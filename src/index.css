@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    font-family: "AeonikTRIAL", sans-serif;
+}
+
+@font-face {
+    font-family: 'AeonikTRIAL';
+    src: url('./fonts/AeonikTRIAL-Regular.otf') format('otf')
+        /* Add additional font formats if necessary */
+        /* Specify the correct path to the font files */
+}
+
+.clipped {
+    clip-path: polygon(0 0, 100% 0, 88% 100%, 0 100%);
+}
+
+.clipped_2 {
+    clip-path: polygon(13% 0, 100% 0%, 100% 100%, 0 100%);
+}
