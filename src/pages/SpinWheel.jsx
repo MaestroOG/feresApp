@@ -4,7 +4,7 @@ import NavigationBtn from '../components/NavigationBtn'
 
 const SpinWheel = () => {
     return (
-        <div className='w-full bg-[#12461F] pt-4 px-4 relative'>
+        <div className='w-full h-screen bg-[#12461F] pt-4 px-4 relative'>
 
             {/* Top Section */}
             <NavigationBtn />

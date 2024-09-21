@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { assets } from '../assets/assets'
 import { useNavigate } from 'react-router-dom'
+import { FeresContext } from '../context/FeresContext';
 
 const SearchBar = () => {
 
     const navigate = useNavigate();
+    const { filterPop, setFilterPop } = useContext(FeresContext)
 
     return (
         <div className='w-full flex items-center justify-between pt-6 px-4'>
@@ -15,7 +17,7 @@ const SearchBar = () => {
                 </input>
             </div>
             <button className='bg-[#F8F8F8] p-4 rounded-lg'>
-                <img src={assets.filter_horizontal} alt="" />
+                <img src={assets.filter_horizontal} alt="" onClick={() => setFilterPop(true)} />
             </button>
 
         </div>

@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { assets } from '../assets/assets'
 import SearchBar from '../components/SearchBar'
 import PopularSearches from '../components/PopularSearches'
 import FeaturedRests from '../components/FeaturedRests'
 import RecentSearch from '../components/RecentSearch'
 import { useNavigate } from 'react-router-dom'
+import { FeresContext } from '../context/FeresContext'
+import FilterPopUp from '../components/FilterPopUp'
 
 const SearchPage = () => {
+    const { filterPop, setFilterPop } = useContext(FeresContext)
     const navigate = useNavigate();
     return (
         <div>
@@ -27,6 +30,9 @@ const SearchPage = () => {
 
             <div>
                 <FeaturedRests />
+            </div>
+            <div>
+                {filterPop ? <FilterPopUp /> : null}
             </div>
         </div>
     )

@@ -52,6 +52,7 @@ import thumbs_up from './thumbs_up.svg'
 import star_hollow from './star_hollow.png'
 import success_img from './success_img.png'
 import star_2 from './star_2.png'
+import cancel_icon from './cancel_icon.png'
 
 
 export const assets = {
@@ -108,5 +109,6 @@ export const assets = {
     thumbs_up,
     star_hollow,
     success_img,
-    star_2
+    star_2,
+    cancel_icon
 }
