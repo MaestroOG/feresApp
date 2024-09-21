@@ -16,7 +16,7 @@ const Outlet = () => {
                 <Route path='/search' element={<SearchPage />} />
                 <Route path='/allrestaurants' element={<AllRestaurants />} />
                 <Route path='/restaurant' element={<Restaurant />} />
-                <Route path='/reviews' element={<Reviews />} />
+                <Route path='/review' element={<Reviews />} />
             </Routes>
         </>
     )

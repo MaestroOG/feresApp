@@ -4,10 +4,13 @@ export const FeresContext = createContext();
 
 const FeresContextProvider = (props) => {
     const [visible, setVisible] = useState(false);
+    const [customerReview, setCustomerReview] = useState(false);
 
     const value = {
         visible,
-        setVisible
+        setVisible,
+        customerReview,
+        setCustomerReview
     }
 
     return (

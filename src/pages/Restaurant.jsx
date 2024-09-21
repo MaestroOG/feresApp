@@ -34,7 +34,7 @@ const Restaurant = () => {
                         <img src={assets.kfc_logo} alt="" />
                         <h2 className='text-xl font-bold text-[#2F2F3F]'>KFC Eastlight</h2>
                     </div>
-                    <div className='flex items-center gap-1' onClick={() => navigate('/reviews')}>
+                    <div className='flex items-center gap-1' onClick={() => navigate('/review')}>
                         <img src={assets.star} alt="" />
                         <p className='text-base font-normal'>4.5 (50 reviews)</p>
                     </div>
