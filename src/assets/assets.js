@@ -60,6 +60,12 @@ import location_03 from './location_03.svg'
 import close from './close.png'
 import burger_img from './burger_img.svg'
 import success_img_2 from './success_img_2.png'
+import ice_cream_img from './ice_cream_img.png'
+import mango_juice_img from './mango_juice_img.png'
+import orange_juice_img from './orange_juice_img.png'
+import service_card_img_2 from './service_card_img_2.png'
+import thumbs_up_green from './thumbs_up_green.svg'
+import document_attachment from './document_attachment.svg'
 
 export const assets = {
     arrow_left,
@@ -123,5 +129,11 @@ export const assets = {
     location_03,
     close,
     burger_img,
-    success_img_2
+    success_img_2,
+    ice_cream_img,
+    mango_juice_img,
+    orange_juice_img,
+    service_card_img_2,
+    thumbs_up_green,
+    document_attachment
 }

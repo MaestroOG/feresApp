@@ -9,7 +9,7 @@ const DeliveredPopup = () => {
 
     return (
         <div className={`fixed bottom-0 left-0 rounded-2xl z-50 bg-white ${visible ? '' : 'hidden'}`}>
-            <img src={assets.delivered_popup_img} alt="" onClick={() => setVisible(false)} />
+            <img src={assets.delivered_popup_img} alt="" onClick={() => setVisible(false)} className='rounded-tr-[13px] rounded-tl-[13px]' />
             <div className='p-4'>
                 <h2 className='font-black text-xl'>Delivered by <span className='text-[#0AB247]'>Feres</span></h2>
                 <p className='text-sm text-[#72737B] leading-6 my-2'>We strive to provide the best possible experience for you. This restaurant use our feres riders to bring your food by using one of these services: motorbike, car, cycle, or walking person</p>

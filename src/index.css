@@ -29,9 +29,13 @@
 }
 
 .clipped {
-    clip-path: polygon(0 0, 100% 0, 88% 100%, 0 100%);
+    clip-path: polygon(0 0, 100% 0%, 83% 100%, 0% 100%);
 }
 
 .clipped_2 {
     clip-path: polygon(13% 0, 100% 0%, 100% 100%, 0 100%);
+}
+
+.explore-card::-webkit-scrollbar {
+    display: none;
 }

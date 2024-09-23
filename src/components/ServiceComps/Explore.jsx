@@ -4,14 +4,16 @@ import ExploreCard from './ExploreCard'
 
 const Explore = () => {
     return (
-        <div className='mt-9 px-4 w-full'>
+        <div className='mt-[220px] px-4 w-full'>
             <h3 className='text-[18px] font-medium'>Explore Feres</h3>
 
-            <div className='grid grid-cols-3'>
+            <div className='flex flex-row gap-5 overflow-y-scroll explore-card'>
                 {/* Card */}
                 <ExploreCard name={"Ride"} img={assets.car} />
                 <ExploreCard name={"Food"} img={assets.food_img} />
                 <ExploreCard name={"Mart"} img={assets.mart_bucket} />
+                <ExploreCard name={"Car"} img={assets.car} />
+                <ExploreCard name={"Food"} img={assets.food_img} />
             </div>
         </div>
     )
