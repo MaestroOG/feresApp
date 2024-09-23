@@ -1,6 +1,6 @@
 import React, { useCallback, useContext } from 'react'
-import { assets } from '../assets/assets'
-import { FeresContext } from '../context/FeresContext'
+import { assets } from '../../assets/assets'
+import { FeresContext } from '../../context/FeresContext'
 
 const WaitPopUp = () => {
     const { setVisible } = useContext(FeresContext)

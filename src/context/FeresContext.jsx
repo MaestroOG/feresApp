@@ -6,6 +6,7 @@ const FeresContextProvider = (props) => {
     const [visible, setVisible] = useState(false);
     const [customerReview, setCustomerReview] = useState(false);
     const [filterPop, setFilterPop] = useState(false);
+    const [deliverPopup, setDeliverPopup] = useState(true);
 
     const value = {
         visible,
@@ -13,7 +14,9 @@ const FeresContextProvider = (props) => {
         customerReview,
         setCustomerReview,
         filterPop,
-        setFilterPop
+        setFilterPop,
+        deliverPopup,
+        setDeliverPopup
     }
 
     return (

@@ -1,12 +1,12 @@
 import React, { useContext } from 'react'
 import { assets } from '../assets/assets'
 import SearchBar from '../components/SearchBar'
-import PopularSearches from '../components/PopularSearches'
-import FeaturedRests from '../components/FeaturedRests'
-import RecentSearch from '../components/RecentSearch'
+import PopularSearches from '../components/SearchComps/PopularSearches'
+import FeaturedRests from '../components/SearchComps/FeaturedRests'
+import RecentSearch from '../components/SearchComps/RecentSearch'
 import { useNavigate } from 'react-router-dom'
 import { FeresContext } from '../context/FeresContext'
-import FilterPopUp from '../components/FilterPopUp'
+import FilterPopUp from '../components/SearchComps/FilterPopUp'
 
 const SearchPage = () => {
     const { filterPop, setFilterPop } = useContext(FeresContext)

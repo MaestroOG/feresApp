@@ -1,5 +1,5 @@
 import React from 'react'
-import { assets } from '../assets/assets'
+import { assets } from '../../assets/assets'
 import ExploreCard from './ExploreCard'
 
 const Explore = () => {

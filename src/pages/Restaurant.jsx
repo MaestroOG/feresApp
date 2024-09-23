@@ -1,10 +1,16 @@
-import React from 'react'
-import { assets } from '../assets/assets'
+import React, { useContext } from 'react'
+import { assets } from '../assets/assets';
 import { useNavigate } from 'react-router-dom'
+import { FeresContext } from '../context/FeresContext';
+import PickupPopup from '../components/RestaurantComps/PickupPopup';
+import DeliveredPopup from '../components/RestaurantComps/DeliveredPopup';
+import MenuCard from '../components/RestaurantComps/MenuCard';
+import SuccessPopup from '../components/SuccessPopup';
 
 const Restaurant = () => {
 
     const navigate = useNavigate();
+    const { deliverPopup, setDeliverPopup } = useContext(FeresContext)
 
     return (
         <div className='bg-gray-400'>
@@ -105,7 +111,27 @@ const Restaurant = () => {
 
                 </div>
 
+                {/* Delivered By Feres Popup*/}
+
+                <PickupPopup />
+
+                <DeliveredPopup />
+
                 {/* Add To Basket Button */}
+
+                {/* Menu */}
+
+                <div className='px-4 mt-7 mb-28'>
+                    <h2 className='text-[#2F2F3F] font-medium text-lg mb-4'>All Menu</h2>
+                    <MenuCard image={assets.burger_img} title={"Beef Burger"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} />
+                    <MenuCard image={assets.burger_img} title={"Fresh orange juice"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} />
+                    <MenuCard image={assets.burger_img} title={"Fresh mango juice"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} />
+                    <MenuCard image={assets.burger_img} title={"Ice cream"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} />
+                    <MenuCard image={assets.burger_img} title={"Beef Burger"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} />
+                </div>
+
+                {/* Success Popup */}
+                <SuccessPopup image={assets.success_img_2} title={"Get 30% off everything up to EBT 150.00"} desc={"The maximum discount for preorders is EBT 150, usable once, and valid until February 22, 2024."} />
 
                 <div className='bg-white px-2 py-4 fixed bottom-0 w-full'>
                     <button className='bg-[#0AB247] text-white flex items-center gap-2 w-full justify-center rounded-3xl p-4'>

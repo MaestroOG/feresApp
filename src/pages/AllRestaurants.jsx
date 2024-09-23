@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
 import Navbar from '../components/Navbar'
 import SearchBar from '../components/SearchBar'
-import WaitWarn from '../components/WaitWarn'
-import RecommendedRests from '../components/RecommendedRests'
-import AllRestCard from '../components/AllRestCard'
+import WaitWarn from '../components/AllRestaurantComps/WaitWarn'
+import RecommendedRests from '../components/AllRestaurantComps/RecommendedRests'
+import AllRestCard from '../components/AllRestaurantComps/AllRestCard'
 import { FeresContext } from '../context/FeresContext'
-import WaitPopUp from '../components/WaitPopUp'
+import WaitPopUp from '../components/AllRestaurantComps/WaitPopUp'
 
 const AllRestaurants = () => {
 

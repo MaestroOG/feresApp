@@ -1,10 +1,10 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
 import SearchBar from '../components/SearchBar'
-import ServiceCard from '../components/ServiceCard'
-import Explore from '../components/Explore'
-import Offers from '../components/Offers'
-import Menu from '../components/Menu'
+import ServiceCard from '../components/ServiceComps/ServiceCard'
+import Explore from '../components/ServiceComps/Explore'
+import Offers from '../components/ServiceComps/Offers'
+import Menu from '../components/ServiceComps/Menu'
 
 const Services = () => {
     return (

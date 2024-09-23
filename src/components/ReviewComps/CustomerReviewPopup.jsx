@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
-import { assets } from '../assets/assets'
+import { assets } from '../../assets/assets';
 import { useNavigate } from 'react-router-dom';
-import { FeresContext } from '../context/FeresContext';
+import { FeresContext } from '../../context/FeresContext';
 
 const CustomerReviewPopup = () => {
 

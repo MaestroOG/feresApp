@@ -53,7 +53,13 @@ import star_hollow from './star_hollow.png'
 import success_img from './success_img.png'
 import star_2 from './star_2.png'
 import cancel_icon from './cancel_icon.png'
-
+import delivered_popup_img from './delivered_popup_img.svg'
+import clock_01 from './clock_01.png'
+import customer_support from './customer_support.svg'
+import location_03 from './location_03.svg'
+import close from './close.png'
+import burger_img from './burger_img.svg'
+import success_img_2 from './success_img_2.png'
 
 export const assets = {
     arrow_left,
@@ -110,5 +116,12 @@ export const assets = {
     star_hollow,
     success_img,
     star_2,
-    cancel_icon
+    cancel_icon,
+    delivered_popup_img,
+    clock_01,
+    customer_support,
+    location_03,
+    close,
+    burger_img,
+    success_img_2
 }

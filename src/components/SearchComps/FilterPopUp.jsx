@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
-import { assets } from '../assets/assets'
-import { FeresContext } from '../context/FeresContext'
+import { assets } from '../../assets/assets'
+import { FeresContext } from '../../context/FeresContext'
 
 const FilterPopUp = () => {
 

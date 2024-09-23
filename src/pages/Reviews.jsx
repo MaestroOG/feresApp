@@ -1,14 +1,14 @@
 import React, { useContext } from 'react'
 import { assets } from '../assets/assets'
 import { useNavigate } from 'react-router-dom'
-import Address from '../components/Address';
-import Overview from '../components/Overview';
-import RestReview from '../components/RestReview';
-import CustomerReview from '../components/CustomerReview';
-import CustomerReviewCard from '../components/CustomerReviewCard';
-import CustomerReviewTextArea from '../components/CustomerReviewTextArea';
+import Address from '../components/ReviewComps/Address';
+import Overview from '../components/ReviewComps/Overview';
+import RestReview from '../components/ReviewComps/RestReview';
+import CustomerReview from '../components/ReviewComps/CustomerReview';
+import CustomerReviewCard from '../components/ReviewComps/CustomerReviewCard';
+import CustomerReviewTextArea from '../components/ReviewComps/CustomerReviewTextArea';
 import SuccessPopup from '../components/SuccessPopup';
-import CustomerReviewPopup from '../components/CustomerReviewPopup';
+import CustomerReviewPopup from '../components/ReviewComps/CustomerReviewPopup';
 import { FeresContext } from '../context/FeresContext';
 
 const Reviews = () => {
@@ -36,7 +36,7 @@ const Reviews = () => {
             <CustomerReviewCard customerPfp={assets.customer_pfp} />
 
             <CustomerReviewTextArea />
-            {/* <SuccessPopup /> */}
+            <SuccessPopup image={assets.success_img} title={"Thanks for your review"} desc={"Your review has been submitted. We’ll check your review and email you with a status update."} />
             {
                 customerReview ? <CustomerReviewPopup /> : null
             }
