@@ -9,11 +9,11 @@ const ServiceCard = () => {
 
     const navigate = useNavigate();
 
-    setTimeout(() => {
-        setIndex(index === 0 ? 1 : 0)
-        // console.log(index);
+    // setTimeout(() => {
+    //     setIndex(index === 0 ? 1 : 0)
+    //     // console.log(index);
 
-    }, 6000);
+    // }, 6000);
 
     return (
         <div className='my-8'>
