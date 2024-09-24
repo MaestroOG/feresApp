@@ -67,6 +67,13 @@ import service_card_img_2 from './service_card_img_2.png'
 import thumbs_up_green from './thumbs_up_green.svg'
 import document_attachment from './document_attachment.svg'
 import popup_bar from './popup_bar.png'
+import telephone from './telephone.png'
+import lock_icon from './lock_icon.png'
+import tick_double from './tick_double.png'
+import neutral_emoji from './neutral_emoji.png'
+import sent_icon from './sent_icon.png'
+import attachment_02 from './attachment_02.png'
+import camera_02 from './camera_02.png'
 
 export const assets = {
     arrow_left,
@@ -137,5 +144,12 @@ export const assets = {
     service_card_img_2,
     thumbs_up_green,
     document_attachment,
-    popup_bar
+    popup_bar,
+    telephone,
+    lock_icon,
+    tick_double,
+    neutral_emoji,
+    sent_icon,
+    camera_02,
+    attachment_02
 }
