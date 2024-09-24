@@ -66,6 +66,7 @@ import orange_juice_img from './orange_juice_img.png'
 import service_card_img_2 from './service_card_img_2.png'
 import thumbs_up_green from './thumbs_up_green.svg'
 import document_attachment from './document_attachment.svg'
+import popup_bar from './popup_bar.png'
 
 export const assets = {
     arrow_left,
@@ -135,5 +136,6 @@ export const assets = {
     orange_juice_img,
     service_card_img_2,
     thumbs_up_green,
-    document_attachment
+    document_attachment,
+    popup_bar
 }

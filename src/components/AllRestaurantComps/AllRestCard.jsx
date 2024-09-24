@@ -7,7 +7,7 @@ const AllRestCard = () => {
     const navigate = useNavigate();
 
     return (
-        <div className='px-4 mt-6'>
+        <div className='px-4 mt-6 relative'>
             <h2 className='text-[#2F2F3F] text-lg font-medium'>All restaurants</h2>
 
             <div className='w-full mt-8 mb-5 relative' onClick={() => navigate('/restaurant')}>

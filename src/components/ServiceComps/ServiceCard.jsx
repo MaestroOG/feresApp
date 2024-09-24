@@ -16,20 +16,19 @@ const ServiceCard = () => {
     // }, 6000);
 
     return (
-        <div className='my-8'>
+        <div className='my-8 px-4'>
             {/* Left */}
-            <div className='bg-[#0AB247] clipped w-[179px] h-[158px] flex flex-col justify-center absolute left-[3%] px-3 rounded-tl-3xl rounded-bl-3xl'>
+            <div className='bg-[#0AB247] w-[45%] clipped flex flex-col justify-center absolute left-[2%] px-3 pr-5 py-[18px] rounded-tl-3xl rounded-bl-3xl z-10'>
                 <p className='text-[#FFE5A4] font-medium text-base'>Get the best food restaurant and fast delivery with Feres</p>
-                <button className='bg-white text-[#0AB247] rounded-[30px] p-[10px] w-[77px] mt-3' onClick={() => navigate('/allrestaurants')}>View all</button>
+                <button className='bg-white text-[#0AB247] rounded-[30px] p-[10px] py-[7px] w-[77px] mt-3' onClick={() => navigate('/allrestaurants')}>View all</button>
             </div>
 
             {/* Right */}
 
             <div className='relative'>
-                <img src={cardImgSrc[index]} alt="" className='absolute right-[4%] rounded-tr-3xl rounded-br-3xl transition-all ease-in-out' />
+                <img src={cardImgSrc[index]} alt="" className='absolute -right-2 rounded-tr-3xl rounded-br-3xl transition-all ease-in-out' />
                 <img src={assets.feres_logo} className="absolute right-[6%] top-4" />
             </div>
-
         </div>
     )
 }

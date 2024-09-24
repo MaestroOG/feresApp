@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { assets } from '../assets/assets';
 import { useNavigate } from 'react-router-dom'
 import { FeresContext } from '../context/FeresContext';
@@ -11,6 +11,7 @@ const Restaurant = () => {
 
     const navigate = useNavigate();
     const { deliverPopup, setDeliverPopup } = useContext(FeresContext)
+    const [categoryBtn, setCategoryBtn] = useState('all')
 
     return (
         <div className='bg-gray-400'>
@@ -104,9 +105,9 @@ const Restaurant = () => {
                     {/* Category Buttons */}
 
                     <div className='mt-6 flex gap-3'>
-                        <button className='bg-[#0AB247] text-white rounded-xl p-3 px-6'>All</button>
-                        <button className='border border-[#EEEEEE] text-[#AEAEAE] rounded-xl p-3 px-6'>Trending meals</button>
-                        <button className='border border-[#EEEEEE] text-[#AEAEAE] rounded-xl p-3 px-6'>Sandwiches</button>
+                        <button className={`${categoryBtn == 'all' ? ' bg-[#0AB247] text-white' : 'border border-[#EEEEEE] text-[#AEAEAE]'} rounded-xl px-[10px] py-[5px]`} onClick={() => setCategoryBtn('all')}>All</button>
+                        <button className={`${categoryBtn == 'trending' ? ' bg-[#0AB247] text-white' : 'border border-[#EEEEEE] text-[#AEAEAE]'} rounded-xl px-[10px] py-[5px]`} onClick={() => setCategoryBtn('trending')}>Trending meals</button>
+                        <button className={`${categoryBtn == 'sandwiches' ? ' bg-[#0AB247] text-white' : 'border border-[#EEEEEE] text-[#AEAEAE]'} rounded-xl px-[10px] py-[5px]`} onClick={() => setCategoryBtn('sandwiches')}>Sandwiches</button>
                     </div>
 
                 </div>
@@ -122,11 +123,13 @@ const Restaurant = () => {
                 {/* Menu */}
 
                 <div className='px-4 mt-7 mb-28'>
-                    <h2 className='text-[#2F2F3F] font-medium text-lg mb-4'>All Menu</h2>
+                    <h2 className='text-[#2F2F3F] font-medium text-lg mb-4'>{
+                        categoryBtn == 'all' ? 'All Menu' : categoryBtn == 'trending' ? 'Trending Menu' : categoryBtn == 'sandwiches' ? 'Sandwiches' : null
+                    }</h2>
                     <MenuCard image={assets.burger_img} title={"Beef Burger"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} />
-                    <MenuCard image={assets.burger_img} title={"Fresh orange juice"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} />
-                    <MenuCard image={assets.burger_img} title={"Fresh mango juice"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} />
-                    <MenuCard image={assets.burger_img} title={"Ice cream"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} />
+                    <MenuCard image={assets.orange_juice_img} title={"Fresh orange juice"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} />
+                    <MenuCard image={assets.mango_juice_img} title={"Fresh mango juice"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} />
+                    <MenuCard image={assets.ice_cream_img} title={"Ice cream"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} />
                     <MenuCard image={assets.burger_img} title={"Beef Burger"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} />
                 </div>
 

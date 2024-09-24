@@ -22,7 +22,7 @@ const Offers = () => {
                 </div>
 
                 {/* Bottom Right */}
-                <div className='bg-white text-black flex items-center gap-2 p-3 rounded-3xl absolute bottom-[4%] right-[34%]'>
+                <div className='bg-white text-black flex items-center gap-2 p-3 rounded-3xl absolute bottom-[4%] right-[32%]'>
                     <img src={assets.clock_img} alt="" />
                     <p className='text-sm'>31 mins</p>
                 </div>

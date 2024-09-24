@@ -4,8 +4,8 @@ import ExploreCard from './ExploreCard'
 
 const Explore = () => {
     return (
-        <div className='mt-[220px] px-4 w-full'>
-            <h3 className='text-[18px] font-medium'>Explore Feres</h3>
+        <div className='mt-[220px] w-full'>
+            <h3 className='text-[18px] font-medium px-4'>Explore Feres</h3>
 
             <div className='flex flex-row gap-5 overflow-y-scroll explore-card'>
                 {/* Card */}
