@@ -13,6 +13,7 @@ import DescribeIssue from '../components/SupportComps/DescribeIssue'
 import AboutRestaurant from '../components/SupportComps/AboutRestaurant'
 import RestaurantIssue from '../components/SupportComps/RestaurantIssue'
 import ChatSupport from './ChatSupport'
+import Food from './Food'
 
 const Outlet = () => {
     return (
@@ -31,6 +32,7 @@ const Outlet = () => {
                 <Route path='/restaurantsupport/aboutrestaurant' element={<AboutRestaurant />} />
                 <Route path='/restaurantsupport/restaurantissue' element={<RestaurantIssue />} />
                 <Route path='/chatsupport' element={<ChatSupport />} />
+                <Route path='/food' element={<Food />} />
             </Routes>
         </>
     )

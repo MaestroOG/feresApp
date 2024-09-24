@@ -74,6 +74,12 @@ import neutral_emoji from './neutral_emoji.png'
 import sent_icon from './sent_icon.png'
 import attachment_02 from './attachment_02.png'
 import camera_02 from './camera_02.png'
+import burger_img_lg from './burger_img_lg.png'
+import plus_sign from './plus_sign.svg'
+import minus_sign from './minus_sign.png'
+import heart_icon from './heart_icon.png'
+import burger_featured from './burger_featured.png'
+import alert_02 from './alert_02.svg'
 
 export const assets = {
     arrow_left,
@@ -151,5 +157,11 @@ export const assets = {
     neutral_emoji,
     sent_icon,
     camera_02,
-    attachment_02
+    attachment_02,
+    burger_img_lg,
+    plus_sign,
+    minus_sign,
+    heart_icon,
+    burger_featured,
+    alert_02
 }

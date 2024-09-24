@@ -12,6 +12,7 @@ const Restaurant = () => {
     const navigate = useNavigate();
     const { deliverPopup, setDeliverPopup } = useContext(FeresContext)
     const [categoryBtn, setCategoryBtn] = useState('all')
+    const [foodPopup, setFoodPopup] = useState(false)
 
     return (
         <div>
@@ -126,22 +127,52 @@ const Restaurant = () => {
                     <h2 className='text-[#2F2F3F] font-medium text-lg mb-4'>{
                         categoryBtn == 'all' ? 'All Menu' : categoryBtn == 'trending' ? 'Trending Menu' : categoryBtn == 'sandwiches' ? 'Sandwiches' : null
                     }</h2>
-                    <MenuCard image={assets.burger_img} title={"Beef Burger"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} />
-                    <MenuCard image={assets.orange_juice_img} title={"Fresh orange juice"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} />
-                    <MenuCard image={assets.mango_juice_img} title={"Fresh mango juice"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} />
-                    <MenuCard image={assets.ice_cream_img} title={"Ice cream"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} />
-                    <MenuCard image={assets.burger_img} title={"Beef Burger"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} />
+                    <MenuCard image={assets.burger_img} title={"Beef Burger"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} onClick={() => setFoodPopup(true)} />
+                    <MenuCard image={assets.orange_juice_img} title={"Fresh orange juice"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} onClick={() => setFoodPopup(true)} />
+                    <MenuCard image={assets.mango_juice_img} title={"Fresh mango juice"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} onClick={() => setFoodPopup(true)} />
+                    <MenuCard image={assets.ice_cream_img} title={"Ice cream"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} onClick={() => setFoodPopup(true)} />
+                    <MenuCard image={assets.burger_img} title={"Beef Burger"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} onClick={() => setFoodPopup(true)} />
                 </div>
+
+                {/* Food Popup */}
+
+                {
+                    foodPopup ? <>
+                        <div className='fixed bottom-0 left-0 right-0'>
+                            <div className='relative'>
+                                <img src={assets.burger_img_lg} alt="" className='z-50 rounded-tr-3xl rounded-tl-3xl' />
+                                <img src={assets.cancel_icon} alt="" className='absolute right-[3%] top-[7%] bg-white rounded-full' onClick={() => setFoodPopup(false)} />
+                            </div>
+                            <div className='bg-white px-4 py-4 rounded-tr-[16px] rounded-tl-[16px]'>
+                                <h2 className='text-[#2F2F3F] text-xl font-bold mb-2'>Beef Burger</h2>
+                                <p className='text-[#767578] text-base'>Lorem ipsum dolor sit amet consectetur. Bibendum est urna eget tortor id tincidunt. Euismod vel faucibus dolor ac mus vel tempus sit bibendum.</p>
+                                <div className='flex items-center gap-2 mt-3'>
+                                    <p className='text-[#9E9E9E] line-through text-base'>ETB 170</p>
+                                    <p className='text-[#0AB247] font-bold text-base'>ETB 140</p>
+                                </div>
+                                <p className='text-[#C4C4C4] mt-6 mb-5 text-base'>Add a note</p>
+                                <div className='flex items-center w-full justify-between'>
+                                    <button className='border border-[#EEEEEE] py-[12px] px-[16px] rounded-3xl flex items-center justify-between w-[45%]'>
+                                        <img src={assets.minus_sign} alt="" />
+                                        <p>1</p>
+                                        <img src={assets.plus_sign} alt="" />
+                                    </button>
+                                    <button className='bg-[#0AB247] py-[12px] px-[16px] rounded-3xl text-white w-[50%]'>Add EBT 140</button>
+                                </div>
+                            </div>
+                        </div>
+                    </> : null
+                }
 
                 {/* Success Popup */}
                 <SuccessPopup image={assets.success_img_2} title={"Get 30% off everything up to EBT 150.00"} desc={"The maximum discount for preorders is EBT 150, usable once, and valid until February 22, 2024."} />
 
-                <div className='bg-white px-2 py-4 fixed bottom-0 w-full'>
+                {/* <div className='bg-white px-2 py-4 fixed bottom-0 w-full'>
                     <button className='bg-[#0AB247] text-white flex items-center gap-2 w-full justify-center rounded-3xl p-4'>
                         <img src={assets.shopping_basket} alt="" className='invert' />
                         Add To Basket
                     </button>
-                </div>
+                </div> */}
 
             </div>
         </div>
