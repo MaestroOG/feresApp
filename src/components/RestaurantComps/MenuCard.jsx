@@ -1,9 +1,9 @@
 import React from 'react'
 
-const MenuCard = ({ image, title, desc, onClick }) => {
+const MenuCard = ({ image, title, desc, onClick, className }) => {
     return (
-        <div className='flex items-center gap-3 shadow rounded-2xl mb-4' onClick={onClick}>
-            <img src={image} alt="" className='w-28 mb-auto' />
+        <div className={`flex items-center gap-3 shadow-sm rounded-2xl mb-4 px-2 ${className ? className : ""}`} onClick={onClick}>
+            <img src={image} alt="" className='w-28 mb-auto py-[6px]' />
             <div className='pr-1'>
                 <h4 className='text-[#2F2F3F] font-medium text-base '>{title}</h4>
                 <p className='text-[#2F2F3F66] text-xs'>{desc}</p>

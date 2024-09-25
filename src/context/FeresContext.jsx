@@ -8,6 +8,7 @@ const FeresContextProvider = (props) => {
     const [filterPop, setFilterPop] = useState(false);
     const [deliverPopup, setDeliverPopup] = useState(true);
     const [helpfulBtn, setHelpfulBtn] = useState('')
+    const [notePop, setNotePop] = useState(false)
 
     const value = {
         visible,
@@ -19,7 +20,9 @@ const FeresContextProvider = (props) => {
         deliverPopup,
         setDeliverPopup,
         helpfulBtn,
-        setHelpfulBtn
+        setHelpfulBtn,
+        notePop,
+        setNotePop
     }
 
     return (

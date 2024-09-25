@@ -80,6 +80,7 @@ import minus_sign from './minus_sign.png'
 import heart_icon from './heart_icon.png'
 import burger_featured from './burger_featured.png'
 import alert_02 from './alert_02.svg'
+import newOrder_img from './newOrder_img.svg'
 
 export const assets = {
     arrow_left,
@@ -163,5 +164,6 @@ export const assets = {
     minus_sign,
     heart_icon,
     burger_featured,
-    alert_02
+    alert_02,
+    newOrder_img
 }

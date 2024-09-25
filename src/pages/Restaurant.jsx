@@ -6,13 +6,16 @@ import PickupPopup from '../components/RestaurantComps/PickupPopup';
 import DeliveredPopup from '../components/RestaurantComps/DeliveredPopup';
 import MenuCard from '../components/RestaurantComps/MenuCard';
 import SuccessPopup from '../components/SuccessPopup';
+import { NewOrderPopUp } from '../components/RestaurantComps/NewOrderPopUp';
+import FoodSearchPopUp from '../components/RestaurantComps/FoodSearchPopUp';
 
 const Restaurant = () => {
 
-    const navigate = useNavigate();
+    const navigate = useNavigate()
     const { deliverPopup, setDeliverPopup } = useContext(FeresContext)
     const [categoryBtn, setCategoryBtn] = useState('all')
     const [foodPopup, setFoodPopup] = useState(false)
+    const [foodSearch, setFoodSearch] = useState(false)
 
     return (
         <div>
@@ -29,7 +32,7 @@ const Restaurant = () => {
                     <button className='bg-[#06060666] p-3 rounded-xl ml-4'>
                         <img src={assets.share} alt="" />
                     </button>
-                    <button className='bg-[#06060666] p-3 rounded-xl ml-4'>
+                    <button className='bg-[#06060666] p-3 rounded-xl ml-4' onClick={() => setFoodSearch(true)}>
                         <img className='invert' src={assets.search} alt="" />
                     </button>
                 </div>
@@ -127,12 +130,17 @@ const Restaurant = () => {
                     <h2 className='text-[#2F2F3F] font-medium text-lg mb-4'>{
                         categoryBtn == 'all' ? 'All Menu' : categoryBtn == 'trending' ? 'Trending Menu' : categoryBtn == 'sandwiches' ? 'Sandwiches' : null
                     }</h2>
-                    <MenuCard image={assets.burger_img} title={"Beef Burger"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} onClick={() => setFoodPopup(true)} />
+                    <MenuCard image={assets.burger_img} title={"Beef Burger"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} onClick={() => setFoodPopup(true)} className={"border border-[#0AB247]"} />
                     <MenuCard image={assets.orange_juice_img} title={"Fresh orange juice"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} onClick={() => setFoodPopup(true)} />
                     <MenuCard image={assets.mango_juice_img} title={"Fresh mango juice"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} onClick={() => setFoodPopup(true)} />
                     <MenuCard image={assets.ice_cream_img} title={"Ice cream"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} onClick={() => setFoodPopup(true)} />
                     <MenuCard image={assets.burger_img} title={"Beef Burger"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} onClick={() => setFoodPopup(true)} />
                 </div>
+
+                <NewOrderPopUp />
+
+                {foodSearch ? <FoodSearchPopUp ref={foodSearchRef} /> : null}
+
 
                 {/* Food Popup */}
 
@@ -167,12 +175,15 @@ const Restaurant = () => {
                 {/* Success Popup */}
                 <SuccessPopup image={assets.success_img_2} title={"Get 30% off everything up to EBT 150.00"} desc={"The maximum discount for preorders is EBT 150, usable once, and valid until February 22, 2024."} />
 
-                {/* <div className='bg-white px-2 py-4 fixed bottom-0 w-full'>
-                    <button className='bg-[#0AB247] text-white flex items-center gap-2 w-full justify-center rounded-3xl p-4'>
-                        <img src={assets.shopping_basket} alt="" className='invert' />
-                        Add To Basket
+                <div className='bg-white px-2 py-4 fixed bottom-0 w-full'>
+                    <button className='flex items-center justify-between bg-[#0AB247] text-white w-full rounded-full p-4 px-5'>
+                        <div className='flex items-center gap-2'>
+                            <img src={assets.shopping_basket} alt="" className='invert' />
+                            Add To Basket
+                        </div>
+                        <div className='text-white text-lg font-medium'>ETB140.00</div>
                     </button>
-                </div> */}
+                </div>
 
             </div>
         </div>
