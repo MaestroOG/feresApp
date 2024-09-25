@@ -1,7 +1,9 @@
 import React from 'react'
 import { assets } from '../../assets/assets'
+import { useNavigate } from 'react-router-dom'
 
 const FoodTopBar = () => {
+    const navigate = useNavigate();
     return (
         <div className='relative'>
             <img src={assets.burger_featured} alt="" className='w-screen' />
