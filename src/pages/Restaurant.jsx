@@ -139,7 +139,7 @@ const Restaurant = () => {
 
                 <NewOrderPopUp />
 
-                {foodSearch ? <FoodSearchPopUp ref={foodSearchRef} /> : null}
+                {foodSearch ? <FoodSearchPopUp /> : null}
 
 
                 {/* Food Popup */}
