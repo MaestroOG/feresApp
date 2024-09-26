@@ -81,6 +81,12 @@ import heart_icon from './heart_icon.png'
 import burger_featured from './burger_featured.png'
 import alert_02 from './alert_02.svg'
 import newOrder_img from './newOrder_img.svg'
+import search_01 from './search_01.png'
+import alert_red from './alert_red.svg'
+import delete_02 from './delete_02.svg'
+import scooter_02 from './scooter_02.svg'
+import spoon from './spoon.svg'
+import message_01 from './message_01.svg'
 
 export const assets = {
     arrow_left,
@@ -165,5 +171,11 @@ export const assets = {
     heart_icon,
     burger_featured,
     alert_02,
-    newOrder_img
+    newOrder_img,
+    search_01,
+    alert_red,
+    delete_02,
+    scooter_02,
+    spoon,
+    message_01
 }

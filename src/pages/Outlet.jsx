@@ -14,6 +14,9 @@ import AboutRestaurant from '../components/SupportComps/AboutRestaurant'
 import RestaurantIssue from '../components/SupportComps/RestaurantIssue'
 import ChatSupport from './ChatSupport'
 import Food from './Food'
+import ViewAllMenu from '../components/RestaurantComps/ViewAllMenu'
+import FoodCategories from './FoodCategories'
+import Order from './Order'
 
 const Outlet = () => {
     return (
@@ -24,6 +27,8 @@ const Outlet = () => {
                 <Route path='/search' element={<SearchPage />} />
                 <Route path='/allrestaurants' element={<AllRestaurants />} />
                 <Route path='/restaurant' element={<Restaurant />} />
+                <Route path='/restaurant/viewmenu' element={<ViewAllMenu />} />
+                <Route path='/restaurant/categories' element={<FoodCategories />} />
                 <Route path='/review' element={<Reviews />} />
                 <Route path='/restaurantsupport' element={<RestaurantSupport />} />
                 <Route path='/restaurantsupport/selectmenu' element={<SelectMenu />} />
@@ -33,6 +38,7 @@ const Outlet = () => {
                 <Route path='/restaurantsupport/restaurantissue' element={<RestaurantIssue />} />
                 <Route path='/chatsupport' element={<ChatSupport />} />
                 <Route path='/food' element={<Food />} />
+                <Route path='/order' element={<Order />} />
             </Routes>
         </>
     )

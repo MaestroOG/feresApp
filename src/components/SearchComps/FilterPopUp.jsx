@@ -7,9 +7,9 @@ const FilterPopUp = () => {
     const { filterPop, setFilterPop } = useContext(FeresContext);
 
     return (
-        <div className='h-[90vh] w-full bg-[#F8F8F8] fixed bottom-0 left-0 rounded-2xl'>
+        <div className='h-[90vh] w-full bg-[#F8F8F8] fixed bottom-0 left-0 rounded-2xl overflow-y-scroll pb-20'>
             {/* Top Bar */}
-            <div className='flex items-center justify-between px-2 py-2 bg-white'>
+            <div className='flex items-center justify-between px-2 py-2 bg-white sticky top-0'>
                 <img src={assets.cancel_icon} alt="" onClick={() => setFilterPop(false)} />
                 <h2 className='text-[#2F2F3F] font-bold text-xl'>Filters</h2>
                 <p className='font-normal text-[#2F2F3F] text-lg'>Clear</p>
@@ -69,12 +69,36 @@ const FilterPopUp = () => {
 
             {/* Delivery Time */}
 
-            <div className='px-4 py-2 mt-5 bg-white rounded-3xl'>
+            <div className='px-4 py-4 mt-5 bg-white rounded-3xl'>
                 <h2 className='text-lg font-bold text-[#2F2F3F]'>Delivery time</h2>
                 <div className='mt-3 flex items-center gap-2'>
                     <button className='bg-[#F8F8F8] rounded-lg px-4 py-2 font-medium text-xs text-[#2F2F3F]'>Up to 15 min</button>
                     <button className='bg-[#F8F8F8] rounded-lg px-4 py-2 font-medium text-xs text-[#2F2F3F]'>Up to 20 min</button>
                     <button className='bg-[#0AB247] rounded-lg px-4 py-2 font-medium text-xs text-white'>Up to 30 min</button>
+                </div>
+            </div>
+            {/* Distance */}
+
+            <div className='px-4 py-4 mt-5 bg-white rounded-3xl'>
+                <h2 className='text-lg font-bold text-[#2F2F3F]'>Distance</h2>
+                <div className='mt-3 flex items-center gap-2'>
+                    <button className='bg-[#F8F8F8] rounded-lg px-4 py-2 font-medium text-xs text-[#2F2F3F]'>Up to 1 km</button>
+                    <button className='bg-[#F8F8F8] rounded-lg px-4 py-2 font-medium text-xs text-[#2F2F3F]'>Up to 1 km</button>
+                    <button className='bg-[#0AB247] rounded-lg px-4 py-2 font-medium text-xs text-white'>Up to 3 km</button>
+                </div>
+            </div>
+
+            {/* Cuisines */}
+
+            <div className='px-4 py-2 pb-11 mt-3 bg-white rounded-3xl'>
+                <h2 className='text-lg font-bold text-[#2F2F3F]'>Sort By</h2>
+                <div className='mt-6 flex items-center justify-between'>
+                    <p className='font-normal text-base text-[#646464]'>Desserts</p>
+                    <input type="radio" name="cuisines" id="" />
+                </div>
+                <div className='mt-6 flex items-center justify-between'>
+                    <p className='font-normal text-base text-[#646464]'>Beverages</p>
+                    <input type="radio" name="cuisines" id="" />
                 </div>
             </div>
 
