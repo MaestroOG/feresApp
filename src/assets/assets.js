@@ -87,6 +87,15 @@ import delete_02 from './delete_02.svg'
 import scooter_02 from './scooter_02.svg'
 import spoon from './spoon.svg'
 import message_01 from './message_01.svg'
+import arrow_right_02 from './arrow_right_02.svg'
+import delivery_truck_02 from './delivery_truck_02.svg'
+import user_full_view from './user_full_view.svg'
+import extra_order_img_1 from './extra_order_img_1.png'
+import extra_order_img_2 from './extra_order_img_2.png'
+import plus_green from './plus_green.png'
+import calendar_03 from './calendar_03.svg'
+import clock_light_green from './clock_light_green.png'
+import location_light_green from './location_light_green.png'
 
 export const assets = {
     arrow_left,
@@ -177,5 +186,14 @@ export const assets = {
     delete_02,
     scooter_02,
     spoon,
-    message_01
+    message_01,
+    arrow_right_02,
+    delivery_truck_02,
+    user_full_view,
+    extra_order_img_1,
+    extra_order_img_2,
+    plus_green,
+    calendar_03,
+    location_light_green,
+    clock_light_green
 }

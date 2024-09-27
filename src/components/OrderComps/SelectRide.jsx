@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { assets } from '../../assets/assets'
+import { FeresContext } from '../../context/FeresContext'
 
 const SelectRide = () => {
+    const { setSelectDel } = useContext(FeresContext)
     return (
         <div className='px-4 mt-9 flex items-center justify-between'>
             <div>
@@ -11,7 +13,7 @@ const SelectRide = () => {
                 </div>
                 <p className='text-[#767578CC] font-medium text-[13px]'>Deliver now</p>
             </div>
-            <h4 className='font-medium text-base text-[#0AB247]'>Select options</h4>
+            <h4 className='font-medium text-base text-[#0AB247]' onClick={() => setSelectDel(true)}>Select options</h4>
         </div>
     )
 }

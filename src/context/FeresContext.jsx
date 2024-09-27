@@ -9,6 +9,9 @@ const FeresContextProvider = (props) => {
     const [deliverPopup, setDeliverPopup] = useState(true);
     const [helpfulBtn, setHelpfulBtn] = useState('')
     const [notePop, setNotePop] = useState(false)
+    const [delOrderVisible, setDelOrderVisible] = useState(false);
+    const [selectDel, setSelectDel] = useState(false)
+    const [orderNote, setOrderNote] = useState(false)
 
     const value = {
         visible,
@@ -22,7 +25,13 @@ const FeresContextProvider = (props) => {
         helpfulBtn,
         setHelpfulBtn,
         notePop,
-        setNotePop
+        setNotePop,
+        delOrderVisible,
+        setDelOrderVisible,
+        selectDel,
+        setSelectDel,
+        orderNote,
+        setOrderNote
     }
 
     return (
