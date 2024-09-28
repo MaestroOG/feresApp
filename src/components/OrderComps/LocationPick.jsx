@@ -4,7 +4,7 @@ import { FeresContext } from '../../context/FeresContext'
 
 const LocationPick = () => {
 
-    const { riderNote, setRiderNote } = useContext(FeresContext)
+    const { setRiderNote } = useContext(FeresContext)
 
     return (
         <div className='px-4 rounded-[13px]'>

@@ -21,6 +21,7 @@ import PaymentMethods from '../components/OrderComps/PaymentMethods'
 import OtherTip from '../components/OrderComps/OtherTip'
 import { assets } from '../assets/assets'
 import TotalBill from '../components/OrderComps/TotalBill'
+import RiderNote from '../components/OrderComps/RiderNote'
 
 const Order = () => {
     const { orderNote, riderNote } = useContext(FeresContext)
@@ -49,7 +50,7 @@ const Order = () => {
 
             <TotalBill />
 
-            {/* {riderNote ? <ExtraNotePopUp placeholder={"Write note to the rider"} /> : null} */}
+            {riderNote ? <RiderNote /> : null}
 
             {/* <TIpRiderPopUp /> */}
             {/* <SaveMoneyPopUp /> */}
