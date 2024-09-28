@@ -17,6 +17,8 @@ import Food from './Food'
 import ViewAllMenu from '../components/RestaurantComps/ViewAllMenu'
 import FoodCategories from './FoodCategories'
 import Order from './Order'
+import SelectLocation from './SelectLocation'
+import LocationSearch from './LocationSearch'
 
 const Outlet = () => {
     return (
@@ -39,6 +41,8 @@ const Outlet = () => {
                 <Route path='/chatsupport' element={<ChatSupport />} />
                 <Route path='/food' element={<Food />} />
                 <Route path='/order' element={<Order />} />
+                <Route path='/selectlocation' element={<SelectLocation />} />
+                <Route path='/selectlocation/locationsearch' element={<LocationSearch />} />
             </Routes>
         </>
     )

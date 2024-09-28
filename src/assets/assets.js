@@ -96,6 +96,17 @@ import plus_green from './plus_green.png'
 import calendar_03 from './calendar_03.svg'
 import clock_light_green from './clock_light_green.png'
 import location_light_green from './location_light_green.png'
+import save_money_img from './save_money_img.svg'
+import map_2 from './map_2.svg'
+import location_dot_2 from './location_dot_2.png'
+import gift from './gift.png'
+import information_circle from './information_circle.png'
+import tip_rider_popup_img from './tip_rider_popup_img.png'
+import link_forward from './link_forward.png'
+import wallet_01 from './wallet_01.png'
+import maps_location_02 from './maps_location_02.png'
+import location_black from './location_black.png'
+import discount from './discount.svg'
 
 export const assets = {
     arrow_left,
@@ -195,5 +206,16 @@ export const assets = {
     plus_green,
     calendar_03,
     location_light_green,
-    clock_light_green
+    clock_light_green,
+    save_money_img,
+    map_2,
+    location_dot_2,
+    gift,
+    information_circle,
+    tip_rider_popup_img,
+    link_forward,
+    wallet_01,
+    maps_location_02,
+    location_black,
+    discount
 }

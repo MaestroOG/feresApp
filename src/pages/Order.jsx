@@ -13,11 +13,19 @@ import ExtraNotePopUp from '../components/FoodComps/ExtraNotePopUp'
 import { FeresContext } from '../context/FeresContext'
 import ExtraOrder from '../components/OrderComps/ExtraOrder'
 import OrderSchedule from '../components/OrderComps/OrderSchedule'
+import SaveMoneyPopUp from '../components/OrderComps/SaveMoneyPopUp'
+import LocationPick from '../components/OrderComps/LocationPick'
+import TipRider from '../components/OrderComps/TipRider'
+import TIpRiderPopUp from '../components/OrderComps/TIpRiderPopUp'
+import PaymentMethods from '../components/OrderComps/PaymentMethods'
+import OtherTip from '../components/OrderComps/OtherTip'
+import { assets } from '../assets/assets'
+import TotalBill from '../components/OrderComps/TotalBill'
 
 const Order = () => {
-    const { orderNote } = useContext(FeresContext)
+    const { orderNote, riderNote } = useContext(FeresContext)
     return (
-        <div>
+        <div className='pb-24'>
             <OrderNav />
             <DelOrPickBtn />
             <SelectRide />
@@ -30,13 +38,28 @@ const Order = () => {
             <ExtraOrder />
             <OrderSchedule />
 
+            <LocationPick />
+
+            <TipRider />
+
+            <OtherTip />
+
+            <PaymentMethods img={assets.wallet_01} text={"Payment Methods"} />
+            <PaymentMethods img={assets.discount} text={"Get Discounts"} />
+
+            <TotalBill />
+
+            {/* {riderNote ? <ExtraNotePopUp placeholder={"Write note to the rider"} /> : null} */}
+
+            {/* <TIpRiderPopUp /> */}
+            {/* <SaveMoneyPopUp /> */}
             <DelOrderPopUp />
 
             <SelectDeliveryPopup />
 
             {orderNote ? <ExtraNotePopUp placeholder={"Write anything else we need to know"} /> : null}
 
-            {/* <OrderConfirmBtn /> */}
+            <OrderConfirmBtn />
         </div>
     )
 }
