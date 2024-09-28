@@ -23,7 +23,7 @@ const Navbar = () => {
             </div>
 
             <button className='relative'>
-                <img src={assets.shopping_basket} className="border border-[#EEEEEE] p-2 rounded-lg" />
+                <img src={assets.shopping_basket} className="border border-[#EEEEEE] p-2 rounded-lg" onClick={() => navigate('/order')} />
                 <p className='absolute text-[10px] text-white bg-[#E92D53] font-bold px-1 rounded-full top-[18%] left-[54%]'>3</p>
             </button>
         </div>
