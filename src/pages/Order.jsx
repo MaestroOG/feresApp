@@ -22,9 +22,11 @@ import OtherTip from '../components/OrderComps/OtherTip'
 import { assets } from '../assets/assets'
 import TotalBill from '../components/OrderComps/TotalBill'
 import RiderNote from '../components/OrderComps/RiderNote'
+import DeliveryFeePopup from '../components/OrderComps/DeliveryFeePopup'
+import ServiceFeePopup from '../components/OrderComps/ServiceFeePopup'
 
 const Order = () => {
-    const { orderNote, riderNote } = useContext(FeresContext)
+    const { orderNote, riderNote, tipBtn } = useContext(FeresContext)
     return (
         <div className='pb-24'>
             <OrderNav />
@@ -43,7 +45,7 @@ const Order = () => {
 
             <TipRider />
 
-            <OtherTip />
+            {tipBtn == 'other' ? <OtherTip /> : null}
 
             <PaymentMethods img={assets.wallet_01} text={"Payment Methods"} />
             <PaymentMethods img={assets.discount} text={"Get Discounts"} />
@@ -54,6 +56,8 @@ const Order = () => {
 
             {/* <TIpRiderPopUp /> */}
             {/* <SaveMoneyPopUp /> */}
+            {/* <DeliveryFeePopup /> */}
+            <ServiceFeePopup />
             <DelOrderPopUp />
 
             <SelectDeliveryPopup />

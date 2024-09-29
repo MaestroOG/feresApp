@@ -13,6 +13,7 @@ const FeresContextProvider = (props) => {
     const [selectDel, setSelectDel] = useState(false)
     const [orderNote, setOrderNote] = useState(false)
     const [riderNote, setRiderNote] = useState(false)
+    const [tipBtn, setTipBtn] = useState('no')
 
     const value = {
         visible,
@@ -34,7 +35,9 @@ const FeresContextProvider = (props) => {
         orderNote,
         setOrderNote,
         riderNote,
-        setRiderNote
+        setRiderNote,
+        tipBtn,
+        setTipBtn
     }
 
     return (

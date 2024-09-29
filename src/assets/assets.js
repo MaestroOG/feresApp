@@ -107,6 +107,13 @@ import wallet_01 from './wallet_01.png'
 import maps_location_02 from './maps_location_02.png'
 import location_black from './location_black.png'
 import discount from './discount.svg'
+import delivery_fee_img from './delivery_fee_img.png'
+import service_fee_img from './service_fee_img.svg'
+import mastercard from './mastercard.svg'
+import visa from './visa.svg'
+import wavy_money_bill from './wavy_money_bill.svg'
+import E_birr from './E_birr.png'
+import kaafi from './kaafi.png'
 
 export const assets = {
     arrow_left,
@@ -217,5 +224,12 @@ export const assets = {
     wallet_01,
     maps_location_02,
     location_black,
-    discount
+    discount,
+    delivery_fee_img,
+    service_fee_img,
+    mastercard,
+    visa,
+    wavy_money_bill,
+    E_birr,
+    kaafi
 }

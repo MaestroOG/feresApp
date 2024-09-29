@@ -1,8 +1,8 @@
 import React from 'react'
 
-const TipRiderBtn = ({ className, text }) => {
+const TipRiderBtn = ({ className, text, onClick }) => {
     return (
-        <button className={`${className ? className : ''} rounded-[10px] py-[8px] px-[10px]`}>{text}</button>
+        <button onClick={onClick} className={`${className ? className : ''} rounded-[10px] py-[8px] px-[10px]`}>{text}</button>
     )
 }
 

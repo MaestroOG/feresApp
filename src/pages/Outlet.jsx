@@ -19,6 +19,9 @@ import FoodCategories from './FoodCategories'
 import Order from './Order'
 import SelectLocation from './SelectLocation'
 import LocationSearch from './LocationSearch'
+import SelectPayment from './SelectPayment'
+import DeleteCard from '../components/SelectPaymentComps/DeleteCard'
+import AddCard from '../components/AddCard/AddCard'
 
 const Outlet = () => {
     return (
@@ -43,6 +46,9 @@ const Outlet = () => {
                 <Route path='/order' element={<Order />} />
                 <Route path='/selectlocation' element={<SelectLocation />} />
                 <Route path='/selectlocation/locationsearch' element={<LocationSearch />} />
+                <Route path='/selectpayment' element={<SelectPayment />} />
+                <Route path='/selectpayment/deletecard' element={<DeleteCard />} />
+                <Route path='/selectpayment/addcard' element={<AddCard />} />
             </Routes>
         </>
     )
