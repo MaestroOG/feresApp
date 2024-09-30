@@ -22,6 +22,7 @@ import LocationSearch from './LocationSearch'
 import SelectPayment from './SelectPayment'
 import DeleteCard from '../components/SelectPaymentComps/DeleteCard'
 import AddCard from '../components/AddCard/AddCard'
+import AddNewCardForm from '../components/AddCard/AddNewCardForm'
 
 const Outlet = () => {
     return (
@@ -49,6 +50,7 @@ const Outlet = () => {
                 <Route path='/selectpayment' element={<SelectPayment />} />
                 <Route path='/selectpayment/deletecard' element={<DeleteCard />} />
                 <Route path='/selectpayment/addcard' element={<AddCard />} />
+                <Route path='/selectpayment/addcard/addnewcard' element={<AddNewCardForm />} />
             </Routes>
         </>
     )

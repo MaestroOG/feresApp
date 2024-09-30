@@ -17,6 +17,8 @@ const Restaurant = () => {
     const [foodPopup, setFoodPopup] = useState(false)
     const [foodSearch, setFoodSearch] = useState(false)
     const [orderNum, setOrderNum] = useState(7)
+    const [deliverPop, setDeliverPop] = useState(false)
+    const [pickupPop, setPickupPop] = useState(false)
 
     return (
         <div>
@@ -52,11 +54,11 @@ const Restaurant = () => {
                     </div>
                 </div>
                 <div className='px-4 mt-5 flex items-center gap-5'>
-                    <div className='flex items-center gap-2'>
+                    <div className='flex items-center gap-2' onClick={() => setDeliverPop(true)}>
                         <img src={assets.scooter_img} alt="" />
                         <p className='text-base text-[#646464]'>Delivery</p>
                     </div>
-                    <div className='flex items-center gap-2'>
+                    <div className='flex items-center gap-2' onClick={() => setPickupPop(true)}>
                         <img src={assets.location_user} alt="" />
                         <p className='text-base text-[#646464]'>Pickup</p>
                     </div>
@@ -94,7 +96,7 @@ const Restaurant = () => {
                             <p className='text-xs text-[#2F2F3F]'>30% off on their entire menu</p>
                         </div>
                     </div>
-                    <div>
+                    <div onClick={() => navigate('/restaurantsupport')}>
                         <img src={assets.arrow_right} alt="" />
                     </div>
                 </div>
@@ -119,9 +121,9 @@ const Restaurant = () => {
 
                 {/* Delivered By Feres Popup*/}
 
-                <PickupPopup />
+                {pickupPop ? <PickupPopup /> : null}
 
-                <DeliveredPopup />
+                {deliverPop ? <DeliveredPopup /> : null}
 
                 {/* Add To Basket Button */}
 
@@ -131,14 +133,14 @@ const Restaurant = () => {
                     <h2 className='text-[#2F2F3F] font-medium text-lg mb-4'>{
                         categoryBtn == 'all' ? 'All Menu' : categoryBtn == 'trending' ? 'Trending Menu' : categoryBtn == 'sandwiches' ? 'Sandwiches' : null
                     }</h2>
-                    <MenuCard image={assets.burger_img} title={"Beef Burger"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} onClick={() => setFoodPopup(true)} className={"border border-[#0AB247]"} />
+                    <MenuCard image={assets.burger_img} title={"Beef Burger"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} onClick={() => setFoodPopup(true)} />
                     <MenuCard image={assets.orange_juice_img} title={"Fresh orange juice"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} onClick={() => setFoodPopup(true)} />
                     <MenuCard image={assets.mango_juice_img} title={"Fresh mango juice"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} onClick={() => setFoodPopup(true)} />
                     <MenuCard image={assets.ice_cream_img} title={"Ice cream"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} onClick={() => setFoodPopup(true)} />
                     <MenuCard image={assets.burger_img} title={"Beef Burger"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} onClick={() => setFoodPopup(true)} />
                 </div>
 
-                <NewOrderPopUp />
+                {/* <NewOrderPopUp /> */}
 
                 {foodSearch ? <FoodSearchPopUp /> : null}
 
@@ -176,15 +178,15 @@ const Restaurant = () => {
                 }
 
                 {/* Success Popup */}
-                <SuccessPopup image={assets.success_img_2} title={"Get 30% off everything up to EBT 150.00"} desc={"The maximum discount for preorders is EBT 150, usable once, and valid until February 22, 2024."} />
+                {/* <SuccessPopup image={assets.success_img_2} title={"Get 30% off everything up to EBT 150.00"} desc={"The maximum discount for preorders is EBT 150, usable once, and valid until February 22, 2024."} /> */}
 
                 <div className='bg-white px-2 py-4 fixed bottom-0 w-full z-10'>
-                    <button className='flex items-center justify-between bg-[#0AB247] text-white w-full rounded-full p-4 px-5'>
-                        <div className='flex items-center gap-2'>
-                            <img src={assets.shopping_basket} alt="" className='invert' />
+                    <button className='flex items-center justify-center bg-[#0AB247] text-white w-full rounded-full p-4 px-5'>
+                        <div className='flex items-center text-center gap-2'>
+                            {/* <img src={assets.shopping_basket} alt="" className='invert' /> */}
                             Add To Basket
                         </div>
-                        <div className='text-white text-lg font-medium'>ETB140.00</div>
+                        {/* <div className='text-white text-lg font-medium'>ETB140.00</div> */}
                     </button>
                 </div>
 

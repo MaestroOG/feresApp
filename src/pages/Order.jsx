@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import OrderNav from '../components/OrderComps/OrderNav'
 import DelOrPickBtn from '../components/OrderComps/DelOrPickBtn'
 import SelectRide from '../components/OrderComps/SelectRide'
@@ -27,6 +27,8 @@ import ServiceFeePopup from '../components/OrderComps/ServiceFeePopup'
 
 const Order = () => {
     const { orderNote, riderNote, tipBtn } = useContext(FeresContext)
+    const [delPop, setDelPop] = useState(false)
+    const [servicePop, setServicePop] = useState(false)
     return (
         <div className='pb-24'>
             <OrderNav />
@@ -50,14 +52,15 @@ const Order = () => {
             <PaymentMethods img={assets.wallet_01} text={"Payment Methods"} />
             <PaymentMethods img={assets.discount} text={"Get Discounts"} />
 
-            <TotalBill />
+            <TotalBill onDelClick={() => setDelPop(true)} onServiceClick={() => setServicePop(true)} />
 
             {riderNote ? <RiderNote /> : null}
 
             {/* <TIpRiderPopUp /> */}
             {/* <SaveMoneyPopUp /> */}
-            {/* <DeliveryFeePopup /> */}
-            <ServiceFeePopup />
+            {delPop ? <DeliveryFeePopup /> : null}
+            {servicePop ? <ServiceFeePopup /> : null}
+
             <DelOrderPopUp />
 
             <SelectDeliveryPopup />

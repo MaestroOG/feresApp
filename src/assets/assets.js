@@ -114,6 +114,11 @@ import visa from './visa.svg'
 import wavy_money_bill from './wavy_money_bill.svg'
 import E_birr from './E_birr.png'
 import kaafi from './kaafi.png'
+import card_place_img from './card_place_img.png'
+import cancel_circle from './cancel_circle.png'
+import country_flag from './country_flag.png'
+import arrow_down from './arrow_down.png'
+import afghanistan from './afghanistan.png'
 
 export const assets = {
     arrow_left,
@@ -231,5 +236,10 @@ export const assets = {
     visa,
     wavy_money_bill,
     E_birr,
-    kaafi
+    kaafi,
+    card_place_img,
+    cancel_circle,
+    country_flag,
+    arrow_down,
+    afghanistan
 }

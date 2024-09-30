@@ -1,10 +1,10 @@
 import React from 'react'
 import { assets } from '../../assets/assets'
 
-const SupportLinks = ({ text }) => {
+const SupportLinks = ({ text, onClick }) => {
     return (
         <>
-            <div className='mt-8 w-full flex items-center justify-between'>
+            <div className='mt-8 w-full flex items-center justify-between' onClick={onClick}>
                 <p className='text-[#2F2F3F] font-normal text-base'>{text}</p>
                 <img src={assets.arrow_right} alt="" />
             </div>

@@ -14,6 +14,8 @@ const FeresContextProvider = (props) => {
     const [orderNote, setOrderNote] = useState(false)
     const [riderNote, setRiderNote] = useState(false)
     const [tipBtn, setTipBtn] = useState('no')
+    const [countryPop, setCountryPop] = useState(false)
+    const [addCardPop, setAddCardPop] = useState(false)
 
     const value = {
         visible,
@@ -37,7 +39,11 @@ const FeresContextProvider = (props) => {
         riderNote,
         setRiderNote,
         tipBtn,
-        setTipBtn
+        setTipBtn,
+        countryPop,
+        setCountryPop,
+        addCardPop,
+        setAddCardPop
     }
 
     return (

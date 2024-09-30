@@ -22,21 +22,21 @@ const SelectDeliveryPopup = () => {
                         <img src={assets.scooter_02} alt="" />
                         <p className='text-[#2F2F3F] text-xl'>Motor bike</p>
                     </div>
-                    <input type="radio" name="" id="" />
+                    <input type="radio" name="delivery" id="" />
                 </div>
                 <div className='px-4 flex items-center justify-between mb-5'>
                     <div className='flex items-center gap-2'>
                         <img src={assets.delivery_truck_02} alt="" />
                         <p className='text-[#2F2F3F] text-xl'>Delivery truck</p>
                     </div>
-                    <input type="radio" name="" id="" />
+                    <input type="radio" name="delivery" id="" />
                 </div>
                 <div className='px-4 flex items-center justify-between mb-5'>
                     <div className='flex items-center gap-2'>
                         <img src={assets.user_full_view} alt="" />
                         <p className='text-[#2F2F3F] text-xl'>Courier</p>
                     </div>
-                    <input type="radio" name="" id="" />
+                    <input type="radio" name="delivery" id="" />
                 </div>
             </div>
         </div>
