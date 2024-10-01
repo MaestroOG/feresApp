@@ -16,6 +16,22 @@ const FeresContextProvider = (props) => {
     const [tipBtn, setTipBtn] = useState('no')
     const [countryPop, setCountryPop] = useState(false)
     const [addCardPop, setAddCardPop] = useState(false)
+    const [selectedOption, setSelectedOption] = useState('');
+    const [paymentMethod, setPaymentMethod] = useState('')
+    const [discountOpt, setDiscountOpt] = useState('')
+    const [discount, setDiscount] = useState('')
+
+
+    const handleDiscountChange = (event) => {
+        setDiscountOpt(event.target.value)
+        console.log(event.target.value);
+
+    }
+
+    const handleOptionChange = (event) => {
+        setSelectedOption(event.target.value);
+        console.log(event.target.value);
+    };
 
     const value = {
         visible,
@@ -43,7 +59,17 @@ const FeresContextProvider = (props) => {
         countryPop,
         setCountryPop,
         addCardPop,
-        setAddCardPop
+        setAddCardPop,
+        selectedOption,
+        setSelectedOption,
+        handleOptionChange,
+        paymentMethod,
+        setPaymentMethod,
+        discountOpt,
+        setDiscountOpt,
+        handleDiscountChange,
+        discount,
+        setDiscount
     }
 
     return (

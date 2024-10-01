@@ -23,6 +23,8 @@ import SelectPayment from './SelectPayment'
 import DeleteCard from '../components/SelectPaymentComps/DeleteCard'
 import AddCard from '../components/AddCard/AddCard'
 import AddNewCardForm from '../components/AddCard/AddNewCardForm'
+import GetDiscount from './GetDiscount'
+import FeresSupport from './FeresSupport'
 
 const Outlet = () => {
     return (
@@ -51,6 +53,8 @@ const Outlet = () => {
                 <Route path='/selectpayment/deletecard' element={<DeleteCard />} />
                 <Route path='/selectpayment/addcard' element={<AddCard />} />
                 <Route path='/selectpayment/addcard/addnewcard' element={<AddNewCardForm />} />
+                <Route path='/getdiscount' element={<GetDiscount />} />
+                <Route path='/feressupport' element={<FeresSupport />} />
             </Routes>
         </>
     )

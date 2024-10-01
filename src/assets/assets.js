@@ -119,6 +119,11 @@ import cancel_circle from './cancel_circle.png'
 import country_flag from './country_flag.png'
 import arrow_down from './arrow_down.png'
 import afghanistan from './afghanistan.png'
+import visa_sticker from './visa_sticker.png'
+import cash_sticker from './cash_sticker.png'
+import user_promo from './user_promo.svg'
+import discount_promo from './discount_promo.svg'
+import scooter_promo from './scooter_promo.svg'
 
 export const assets = {
     arrow_left,
@@ -241,5 +246,10 @@ export const assets = {
     cancel_circle,
     country_flag,
     arrow_down,
-    afghanistan
+    afghanistan,
+    visa_sticker,
+    cash_sticker,
+    user_promo,
+    discount_promo,
+    scooter_promo
 }

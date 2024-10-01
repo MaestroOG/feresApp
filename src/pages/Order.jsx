@@ -49,8 +49,8 @@ const Order = () => {
 
             {tipBtn == 'other' ? <OtherTip /> : null}
 
-            <PaymentMethods img={assets.wallet_01} text={"Payment Methods"} />
-            <PaymentMethods img={assets.discount} text={"Get Discounts"} />
+            <PaymentMethods img={assets.wallet_01} text={"Payment Methods"} isCard={true} />
+            <PaymentMethods img={assets.discount} text={"Get Discounts"} isDiscount={true} />
 
             <TotalBill onDelClick={() => setDelPop(true)} onServiceClick={() => setServicePop(true)} />
 
