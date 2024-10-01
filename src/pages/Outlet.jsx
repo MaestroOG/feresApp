@@ -25,6 +25,7 @@ import AddCard from '../components/AddCard/AddCard'
 import AddNewCardForm from '../components/AddCard/AddNewCardForm'
 import GetDiscount from './GetDiscount'
 import FeresSupport from './FeresSupport'
+import BookRide from './BookRide'
 
 const Outlet = () => {
     return (
@@ -55,6 +56,7 @@ const Outlet = () => {
                 <Route path='/selectpayment/addcard/addnewcard' element={<AddNewCardForm />} />
                 <Route path='/getdiscount' element={<GetDiscount />} />
                 <Route path='/feressupport' element={<FeresSupport />} />
+                <Route path='/bookride' element={<BookRide />} />
             </Routes>
         </>
     )

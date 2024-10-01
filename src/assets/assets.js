@@ -124,6 +124,9 @@ import cash_sticker from './cash_sticker.png'
 import user_promo from './user_promo.svg'
 import discount_promo from './discount_promo.svg'
 import scooter_promo from './scooter_promo.svg'
+import book_ride_img from './book_ride_img.png'
+import store_loco from './store_loco.png'
+import popup_down_arrow from './popup_down_arrow.png'
 
 export const assets = {
     arrow_left,
@@ -251,5 +254,8 @@ export const assets = {
     cash_sticker,
     user_promo,
     discount_promo,
-    scooter_promo
+    scooter_promo,
+    book_ride_img,
+    store_loco,
+    popup_down_arrow
 }
