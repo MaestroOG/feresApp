@@ -16,6 +16,30 @@ const SelectCountryPopup = ({ onCancelClick }) => {
                     <img src={assets.afghanistan} alt="" />
                     <p className='text-[#333333] text-lg'>Afghanistan</p>
                 </div>
+                <div className='flex items-center gap-3 mt-7'>
+                    <img src={assets.albania} alt="" />
+                    <p className='text-[#333333] text-lg'>Albania</p>
+                </div>
+                <div className='flex items-center gap-3 mt-7'>
+                    <img src={assets.samoa} alt="" />
+                    <p className='text-[#333333] text-lg'>American Samoa</p>
+                </div>
+                <div className='flex items-center gap-3 mt-7'>
+                    <img src={assets.andorra} alt="" />
+                    <p className='text-[#333333] text-lg'>Andorra</p>
+                </div>
+                <div className='flex items-center gap-3 mt-7'>
+                    <img src={assets.angola} alt="" />
+                    <p className='text-[#333333] text-lg'>Angola</p>
+                </div>
+                <div className='flex items-center gap-3 mt-7'>
+                    <img src={assets.anguilla} alt="" />
+                    <p className='text-[#333333] text-lg'>Anguilla</p>
+                </div>
+                <div className='flex items-center gap-3 mt-7'>
+                    <img src={assets.antarctica} alt="" />
+                    <p className='text-[#333333] text-lg'>Antarctica</p>
+                </div>
             </div>
         </div>
     )

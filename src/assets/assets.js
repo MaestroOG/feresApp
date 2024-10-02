@@ -127,6 +127,13 @@ import scooter_promo from './scooter_promo.svg'
 import book_ride_img from './book_ride_img.png'
 import store_loco from './store_loco.png'
 import popup_down_arrow from './popup_down_arrow.png'
+import albania from './albania.png'
+import algeria from './algeria.png'
+import samoa from './samoa.png'
+import andorra from './andorra.png'
+import angola from './angola.png'
+import anguilla from './angulla.png'
+import antarctica from './antarctica.png'
 
 export const assets = {
     arrow_left,
@@ -257,5 +264,12 @@ export const assets = {
     scooter_promo,
     book_ride_img,
     store_loco,
-    popup_down_arrow
+    popup_down_arrow,
+    albania,
+    algeria,
+    samoa,
+    andorra,
+    angola,
+    anguilla,
+    antarctica
 }
