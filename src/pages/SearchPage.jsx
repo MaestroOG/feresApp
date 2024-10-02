@@ -13,7 +13,8 @@ const SearchPage = () => {
     const navigate = useNavigate();
     return (
         <div>
-            <div className='w-full flex items-center px-4 bg-white'>
+            <div className='w-full flex items-center px-2 bg-white'>
+                <img src={assets.arrow_left} alt="" className='invert' />
                 <SearchBar />
             </div>
 
