@@ -6,8 +6,10 @@ import Explore from '../components/ServiceComps/Explore'
 import Offers from '../components/ServiceComps/Offers'
 import Menu from '../components/ServiceComps/Menu'
 import { assets } from '../assets/assets'
+import { useNavigate } from 'react-router-dom'
 
 const Services = () => {
+    const navigate = useNavigate()
     return (
         <div className='pb-24'>
             <Navbar />
