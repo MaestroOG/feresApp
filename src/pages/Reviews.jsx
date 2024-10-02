@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { assets } from '../assets/assets'
 import { useNavigate } from 'react-router-dom'
 import Address from '../components/ReviewComps/Address';
@@ -13,7 +13,7 @@ import { FeresContext } from '../context/FeresContext';
 
 const Reviews = () => {
 
-
+    const [reviewSuccess, setReviewSuccess] = useState(false)
     const { customerReview, setCustomerReview } = useContext(FeresContext)
     const navigate = useNavigate();
 
@@ -36,7 +36,8 @@ const Reviews = () => {
             <CustomerReviewCard customerPfp={assets.customer_pfp} />
 
             <CustomerReviewTextArea />
-            <SuccessPopup image={assets.success_img} title={"Thanks for your review"} desc={"Your review has been submitted. We’ll check your review and email you with a status update."} />
+            {reviewSuccess ? <SuccessPopup image={assets.success_img} title={"Thanks for your review"} desc={"Your review has been submitted. We’ll check your review and email you with a status update."} /> : null}
+
             {
                 customerReview ? <CustomerReviewPopup /> : null
             }
@@ -44,7 +45,7 @@ const Reviews = () => {
             {/* Submit Review Button */}
 
             <div className='bg-white px-2 py-4 fixed bottom-0 left-0 w-full'>
-                <button className='bg-[#0AB247] text-white flex items-center gap-2 w-full justify-center rounded-3xl p-4'>
+                <button className='bg-[#0AB247] text-white flex items-center gap-2 w-full justify-center rounded-3xl p-4' onClick={() => setReviewSuccess(true)}>
                     Submit a Review
                 </button>
             </div>

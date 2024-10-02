@@ -38,7 +38,7 @@ const CustomerReviewPopup = () => {
                         );
                     })}
                 </div>
-                <textarea name="" id="" placeholder='Write your review here' className='placeholder:text-[#C4C4C4] placeholder:text-base mt-5 w-full px-6 h-full'></textarea>
+                <textarea name="" id="" placeholder='Write your review here' className='placeholder:text-[#C4C4C4] placeholder:text-base mt-5 w-full px-6 h-full border-none outline-none'></textarea>
             </div>
 
         </div>

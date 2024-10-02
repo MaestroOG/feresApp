@@ -14,9 +14,6 @@ const SearchPage = () => {
     return (
         <div>
             <div className='w-full flex items-center px-4 bg-white'>
-                <button className='mt-5'>
-                    <img onClick={() => navigate(-1)} src={assets.arrow_left_02} className="border border-[#EEEEEE] p-2 rounded-lg" />
-                </button>
                 <SearchBar />
             </div>
 
