@@ -7,7 +7,7 @@ const Offers = () => {
     const navigate = useNavigate();
 
     return (
-        <div className='w-full pt-6 px-4 mt-2 mb-20'>
+        <div className='w-full pt-6 px-4 mt-2 mb-10'>
 
             <div className='w-full flex items-center justify-between'>
                 <h3 className='text-[18px] font-medium'>Special offers</h3>
