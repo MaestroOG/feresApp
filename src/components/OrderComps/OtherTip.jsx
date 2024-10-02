@@ -12,7 +12,7 @@ const OtherTip = () => {
     const handleDone = () => {
         setCustomTip(value)
         console.log(customTip);
-        setTipBtn('')
+        setTipBtn('50')
 
     }
     return (
