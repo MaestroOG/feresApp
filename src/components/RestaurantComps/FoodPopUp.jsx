@@ -6,9 +6,9 @@ import ExtraNotePopUp from '../FoodComps/ExtraNotePopUp'
 
 const FoodPopUp = ({ img, text }) => {
     const [orderNum, setOrderNum] = useState(1)
-    const { foodPopup, setFoodPopup } = useContext(FeresContext)
+    const { foodPopup, setFoodPopup, foodSelected, setFoodSelected } = useContext(FeresContext)
     return (
-        <div className={`${foodPopup ? '' : 'hidden'} fixed bottom-0 left-0 right-0 z-50 bg-white`}>
+        <div className={`${foodPopup || !foodSelected ? '' : 'hidden'} fixed bottom-0 left-0 right-0 z-50 bg-white`}>
             <div className='relative'>
                 <img src={img} alt="" className='z-50 rounded-tr-3xl rounded-tl-3xl' />
                 <img src={assets.cancel_icon} alt="" className='absolute right-[3%] top-[7%] bg-white rounded-full' onClick={() =>
@@ -31,7 +31,7 @@ const FoodPopUp = ({ img, text }) => {
                         <p>{orderNum}</p>
                         <img src={assets.plus_sign} alt="" onClick={() => setOrderNum(orderNum + 1)} />
                     </button>
-                    <button className='bg-[#0AB247] py-[12px] px-[16px] rounded-3xl text-white w-[50%]'>Add EBT 140</button>
+                    <button className='bg-[#0AB247] py-[12px] px-[16px] rounded-3xl text-white w-[50%]' onClick={() => setFoodSelected(text)}>Add EBT 140</button>
                 </div>
             </div>
         </div>
