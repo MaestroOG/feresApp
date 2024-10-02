@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { assets } from '../../assets/assets'
 import MenuCard from './MenuCard'
+import { useNavigate } from 'react-router-dom'
 
 const ViewAllMenu = () => {
+    const navigate = useNavigate();
     const [categoryBtn, setCategoryBtn] = useState('all')
     return (
         <>
@@ -10,7 +12,7 @@ const ViewAllMenu = () => {
                 {/* Top Bar */}
                 <div className='flex items-center gap-[10px]'>
                     <button className='mt-1 border border-[#EEEEEE] rounded-[13px] p-[10px]'>
-                        <img src={assets.arrow_left} alt="" className='invert' />
+                        <img src={assets.arrow_left} alt="" className='invert' onClick={() => navigate(-1)} />
                     </button>
                     <h2 className='text-[#2F2F3F] font-bold text-xl'>KFC Eastlight</h2>
                 </div>
