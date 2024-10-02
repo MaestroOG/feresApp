@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { assets } from '../../assets/assets'
 import { FeresContext } from '../../context/FeresContext'
 
-const PaymentMethods = ({ img, text, isCard, isDiscount }) => {
+const PaymentMethods = ({ img, text, isCard, isDiscount, onClick }) => {
     const { paymentMethod, discount } = useContext(FeresContext)
 
     useEffect(() => {
@@ -12,7 +12,7 @@ const PaymentMethods = ({ img, text, isCard, isDiscount }) => {
     }, [])
     return (
         <>
-            <div className='px-3 mt-7 flex items-center justify-between pb-5'>
+            <div className='px-3 mt-7 flex items-center justify-between pb-5' onClick={onClick}>
                 <div className='flex items-center gap-2'>
                     <img src={img} alt="" />
                     <p className='font-medium text-[#2F2F3F#2F2F3F]'>{text}</p>

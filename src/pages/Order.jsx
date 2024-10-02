@@ -24,8 +24,10 @@ import TotalBill from '../components/OrderComps/TotalBill'
 import RiderNote from '../components/OrderComps/RiderNote'
 import DeliveryFeePopup from '../components/OrderComps/DeliveryFeePopup'
 import ServiceFeePopup from '../components/OrderComps/ServiceFeePopup'
+import { useNavigate } from 'react-router-dom'
 
 const Order = () => {
+    const navigate = useNavigate()
     const { orderNote, riderNote, tipBtn } = useContext(FeresContext)
     const [delPop, setDelPop] = useState(false)
     const [servicePop, setServicePop] = useState(false)
@@ -49,8 +51,8 @@ const Order = () => {
 
             {tipBtn == 'other' ? <OtherTip /> : null}
 
-            <PaymentMethods img={assets.wallet_01} text={"Payment Methods"} isCard={true} />
-            <PaymentMethods img={assets.discount} text={"Get Discounts"} isDiscount={true} />
+            <PaymentMethods img={assets.wallet_01} text={"Payment Methods"} isCard={true} onClick={() => navigate('/selectpayment')} />
+            <PaymentMethods img={assets.discount} text={"Get Discounts"} isDiscount={true} onClick={() => navigate('/getdiscount')} />
 
             <TotalBill onDelClick={() => setDelPop(true)} onServiceClick={() => setServicePop(true)} />
 

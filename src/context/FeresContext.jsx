@@ -20,6 +20,10 @@ const FeresContextProvider = (props) => {
     const [paymentMethod, setPaymentMethod] = useState('')
     const [discountOpt, setDiscountOpt] = useState('')
     const [discount, setDiscount] = useState('')
+    const [foodPopup, setFoodPopup] = useState('')
+    const [foodSearch, setFoodSearch] = useState(false)
+    const [delRadio, setDelRadio] = useState('bike')
+    const [customTip, setCustomTip] = useState(0)
 
 
     const handleDiscountChange = (event) => {
@@ -32,6 +36,11 @@ const FeresContextProvider = (props) => {
         setSelectedOption(event.target.value);
         console.log(event.target.value);
     };
+
+    const handleDelRadioChange = (event) => {
+        setDelRadio(event.target.value)
+        console.log(event.target.value);
+    }
 
     const value = {
         visible,
@@ -69,7 +78,15 @@ const FeresContextProvider = (props) => {
         setDiscountOpt,
         handleDiscountChange,
         discount,
-        setDiscount
+        setDiscount,
+        foodPopup,
+        setFoodPopup,
+        foodSearch,
+        setFoodSearch,
+        delRadio,
+        setDelRadio,
+        handleDelRadioChange,
+        customTip, setCustomTip
     }
 
     return (

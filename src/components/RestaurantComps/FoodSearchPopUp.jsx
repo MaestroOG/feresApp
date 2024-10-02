@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { assets } from '../../assets/assets'
 import AnalysisCards from './AnalysisCards'
 import { foodItems } from '../../tempDB/FoodItem';
 import MenuCard from './MenuCard';
+import { FeresContext } from '../../context/FeresContext';
 
 const FoodSearchPopUp = () => {
 
+    const { foodSearch, setFoodSearch } = useContext(FeresContext)
 
     const [search, setSearch] = useState("");
 
@@ -14,19 +16,21 @@ const FoodSearchPopUp = () => {
     ) : []
 
     return (
-        <div className='h-[94vh] w-full bg-white fixed bottom-0 left-0 rounded-xl px-3 py-3 z-50'>
+        <div className={`${foodSearch ? '' : 'hidden'} h-[94vh] w-full bg-white fixed bottom-0 left-0 rounded-xl px-3 py-3 z-50`}>
             <div className='w-full'>
                 <img src={assets.popup_bar} alt="" className='mx-auto' />
             </div>
-            <div className='border border-[#EEEEEE] rounded-[30px] flex items-center justify-between gap-4 mt-6 py-[15px] px-[20px]'>
-                <div className='flex items-center gap-4'>
-                    <img src={assets.search} alt="" />
-                    <input type="text" placeholder='Search for meals' className='border-none outline-none focus:border focus:border-[#0AB247] focus' value={search} onChange={(e) => setSearch(e.target.value)} />
+            <div className='flex items-center gap-4 w-full'>
+                <img src={assets.arrow_left} alt="" className='invert mt-6' onClick={() => setFoodSearch(false)} />
+                <div className='w-full border border-[#EEEEEE] rounded-[30px] flex items-center justify-between gap-4 mt-6 py-[15px] px-[20px]'>
+                    <div className='flex items-center gap-4'>
+                        <img src={assets.search} alt="" />
+                        <input type="text" placeholder='Search for meals' className='border-none outline-none focus:border focus:border-[#0AB247] focus' value={search} onChange={(e) => setSearch(e.target.value)} />
+                    </div>
+                    {search.length > 0 ? <div>
+                        <img src={assets.close} alt="" />
+                    </div> : null}
                 </div>
-                {search.length > 0 ? <div>
-                    <img src={assets.close} alt="" />
-                </div> : null}
-
             </div>
 
             {search.length > 0 && filteredData.length === 0 ? (

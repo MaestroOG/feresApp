@@ -3,7 +3,7 @@ import { assets } from '../../assets/assets'
 import { FeresContext } from '../../context/FeresContext'
 
 const SelectDeliveryPopup = () => {
-    const { selectDel, setSelectDel } = useContext(FeresContext)
+    const { selectDel, setSelectDel, delRadio, setDelRadio, handleDelRadioChange } = useContext(FeresContext)
     return (
         <div className={`${!selectDel ? 'hidden' : ''} fixed bottom-0 w-full z-30 pt-4 pb-2 bg-white rounded-tl-3xl rounded-tr-3xl shadow-md shadow-[#96969640]`}>
             <div className='w-full mb-3'>
@@ -19,24 +19,24 @@ const SelectDeliveryPopup = () => {
             <div>
                 <div className='px-4 flex items-center justify-between mb-5'>
                     <div className='flex items-center gap-2'>
-                        <img src={assets.scooter_02} alt="" />
+                        <img src={assets.scooter_02} alt="" className='w-6' />
                         <p className='text-[#2F2F3F] text-xl'>Motor bike</p>
                     </div>
-                    <input type="radio" name="delivery" id="" />
+                    <input type="radio" name="delivery" id="" onChange={handleDelRadioChange} checked={delRadio === 'bike'} value={"bike"} />
                 </div>
                 <div className='px-4 flex items-center justify-between mb-5'>
                     <div className='flex items-center gap-2'>
-                        <img src={assets.delivery_truck_02} alt="" />
+                        <img src={assets.delivery_truck_02} alt="" className='w-6' />
                         <p className='text-[#2F2F3F] text-xl'>Delivery truck</p>
                     </div>
-                    <input type="radio" name="delivery" id="" />
+                    <input type="radio" name="delivery" id="" onChange={handleDelRadioChange} checked={delRadio === 'truck'} value={"truck"} />
                 </div>
                 <div className='px-4 flex items-center justify-between mb-5'>
                     <div className='flex items-center gap-2'>
-                        <img src={assets.user_full_view} alt="" />
+                        <img src={assets.user_full_view} alt="" className='w-6' />
                         <p className='text-[#2F2F3F] text-xl'>Courier</p>
                     </div>
-                    <input type="radio" name="delivery" id="" />
+                    <input type="radio" name="delivery" id="" onChange={handleDelRadioChange} checked={delRadio === 'courier'} value={"courier"} />
                 </div>
             </div>
         </div>

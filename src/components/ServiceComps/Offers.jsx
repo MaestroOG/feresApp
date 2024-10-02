@@ -14,7 +14,7 @@ const Offers = () => {
                 <h4 onClick={() => navigate('/allrestaurants')} className='text-base text-[#979797]'>See all</h4>
             </div>
 
-            <div className='w-full mt-8 mb-5 relative'>
+            <div className='w-full mt-8 mb-5 relative' onClick={() => navigate('/allrestaurants')}>
                 <img src={assets.offer_bg} alt="" className='mx-auto' />
                 {/* Top left */}
                 <div className='absolute top-3 left-6 bg-[#F2FDF8] rounded-3xl'>

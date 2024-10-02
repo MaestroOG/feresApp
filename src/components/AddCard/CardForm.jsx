@@ -6,16 +6,17 @@ const CardForm = () => {
     const { setCountryPop, addCardPop, setAddCardPop } = useContext(FeresContext)
     const [cardNum, setCardNum] = useState("");
     const [cardType, setCardType] = useState("");
+    const [cvv, setCvv] = useState("")
 
     const [expiryDate, setExpiryDate] = useState("")
 
-    const handleExpiryChange = (e) => {
-        let value = e.target.value.replace(/\//g, ""); // Remove any existing slashes
-        // Add slash after every 2 characters
-        if (value.length > 2) {
-            value = value.substring(0, 2) + "/" + value.substring(2, 4);
+    const handleExpiryChange = (event) => {
+        let inputValue = event.target.value.replace(/\//g, ''); // Remove any existing slashes
+
+        if (inputValue.length > 2) {
+            inputValue = inputValue.slice(0, 2) + '/' + inputValue.slice(2); // Add slash after 2 characters
         }
-        setExpiryDate(value);
+        setExpiryDate(inputValue);
     };
     return (
         <form className='mt-7'>
@@ -30,18 +31,18 @@ const CardForm = () => {
                         }
                         setCardNum(e.target.value)
                     }} />
-                    <span className='text-[#767578] text-base absolute left-[4.5rem] peer-focus:text-xs peer-focus:text-[#A0A0A0] peer-focus:-top-[2px] transition-all'>Card number</span>
+                    <span className={`text-[#767578] text-base absolute left-[4.5rem] peer-focus:text-xs peer-focus:text-[#A0A0A0] peer-focus:-top-[2px] transition-all ${cardNum.length > 0 ? 'text-xs text-[#A0A0A0] -top-[2px]' : null}`}>Card number</span>
                 </div>
                 {cardNum.length > 0 ? <img src={assets.cancel_circle} alt="" onClick={() => setCardNum("")} /> : null}
             </div>
             <div className='flex items-center gap-3 w-full'>
                 <div className='w-1/2 mt-6 bg-[#F8F8F8] rounded-[13px] py-[10px] px-[20px] flex items-center justify-between gap-3 relative focus-within:border focus-within:border-[#0AB247] focus-within:bg-white transition-all ease-in'>
-                    <input type="number" className='peer border-none outline-none bg-transparent w-full peer' maxLength={"5"} value={expiryDate} onChange={handleExpiryChange} />
-                    <span className='text-[#767578] text-base absolute left-5 peer-focus:text-xs peer-focus:text-[#A0A0A0] peer-focus:-top-[2px] transition-all'>Expiry date</span>
+                    <input type="text" className='peer tracking-[4px] border-none outline-none bg-transparent w-full peer' maxLength={"5"} value={expiryDate} onChange={handleExpiryChange} />
+                    <span className={`text-[#767578] text-base absolute left-5 peer-focus:text-xs peer-focus:text-[#A0A0A0] peer-focus:-top-[2px] transition-all ${expiryDate.length > 0 ? 'text-xs text-[#A0A0A0] -top-[2px]' : null}`}>Expiry date</span>
                 </div>
                 <div className='w-1/2 mt-6 bg-[#F8F8F8] rounded-[13px] py-[10px] px-[20px] flex items-center justify-between gap-3 relative focus-within:border focus-within:border-[#0AB247] focus-within:bg-white transition-all ease-in'>
-                    <input type="password" className='peer border-none outline-none bg-transparent w-full peer' maxLength={"3"} />
-                    <span className='text-[#767578] text-base absolute left-5 peer-focus:text-xs peer-focus:text-[#A0A0A0] peer-focus:-top-[2px] transition-all'>CVV</span>
+                    <input type="password" value={cvv} onChange={(e) => setCvv(e.target.value)} className='peer border-none outline-none bg-transparent w-full peer' maxLength={"3"} />
+                    <span className={`text-[#767578] text-base absolute left-5 peer-focus:text-xs peer-focus:text-[#A0A0A0] peer-focus:-top-[2px] transition-all ${cvv.length > 0 ? 'text-xs text-[#A0A0A0] -top-[2px]' : null}`}>CVV</span>
                 </div>
             </div>
             <div className='bg-[#F8F8F8] rounded-[13px] py-[10px] px-[20px] flex items-center justify-between gap-3 mt-7'>

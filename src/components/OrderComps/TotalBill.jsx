@@ -3,7 +3,7 @@ import { assets } from '../../assets/assets'
 import { FeresContext } from '../../context/FeresContext'
 
 const TotalBill = ({ onDelClick, onServiceClick }) => {
-    const { tipBtn, setTipBtn, discount } = useContext(FeresContext)
+    const { tipBtn, setTipBtn, discount, customTip } = useContext(FeresContext)
     return (
         <div className='px-4 mt-7 pb-4'>
             <div className='flex items-center justify-between'>
@@ -30,7 +30,7 @@ const TotalBill = ({ onDelClick, onServiceClick }) => {
                         <h3 className='text-[#767578]'>Rider Tip</h3>
                         <img src={assets.information_circle} alt="" />
                     </div>
-                    <p className='text-[#0AB247] font-medium text-base'>ETB{tipBtn === '50' || tipBtn === '80' ? tipBtn : null}</p>
+                    <p className='text-[#0AB247] font-medium text-base'>ETB{tipBtn === '50' || tipBtn === '80' ? tipBtn : customTip}</p>
                 </div> : null
             }
             {
