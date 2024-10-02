@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import { FeresContext } from '../../context/FeresContext'
 
 const OtherTip = () => {
-    const { customTip, setCustomTip, setTipBtn } = useContext(FeresContext)
+    const { customTip, setCustomTip, setTipBtn, tipBtn } = useContext(FeresContext)
     const [value, setValue] = useState(0)
 
     const onChange = (e) => {
@@ -12,6 +12,7 @@ const OtherTip = () => {
     const handleDone = () => {
         setCustomTip(value)
         console.log(customTip);
+        setTipBtn('')
 
     }
     return (
