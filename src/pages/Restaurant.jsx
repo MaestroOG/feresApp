@@ -133,10 +133,21 @@ const Restaurant = () => {
                     <h2 className='text-[#2F2F3F] font-medium text-lg mb-4'>{
                         categoryBtn == 'all' ? 'All Menu' : categoryBtn == 'trending' ? 'Trending Menu' : categoryBtn == 'sandwiches' ? 'Sandwiches' : null
                     }</h2>
-                    <MenuCard image={assets.burger_img} title={"Beef Burger"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} onClick={() => setFoodPopup('beef')} className={`${foodSelected === 'Beef Burger' ? 'border border-[#0AB247]' : null}`} />
-                    <MenuCard image={assets.orange_juice_img} title={"Fresh orange juice"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} onClick={() => setFoodPopup('orange')} className={`${foodSelected === 'Fresh orange juice' ? 'border border-[#0AB247]' : null}`} />
-                    <MenuCard image={assets.mango_juice_img} title={"Fresh mango juice"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} onClick={() => setFoodPopup('mango')} className={`${foodSelected === 'Fresh mango juice' ? 'border border-[#0AB247]' : null}`} />
-                    <MenuCard image={assets.ice_cream_img} title={"Ice cream"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} onClick={() => setFoodPopup('cream')} className={`${foodSelected === 'Ice cream' ? 'border border-[#0AB247]' : null}`} />
+                    <MenuCard image={assets.burger_img} title={"Beef Burger"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} onClick={() => {
+                        // setFoodPopup('beef')
+                        navigate('/food')
+                    }} className={`${foodSelected === 'Beef Burger' ? 'border border-[#0AB247]' : null}`} />
+                    <MenuCard image={assets.orange_juice_img} title={"Fresh orange juice"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} onClick={() => {
+                        // setFoodPopup('orange')
+                        navigate('/food')
+                    }} className={`${foodSelected === 'Fresh orange juice' ? 'border border-[#0AB247]' : null}`} />
+                    <MenuCard image={assets.mango_juice_img} title={"Fresh mango juice"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} onClick={() => {
+                        // setFoodPopup('mango')
+                        navigate('/food')
+                    }} className={`${foodSelected === 'Fresh mango juice' ? 'border border-[#0AB247]' : null}`} />
+                    <MenuCard image={assets.ice_cream_img} title={"Ice cream"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} onClick={() => {
+                        // navigate('/food')
+                    }} className={`${foodSelected === 'Ice cream' ? 'border border-[#0AB247]' : null}`} />
                 </div>
 
                 {/* <NewOrderPopUp /> */}
