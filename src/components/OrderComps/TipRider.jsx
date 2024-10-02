@@ -13,10 +13,10 @@ const TipRider = () => {
                 <div className='bg-[#F2FDF8] rounded-full p-3'>
                     <img src={assets.gift} alt="" />
                 </div>
-                <div>
+                <div onClick={() => setTipRidePop(true)}>
                     <div className='flex items-center gap-2 mb-[2px]'>
                         <h3 className='font-medium text-[#2F2F3F] text-base'>Tip your rider in appreciation</h3>
-                        <img src={assets.information_circle} alt="" onClick={() => setTipRidePop(true)} />
+                        <img src={assets.information_circle} alt="" />
                     </div>
                     <p className='text-[#767578] text-sm'>Riders retain 100% of your tips.</p>
                 </div>
