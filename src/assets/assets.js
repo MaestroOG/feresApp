@@ -134,6 +134,15 @@ import andorra from './andorra.png'
 import angola from './angola.png'
 import anguilla from './angulla.png'
 import antarctica from './antarctica.png'
+import rateRiderBar from './rateRiderBar.png'
+import rider_img from './rider_img.png'
+import rateFoodBar from './rateFoodBar.png'
+import rateFood_rest from './rateFood_rest.png'
+import terrible from './terrible.png'
+import bad from './bad.png'
+import good from './good.png'
+import meh from './meh.png'
+import superb from './superb.png'
 
 export const assets = {
     arrow_left,
@@ -271,5 +280,14 @@ export const assets = {
     andorra,
     angola,
     anguilla,
-    antarctica
+    antarctica,
+    rateRiderBar,
+    rider_img,
+    rateFoodBar,
+    rateFood_rest,
+    terrible,
+    bad,
+    good,
+    meh,
+    superb
 }

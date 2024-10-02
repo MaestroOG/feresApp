@@ -5,7 +5,7 @@ import { FeresContext } from '../../context/FeresContext'
 
 const TipRider = () => {
     const tipBtnTexts = ["ETB 50", "ETB 80", "Others"]
-    const { tipBtn, setTipBtn } = useContext(FeresContext)
+    const { tipBtn, setTipBtn, setTipRidePop } = useContext(FeresContext)
     return (
         <div className='px-4 mt-5 pb-5'>
             {/* Top */}
@@ -16,7 +16,7 @@ const TipRider = () => {
                 <div>
                     <div className='flex items-center gap-2 mb-[2px]'>
                         <h3 className='font-medium text-[#2F2F3F] text-base'>Tip your rider in appreciation</h3>
-                        <img src={assets.information_circle} alt="" />
+                        <img src={assets.information_circle} alt="" onClick={() => setTipRidePop(true)} />
                     </div>
                     <p className='text-[#767578] text-sm'>Riders retain 100% of your tips.</p>
                 </div>

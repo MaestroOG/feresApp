@@ -1,9 +1,9 @@
 import React from 'react'
 import { assets } from '../../assets/assets'
 
-const FeaturedRestsCard = () => {
+const FeaturedRestsCard = ({ onClick }) => {
     return (
-        <div className='border border-[#F4F4F4] py-3 mt-5 flex rounded-xl'>
+        <div className='border border-[#F4F4F4] py-3 mt-5 flex rounded-xl' onClick={onClick}>
             {/* Card Left */}
             <div className='px-2'>
                 <img src={assets.featured_rest_img} alt="" />

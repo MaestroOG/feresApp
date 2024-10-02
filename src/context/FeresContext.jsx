@@ -24,6 +24,7 @@ const FeresContextProvider = (props) => {
     const [foodSearch, setFoodSearch] = useState(false)
     const [delRadio, setDelRadio] = useState('bike')
     const [customTip, setCustomTip] = useState(0)
+    const [tipRidePop, setTipRidePop] = useState(false)
 
 
     const handleDiscountChange = (event) => {
@@ -86,7 +87,9 @@ const FeresContextProvider = (props) => {
         delRadio,
         setDelRadio,
         handleDelRadioChange,
-        customTip, setCustomTip
+        customTip, setCustomTip,
+        tipRidePop,
+        setTipRidePop
     }
 
     return (

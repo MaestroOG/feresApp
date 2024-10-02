@@ -56,7 +56,7 @@ const Restaurant = () => {
                 <div className='px-4 mt-5 flex items-center gap-5'>
                     <div className='flex items-center gap-2' onClick={() => setDeliverPop(true)}>
                         <img src={assets.scooter_img} alt="" />
-                        <p className='text-base text-[#646464]'>Delivery</p>
+                        <p className='text-base text-[#646464]' unselectable='on'>Delivery</p>
                     </div>
                     <div className='flex items-center gap-2' onClick={() => setPickupPop(true)}>
                         <img src={assets.location_user} alt="" />
@@ -157,7 +157,7 @@ const Restaurant = () => {
                 {/* <SuccessPopup image={assets.success_img_2} title={"Get 30% off everything up to EBT 150.00"} desc={"The maximum discount for preorders is EBT 150, usable once, and valid until February 22, 2024."} /> */}
 
                 <div className='bg-white px-2 py-4 fixed bottom-0 w-full z-10'>
-                    <button className='flex items-center justify-center bg-[#0AB247] text-white w-full rounded-full p-4 px-5'>
+                    <button onClick={() => navigate('/order')} className='flex items-center justify-center bg-[#0AB247] text-white w-full rounded-full p-4 px-5'>
                         <div className='flex items-center text-center gap-2'>
                             {/* <img src={assets.shopping_basket} alt="" className='invert' /> */}
                             Add To Basket

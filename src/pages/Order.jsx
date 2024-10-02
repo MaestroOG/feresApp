@@ -28,7 +28,7 @@ import { useNavigate } from 'react-router-dom'
 
 const Order = () => {
     const navigate = useNavigate()
-    const { orderNote, riderNote, tipBtn } = useContext(FeresContext)
+    const { orderNote, riderNote, tipBtn, tipRidePop, setTipRidePop } = useContext(FeresContext)
     const [delPop, setDelPop] = useState(false)
     const [servicePop, setServicePop] = useState(false)
     return (
@@ -58,7 +58,7 @@ const Order = () => {
 
             {riderNote ? <RiderNote /> : null}
 
-            {/* <TIpRiderPopUp /> */}
+            {tipRidePop ? <TIpRiderPopUp /> : null}
             {/* <SaveMoneyPopUp /> */}
             {delPop ? <DeliveryFeePopup /> : null}
             {servicePop ? <ServiceFeePopup /> : null}
