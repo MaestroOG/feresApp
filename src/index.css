@@ -39,3 +39,10 @@
 .explore-card::-webkit-scrollbar {
     display: none;
 }
+
+input[type='time']::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    position: absolute;
+    width: 10%;
+    left: 35%;
+}
