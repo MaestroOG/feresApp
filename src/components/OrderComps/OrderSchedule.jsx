@@ -8,7 +8,7 @@ const OrderSchedule = () => {
                 <div className='flex items-center gap-2'>
                     <img src={assets.calendar_03} alt="" />
                     <p className='text-base text-[#2F2F3F]'>Schedule order</p>
-                    <input type="date" name="" id="" />
+                    <input type="time" name="" id="" />
                 </div>
                 <img src={assets.arrow_right} alt="" />
             </div>
