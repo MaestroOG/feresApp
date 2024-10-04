@@ -12,7 +12,7 @@ const OrderedFoodCard = () => {
                     <p className='text-[#2F2F3F66] text-xs'>beef patties, comb the ground beef, salt, pepper, Worcestershire..</p>
                     <div className='flex items-center justify-between mt-2'>
                         <p className='text-[#0AB247] text-base font-bold'>ETB 140</p>
-                        <div className='flex items-center justify-between border border-[#EEEEEE] rounded-full gap-2 px-2 py-1'>
+                        <div className='flex items-center justify-between border border-[#EEEEEE] rounded-full gap-2 px-2 py-1 w-[88px] h-[33px]'>
                             <img src={assets.minus_sign} alt="" className='invert w-[11px]' onClick={() => {
                                 orderCount > 0 ? setOrderCount(orderCount - 1) : null
                             }} />
