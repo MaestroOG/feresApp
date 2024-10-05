@@ -8,6 +8,10 @@
     font-family: "Aeonik", sans-serif;
 }
 
+.offers::-webkit-scrollbar {
+    display: none;
+}
+
 @font-face {
     font-family: 'Aeonik';
     src: url('./fonts/Aeonik-Regular.otf') format('opentype'),
@@ -45,4 +49,35 @@ input[type='time']::-webkit-calendar-picker-indicator {
     position: absolute;
     width: 10%;
     left: 35%;
+}
+
+input[type='range'] {
+    -webkit-appearance: none;
+    /* Override default CSS styles */
+    appearance: none;
+    width: 95%;
+    border-radius: 30px;
+    /* Full-width */
+    height: 58px;
+    /* Specified height */
+    background: #0AB247;
+    /* Grey background */
+    outline: none;
+    /* Remove outline */
+    opacity: 1;
+    /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s;
+    /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+}
+
+input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 48px;
+    height: 48px;
+    background: url('/public/orderBtnThumb.png') no-repeat center;
+    background-size: contain;
+    cursor: pointer;
+    border: none;
 }

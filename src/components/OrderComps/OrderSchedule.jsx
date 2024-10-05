@@ -12,7 +12,7 @@ const OrderSchedule = () => {
 
     const handleTimeLabelClick = () => {
         // Trigger click event on the hidden time input
-        dateInputRef.current.click();
+        timeInputRef.current.click();
     };
 
     return (

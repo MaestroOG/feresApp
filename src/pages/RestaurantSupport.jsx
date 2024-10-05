@@ -14,7 +14,7 @@ const RestaurantSupport = () => {
                 <BlockBtn />
             </div>
             <div className='mt-6'>
-                <h4 className='text-[#2F2F3F] text-base font-medium'>How can we help you?</h4>
+                <h4 className='text-[#2F2F3F] text-base font-extrabold'>How can we help you?</h4>
                 <SupportLinks text={"About KFC Eastlight"} onClick={() => navigate('/restaurantsupport/aboutrestaurant')} />
                 <SupportLinks text={"Restaurant location"} />
                 <SupportLinks text={"About food ingredients"} />

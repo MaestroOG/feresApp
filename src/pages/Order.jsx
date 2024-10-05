@@ -25,6 +25,7 @@ import RiderNote from '../components/OrderComps/RiderNote'
 import DeliveryFeePopup from '../components/OrderComps/DeliveryFeePopup'
 import ServiceFeePopup from '../components/OrderComps/ServiceFeePopup'
 import { useNavigate } from 'react-router-dom'
+import SwipeToConfirm from '../components/OrderComps/OrderConfirmBtn'
 
 const Order = () => {
     const navigate = useNavigate()
@@ -70,6 +71,7 @@ const Order = () => {
             {orderNote ? <ExtraNotePopUp placeholder={"Write anything else we need to know"} /> : null}
 
             <OrderConfirmBtn />
+            {/* <SwipeToConfirm /> */}
         </div>
     )
 }
