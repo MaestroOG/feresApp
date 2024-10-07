@@ -31,6 +31,7 @@ const Order = () => {
     const { orderNote, riderNote, tipBtn, tipRidePop, setTipRidePop } = useContext(FeresContext)
     const [delPop, setDelPop] = useState(false)
     const [servicePop, setServicePop] = useState(false)
+
     return (
         <div className='pb-24'>
             <OrderNav />

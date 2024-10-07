@@ -29,18 +29,18 @@ const OrderSchedule = () => {
     return (
         <div className='px-4 mt-5 bg-white rounded-tl-3xl rounded-tr-3xl flex flex-col gap-5'>
             <div className='flex items-center justify-between'>
-                <div className='flex items-center gap-2'>
+                <div className='flex items-center gap-2' onClick={handleDateLabelClick}>
                     <img src={assets.calendar_03} alt="" />
-                    <label htmlFor='date' onClick={handleDateLabelClick} className='text-base text-[#2F2F3F]'>{selectedDate ? selectedDate : "Schedule order"}</label>
+                    <label htmlFor='date' className='text-base text-[#2F2F3F]'>{selectedDate ? selectedDate : "Schedule order"}</label>
                     <input type="date" name="" id="date" ref={dateInputRef} onChange={handleDateChange} className='absolute left-[-9999px]' />
                 </div>
                 <img src={assets.arrow_right} alt="" />
             </div>
             <hr />
             <div className='flex items-center justify-between'>
-                <div className='flex items-center gap-2'>
+                <div className='flex items-center gap-2' onClick={handleTimeLabelClick}>
                     <img src={assets.clock_light_green} alt="" />
-                    <label htmlFor='time' onClick={handleTimeLabelClick} className='text-base text-[#2F2F3F]'>{selectedTime ? selectedTime : "30 min"}</label>
+                    <label htmlFor='time' className='text-base text-[#2F2F3F]'>{selectedTime ? selectedTime : "30 min"}</label>
                     <input type="time" name="" id="time" ref={timeInputRef} onChange={handleTimeChange} className='absolute left-[-9999px]' />
                 </div>
                 <img src={assets.arrow_right} alt="" />

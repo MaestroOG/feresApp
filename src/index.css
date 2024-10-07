@@ -33,7 +33,9 @@
 }
 
 .clipped {
-    clip-path: polygon(0 0, 100% 0%, 83% 100%, 0% 100%);
+    clip-path: polygon(0 0, 100% 0%, 85% 100%, 0% 100%);
+
+
 }
 
 .clipped_2 {
