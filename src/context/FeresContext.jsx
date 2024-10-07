@@ -28,6 +28,8 @@ const FeresContextProvider = (props) => {
     const [foodSelected, setFoodSelected] = useState('')
     const [sharePop, setSharePop] = useState(false)
     const [rideInfoPop, setRideInfoPop] = useState(false)
+    const [cancelOption, setCancelOption] = useState('');
+    const [cancelReason, setCancelReason] = useState(false)
 
 
     const handleDiscountChange = (event) => {
@@ -99,7 +101,11 @@ const FeresContextProvider = (props) => {
         sharePop,
         setSharePop,
         rideInfoPop,
-        setRideInfoPop
+        setRideInfoPop,
+        cancelOption,
+        setCancelOption,
+        cancelReason,
+        setCancelReason
     }
 
     return (

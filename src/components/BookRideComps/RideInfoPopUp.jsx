@@ -1,10 +1,11 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { assets } from '../../assets/assets'
 import { useNavigate } from 'react-router-dom'
 import { FeresContext } from '../../context/FeresContext'
 
 const RideInfoPopUp = () => {
     const { setRideInfoPop } = useContext(FeresContext)
+    const [progress, setProgress] = useState(0);
     const navigate = useNavigate();
     return (
         <div className='fixed bottom-0 left-0 max-h-[90vh] w-full bg-white px-3 rounded-tr-[13px] rounded-tl-[13px] overflow-y-auto pb-48'>
@@ -20,28 +21,28 @@ const RideInfoPopUp = () => {
             <p className='mt-5 text-[#2F2F3F] text-xl font-medium'>Order progress</p>
             {/* Order Progress */}
             <div className='relative'>
-                <div className='flex items-center gap-2 mt-6'>
-                    <img src={assets.order_progress} alt="" />
-                    <p className='text-base text-[#2F2F3F]'>Waiting for KFC Eastlight to confirm your order </p>
+                <div className='flex items-center gap-2 mt-6' onClick={() => setProgress(0)}>
+                    <img src={progress === 0 ? assets.order_progress : assets.order_progress_2} alt="" />
+                    <p className='text-base text-[#2F2F3F]'>Waiting for KFC Eastlight to confirm your order</p>
                 </div>
                 <hr className='rotate-90 w-10 absolute top-14 -left-2 mb-5' />
-                <div className='flex items-center gap-2 mt-16'>
-                    <img src={assets.order_progress_2} alt="" />
+                <div className='flex items-center gap-2 mt-16' onClick={() => setProgress(1)}>
+                    <img src={progress === 1 ? assets.order_progress : assets.order_progress_2} alt="" />
                     <p className='text-base text-[#979797]'>Preparing your order</p>
                 </div>
                 <hr className='rotate-90 w-10 absolute top-36 -left-2 mb-5' />
-                <div className='flex items-center gap-2 mt-16'>
-                    <img src={assets.order_progress_2} alt="" />
+                <div className='flex items-center gap-2 mt-16' onClick={() => setProgress(2)}>
+                    <img src={progress === 2 ? assets.order_progress : assets.order_progress_2} alt="" />
                     <p className='text-base text-[#979797]'>Looking for a rider</p>
                 </div>
                 <hr className='rotate-90 w-10 absolute top-[230px] -left-2 mb-5' />
-                <div className='flex items-center gap-2 mt-16'>
-                    <img src={assets.order_progress_2} alt="" />
+                <div className='flex items-center gap-2 mt-16' onClick={() => setProgress(3)}>
+                    <img src={progress === 3 ? assets.order_progress : assets.order_progress_2} alt="" />
                     <p className='text-base text-[#979797]'>The rider is on their way to KFC Eastlight</p>
                 </div>
                 <hr className='rotate-90 w-10 absolute top-[318px] -left-2 mb-5' />
-                <div className='flex items-center gap-2 mt-16'>
-                    <img src={assets.order_progress_2} alt="" />
+                <div className='flex items-center gap-2 mt-16' onClick={() => setProgress(4)}>
+                    <img src={progress === 4 ? assets.order_progress : assets.order_progress_2} alt="" />
                     <p className='text-base text-[#979797]'>The rider is on their way to you</p>
                 </div>
             </div>
@@ -91,7 +92,7 @@ const RideInfoPopUp = () => {
             {/* Buttons */}
             <div className='fixed bottom-0 left-0 w-full px-2 py-4 bg-white'>
                 <button className='text-[#2F2F3F] text-lg font-medium bg-[#F8F8F8] p-[16px] rounded-[30px] w-full mb-3' onClick={() => navigate('/feressupport')}>Get help</button>
-                <button className='text-white text-lg font-medium bg-[#E92D53] p-[16px] rounded-[30px] w-full'>Cancel order</button>
+                <button className='text-white text-lg font-medium bg-[#E92D53] p-[16px] rounded-[30px] w-full' onClick={() => navigate('/cancelorder')}>Cancel order</button>
             </div>
         </div>
     )
