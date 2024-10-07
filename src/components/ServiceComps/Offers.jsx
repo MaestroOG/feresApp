@@ -14,7 +14,7 @@ const Offers = () => {
                 <h3 className='text-[#2F2F3F] text-lg font-medium'>Special offers</h3>
                 <p className='text-base font-medium text-[#979797]'>See all</p>
             </div>
-            <div className='flex items-center gap-2 overflow-x-auto offers mb-8'>
+            <div className='flex items-center gap-2 overflow-x-auto offers mb-8 w-screen'>
                 {/* Card */}
                 {/* Card Top */}
                 <div className='relative flex-shrink-0'>

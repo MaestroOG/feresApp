@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { assets } from '../../assets/assets'
+import { useNavigate } from 'react-router-dom';
 
 const OrderConfirmBtn = () => {
+    const navigate = useNavigate()
     const [value, setValue] = useState(0); // Initial slider value
     const rangeRef = useRef(null);
     const thumbRef = useRef(null);
@@ -24,27 +26,29 @@ const OrderConfirmBtn = () => {
         thumb.style.left = `${thumbPosition + 7}px`;
     };
 
+    const handleChange = (e) => {
+        const newValue = e.target.value;
+        setValue(newValue);
+
+        // console.log(newValue);
+
+
+        if (newValue === "100") {
+            navigate('/bookride');
+        }
+    }
+
     useEffect(() => {
         updateThumbPosition();
     }, [value]);
 
     return (
-        // <div className='fixed bottom-0 flex items-center justify-center bg-white w-full py-3'>
-        //     <div className='w-[95%] mx-auto bg-[#0AB247] rounded-full p-[12px] py-[8px] flex items-center gap-24'>
-        //         <div className='bg-white rounded-full w-12 h-12 flex item-center justify-center' onTouchStart={handleTouchStart}
-        //             onTouchMove={handleTouchMove}
-        //             onTouchEnd={handleTouchEnd}>
-        //             <img src={assets.arrow_right_02} alt="" className='mx-auto w-6' />
-        //         </div>
-        //         
-        //     </div>
-        // </div>
         <div className='fixed bottom-0 flex items-center justify-center bg-white w-full py-10 h-[58px]'>
             <div className='relative w-full flex items-center justify-center'>
                 <input type="range" name="" id="" className='mx-auto' ref={rangeRef} min="0"
                     max="100"
                     value={value}
-                    onChange={(e) => setValue(e.target.value)} />
+                    onChange={handleChange} />
                 <div
                     ref={thumbRef}
                     className="absolute pointer-events-none"

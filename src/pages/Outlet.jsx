@@ -28,6 +28,7 @@ import FeresSupport from './FeresSupport'
 import BookRide from './BookRide'
 import RateRider from './RateRider'
 import RateFood from './RateFood'
+import CancelOrder from './CancelOrder'
 
 const Outlet = () => {
     return (
@@ -61,6 +62,7 @@ const Outlet = () => {
                 <Route path='/bookride' element={<BookRide />} />
                 <Route path='/raterider' element={<RateRider />} />
                 <Route path='/ratefood' element={<RateFood />} />
+                <Route path='/cancelorder' element={<CancelOrder />} />
             </Routes>
         </>
     )

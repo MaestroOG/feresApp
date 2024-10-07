@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useRef } from 'react'
 import { assets } from '../assets/assets';
 import { useNavigate } from 'react-router-dom'
 import { FeresContext } from '../context/FeresContext';
@@ -9,16 +9,28 @@ import SuccessPopup from '../components/SuccessPopup';
 import { NewOrderPopUp } from '../components/RestaurantComps/NewOrderPopUp';
 import FoodSearchPopUp from '../components/RestaurantComps/FoodSearchPopUp';
 import FoodPopUp from '../components/RestaurantComps/FoodPopUp';
+import SharePopUp from '../components/RestaurantComps/SharePopUp';
 
 const Restaurant = () => {
 
+    const dateInputRef = useRef(null);
     const navigate = useNavigate()
     const { deliverPopup, setDeliverPopup } = useContext(FeresContext)
     const [categoryBtn, setCategoryBtn] = useState('all')
-    const { foodPopup, setFoodPopup } = useContext(FeresContext)
+    const { foodPopup, setSharePop, sharePop } = useContext(FeresContext)
     const { foodSearch, setFoodSearch, foodSelected } = useContext(FeresContext)
     const [deliverPop, setDeliverPop] = useState(false)
     const [pickupPop, setPickupPop] = useState(false)
+    const [selectedDate, setSelectedDate] = useState('')
+
+    const handleDateLabelClick = () => {
+        // Trigger click event on the hidden time input
+        dateInputRef.current.click();
+    };
+
+    const handleDateChange = (e) => {
+        setSelectedDate(e.target.value)
+    }
 
     return (
         <div>
@@ -32,7 +44,7 @@ const Restaurant = () => {
                     <button className='bg-[#06060666] p-3 rounded-xl ml-4'>
                         <img src={assets.add_team} alt="" />
                     </button>
-                    <button className='bg-[#06060666] p-3 rounded-xl ml-4'>
+                    <button className='bg-[#06060666] p-3 rounded-xl ml-4' onClick={() => setSharePop(true)}>
                         <img src={assets.share} alt="" />
                     </button>
                     <button className='bg-[#06060666] p-3 rounded-xl ml-4' onClick={() => setFoodSearch(true)}>
@@ -64,7 +76,8 @@ const Restaurant = () => {
                     </div>
                     <div className='flex items-center gap-2'>
                         <img src={assets.calendar} alt="" />
-                        <p className='text-base text-[#646464]'>Schedule</p>
+                        <label onClick={handleDateLabelClick} htmlFor='sched' className='text-base text-[#646464]'>{selectedDate ? selectedDate : "Schedule"}</label>
+                        <input ref={dateInputRef} onChange={handleDateChange} type="date" name="" id="sched" className='absolute left-[-9999px]' />
                     </div>
                 </div>
 
@@ -164,7 +177,10 @@ const Restaurant = () => {
                 }
 
                 {/* Success Popup */}
-                {/* <SuccessPopup image={assets.success_img_2} title={"Get 30% off everything up to EBT 150.00"} desc={"The maximum discount for preorders is EBT 150, usable once, and valid until February 22, 2024."} /> */}
+                <SuccessPopup image={assets.success_img_2} title={"Get 30% off everything up to EBT 150.00"} desc={"The maximum discount for preorders is EBT 150, usable once, and valid until February 22, 2024."} />
+
+                {/* Share popup */}
+                {sharePop ? <SharePopUp /> : null}
 
                 <div className='bg-white px-2 py-4 fixed bottom-0 w-full z-10'>
                     <button onClick={() => navigate('/order')} className='flex items-center justify-center bg-[#0AB247] text-white w-full rounded-full p-4 px-5'>

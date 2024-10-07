@@ -143,8 +143,42 @@ import bad from './bad.png'
 import good from './good.png'
 import meh from './meh.png'
 import superb from './superb.png'
+import air_drop from './air_drop.png'
+import photo_app from './photo_app.png'
+import message_app_icon from './message_app_icon.png'
+import mail_app_icon from './mail_app_icon.png'
+import messenger_app_icon from './messenger_app_icon.png'
+import whatsapp_app_icon from './whatsapp_app_icon.png'
+import twitter_app_icon from './twitter_app_icon.png'
+import copy_icon from './copy_icon.png'
+import glassses_icon from './glasses_icon.png'
+import book_icon from './book_icon.png'
+import fav_star_icon from './fav_star_icon.png'
+import share_search_icon from './share_search_icon.png'
+import kfc_share_logo from './kfc_share_logo.png'
+import order_progress from './order_progress.svg'
+import order_progress_2 from './order_progress_2.svg'
+import ebirr_sticker from './ebirr_sticker.png'
+import address_sticker from './address_sticker.png'
+import edit_02 from './edit_02.png'
 
 export const assets = {
+    edit_02,
+    address_sticker,
+    ebirr_sticker,
+    order_progress_2,
+    order_progress,
+    kfc_share_logo,
+    share_search_icon,
+    fav_star_icon,
+    book_icon,
+    glassses_icon,
+    copy_icon,
+    message_app_icon,
+    mail_app_icon,
+    messenger_app_icon,
+    whatsapp_app_icon,
+    twitter_app_icon,
     arrow_left,
     volume_icon,
     wheel,
@@ -289,5 +323,7 @@ export const assets = {
     bad,
     good,
     meh,
-    superb
+    superb,
+    air_drop,
+    photo_app
 }

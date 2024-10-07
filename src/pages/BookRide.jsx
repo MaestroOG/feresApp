@@ -1,15 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import BookRideNav from '../components/BookRideComps/BookRideNav'
 import { assets } from '../assets/assets'
+import RideInfoPopUp from '../components/BookRideComps/RideInfoPopUp'
+import { FeresContext } from '../context/FeresContext'
 
 const BookRide = () => {
+    const { rideInfoPop, setRideInfoPop } = useContext(FeresContext)
     return (
         <div className='relative h-[100vh] overflow-hidden'>
             <BookRideNav />
             <p className='text-[#2F2F3F] text-lg text-center py-3 pb-8'>Waiting for restaurant to confirm your order...</p>
             <img src={assets.book_ride_img} alt="" className='w-screen' />
             <img src={assets.store_loco} alt="" className='absolute top-[27.4rem] left-[14.1rem]' />
-            <div className='w-full bg-white fixed bottom-0 left-0 px-3 py-2 rounded-tr-[13px] rounded-tl-[13px]'>
+            <div className='w-full bg-white fixed bottom-0 left-0 px-3 py-2 rounded-tr-[13px] rounded-tl-[13px]' onClick={() => setRideInfoPop(true)}>
                 <div className='mb-4 pt-2'>
                     <img src={assets.popup_down_arrow} alt="" className='mx-auto' />
                 </div>
@@ -19,6 +22,7 @@ const BookRide = () => {
                 </div>
                 <p className='mt-5 text-[#2F2F3F] text-xl font-medium'>Order progress</p>
             </div>
+            {rideInfoPop ? <RideInfoPopUp /> : null}
         </div>
     )
 }
