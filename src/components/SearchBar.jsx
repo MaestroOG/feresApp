@@ -9,7 +9,7 @@ const SearchBar = () => {
     const { setFilterPop } = useContext(FeresContext)
 
     return (
-        <div className='w-full flex items-center justify-between pt-6 px-4'>
+        <div className='w-full flex items-center gap-3 pt-6 px-2'>
 
             <div className='flex gap-2 items-center bg-[#F8F8F8] rounded-lg px-4 w-4/5'>
                 <img src={assets.search} alt="" />

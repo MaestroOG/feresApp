@@ -55,7 +55,7 @@ const Offers = () => {
                         {/* <img src={assets.offer_bg} alt="" /> */}
                         {promotionData && promotionData.promotions_list.map((item) => (
                             item.store_info.map((store, index) => (
-                                <img key={index} src={store.image_url} alt="" className='w-[385px]' />
+                                <img key={index} src={store.image_url} alt="" className='w-[365px]' onClick={() => navigate(`/restaurant/${store._id}`)} />
                             ))
                         ))}
                         {/* Card Top Stickers */}
@@ -111,7 +111,7 @@ const Offers = () => {
                         {/* <img src={assets.offer_bg} alt="" /> */}
                         {promotionData && promotionData.promotions_list.map((item) => (
                             item.store_info.map(store => (
-                                <img src={store.image_url} alt="" className='w-[385px]' />
+                                <img src={store.image_url} alt="" className='w-[365px]' />
                             ))
                         ))}
                         {/* Card Top Stickers */}

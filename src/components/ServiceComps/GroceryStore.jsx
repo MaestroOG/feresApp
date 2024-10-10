@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { assets } from '../../assets/assets'
+import { useNavigate } from 'react-router-dom'
 
 const GroceryStore = () => {
 
+    const navigate = useNavigate();
     const [groceryStore, setGroceryStore] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
 
@@ -39,7 +41,7 @@ const GroceryStore = () => {
             {isLoading ? <div className='text-center'>Loading...</div> : groceryStore && groceryStore.stores.slice(0, 2).map((store, index) => (
                 <div className='px-4 mt-6 relative' key={index}>
 
-                    <div className='w-full mt-8 mb-5 relative' onClick={() => navigate('/restaurant')}>
+                    <div className='w-full mt-8 mb-5 relative' onClick={() => navigate(`/restaurant/${store._id}`)}>
                         <img src={store.image_url} alt="" className='w-[400px] h-[154.5px] object-contain' />
 
                         <div className='bg-white text-black flex items-center gap-2 p-3 rounded-3xl absolute bottom-2 right-32'>

@@ -1,6 +1,6 @@
-import React, { useContext, useState, useRef } from 'react'
+import React, { useContext, useState, useRef, useEffect } from 'react'
 import { assets } from '../assets/assets';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { FeresContext } from '../context/FeresContext';
 import PickupPopup from '../components/RestaurantComps/PickupPopup';
 import DeliveredPopup from '../components/RestaurantComps/DeliveredPopup';
@@ -13,12 +13,19 @@ import SharePopUp from '../components/RestaurantComps/SharePopUp';
 
 const Restaurant = () => {
 
+    const { id } = useParams();
+
+
+    const [isLoading, setLoading] = useState(true)
+    const [restInfo, setRestInfo] = useState(null)
+    const [menuItems, setMenuItems] = useState(null)
     const dateInputRef = useRef(null);
     const navigate = useNavigate()
     const { deliverPopup, setDeliverPopup } = useContext(FeresContext)
-    const [categoryBtn, setCategoryBtn] = useState('all')
+    const [categories, setCategories] = useState([])
+    const [categoryBtn, setCategoryBtn] = useState('All Menu');
     const { foodPopup, setSharePop, sharePop } = useContext(FeresContext)
-    const { foodSearch, setFoodSearch, foodSelected } = useContext(FeresContext)
+    const { foodSearch, setFoodSearch } = useContext(FeresContext)
     const [deliverPop, setDeliverPop] = useState(false)
     const [pickupPop, setPickupPop] = useState(false)
     const [selectedDate, setSelectedDate] = useState('')
@@ -44,11 +51,92 @@ const Restaurant = () => {
         setSelectedTime(e.target.value)
     }
 
+    const fetchRestInfo = async () => {
+        const requestBody = {
+            store_id: id
+        }
+        try {
+            const res = await fetch(import.meta.env.VITE_API_URI + '/admin/get_store_data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': '*/*',
+                },
+                body: JSON.stringify(requestBody)
+            });
+
+            if (!res.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const data = await res.json();
+            setRestInfo(data)
+            // console.log(restInfo);
+            setLoading(false)
+
+
+
+
+        } catch (error) {
+            console.error('Fetch error: ', error);
+        }
+    }
+
+    const fetchMenuItems = async () => {
+        const requestBody = {
+            store_id: id
+        }
+        try {
+            const res = await fetch(import.meta.env.VITE_API_URI + '/api/food/get_items_by_store_id', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': '*/*',
+                },
+                body: JSON.stringify(requestBody)
+            });
+
+            if (!res.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const data = await res.json();
+
+            setMenuItems(data)
+            console.log(menuItems);
+            setLoading(false)
+
+
+
+
+        } catch (error) {
+            console.error('Fetch error: ', error);
+        }
+    }
+
+    const addCategories = () => {
+        if (menuItems) {
+            menuItems.store.products.map(product => (
+                setCategories([...categories, product.name])
+            ))
+        }
+
+        console.log(categories);
+
+    }
+
+    useEffect(() => {
+        fetchRestInfo();
+        fetchMenuItems();
+        addCategories()
+    }, [])
     return (
         <div>
             {/* Feature */}
             <div className='relative'>
-                <img src={assets.restaurant_featured} alt="" />
+                {isLoading ? <div>Loading...</div> : (
+                    <img src={restInfo && restInfo.store_detail.cover_image_url ? restInfo.store_detail.cover_image_url : restInfo.store_detail.image_url} alt="" />
+                )}
                 <button className='absolute top-[10%] left-[4%] bg-[#06060666] p-3 rounded-xl'>
                     <img onClick={() => navigate(-1)} src={assets.arrow_left_02} alt="" className='invert' />
                 </button>
@@ -66,15 +154,16 @@ const Restaurant = () => {
             </div>
 
             {/* Restaurant Title */}
+
             <div className='bg-white'>
                 <div className="flex items-center justify-between pt-5 px-4">
                     <div className='flex items-center gap-2'>
                         <img src={assets.kfc_logo} alt="" />
-                        <h2 className='text-xl font-bold text-[#2F2F3F]'>KFC Eastlight</h2>
+                        {isLoading ? <div>Loading...</div> : restInfo && <h2 className='text-xl font-bold text-[#2F2F3F]'>{restInfo.store_detail.name}</h2>}
                     </div>
                     <div className='flex items-center gap-1' onClick={() => navigate('/review')}>
                         <img src={assets.star} alt="" />
-                        <p className='text-base font-normal'>4.5 (50 reviews)</p>
+                        <p className='text-base font-normal whitespace-nowrap'>{restInfo && restInfo.store_detail.user_rate} ({restInfo && restInfo.store_detail.user_rate_count} reviews)</p>
                     </div>
                 </div>
                 <div className='px-4 mt-5 flex items-center gap-5'>
@@ -92,17 +181,16 @@ const Restaurant = () => {
                         <input ref={dateInputRef} onChange={handleDateChange} type="date" name="" id="sched" className='absolute left-[-9999px]' />
                     </div>
                 </div>
-
                 {/* Delivery Details */}
                 <div className='mt-7 px-4'>
                     <div className='flex items-center gap-2 mb-4'>
                         <img src={assets.clock_green} alt="" />
-                        <label onClick={handleTimeLabelClick} className='text-base text-[#1E1E1E]'>{selectedTime ? selectedTime : "30 min"}</label>
+                        <label onClick={handleTimeLabelClick} className='text-base text-[#1E1E1E]'>{selectedTime ? selectedTime : restInfo && restInfo.store_detail.delivery_time + " mins"}</label>
                         <input type="time" name="" id="time" ref={timeInputRef} onChange={handleTimeChange} className='absolute left-[-9999px]' />
                     </div>
                     <div className='flex items-center gap-2'>
                         <img src={assets.location_green} alt="" />
-                        <p className='text-base text-[#1E1E1E]'>Royal Ln. Mesa, New Jersey 45463</p>
+                        <p className='text-base text-[#1E1E1E]'>{restInfo && restInfo.store_detail.store_Address}</p>
                     </div>
                 </div>
 
@@ -119,14 +207,13 @@ const Restaurant = () => {
                         </div>
                         <div className='flex items-center gap-2'>
                             <img src={assets.discount_tag} alt="" />
-                            <p className='text-xs text-[#2F2F3F]'>30% off on their entire menu</p>
+                            <p className='text-xs text-[#2F2F3F]'>{restInfo && restInfo.store_detail.store_discount ? restInfo.store_detail.store_discount : "0"}% off on their entire menu</p>
                         </div>
                     </div>
                     <div onClick={() => navigate('/restaurantsupport')}>
                         <img src={assets.arrow_right} alt="" />
                     </div>
                 </div>
-
                 {/* Categories */}
                 <div className='px-4 mt-7 sticky top-0 bg-white py-5'>
                     <div className='flex items-center justify-between'>
@@ -137,10 +224,10 @@ const Restaurant = () => {
 
                     {/* Category Buttons */}
 
-                    <div className='mt-6 flex gap-3'>
-                        <button className={`${categoryBtn == 'all' ? ' bg-[#0AB247] text-white' : 'border border-[#EEEEEE] text-[#AEAEAE]'} rounded-xl px-[10px] py-[5px]`} onClick={() => setCategoryBtn('all')}>All</button>
-                        <button className={`${categoryBtn == 'trending' ? ' bg-[#0AB247] text-white' : 'border border-[#EEEEEE] text-[#AEAEAE]'} rounded-xl px-[10px] py-[5px]`} onClick={() => setCategoryBtn('trending')}>Trending meals</button>
-                        <button className={`${categoryBtn == 'sandwiches' ? ' bg-[#0AB247] text-white' : 'border border-[#EEEEEE] text-[#AEAEAE]'} rounded-xl px-[10px] py-[5px]`} onClick={() => setCategoryBtn('sandwiches')}>Sandwiches</button>
+                    <div className='mt-6 flex gap-3 overflow-auto category-btns'>
+                        {isLoading ? <div>Loading...</div> : menuItems && menuItems.store.products.map((product, index) => (
+                            <button key={index} className={`${categoryBtn == product.name ? ' bg-[#0AB247] text-white' : 'border border-[#EEEEEE] text-[#AEAEAE]'} rounded-xl px-[10px] py-[5px] whitespace-nowrap`} onClick={() => setCategoryBtn(product.name)}>{product.name}</button>
+                        ))}
                     </div>
 
                 </div>
@@ -156,24 +243,20 @@ const Restaurant = () => {
                 {/* Menu */}
 
                 <div className='px-4 mt-7 mb-28'>
-                    <h2 className='text-[#2F2F3F] font-medium text-lg mb-4'>{
-                        categoryBtn == 'all' ? 'All Menu' : categoryBtn == 'trending' ? 'Trending Menu' : categoryBtn == 'sandwiches' ? 'Sandwiches' : null
-                    }</h2>
-                    <MenuCard image={assets.burger_img} title={"Beef Burger"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} onClick={() => {
+                    <h2 className='text-[#2F2F3F] font-medium text-lg mb-4'>
+                        All Menu</h2>
+                    {isLoading ? <div>Loading...</div> : menuItems && menuItems.store.products.map((product) => (
+                        product.items.map((item, index) => (
+                            <MenuCard key={index} title={item.name} price={item.price} desc={item.details && item.details} image={item.image_url.length > 0 ? item.image_url[0] : assets.item_placeholder} />
+                        ))
+                    ))}
+                    {/* <h2 className='text-[#2F2F3F] font-medium text-lg mb-4'>{
+                        categoryBtn
+                    }</h2> */}
+                    {/* <MenuCard image={assets.burger_img} title={"Beef Burger"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} onClick={() => {
                         // setFoodPopup('beef')
                         navigate('/food')
-                    }} className={`${foodSelected === 'Beef Burger' ? 'border border-[#0AB247]' : null}`} />
-                    <MenuCard image={assets.orange_juice_img} title={"Fresh orange juice"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} onClick={() => {
-                        // setFoodPopup('orange')
-                        navigate('/food')
-                    }} className={`${foodSelected === 'Fresh orange juice' ? 'border border-[#0AB247]' : null}`} />
-                    <MenuCard image={assets.mango_juice_img} title={"Fresh mango juice"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} onClick={() => {
-                        // setFoodPopup('mango')
-                        navigate('/food')
-                    }} className={`${foodSelected === 'Fresh mango juice' ? 'border border-[#0AB247]' : null}`} />
-                    <MenuCard image={assets.ice_cream_img} title={"Ice cream"} desc={"beef patties, comb the ground beef, salt, pepper, Worcestershire.."} onClick={() => {
-                        // navigate('/food')
-                    }} className={`${foodSelected === 'Ice cream' ? 'border border-[#0AB247]' : null}`} />
+                    }} price={"140"} className={`${foodSelected === 'Beef Burger' ? 'border border-[#0AB247]' : null}`} /> */}
                 </div>
 
                 {/* <NewOrderPopUp /> */}

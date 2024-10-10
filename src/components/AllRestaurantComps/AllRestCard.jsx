@@ -56,7 +56,7 @@ const AllRestCard = () => {
             {isLoading ? <div className='text-center'>Loading...</div> : allRests && allRests.stores.map((store) => (
                 store.stores.map((store, index) => (
                     <>
-                        <div key={index} className='w-full mt-8 mb-5 relative' onClick={() => navigate('/restaurant')}>
+                        <div key={index} className='w-full mt-8 mb-5 relative' onClick={() => navigate(`/restaurant/${store._id}`)}>
                             <img src={store.image_url} alt="" />
 
                             <div className='bg-white text-black flex items-center gap-2 p-3 rounded-3xl absolute bottom-2 right-32'>

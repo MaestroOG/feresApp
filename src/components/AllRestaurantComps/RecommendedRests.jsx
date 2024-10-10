@@ -59,7 +59,7 @@ const RecommendedRests = () => {
             <div className="flex items-center gap-4">
                 {isLoading ? <div className='text-center'>Loading...</div> : recommendedRests && recommendedRests.stores.map((store) => (
                     store.stores.map((store, index) => (
-                        <div key={index} className='mt-6 w-max' onClick={() => navigate('/restaurant')}>
+                        <div key={index} className='mt-6 w-max' onClick={() => navigate(`/restaurant/${store._id}`)}>
                             {/* Top */}
                             <img src={store.image_url} alt="" />
                             {/* Bottom */}

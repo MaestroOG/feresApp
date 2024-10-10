@@ -38,7 +38,7 @@ const Outlet = () => {
                 <Route path='/spinwheel' element={<SpinWheel />} />
                 <Route path='/search' element={<SearchPage />} />
                 <Route path='/allrestaurants' element={<AllRestaurants />} />
-                <Route path='/restaurant' element={<Restaurant />} />
+                <Route path='/restaurant/:id' element={<Restaurant />} />
                 <Route path='/restaurant/viewmenu' element={<ViewAllMenu />} />
                 <Route path='/restaurant/categories' element={<FoodCategories />} />
                 <Route path='/review' element={<Reviews />} />

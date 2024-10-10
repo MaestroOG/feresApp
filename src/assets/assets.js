@@ -162,8 +162,10 @@ import ebirr_sticker from './ebirr_sticker.png'
 import address_sticker from './address_sticker.png'
 import edit_02 from './edit_02.png'
 import success_img_3 from './success_img_3.png'
+import item_placeholder from './item_placeholder.png'
 
 export const assets = {
+    item_placeholder,
     success_img_3,
     edit_02,
     address_sticker,
