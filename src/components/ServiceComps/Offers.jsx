@@ -40,10 +40,10 @@ const Offers = () => {
 
 
     return (
-        <div className='px-4 mt-10'>
+        <div className='px-1 mt-10'>
             {/* Top line */}
 
-            <div className='flex items-center justify-between mb-6'>
+            <div className='flex items-center justify-between mb-6 px-3'>
                 <h3 className='text-[#2F2F3F] text-lg font-medium'>Special offers</h3>
                 <p className='text-base font-medium text-[#979797]'>See all</p>
             </div>

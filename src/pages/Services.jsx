@@ -70,55 +70,59 @@ const Services = () => {
             <>
                 <div className='w-full px-2'>
                     <h2 className='text-[#2F2F3F] text-lg font-medium'>Top-rated restaurants</h2>
-                    {isLoading ? <div>Loading...</div> : topRest && topRest.stores.map((store, index) => (
+                    <div className='flex items-center gap-3 overflow-auto no-scrollbar'>
+                        {isLoading ? <div>Loading...</div> : topRest && topRest.stores.map((store, index) => (
 
-                        store.stores.slice(0, 1).map((store, index) => (
-                            <div key={index} className="flex items-center gap-4">
-                                <div className='mt-6 w-max' onClick={() => navigate(`/restaurant/${store._id}`)}>
-                                    {/* Top */}
-                                    <img src={store.image_url} alt="" />
-                                    {/* Bottom */}
-                                    <div className='mt-3'>
-                                        <div className='flex items-center justify-between gap-2'>
-                                            <h2 className='font-bold text-base'>{store.name}</h2>
-                                            <div className='flex items-center gap-1 justify-center'>
-                                                <img className='mb-1' src={assets.star} alt="" />
-                                                <h2 className='text-base'>{store.user_rate}</h2>
+                            store.stores.slice(0, 1).map((store, index) => (
+                                <div key={index} className="flex items-center gap-4">
+                                    <div className='mt-6 w-max' onClick={() => navigate(`/restaurant/${store._id}`)}>
+                                        {/* Top */}
+                                        <img src={store.image_url} alt="" className='w-[365px]' />
+                                        {/* Bottom */}
+                                        <div className='mt-3'>
+                                            <div className='flex items-center justify-between gap-2'>
+                                                <h2 className='font-bold text-base'>{store.name}</h2>
+                                                <div className='flex items-center gap-1 justify-center'>
+                                                    <img className='mb-1' src={assets.star} alt="" />
+                                                    <h2 className='text-base'>{store.user_rate}</h2>
+                                                </div>
                                             </div>
+                                            <p className='text-xs text-[#979797]'>{store.Description}</p>
                                         </div>
-                                        <p className='text-xs text-[#979797]'>{store.Description}</p>
                                     </div>
                                 </div>
-                            </div>
-                        ))
-                    ))}
+                            ))
+                        ))}
+                    </div>
                 </div>
             </>
             <>
                 <div className='w-full px-2 mt-8'>
                     <h2 className='text-[#2F2F3F] text-lg font-medium'>Grocery stores</h2>
-                    {isLoading ? <div>Loading...</div> : topRest && topRest.stores.map((store, index) => (
+                    <div className='flex items-center gap-3 overflow-auto no-scrollbar'>
+                        {isLoading ? <div>Loading...</div> : topRest && topRest.stores.map((store, index) => (
 
-                        store.stores.slice(0, 1).map((store, index) => (
-                            <div key={index} className="flex items-center gap-4">
-                                <div className='mt-6 w-max' onClick={() => navigate(`/restaurant/${store._id}`)}>
-                                    {/* Top */}
-                                    <img src={store.image_url} alt="" />
-                                    {/* Bottom */}
-                                    <div className='mt-3'>
-                                        <div className='flex items-center justify-between gap-2'>
-                                            <h2 className='font-bold text-base'>{store.name}</h2>
-                                            <div className='flex items-center gap-1 justify-center'>
-                                                <img className='mb-1' src={assets.star} alt="" />
-                                                <h2 className='text-base'>{store.user_rate}</h2>
+                            store.stores.slice(0, 1).map((store, index) => (
+                                <div key={index} className="flex items-center gap-4">
+                                    <div className='mt-6 w-max' onClick={() => navigate(`/restaurant/${store._id}`)}>
+                                        {/* Top */}
+                                        <img src={store.image_url} alt="" className='w-[365px]' />
+                                        {/* Bottom */}
+                                        <div className='mt-3'>
+                                            <div className='flex items-center justify-between gap-2'>
+                                                <h2 className='font-bold text-base'>{store.name}</h2>
+                                                <div className='flex items-center gap-1 justify-center'>
+                                                    <img className='mb-1' src={assets.star} alt="" />
+                                                    <h2 className='text-base'>{store.user_rate}</h2>
+                                                </div>
                                             </div>
+                                            <p className='text-xs text-[#979797]'>{store.Description}</p>
                                         </div>
-                                        <p className='text-xs text-[#979797]'>{store.Description}</p>
                                     </div>
                                 </div>
-                            </div>
-                        ))
-                    ))}
+                            ))
+                        ))}
+                    </div>
                 </div>
             </>
             {/* <GroceryStore /> */}

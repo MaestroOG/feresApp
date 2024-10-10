@@ -104,9 +104,7 @@ const Restaurant = () => {
 
             setMenuItems(data)
             console.log(menuItems);
-            setLoading(false)
-
-
+            setLoading(false);
 
 
         } catch (error) {
@@ -128,7 +126,7 @@ const Restaurant = () => {
     useEffect(() => {
         fetchRestInfo();
         fetchMenuItems();
-        addCategories()
+        // addCategories()
     }, [])
     return (
         <div>
