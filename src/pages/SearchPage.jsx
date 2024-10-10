@@ -9,12 +9,12 @@ import { FeresContext } from '../context/FeresContext'
 import FilterPopUp from '../components/SearchComps/FilterPopUp'
 
 const SearchPage = () => {
-    const { filterPop, setFilterPop } = useContext(FeresContext)
+    const { filterPop } = useContext(FeresContext)
     const navigate = useNavigate();
     return (
         <div>
             <div className='w-full flex items-center px-2 bg-white'>
-                <img src={assets.arrow_left} alt="" className='invert' />
+                {/* <img src={assets.arrow_left} alt="" className='invert' /> */}
                 <SearchBar />
             </div>
 

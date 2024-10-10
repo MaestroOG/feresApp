@@ -30,6 +30,7 @@ const FeresContextProvider = (props) => {
     const [rideInfoPop, setRideInfoPop] = useState(false)
     const [cancelOption, setCancelOption] = useState('');
     const [cancelReason, setCancelReason] = useState(false)
+    const [searchTerm, setSearchTerm] = useState("")
 
 
     const handleDiscountChange = (event) => {
@@ -49,6 +50,8 @@ const FeresContextProvider = (props) => {
     }
 
     const value = {
+        searchTerm,
+        setSearchTerm,
         visible,
         setVisible,
         customerReview,
