@@ -4,7 +4,7 @@ const MenuCard = ({ image, title, desc, onClick, className, price, oldPrice }) =
     return (
         <>
             <div className={`flex items-center gap-3 rounded-2xl px-2 ${className ? className : ""}`} onClick={onClick}>
-                <img src={image} alt="" className='w-28 mb-auto py-[6px]' />
+                <img src={image} alt="" className='w-28 mb-auto py-[6px] rounded-2xl' />
                 <div className='pr-1'>
                     <h4 className='text-[#2F2F3F] font-medium text-base '>{title}</h4>
                     <p className='text-[#2F2F3F66] text-xs'>{desc}</p>

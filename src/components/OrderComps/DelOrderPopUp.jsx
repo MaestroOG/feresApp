@@ -18,6 +18,7 @@ const DelOrderPopUp = () => {
                 <button className='bg-[#E92D53] text-white rounded-full w-[90%] p-[16px] mb-4' onClick={() => {
                     clearCart();
                     navigate('/allrestaurants')
+                    setDelOrderVisible(false)
                 }}>Delete</button>
                 <button className='bg-[#F8F8F8] text-[#2F2F3F] rounded-full w-[90%] p-[16px]' onClick={() => setDelOrderVisible(false)}>Cancel</button>
             </div>

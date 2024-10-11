@@ -53,6 +53,10 @@ const FeresContextProvider = (props) => {
         setCartItems([]); // set the cart items to an empty array
     };
 
+    const getCartTotal = () => {
+        return cartItems.reduce((total, item) => total + item.price * item.quantity, 0); // calculate the total price of the items in the cart
+    };
+
     useEffect(() => {
         localStorage.setItem("cartItems", JSON.stringify(cartItems));
     }, [cartItems]);
@@ -86,6 +90,7 @@ const FeresContextProvider = (props) => {
         setCartItems,
         clearCart,
         addToCart,
+        getCartTotal,
         searchTerm,
         setSearchTerm,
         visible,

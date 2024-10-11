@@ -10,6 +10,8 @@ import { NewOrderPopUp } from '../components/RestaurantComps/NewOrderPopUp';
 import FoodSearchPopUp from '../components/RestaurantComps/FoodSearchPopUp';
 import FoodPopUp from '../components/RestaurantComps/FoodPopUp';
 import SharePopUp from '../components/RestaurantComps/SharePopUp';
+import AddBi from '../components/RestaurantComps/AddBi';
+import AddBii from '../components/RestaurantComps/AddBii';
 
 const Restaurant = () => {
 
@@ -29,6 +31,7 @@ const Restaurant = () => {
     const [deliverPop, setDeliverPop] = useState(false)
     const [pickupPop, setPickupPop] = useState(false)
     const [selectedDate, setSelectedDate] = useState('')
+    const [selectedItem, setSelectedItem] = useState([])
 
     const [selectedTime, setSelectedTime] = useState('')
     const timeInputRef = useRef(null);
@@ -112,20 +115,18 @@ const Restaurant = () => {
         }
     }
 
-    const addItems = (item) => {
-        const isItemInCart = items.find((cartItem) => cartItem._id === item._id); // check if the item is already in the cart
-
-        if (isItemInCart) {
-            setItems(
-                items.map((cartItem) =>
-                    [...cartItem]
-                )
-            );
-        } else {
-            setItems([...items, { ...item, quantity: 1 }]);
+    const handleClick = (index, item) => {
+        // Add the clicked card's index to the array if it's not already there
+        if (!selectedItem.includes(index)) {
+            setSelectedItem((prevSelectedItems) => [...prevSelectedItems, index]);
         }
-    }
+        addToCart(item);
 
+        setItems([...items, item])
+        console.log(items);
+
+        console.log("Added");
+    };
     useEffect(() => {
         fetchRestInfo();
         fetchMenuItems();
@@ -252,10 +253,7 @@ const Restaurant = () => {
                         All Menu</h2>
                     {isLoading ? <div>Loading...</div> : menuItems && menuItems.store.products.map((product) => (
                         product.items.map((item, index) => (
-                            <MenuCard key={index} onClick={() => {
-                                addItems(item)
-                                console.log("Added")
-                            }} title={item.name} price={item.price} desc={item.details && item.details} image={item.image_url.length > 0 ? item.image_url[0] : assets.item_placeholder} />
+                            <MenuCard key={item.unique_id} onClick={() => handleClick(item.unique_id, item)} title={item.name} price={item.price} desc={item.details && item.details} image={item.image_url.length > 0 ? item.image_url[0] : assets.item_placeholder} className={`${selectedItem.includes(item.unique_id) ? 'border border-[#0AB247]' : ''}`} />
                         ))
                     ))}
                     {/* <h2 className='text-[#2F2F3F] font-medium text-lg mb-4'>{
@@ -281,24 +279,12 @@ const Restaurant = () => {
                 }
 
                 {/* Success Popup */}
-                <SuccessPopup image={assets.success_img_2} title={"Get 30% off everything up to EBT 150.00"} desc={"The maximum discount for preorders is EBT 150, usable once, and valid until February 22, 2024."} />
+                {/* <SuccessPopup image={assets.success_img_2} title={"Get 30% off everything up to EBT 150.00"} desc={"The maximum discount for preorders is EBT 150, usable once, and valid until February 22, 2024."} /> */}
 
                 {/* Share popup */}
                 {sharePop ? <SharePopUp /> : null}
 
-                <div className='bg-white px-2 py-4 fixed bottom-0 w-full z-10'>
-                    <button onClick={() => {
-                        addToCart(items)
-                        navigate('/order')
-                    }} className='flex items-center justify-center bg-[#0AB247] text-white w-full rounded-full p-4 px-5'>
-                        <div className='flex items-center text-center gap-2'>
-                            {/* <img src={assets.shopping_basket} alt="" className='invert' /> */}
-                            Add To Basket
-                        </div>
-                        {/* <div className='text-white text-lg font-medium'>ETB140.00</div> */}
-                    </button>
-                </div>
-
+                {items.length === 0 ? <AddBi items={items} /> : <AddBii items={items} />}
             </div>
         </div>
     )

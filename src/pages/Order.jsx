@@ -32,6 +32,7 @@ const Order = () => {
     const { cartItems } = useContext(FeresContext)
     const [delPop, setDelPop] = useState(false)
     const [servicePop, setServicePop] = useState(false)
+    const [smPop, setSmPop] = useState(false)
 
     useEffect(() => {
         console.log(cartItems);
@@ -42,8 +43,8 @@ const Order = () => {
             <OrderNav />
             <DelOrPickBtn />
             <SelectRide />
-            {cartItems.map((cartItem) => (
-                <OrderedFoodCard title={cartItem["0"].name} />
+            {cartItems.slice(0, -1).map(item => (
+                <OrderedFoodCard key={item.unique_id} title={item.name} price={item.price} desc={item.details} quantity={cartItems[cartItems.length - 1].quantity} />
             ))}
             {/* <OrderedFoodCard title={item.name} price={item.price} desc={item.details} quantity={item.quantity} /> */}
             <AddItemBtn />
@@ -51,7 +52,7 @@ const Order = () => {
             <AddNoteBtn />
             <hr className='my-3' />
             <ExtraOrder />
-            <OrderSchedule />
+            <OrderSchedule onThirtyClick={() => setSmPop(true)} />
 
             <LocationPick />
 
@@ -67,7 +68,7 @@ const Order = () => {
             {riderNote ? <RiderNote /> : null}
 
             {tipRidePop ? <TIpRiderPopUp /> : null}
-            {/* <SaveMoneyPopUp /> */}
+            {smPop ? <SaveMoneyPopUp /> : null}
             {delPop ? <DeliveryFeePopup /> : null}
             {servicePop ? <ServiceFeePopup /> : null}
 

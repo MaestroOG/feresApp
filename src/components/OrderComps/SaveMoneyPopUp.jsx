@@ -3,7 +3,7 @@ import { assets } from '../../assets/assets'
 
 const SaveMoneyPopUp = () => {
     return (
-        <div className='fixed bottom-0 w-full rounded-3xl bg-white py-4'>
+        <div className='fixed bottom-0 w-full rounded-3xl bg-white py-4 z-30'>
             <div className='w-full'>
                 <img src={assets.save_money_img} alt="" className='mx-auto' />
             </div>

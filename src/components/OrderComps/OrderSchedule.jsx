@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { assets } from '../../assets/assets'
 
-const OrderSchedule = () => {
+const OrderSchedule = ({ onThirtyClick }) => {
     const dateInputRef = useRef(null);
     const timeInputRef = useRef(null);
 
@@ -38,10 +38,9 @@ const OrderSchedule = () => {
             </div>
             <hr />
             <div className='flex items-center justify-between'>
-                <div className='flex items-center gap-2' onClick={handleTimeLabelClick}>
+                <div className='flex items-center gap-2' onClick={onThirtyClick}>
                     <img src={assets.clock_light_green} alt="" />
-                    <label htmlFor='time' className='text-base text-[#2F2F3F]'>{selectedTime ? selectedTime : "30 min"}</label>
-                    <input type="time" name="" id="time" ref={timeInputRef} onChange={handleTimeChange} className='absolute left-[-9999px]' />
+                    <label htmlFor='time' className='text-base text-[#2F2F3F]'>30 mins</label>
                 </div>
                 <img src={assets.arrow_right} alt="" />
             </div>
