@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 export const FeresContext = createContext();
 
@@ -31,6 +31,38 @@ const FeresContextProvider = (props) => {
     const [cancelOption, setCancelOption] = useState('');
     const [cancelReason, setCancelReason] = useState(false)
     const [searchTerm, setSearchTerm] = useState("")
+    const [cartItems, setCartItems] = useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [])
+
+    const addToCart = (item) => {
+        const isItemInCart = cartItems.find((cartItem) => cartItem._id === item._id); // check if the item is already in the cart
+
+        if (isItemInCart) {
+            setCartItems(
+                cartItems.map((cartItem) => // if the item is already in the cart, increase the quantity of the item
+                    cartItem._id === item._id
+                        ? { ...cartItem, quantity: cartItem.quantity + 1 }
+                        : cartItem // otherwise, return the cart item
+                )
+            );
+        } else {
+            setCartItems([...cartItems, { ...item, quantity: 1 }]); // if the item is not in the cart, add the item to the cart
+        }
+    }
+
+    const clearCart = () => {
+        setCartItems([]); // set the cart items to an empty array
+    };
+
+    useEffect(() => {
+        localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    }, [cartItems]);
+
+    useEffect(() => {
+        const cartItems = localStorage.getItem("cartItems");
+        if (cartItems) {
+            setCartItems(JSON.parse(cartItems));
+        }
+    }, []);
 
 
     const handleDiscountChange = (event) => {
@@ -50,6 +82,10 @@ const FeresContextProvider = (props) => {
     }
 
     const value = {
+        cartItems,
+        setCartItems,
+        clearCart,
+        addToCart,
         searchTerm,
         setSearchTerm,
         visible,

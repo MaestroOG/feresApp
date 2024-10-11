@@ -163,8 +163,12 @@ import address_sticker from './address_sticker.png'
 import edit_02 from './edit_02.png'
 import success_img_3 from './success_img_3.png'
 import item_placeholder from './item_placeholder.png'
+import cover_placeholder from './cover_placeholder.png'
+import logo_placeholder from './logo_placeholder.png'
 
 export const assets = {
+    logo_placeholder,
+    cover_placeholder,
     item_placeholder,
     success_img_3,
     edit_02,

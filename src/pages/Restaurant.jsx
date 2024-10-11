@@ -15,7 +15,7 @@ const Restaurant = () => {
 
     const { id } = useParams();
 
-
+    const [items, setItems] = useState([])
     const [isLoading, setLoading] = useState(true)
     const [restInfo, setRestInfo] = useState(null)
     const [menuItems, setMenuItems] = useState(null)
@@ -24,7 +24,7 @@ const Restaurant = () => {
     const { deliverPopup, setDeliverPopup } = useContext(FeresContext)
     const [categories, setCategories] = useState([])
     const [categoryBtn, setCategoryBtn] = useState('All Menu');
-    const { foodPopup, setSharePop, sharePop } = useContext(FeresContext)
+    const { foodPopup, setSharePop, sharePop, addToCart } = useContext(FeresContext)
     const { foodSearch, setFoodSearch } = useContext(FeresContext)
     const [deliverPop, setDeliverPop] = useState(false)
     const [pickupPop, setPickupPop] = useState(false)
@@ -112,15 +112,18 @@ const Restaurant = () => {
         }
     }
 
-    const addCategories = () => {
-        if (menuItems) {
-            menuItems.store.products.map(product => (
-                setCategories([...categories, product.name])
-            ))
+    const addItems = (item) => {
+        const isItemInCart = items.find((cartItem) => cartItem._id === item._id); // check if the item is already in the cart
+
+        if (isItemInCart) {
+            setItems(
+                items.map((cartItem) =>
+                    [...cartItem]
+                )
+            );
+        } else {
+            setItems([...items, { ...item, quantity: 1 }]);
         }
-
-        console.log(categories);
-
     }
 
     useEffect(() => {
@@ -128,12 +131,16 @@ const Restaurant = () => {
         fetchMenuItems();
         // addCategories()
     }, [])
+
+    useEffect(() => {
+        console.log(items)
+    }, [items])
     return (
         <div>
             {/* Feature */}
             <div className='relative'>
                 {isLoading ? <div>Loading...</div> : (
-                    <img src={restInfo && restInfo.store_detail.cover_image_url ? restInfo.store_detail.cover_image_url : restInfo.store_detail.image_url} alt="" />
+                    <img src={restInfo && restInfo.store_detail.cover_image_url ? restInfo.store_detail.cover_image_url : assets.cover_placeholder} alt="" />
                 )}
                 <button className='absolute top-[10%] left-[4%] bg-[#06060666] p-3 rounded-xl'>
                     <img onClick={() => navigate(-1)} src={assets.arrow_left_02} alt="" className='invert' />
@@ -156,7 +163,7 @@ const Restaurant = () => {
             <div className='bg-white'>
                 <div className="flex items-center justify-between pt-5 px-4">
                     <div className='flex items-center gap-2'>
-                        <img src={assets.kfc_logo} alt="" />
+                        <img src={assets.logo_placeholder} alt="" />
                         {isLoading ? <div>Loading...</div> : restInfo && <h2 className='text-xl font-bold text-[#2F2F3F]'>{restInfo.store_detail.name}</h2>}
                     </div>
                     <div className='flex items-center gap-1' onClick={() => navigate('/review')}>
@@ -245,7 +252,10 @@ const Restaurant = () => {
                         All Menu</h2>
                     {isLoading ? <div>Loading...</div> : menuItems && menuItems.store.products.map((product) => (
                         product.items.map((item, index) => (
-                            <MenuCard key={index} title={item.name} price={item.price} desc={item.details && item.details} image={item.image_url.length > 0 ? item.image_url[0] : assets.item_placeholder} />
+                            <MenuCard key={index} onClick={() => {
+                                addItems(item)
+                                console.log("Added")
+                            }} title={item.name} price={item.price} desc={item.details && item.details} image={item.image_url.length > 0 ? item.image_url[0] : assets.item_placeholder} />
                         ))
                     ))}
                     {/* <h2 className='text-[#2F2F3F] font-medium text-lg mb-4'>{
@@ -277,7 +287,10 @@ const Restaurant = () => {
                 {sharePop ? <SharePopUp /> : null}
 
                 <div className='bg-white px-2 py-4 fixed bottom-0 w-full z-10'>
-                    <button onClick={() => navigate('/order')} className='flex items-center justify-center bg-[#0AB247] text-white w-full rounded-full p-4 px-5'>
+                    <button onClick={() => {
+                        addToCart(items)
+                        navigate('/order')
+                    }} className='flex items-center justify-center bg-[#0AB247] text-white w-full rounded-full p-4 px-5'>
                         <div className='flex items-center text-center gap-2'>
                             {/* <img src={assets.shopping_basket} alt="" className='invert' /> */}
                             Add To Basket

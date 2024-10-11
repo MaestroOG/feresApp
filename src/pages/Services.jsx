@@ -77,7 +77,7 @@ const Services = () => {
                                 <div key={index} className="flex items-center gap-4">
                                     <div className='mt-6 w-max' onClick={() => navigate(`/restaurant/${store._id}`)}>
                                         {/* Top */}
-                                        <img src={store.image_url} alt="" className='w-[365px]' />
+                                        <img src={store.image_url} alt="" className='w-[365px] h-[140.98px] rounded-2xl object-cover' />
                                         {/* Bottom */}
                                         <div className='mt-3'>
                                             <div className='flex items-center justify-between gap-2'>
@@ -106,7 +106,7 @@ const Services = () => {
                                 <div key={index} className="flex items-center gap-4">
                                     <div className='mt-6 w-max' onClick={() => navigate(`/restaurant/${store._id}`)}>
                                         {/* Top */}
-                                        <img src={store.image_url} alt="" className='w-[365px]' />
+                                        <img src={store.image_url} alt="" className='w-[365px] h-[140.98px] rounded-2xl object-cover' />
                                         {/* Bottom */}
                                         <div className='mt-3'>
                                             <div className='flex items-center justify-between gap-2'>

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import OrderNav from '../components/OrderComps/OrderNav'
 import DelOrPickBtn from '../components/OrderComps/DelOrPickBtn'
 import SelectRide from '../components/OrderComps/SelectRide'
@@ -29,16 +29,23 @@ import { useNavigate } from 'react-router-dom'
 const Order = () => {
     const navigate = useNavigate()
     const { orderNote, riderNote, tipBtn, tipRidePop, setTipRidePop } = useContext(FeresContext)
+    const { cartItems } = useContext(FeresContext)
     const [delPop, setDelPop] = useState(false)
     const [servicePop, setServicePop] = useState(false)
 
+    useEffect(() => {
+        console.log(cartItems);
+
+    }, [])
     return (
         <div className='pb-24'>
             <OrderNav />
             <DelOrPickBtn />
             <SelectRide />
-            <OrderedFoodCard />
-            <OrderedFoodCard />
+            {cartItems.map((cartItem) => (
+                <OrderedFoodCard title={cartItem["0"].name} />
+            ))}
+            {/* <OrderedFoodCard title={item.name} price={item.price} desc={item.details} quantity={item.quantity} /> */}
             <AddItemBtn />
             <SpecialReq />
             <AddNoteBtn />
