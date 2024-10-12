@@ -55,7 +55,7 @@ const FeaturedRests = () => {
     return (
         <div className='mt-12 px-4'>
             {searchResult && <h2 className='text-base text-[#2F2F3F] font-medium'>Featured restaurants</h2>}
-            {isLoading ? <div className='text-center'>Loading...</div> : searchResult.hasOwnProperty('message') ? searchResult.stores.map(store => (
+            {isLoading ? <div className='text-center'>Loading...</div> : searchResult && searchResult.hasOwnProperty('message') ? searchResult.stores.map(store => (
                 store.stores.map((store, index) => (
                     <FeaturedRestsCard key={index} title={store.name} desc={store.Description} userRate={store.user_rate} userRateQuantity={store.user_rate_count} img={store.image_url} delivery={store.delivery_time} onClick={() => navigate(`/restaurant/${store._id}`)} />
                 ))
