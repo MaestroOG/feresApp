@@ -28,7 +28,7 @@ import { useNavigate } from 'react-router-dom'
 
 const Order = () => {
     const navigate = useNavigate()
-    const { orderNote, riderNote, tipBtn, tipRidePop, setTipRidePop } = useContext(FeresContext)
+    const { orderNote, riderNote, tipBtn, tipRidePop } = useContext(FeresContext)
     const { cartItems } = useContext(FeresContext)
     const [delPop, setDelPop] = useState(false)
     const [servicePop, setServicePop] = useState(false)
@@ -36,7 +36,6 @@ const Order = () => {
 
     useEffect(() => {
         console.log(cartItems);
-
     }, [])
     return (
         <div className='pb-24'>

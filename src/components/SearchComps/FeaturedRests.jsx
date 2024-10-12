@@ -55,11 +55,11 @@ const FeaturedRests = () => {
     return (
         <div className='mt-12 px-4'>
             {searchResult && <h2 className='text-base text-[#2F2F3F] font-medium'>Featured restaurants</h2>}
-            {isLoading ? <div className='text-center'>Loading...</div> : searchResult && searchResult.stores.map(store => (
+            {isLoading ? <div className='text-center'>Loading...</div> : searchResult.hasOwnProperty('message') ? searchResult.stores.map(store => (
                 store.stores.map((store, index) => (
                     <FeaturedRestsCard key={index} title={store.name} desc={store.Description} userRate={store.user_rate} userRateQuantity={store.user_rate_count} img={store.image_url} delivery={store.delivery_time} onClick={() => navigate(`/restaurant/${store._id}`)} />
                 ))
-            ))}
+            )) : <div className='mt-8 text-center'>No Restaurant Found</div>}
 
             {/* <FeaturedRestsCard img={assets.featured_rest_img} title={"KFC Eastlight"} desc={"Burger, Fast Food, American..."} userRate={"4.50"} userRateQuantity={"50+"} price={"150.00"} delivery={"40"} onClick={() => navigate('/restaurant')} /> */}
 

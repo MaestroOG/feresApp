@@ -1,6 +1,6 @@
 import React, { useContext, useState, useRef, useEffect } from 'react'
 import { assets } from '../assets/assets';
-import { useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { FeresContext } from '../context/FeresContext';
 import PickupPopup from '../components/RestaurantComps/PickupPopup';
 import DeliveredPopup from '../components/RestaurantComps/DeliveredPopup';
@@ -224,7 +224,7 @@ const Restaurant = () => {
                 <div className='px-4 mt-7 sticky top-0 bg-white py-5'>
                     <div className='flex items-center justify-between'>
                         <h2 className='text-[#2F2F3F] text-lg'>Categories</h2>
-                        <p className='text-[#979797] text-base' onClick={() => navigate('/restaurant/categories')}>View all</p>
+                        <Link className='text-[#979797] text-base' to={`/restaurant/${id}/categories`}>View all</Link>
                     </div>
 
 
