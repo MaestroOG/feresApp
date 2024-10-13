@@ -57,13 +57,13 @@ const AllRestCard = () => {
                 store.stores.map((store, index) => (
                     <>
                         <div key={index} className='w-full mt-8 mb-5 relative' onClick={() => navigate(`/restaurant/${store._id}`)}>
-                            <img src={store.image_url} alt="" className='w-[365px] h-[140.98px] rounded-2xl object-cover' />
+                            <img src={store.image_url} alt="" className='rounded-tr-2xl rounded-tl-2xl object-cover' />
 
-                            <div className='bg-white text-black flex items-center gap-2 p-3 rounded-3xl absolute bottom-2 right-36'>
+                            <div className='whitespace-nowrap bg-white text-black flex items-center gap-2 p-3 rounded-3xl absolute bottom-2 right-[7.4rem]'>
                                 <img src={assets.clock_img} alt="" />
                                 <p className='text-sm'>{store.delivery_time} mins</p>
                             </div>
-                            <div className='bg-white text-black flex items-center gap-2 p-3 rounded-3xl absolute bottom-2 right-9'>
+                            <div className='whitespace-nowrap bg-white text-black flex items-center gap-2 p-3 rounded-3xl absolute bottom-2 right-2'>
                                 <img src={assets.scooter_img} alt="" />
                                 <p className='text-sm'>EBT 150</p>
                             </div>
@@ -71,7 +71,7 @@ const AllRestCard = () => {
                         <div className='mb-8'>
                             <div className='flex items-center justify-between gap-2'>
                                 <h2 className='font-bold text-base'>{store.name}</h2>
-                                <div className='flex items-center gap-1 justify-center mr-6'>
+                                <div className='flex items-center gap-1 justify-center mr-1'>
                                     <img className='mb-1' src={assets.star} alt="" />
                                     <h2 className='text-base'>{store.user_rate}</h2>
                                 </div>

@@ -33,9 +33,6 @@ const Restaurant = () => {
     const [selectedDate, setSelectedDate] = useState('')
     const [selectedItem, setSelectedItem] = useState([])
 
-    const [selectedTime, setSelectedTime] = useState('')
-    const timeInputRef = useRef(null);
-
     const handleDateLabelClick = () => {
         // Trigger click event on the hidden time input
         dateInputRef.current.click();
@@ -43,15 +40,6 @@ const Restaurant = () => {
 
     const handleDateChange = (e) => {
         setSelectedDate(e.target.value)
-    }
-
-    const handleTimeLabelClick = () => {
-        // Trigger click event on the hidden time input
-        timeInputRef.current.click();
-    };
-
-    const handleTimeChange = (e) => {
-        setSelectedTime(e.target.value)
     }
 
     const fetchRestInfo = async () => {
@@ -191,8 +179,8 @@ const Restaurant = () => {
                 <div className='mt-7 px-4'>
                     <div className='flex items-center gap-2 mb-4'>
                         <img src={assets.clock_green} alt="" />
-                        <label onClick={handleTimeLabelClick} className='text-base text-[#1E1E1E]'>{selectedTime ? selectedTime : restInfo && restInfo.store_detail.delivery_time + " mins"}</label>
-                        <input type="time" name="" id="time" ref={timeInputRef} onChange={handleTimeChange} className='absolute left-[-9999px]' />
+                        <label className='text-base text-[#1E1E1E]'>{restInfo && restInfo.store_detail.delivery_time + " mins"}</label>
+
                     </div>
                     <div className='flex items-center gap-2'>
                         <img src={assets.location_green} alt="" />
