@@ -55,7 +55,7 @@ const Offers = () => {
                         {/* <img src={assets.offer_bg} alt="" /> */}
                         {promotionData && promotionData.promotions_list.map((item) => (
                             item.store_info.map((store, index) => (
-                                <img key={index} src={store.image_url} alt="" className='w-[365px] h-[140.98px] rounded-2xl object-cover' onClick={() => navigate(`/restaurant/${store._id}`)} />
+                                <img key={index} src={store.image_url} alt="" className='w-[365px] h-[140.98px] rounded-tr-3xl rounded-tl-3xl object-cover' onClick={() => navigate(`/restaurant/${store._id}`)} />
                             ))
                         ))}
                         {/* Card Top Stickers */}
@@ -111,7 +111,7 @@ const Offers = () => {
                         {/* <img src={assets.offer_bg} alt="" /> */}
                         {promotionData && promotionData.promotions_list.map((item) => (
                             item.store_info.map(store => (
-                                <img src={store.image_url} alt="" className='w-[365px] h-[140.98px] rounded-2xl object-cover' />
+                                <img src={store.image_url} alt="" className='w-[365px] h-[140.98px] rounded-tr-3xl rounded-tl-3xl object-cover' />
                             ))
                         ))}
                         {/* Card Top Stickers */}

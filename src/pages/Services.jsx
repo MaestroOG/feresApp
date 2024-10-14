@@ -14,6 +14,30 @@ const Services = () => {
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState(true)
     const [topRest, setTopRest] = useState(null)
+    const [groceryStore, setGroceryStore] = useState(null)
+
+    const fetchGroceryStores = async () => {
+        try {
+            const res = await fetch(import.meta.env.VITE_API_URI + '/api/e-commerce/get_ecommerce_stores_list', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': '*/*',
+                },
+            });
+
+            if (!res.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const data = await res.json();
+            setGroceryStore(data);
+            setIsLoading(false);
+            console.log(groceryStore);
+        } catch (error) {
+            console.error('Fetch error: ', error);
+        }
+    }
 
     const fetchTopRest = async () => {
         const requestBody = {
@@ -57,6 +81,7 @@ const Services = () => {
 
     useEffect(() => {
         fetchTopRest();
+        fetchGroceryStores();
         // console.log(topRest);
     }, [])
 
@@ -77,7 +102,7 @@ const Services = () => {
                                 <div key={index} className="flex items-center gap-4">
                                     <div className='mt-6 w-max' onClick={() => navigate(`/restaurant/${store._id}`)}>
                                         {/* Top */}
-                                        <img src={store.image_url} alt="" className='w-[365px] h-[166px] rounded-2xl object-cover' />
+                                        <img src={store.image_url} alt="" className='w-[365px] h-[166px] rounded-tr-3xl rounded-tl-3xl object-cover' />
                                         {/* Bottom */}
                                         <div className='mt-3'>
                                             <div className='flex items-center justify-between gap-2'>
@@ -98,33 +123,31 @@ const Services = () => {
             </>
             <>
                 <div className='w-full px-2 mt-8'>
-                    <h2 className='text-[#2F2F3F] text-lg font-medium'>Grocery stores</h2>
+                    <h2 className='text-[#2F2F3F] text-lg font-medium'>Grocery restaurants</h2>
                     <div className='flex items-center gap-3 overflow-auto no-scrollbar'>
-                        {isLoading ? <div>Loading...</div> : topRest && topRest.stores.map((store, index) => (
-
-                            store.stores.slice(0, 1).map((store, index) => (
-                                <div key={index} className="flex items-center gap-4">
-                                    <div className='mt-6 w-max' onClick={() => navigate(`/restaurant/${store._id}`)}>
-                                        {/* Top */}
-                                        <img src={store.image_url} alt="" className='w-[365px] h-[166px] rounded-2xl object-cover' />
-                                        {/* Bottom */}
-                                        <div className='mt-3'>
-                                            <div className='flex items-center justify-between gap-2'>
-                                                <h2 className='font-bold text-base'>{store.name}</h2>
-                                                <div className='flex items-center gap-1 justify-center'>
-                                                    <img className='mb-1' src={assets.star} alt="" />
-                                                    <h2 className='text-base'>{store.user_rate}</h2>
-                                                </div>
+                        {isLoading ? <div>Loading...</div> : groceryStore && groceryStore.stores.slice(0, 2).map((store, index) => (
+                            <div key={index} className="flex items-center gap-4">
+                                <div className='mt-6 w-max' onClick={() => navigate(`/restaurant/${store._id}`)}>
+                                    {/* Top */}
+                                    <img src={store.image_url} alt="" className='w-[365px] h-[166px] rounded-tr-3xl rounded-tl-3xl object-cover' />
+                                    {/* Bottom */}
+                                    <div className='mt-3'>
+                                        <div className='flex items-center justify-between gap-2'>
+                                            <h2 className='font-bold text-base'>{store.name}</h2>
+                                            <div className='flex items-center gap-1 justify-center'>
+                                                <img className='mb-1' src={assets.star} alt="" />
+                                                <h2 className='text-base'>{store.user_rate}</h2>
                                             </div>
-                                            <p className='text-xs text-[#979797]'>{store.Description}</p>
                                         </div>
+                                        <p className='text-xs text-[#979797]'>{store.Description}</p>
                                     </div>
                                 </div>
-                            ))
+                            </div>
                         ))}
                     </div>
                 </div>
             </>
+
             {/* <GroceryStore /> */}
             <Menu />
         </div>
