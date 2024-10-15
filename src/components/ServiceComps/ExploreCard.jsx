@@ -1,8 +1,8 @@
 import React from 'react'
 
-const ExploreCard = ({ name, img }) => {
+const ExploreCard = ({ name, img, onClick }) => {
     return (
-        <div className='flex flex-col items-center justify-center w-screen first-of-type:pl-5'>
+        <div className='flex flex-col items-center justify-center w-screen first-of-type:pl-5' onClick={onClick}>
             <div className='mt-9 bg-[#F3F4F6] px-[18px] py-[33px] w-[110px] rounded-[13px]'>
                 <img src={img} className="ml-3" />
             </div>
