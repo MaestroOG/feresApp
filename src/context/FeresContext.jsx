@@ -33,6 +33,8 @@ const FeresContextProvider = (props) => {
     const [searchTerm, setSearchTerm] = useState("")
     const [cartItems, setCartItems] = useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [])
     const [searchValue, setSearchValue] = useState("");
+    const [tab, setTab] = useState('home');
+    const [orderCat, setOrderCat] = useState('Active')
 
     const addToCart = (item) => {
         const isItemInCart = cartItems.find((cartItem) => cartItem._id === item._id); // check if the item is already in the cart
@@ -87,6 +89,10 @@ const FeresContextProvider = (props) => {
     }
 
     const value = {
+        orderCat,
+        setOrderCat,
+        tab,
+        setTab,
         searchValue,
         setSearchValue,
         cartItems,

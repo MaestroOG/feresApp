@@ -71,7 +71,7 @@ const Offers = () => {
                             ))}
 
                         </div>
-                        <div className='flex items-center gap-2 bg-white w-[91px] h-[40px] p-[10px] rounded-[30px] absolute bottom-14 right-4'>
+                        <div className='flex items-center gap-2 bg-white w-[91px] h-[40px] p-[10px] rounded-[30px] absolute bottom-14 right-3'>
                             <img src={assets.scooter_02} alt="" className='w-5' />
                             {promotionData && promotionData.promotions_list.map(item => (
                                 item.store_info.map(store => (

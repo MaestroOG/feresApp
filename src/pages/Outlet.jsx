@@ -29,6 +29,8 @@ import BookRide from './BookRide'
 import RateRider from './RateRider'
 import RateFood from './RateFood'
 import CancelOrder from './CancelOrder'
+import OrderPage from './OrderPage'
+import OrderSearch from '../components/OrderPageComps/OrderSearch'
 
 const Outlet = () => {
     return (
@@ -50,7 +52,7 @@ const Outlet = () => {
                 <Route path='/restaurantsupport/restaurantissue' element={<RestaurantIssue />} />
                 <Route path='/chatsupport' element={<ChatSupport />} />
                 <Route path='/food' element={<Food />} />
-                <Route path='/order' element={<Order />} />
+                <Route path='/cart' element={<Order />} />
                 <Route path='/selectlocation' element={<SelectLocation />} />
                 <Route path='/selectlocation/locationsearch' element={<LocationSearch />} />
                 <Route path='/selectpayment' element={<SelectPayment />} />
@@ -63,6 +65,8 @@ const Outlet = () => {
                 <Route path='/raterider' element={<RateRider />} />
                 <Route path='/ratefood' element={<RateFood />} />
                 <Route path='/cancelorder' element={<CancelOrder />} />
+                <Route path='/order' element={<OrderPage />} />
+                <Route path='/ordersearch' element={<OrderSearch />} />
             </Routes>
         </>
     )

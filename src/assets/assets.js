@@ -165,8 +165,20 @@ import success_img_3 from './success_img_3.png'
 import item_placeholder from './item_placeholder.png'
 import cover_placeholder from './cover_placeholder.png'
 import logo_placeholder from './logo_placeholder.png'
+import home_01 from './home_01.png'
+import invoice_01 from './invoice_01.png'
+import separator from './separator.png'
+import invoice_lg from './invoice_lg.png'
+import order_rest_img from './order_rest_img.png'
+import line from './line.png'
 
 export const assets = {
+    line,
+    order_rest_img,
+    invoice_lg,
+    separator,
+    home_01,
+    invoice_01,
     logo_placeholder,
     cover_placeholder,
     item_placeholder,

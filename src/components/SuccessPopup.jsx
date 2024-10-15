@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const SuccessPopup = ({ image, title, desc }) => {
 
+    const navigate = useNavigate()
     const [successVisible, setSuccessVisible] = useState(true)
 
     return (
@@ -11,7 +13,10 @@ const SuccessPopup = ({ image, title, desc }) => {
                 <img src={image} alt="" />
                 <h3 className='font-bold text-xl text-center text-[#0AB247] mt-5'>{title}</h3>
                 <p className='text-sm text-[#2F2F3F] text-center mt-2'>{desc}</p>
-                <button onClick={() => setSuccessVisible(false)} className='bg-[#0AB247] px-8 py-4 text-white rounded-full w-3/4 mt-4 font-medium text-xl'>Got it</button>
+                <button onClick={() => {
+                    setSuccessVisible(false)
+                    navigate('/')
+                }} className='bg-[#0AB247] px-8 py-4 text-white rounded-full w-3/4 mt-4 font-medium text-xl'>Got it</button>
             </div>
 
         </div>
