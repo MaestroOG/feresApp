@@ -59,7 +59,7 @@ const FeaturedRests = () => {
                 store.stores.map((store, index) => (
                     <FeaturedRestsCard key={index} title={store.name} desc={store.Description} userRate={store.user_rate} userRateQuantity={store.user_rate_count} img={store.image_url} delivery={store.delivery_time} onClick={() => navigate(`/restaurant/${store._id}`)} />
                 ))
-            )) : <div className='mt-8 text-center'>No Restaurant Found</div>}
+            )) : null}
 
             {/* <FeaturedRestsCard img={assets.featured_rest_img} title={"KFC Eastlight"} desc={"Burger, Fast Food, American..."} userRate={"4.50"} userRateQuantity={"50+"} price={"150.00"} delivery={"40"} onClick={() => navigate('/restaurant')} /> */}
 
