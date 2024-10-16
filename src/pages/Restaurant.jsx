@@ -12,6 +12,7 @@ import FoodPopUp from '../components/RestaurantComps/FoodPopUp';
 import SharePopUp from '../components/RestaurantComps/SharePopUp';
 import AddBi from '../components/RestaurantComps/AddBi';
 import AddBii from '../components/RestaurantComps/AddBii';
+import './Restaurant.css'
 
 const Restaurant = () => {
 
@@ -25,7 +26,7 @@ const Restaurant = () => {
     const navigate = useNavigate()
     const { deliverPopup, setDeliverPopup } = useContext(FeresContext)
     const [categories, setCategories] = useState([])
-    const [categoryBtn, setCategoryBtn] = useState('All Menu');
+    const [categoryBtn, setCategoryBtn] = useState('');
     const { foodPopup, setSharePop, sharePop, addToCart } = useContext(FeresContext)
     const { foodSearch, setFoodSearch } = useContext(FeresContext)
     const [deliverPop, setDeliverPop] = useState(false)
@@ -124,6 +125,7 @@ const Restaurant = () => {
     useEffect(() => {
         console.log(items)
     }, [items])
+
     return (
         <div>
             {/* Feature */}
@@ -220,7 +222,7 @@ const Restaurant = () => {
 
                     <div className='mt-6 flex gap-3 overflow-auto category-btns'>
                         {isLoading ? <div>Loading...</div> : menuItems && menuItems.store.products.map((product, index) => (
-                            <button key={index} className={`${categoryBtn == product.name ? ' bg-[#0AB247] text-white' : 'border border-[#EEEEEE] text-[#AEAEAE]'} rounded-xl px-[10px] py-[5px] whitespace-nowrap`} onClick={() => setCategoryBtn(product.name)}>{product.name}</button>
+                            <button key={index} className={`${categoryBtn === product.name ? 'active' : 'inactive'}  rounded-xl px-[10px] py-[5px] whitespace-nowrap`} onClick={() => setCategoryBtn(product.name)}>{product.name}</button>
                         ))}
                     </div>
 

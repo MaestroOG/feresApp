@@ -86,7 +86,7 @@ const Services = () => {
     }, [])
 
     return (
-        <div className='pb-24'>
+        <div className='pb-24 overflow-hidden'>
             <Navbar />
             <SearchBar />
             <ServiceCard />

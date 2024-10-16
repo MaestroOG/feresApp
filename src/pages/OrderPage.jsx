@@ -9,7 +9,7 @@ import OrderCards from '../components/OrderPageComps/OrderCards';
 const OrderPage = () => {
     const { orderCat } = useContext(FeresContext)
     return (
-        <div className='h-screen'>
+        <div className='h-screen overflow-hidden'>
             <OrderPageNav />
             <div className='px-2 mt-5'>
                 <OrderCategoryBtn />

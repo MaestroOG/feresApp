@@ -1,0 +1,17 @@
+/* Smooth transition for button styles */
+button {
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* Adjust duration as needed */
+}
+
+/* Active button style */
+button.active {
+    background-color: #0AB247;
+    /* Your active background color */
+    color: white;
+}
+
+button.inactive {
+    border: 1px solid #EEEEEE;
+    color: #AEAEAE;
+}
