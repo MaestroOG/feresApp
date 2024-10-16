@@ -171,8 +171,28 @@ import separator from './separator.png'
 import invoice_lg from './invoice_lg.png'
 import order_rest_img from './order_rest_img.png'
 import line from './line.png'
+import message_02 from './message_02.png'
+import call_lg from './call_lg.png'
+import message_multiple_01 from './message_multiple_01.png'
+import jacob_jones from './jacob_jones.png'
+import call_green from './call_green.png'
+import arrow_up_right_01 from './arrow_up_right_01.png'
+import arrow_down_left_01 from './arrow_down_left_01.png'
+import call from './call.png'
+import video_01 from './video_01.png'
+import message_active from './message_active.png'
 
 export const assets = {
+    message_active,
+    video_01,
+    call,
+    arrow_down_left_01,
+    arrow_up_right_01,
+    call_green,
+    call_lg,
+    jacob_jones,
+    message_multiple_01,
+    message_02,
     line,
     order_rest_img,
     invoice_lg,

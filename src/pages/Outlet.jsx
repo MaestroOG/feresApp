@@ -31,6 +31,8 @@ import RateFood from './RateFood'
 import CancelOrder from './CancelOrder'
 import OrderPage from './OrderPage'
 import OrderSearch from '../components/OrderPageComps/OrderSearch'
+import Messages from './Messages'
+import RiderChat from './RiderChat'
 
 const Outlet = () => {
     return (
@@ -67,6 +69,8 @@ const Outlet = () => {
                 <Route path='/cancelorder' element={<CancelOrder />} />
                 <Route path='/order' element={<OrderPage />} />
                 <Route path='/ordersearch' element={<OrderSearch />} />
+                <Route path='/messages' element={<Messages />} />
+                <Route path='/messages/riderchat' element={<RiderChat />} />
             </Routes>
         </>
     )
