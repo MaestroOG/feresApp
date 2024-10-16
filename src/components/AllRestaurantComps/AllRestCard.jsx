@@ -57,7 +57,7 @@ const AllRestCard = () => {
                 store.stores.map((store, index) => (
                     <>
                         <div key={index} className='w-full mt-8 mb-5 relative' onClick={() => navigate(`/restaurant/${store._id}`)}>
-                            <img src={store.image_url} alt="" className='rounded-tr-2xl rounded-tl-2xl object-cover' />
+                            <img src={store.image_url} alt="" className='rounded-tr-2xl rounded-tl-2xl object-cover h-[154px] w-full' />
 
                             <div className='whitespace-nowrap bg-white text-black flex items-center gap-2 p-3 rounded-3xl absolute bottom-2 right-[7.4rem]'>
                                 <img src={assets.clock_img} alt="" />
