@@ -194,8 +194,12 @@ import notification_03 from './notification_03.png'
 import discount_02 from './discount_02.png'
 import alert_circle from './alert_circle.png'
 import rider_character from './rider_character.png'
+import favorite_lg from './favourite_lg.png'
+import favourite_active from './favourite_active.png'
 
 export const assets = {
+    favourite_active,
+    favorite_lg,
     rider_character,
     money_04,
     notification_03,
