@@ -27,7 +27,8 @@ const OrderPage = () => {
                     <OrderCards paidStatus={"Completed"} btnText={"Reorder"} />
                 </> : orderCat === 'Cancelled' ? <>
                     <OrderCards paidStatus={"Cancelled"} btnText={"Reorder"} />
-                </> : <NoOrderWarn />}
+                </> : <NoOrderWarn orderCat={orderCat} />}
+                {/* <NoOrderWarn orderCat={orderCat} /> */}
             </div>
             <Menu />
         </div>

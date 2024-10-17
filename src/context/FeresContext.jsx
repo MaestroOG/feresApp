@@ -36,6 +36,7 @@ const FeresContextProvider = (props) => {
     const [orderCat, setOrderCat] = useState('Active')
     const [callOrChat, setCallOrChat] = useState("chat");
     const [callTypePop, setCallTypePop] = useState(false)
+    const [deleteGroupOrder, setDeleteGroupOrder] = useState(false)
 
     const addToCart = (item) => {
         const isItemInCart = cartItems.find((cartItem) => cartItem._id === item._id); // check if the item is already in the cart
@@ -90,6 +91,8 @@ const FeresContextProvider = (props) => {
     }
 
     const value = {
+        deleteGroupOrder,
+        setDeleteGroupOrder,
         callTypePop,
         setCallTypePop,
         callOrChat,

@@ -33,6 +33,9 @@ import OrderPage from './OrderPage'
 import OrderSearch from '../components/OrderPageComps/OrderSearch'
 import Messages from './Messages'
 import RiderChat from './RiderChat'
+import FullCart from './FullCart'
+import Profile from './Profile'
+import Favorite from './Favorite'
 
 const Outlet = () => {
     return (
@@ -71,6 +74,9 @@ const Outlet = () => {
                 <Route path='/ordersearch' element={<OrderSearch />} />
                 <Route path='/messages' element={<Messages />} />
                 <Route path='/messages/riderchat' element={<RiderChat />} />
+                <Route path='/grouporder' element={<FullCart />} />
+                <Route path='/profile' element={<Profile />} />
+                <Route path='/profile/favorite' element={<Favorite />} />
             </Routes>
         </>
     )

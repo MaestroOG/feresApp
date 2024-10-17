@@ -38,9 +38,16 @@ const Menu = () => {
                     </>
                 )}
             </NavLink>
-            <NavLink className={({ isActive }) => `${isActive ? 'text-[#0AB247]' : 'text-[#CCCCCC]'} px-3 flex flex-col items-center justify-center`}>
-                <img src={assets.user_icon} alt="" />
-                <p className='text-sm text-[#CCCCCC] mt-1'>Profile</p>
+            <NavLink to={'/profile'} className={({ isActive }) => `${isActive ? 'text-[#0AB247]' : 'text-[#CCCCCC]'} px-3 flex flex-col items-center justify-center`}>
+                {({ isActive }) => (
+                    <>
+                        <img
+                            src={isActive ? assets.user_02 : assets.user_icon}
+                            alt="Nav Icon"
+                        />
+                        <p className={`text-sm mt-1`}>Profile</p>
+                    </>
+                )}
             </NavLink>
         </div>
     )

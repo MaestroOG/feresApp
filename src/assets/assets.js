@@ -181,8 +181,34 @@ import arrow_down_left_01 from './arrow_down_left_01.png'
 import call from './call.png'
 import video_01 from './video_01.png'
 import message_active from './message_active.png'
+import shopping_basket_lg from './shopping_basket_lg.png'
+import delete_lg from './delete_lg.png'
+import arrow_right_03 from './arrow_right_03.png'
+import user_02 from './user_02.svg'
+import abraham_john from './abraham_john.png'
+import edit_profile from './edit_profile.png'
+import language_skill from './language_skill.svg'
+import favourite from './favourite.png'
+import money_04 from './money_04.png'
+import notification_03 from './notification_03.png'
+import discount_02 from './discount_02.png'
+import alert_circle from './alert_circle.png'
+import rider_character from './rider_character.png'
 
 export const assets = {
+    rider_character,
+    money_04,
+    notification_03,
+    discount_02,
+    alert_circle,
+    favourite,
+    language_skill,
+    edit_profile,
+    abraham_john,
+    user_02,
+    arrow_right_03,
+    delete_lg,
+    shopping_basket_lg,
     message_active,
     video_01,
     call,

@@ -1,0 +1,40 @@
+/* Container for swipeable card */
+.swipe-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.card-content {
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Swiped class moves the card to the left */
+.swipe-container.swiped .card-content {
+    transform: translateX(-100px);
+    /* Adjust the value to reveal the delete button */
+}
+
+/* Delete icon */
+.delete-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.delete-icon.visible {
+    opacity: 1;
+}
+
+/* Icon size */
+.icon {
+    width: 24px;
+    height: 24px;
+    stroke: red;
+}
