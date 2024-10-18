@@ -200,8 +200,10 @@ import more_horizontal from './more_horizontal.png'
 import promotion_img from './promotion_img.png'
 import discount_tag_02 from './discount_tag_02.svg'
 import promotion_sticker from './promotion_sticker.svg'
+import notification_lg from './notification_lg.png'
 
 export const assets = {
+    notification_lg,
     promotion_sticker,
     discount_tag_02,
     promotion_img,
