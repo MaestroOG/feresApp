@@ -196,8 +196,16 @@ import alert_circle from './alert_circle.png'
 import rider_character from './rider_character.png'
 import favorite_lg from './favourite_lg.png'
 import favourite_active from './favourite_active.png'
+import more_horizontal from './more_horizontal.png'
+import promotion_img from './promotion_img.png'
+import discount_tag_02 from './discount_tag_02.svg'
+import promotion_sticker from './promotion_sticker.svg'
 
 export const assets = {
+    promotion_sticker,
+    discount_tag_02,
+    promotion_img,
+    more_horizontal,
     favourite_active,
     favorite_lg,
     rider_character,

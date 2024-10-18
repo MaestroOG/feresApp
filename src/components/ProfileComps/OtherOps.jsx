@@ -13,14 +13,14 @@ const OtherOps = () => {
                 </div>
                 <img src={assets.arrow_right} alt="" />
             </Link>
-            <Link className='flex items-center justify-between px-4 mb-10'>
+            <Link to={'/profile/paymentmethods'} className='flex items-center justify-between px-4 mb-10'>
                 <div className='flex items-center gap-3'>
                     <img src={assets.money_04} alt="" />
                     <p className='text-lg text-[#2F2F3F]'>Payment method</p>
                 </div>
                 <img src={assets.arrow_right} alt="" />
             </Link>
-            <Link className='flex items-center justify-between px-4 mb-10'>
+            <Link to={'/profile/promotions'} className='flex items-center justify-between px-4 mb-10'>
                 <div className='flex items-center gap-3'>
                     <img src={assets.discount_02} alt="" />
                     <p className='text-lg text-[#2F2F3F]'>Promo codes</p>

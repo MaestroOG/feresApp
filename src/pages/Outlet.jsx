@@ -36,6 +36,10 @@ import RiderChat from './RiderChat'
 import FullCart from './FullCart'
 import Profile from './Profile'
 import Favorite from './Favorite'
+import PaymentMethods from './PaymentMethods'
+import Promotions from './Promotions'
+import PromoForm from '../components/PromotionComps/PromoForm'
+import PromoApplied from '../components/PromotionComps/PromoApplied'
 
 const Outlet = () => {
     return (
@@ -77,6 +81,10 @@ const Outlet = () => {
                 <Route path='/grouporder' element={<FullCart />} />
                 <Route path='/profile' element={<Profile />} />
                 <Route path='/profile/favorite' element={<Favorite />} />
+                <Route path='/profile/paymentmethods' element={<PaymentMethods />} />
+                <Route path='/profile/promotions' element={<Promotions />} />
+                <Route path='/profile/promotions/promoform' element={<PromoForm />} />
+                <Route path='/profile/promotions/applied' element={<PromoApplied />} />
             </Routes>
         </>
     )
