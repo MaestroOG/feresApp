@@ -207,8 +207,16 @@ import delivery_truck_01 from './delivery_truck_01.png'
 import store_02 from './store_02.png'
 import location_01 from './location_01.png'
 import location_02 from './location_02.png'
+import pie from './pie.png'
+import hot_price from './hot_price.png'
+import food_order_featured from './food_order_featured.png'
+import invoice_black from './invoice_black.png'
 
 export const assets = {
+    invoice_black,
+    food_order_featured,
+    hot_price,
+    pie,
     location_02,
     location_01,
     store_02,

@@ -42,6 +42,7 @@ import PromoForm from '../components/PromotionComps/PromoForm'
 import PromoApplied from '../components/PromotionComps/PromoApplied'
 import Notifications from './Notifications'
 import MapScreen from '../components/Map'
+import FoodOrderDetails from './FoodOrderDetails'
 
 const Outlet = () => {
     return (
@@ -89,6 +90,7 @@ const Outlet = () => {
                 <Route path='/profile/promotions/promoform' element={<PromoForm />} />
                 <Route path='/profile/promotions/applied' element={<PromoApplied />} />
                 <Route path='/profile/notifications' element={<Notifications />} />
+                <Route path='/foodorderdetails' element={<FoodOrderDetails />} />
             </Routes>
         </>
     )
