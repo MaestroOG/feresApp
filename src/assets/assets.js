@@ -211,8 +211,12 @@ import pie from './pie.png'
 import hot_price from './hot_price.png'
 import food_order_featured from './food_order_featured.png'
 import invoice_black from './invoice_black.png'
+import detail_notif_img from './detail_notif_img.png'
+import bubble_chat from './bubble_chat.png'
 
 export const assets = {
+    bubble_chat,
+    detail_notif_img,
     invoice_black,
     food_order_featured,
     hot_price,

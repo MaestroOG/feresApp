@@ -1,9 +1,10 @@
 import React from 'react'
 import { assets } from '../../assets/assets'
+import { Link } from 'react-router-dom'
 
 const NotificationCard = ({ img, name, desc, successStat, isDetail }) => {
     return (
-        <div className='flex items-center justify-between px-4 mb-4'>
+        <Link to={`${isDetail ? '/detailnotification' : successStat ? '/foodorderdetails' : ''}`} className='flex items-center justify-between px-4 mb-4'>
             <div className='flex items-center gap-3'>
                 <div className='bg-[#F8F8F8] rounded-full p-4'>
                     <img src={img} alt="" className='w-6' />
@@ -14,7 +15,7 @@ const NotificationCard = ({ img, name, desc, successStat, isDetail }) => {
                 </div>
             </div>
             {isDetail ? <img src={assets.arrow_right} /> : successStat ? <p className='text-[#0AB247] text-sm'>Successful</p> : <p className='text-[#E92D53] text-sm'>Cancelled</p>}
-        </div>
+        </Link>
     )
 }
 

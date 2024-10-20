@@ -43,6 +43,8 @@ import PromoApplied from '../components/PromotionComps/PromoApplied'
 import Notifications from './Notifications'
 import MapScreen from '../components/Map'
 import FoodOrderDetails from './FoodOrderDetails'
+import DetailNotif from '../components/NotificationComps/DetailNotif'
+import Support from './Support'
 
 const Outlet = () => {
     return (
@@ -91,6 +93,8 @@ const Outlet = () => {
                 <Route path='/profile/promotions/applied' element={<PromoApplied />} />
                 <Route path='/profile/notifications' element={<Notifications />} />
                 <Route path='/foodorderdetails' element={<FoodOrderDetails />} />
+                <Route path='/detailnotification' element={<DetailNotif />} />
+                <Route path='/support' element={<Support />} />
             </Routes>
         </>
     )
