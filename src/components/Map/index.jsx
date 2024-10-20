@@ -60,7 +60,7 @@ const MapScreen = () => {
         }
 
         loadScript(
-            `https://maps.googleapis.com/maps/api/js?key=AIzaSyAr0kFbnDJCPoqHYxQufCEj11KoS01Zh_s&callback=initMap`
+            `https://maps.googleapis.com/maps/api/js?key=${import.meta.env.VITE_MAP_API_KEY}`
         );
     }, []);
 
