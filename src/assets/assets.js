@@ -201,8 +201,20 @@ import promotion_img from './promotion_img.png'
 import discount_tag_02 from './discount_tag_02.svg'
 import promotion_sticker from './promotion_sticker.svg'
 import notification_lg from './notification_lg.png'
+import steaming_bowl from './steaming_bowl.png'
+import oncoming_bus_01 from './oncoming_bus_01.png'
+import delivery_truck_01 from './delivery_truck_01.png'
+import store_02 from './store_02.png'
+import location_01 from './location_01.png'
+import location_02 from './location_02.png'
 
 export const assets = {
+    location_02,
+    location_01,
+    store_02,
+    delivery_truck_01,
+    oncoming_bus_01,
+    steaming_bowl,
     notification_lg,
     promotion_sticker,
     discount_tag_02,
