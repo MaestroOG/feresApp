@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react'
 import OrderIssuesNav from './OrderIssuesNav'
 import { assets } from '../../assets/assets'
+import { Link } from 'react-router-dom';
 
 const IssueDetailMessage = () => {
     const [selectedFile, setSelectedFile] = useState(null);
@@ -70,9 +71,9 @@ const IssueDetailMessage = () => {
             </div>
 
             {/* Send Message */}
-            <div className='fixed bottom-0 left-0 w-full bg-white px-3 py-5'>
+            <Link to={'/feressupport'} className='fixed bottom-0 left-0 w-full bg-white px-3 py-5'>
                 <button className='bg-[#0AB247] text-white w-full rounded-full p-4 text-lg font-medium'>Send message</button>
-            </div>
+            </Link>
         </div>
     )
 }
