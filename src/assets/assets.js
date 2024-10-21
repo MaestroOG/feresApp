@@ -213,8 +213,10 @@ import food_order_featured from './food_order_featured.png'
 import invoice_black from './invoice_black.png'
 import detail_notif_img from './detail_notif_img.png'
 import bubble_chat from './bubble_chat.png'
+import image_01 from './image_01.png'
 
 export const assets = {
+    image_01,
     bubble_chat,
     detail_notif_img,
     invoice_black,

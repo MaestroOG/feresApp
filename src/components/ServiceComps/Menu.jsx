@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 const Menu = () => {
     return (
         <div className='w-screen fixed bottom-0 left-0 flex items-center justify-between px-2 py-2 bg-white'>
-            <NavLink to={'/'} className={({ isActive }) => `${isActive ? 'text-[#0AB247]' : 'text-[#CCCCCC]'} px-3 flex flex-col items-center justify-center`}>
+            <NavLink to={'/services'} className={({ isActive }) => `${isActive ? 'text-[#0AB247]' : 'text-[#CCCCCC]'} px-3 flex flex-col items-center justify-center`}>
                 {({ isActive }) => (
                     <>
                         <img

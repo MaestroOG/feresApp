@@ -45,6 +45,10 @@ import MapScreen from '../components/Map'
 import FoodOrderDetails from './FoodOrderDetails'
 import DetailNotif from '../components/NotificationComps/DetailNotif'
 import Support from './Support'
+import SelectOrder from './SelectOrder'
+import OrderIssues from '../components/SelectOrderComps/OrderIssues'
+import IssueDetails from '../components/SelectOrderComps/IssueDetails'
+import IssueDetailMessage from '../components/SelectOrderComps/IssueDetailMessage'
 
 const Outlet = () => {
     return (
@@ -95,6 +99,10 @@ const Outlet = () => {
                 <Route path='/foodorderdetails' element={<FoodOrderDetails />} />
                 <Route path='/detailnotification' element={<DetailNotif />} />
                 <Route path='/support' element={<Support />} />
+                <Route path='/support/selectorder' element={<SelectOrder />} />
+                <Route path='/support/selectorder/orderissues' element={<OrderIssues />} />
+                <Route path='/support/selectorder/orderissues/orderdetails' element={<IssueDetails />} />
+                <Route path='/support/selectorder/orderissues/orderdetails/sendmessage' element={<IssueDetailMessage />} />
             </Routes>
         </>
     )

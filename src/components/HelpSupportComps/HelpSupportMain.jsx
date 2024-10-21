@@ -1,8 +1,10 @@
 import React from 'react'
 import { assets } from '../../assets/assets'
 import { supportBtns } from './supportBtns'
+import { useNavigate } from 'react-router-dom'
 
 const HelpSupportMain = () => {
+    const navigate = useNavigate()
     return (
         <div className='px-4 mt-6'>
             <h3 className='text-[#2F2F3F] text-base font-medium'>Support cases</h3>
@@ -21,7 +23,7 @@ const HelpSupportMain = () => {
             {/* Get help with the last order */}
             <div>
                 <h3 className='text-[#2F2F3F] font-medium'>Get help with the last order</h3>
-                <button className='text-[#2F2F3F] text-lg font-medium bg-[#F8F8F8] p-4 w-full rounded-full my-4'>Select your order</button>
+                <button onClick={() => navigate('/support/selectorder')} className='text-[#2F2F3F] text-lg font-medium bg-[#F8F8F8] p-4 w-full rounded-full my-4'>Select your order</button>
             </div>
 
             {/* How can we help you? */}

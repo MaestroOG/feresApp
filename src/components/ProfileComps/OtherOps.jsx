@@ -34,7 +34,7 @@ const OtherOps = () => {
                 </div>
                 <img src={assets.arrow_right} alt="" />
             </Link>
-            <Link className='flex items-center justify-between px-4 mb-10'>
+            <Link to={'/support'} className='flex items-center justify-between px-4 mb-10'>
                 <div className='flex items-center gap-3'>
                     <img src={assets.alert_circle} alt="" />
                     <p className='text-lg text-[#2F2F3F]'>Support</p>
