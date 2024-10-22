@@ -38,6 +38,7 @@ const FeresContextProvider = (props) => {
     const [callTypePop, setCallTypePop] = useState(false)
     const [deleteGroupOrder, setDeleteGroupOrder] = useState(false)
     const [selectView, setSelectView] = useState(false)
+    const [tableList, setTableList] = useState(false)
 
     const addToCart = (item) => {
         const isItemInCart = cartItems.find((cartItem) => cartItem._id === item._id); // check if the item is already in the cart
@@ -92,6 +93,8 @@ const FeresContextProvider = (props) => {
     }
 
     const value = {
+        tableList,
+        setTableList,
         selectView,
         setSelectView,
         deleteGroupOrder,

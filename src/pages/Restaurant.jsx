@@ -14,6 +14,7 @@ import AddBi from '../components/RestaurantComps/AddBi';
 import AddBii from '../components/RestaurantComps/AddBii';
 import './Restaurant.css'
 import Food from './Food';
+import MealsCategoriesAndItems from '../components/RestaurantComps/MealsCategoriesAndItems';
 
 const Restaurant = () => {
 
@@ -27,7 +28,7 @@ const Restaurant = () => {
     const navigate = useNavigate()
     const { deliverPopup, setDeliverPopup } = useContext(FeresContext)
     const [categories, setCategories] = useState([])
-    const [categoryBtn, setCategoryBtn] = useState('');
+
     const { foodPopup, setSharePop, sharePop, addToCart } = useContext(FeresContext)
     const { foodSearch, setFoodSearch } = useContext(FeresContext)
     const [deliverPop, setDeliverPop] = useState(false)
@@ -133,119 +134,121 @@ const Restaurant = () => {
 
     return (
         <>
-
-            {!foodDetailShow ? <div>
-                {/* Feature */}
-                <div className='relative'>
-                    {isLoading ? <div>Loading...</div> : (
-                        <img src={restInfo && restInfo.store_detail.cover_image_url ? restInfo.store_detail.cover_image_url : assets.cover_placeholder} alt="" />
-                    )}
-                    <button className='absolute top-[10%] left-[4%] bg-[#06060666] p-3 rounded-xl'>
-                        <img onClick={() => navigate(-1)} src={assets.arrow_left_02} alt="" className='invert' />
-                    </button>
-                    <div className='absolute top-[10%] right-[4%]'>
-                        <button className='bg-[#06060666] p-3 rounded-xl ml-4'>
-                            <img src={assets.add_team} alt="" />
+            <div className='pb-32'>
+                {!foodDetailShow ? <div>
+                    {/* Feature */}
+                    <div className='relative'>
+                        {isLoading ? <div>Loading...</div> : (
+                            <img src={restInfo && restInfo.store_detail.cover_image_url ? restInfo.store_detail.cover_image_url : assets.cover_placeholder} alt="" />
+                        )}
+                        <button className='absolute top-[10%] left-[4%] bg-[#06060666] p-3 rounded-xl'>
+                            <img onClick={() => navigate(-1)} src={assets.arrow_left_02} alt="" className='invert' />
                         </button>
-                        <button className='bg-[#06060666] p-3 rounded-xl ml-4' onClick={() => setSharePop(true)}>
-                            <img src={assets.share} alt="" />
-                        </button>
-                        <button className='bg-[#06060666] p-3 rounded-xl ml-4' onClick={() => setFoodSearch(true)}>
-                            <img className='invert' src={assets.search} alt="" />
-                        </button>
-                    </div>
-                </div>
-
-                {/* Restaurant Title */}
-
-                <div className='bg-white'>
-                    <div className="flex items-center justify-between pt-5 px-4">
-                        <div className='flex items-center gap-2'>
-                            <img src={assets.logo_placeholder} alt="" />
-                            {isLoading ? <div>Loading...</div> : restInfo && <h2 className='text-xl font-bold text-[#2F2F3F]'>{restInfo.store_detail.name}</h2>}
-                        </div>
-                        <div className='flex items-center gap-1' onClick={() => navigate('/review')}>
-                            <img src={assets.star} alt="" />
-                            <p className='text-base font-normal whitespace-nowrap'>{restInfo && restInfo.store_detail.user_rate} ({restInfo && restInfo.store_detail.user_rate_count} reviews)</p>
-                        </div>
-                    </div>
-                    <div className='px-4 mt-5 flex items-center gap-5'>
-                        <div className='flex items-center gap-2' onClick={() => setDeliverPop(true)}>
-                            <img src={assets.scooter_img} alt="" />
-                            <p className='text-base text-[#646464]' unselectable='on'>Delivery</p>
-                        </div>
-                        <div className='flex items-center gap-2' onClick={() => setPickupPop(true)}>
-                            <img src={assets.location_user} alt="" />
-                            <p className='text-base text-[#646464]'>Pickup</p>
-                        </div>
-                        <div className='flex items-center gap-2'>
-                            <img src={assets.calendar} alt="" />
-                            <label onClick={handleDateLabelClick} htmlFor='sched' className='text-base text-[#646464]'>{selectedDate ? selectedDate : "Schedule"}</label>
-                            <input ref={dateInputRef} onChange={handleDateChange} type="date" name="" id="sched" className='absolute left-[-9999px]' />
-                        </div>
-                    </div>
-                    {/* Delivery Details */}
-                    <div className='mt-7 px-4'>
-                        <div className='flex items-center gap-2 mb-4'>
-                            <img src={assets.clock_green} alt="" />
-                            <label className='text-base text-[#1E1E1E]'>{restInfo && restInfo.store_detail.delivery_time + " mins"}</label>
-
-                        </div>
-                        <div className='flex items-center gap-2'>
-                            <img src={assets.location_green} alt="" />
-                            <p className='text-base text-[#1E1E1E]'>{restInfo && restInfo.store_detail.store_Address}</p>
+                        <div className='absolute top-[10%] right-[4%]'>
+                            <button className='bg-[#06060666] p-3 rounded-xl ml-4'>
+                                <img src={assets.add_team} alt="" />
+                            </button>
+                            <button className='bg-[#06060666] p-3 rounded-xl ml-4' onClick={() => setSharePop(true)}>
+                                <img src={assets.share} alt="" />
+                            </button>
+                            <button className='bg-[#06060666] p-3 rounded-xl ml-4' onClick={() => setFoodSearch(true)}>
+                                <img className='invert' src={assets.search} alt="" />
+                            </button>
                         </div>
                     </div>
 
-                    {/* Help Cirlce */}
-                    <div className='mt-7 px-4 flex items-center justify-between gap-4'>
-                        <div className='flex flex-col gap-4'>
+                    {/* Restaurant Title */}
+
+                    <div className='bg-white'>
+                        <div className="flex items-center justify-between pt-5 px-4">
                             <div className='flex items-center gap-2'>
-                                <img src={assets.scooter_green} alt="" />
-                                <p className='text-xs text-[#2F2F3F]'>EBT 150</p>
+                                <img src={assets.logo_placeholder} alt="" />
+                                {isLoading ? <div>Loading...</div> : restInfo && <h2 className='text-xl font-bold text-[#2F2F3F]'>{restInfo.store_detail.name}</h2>}
                             </div>
-                            <div className='flex items-center gap-2' onClick={() => navigate('/restaurantsupport')}>
-                                <img src={assets.help_circle} alt="" />
-                                <p className='text-xs text-[#2F2F3F]'>Allergies and contact details</p>
+                            <div className='flex items-center gap-1' onClick={() => navigate('/review')}>
+                                <img src={assets.star} alt="" />
+                                <p className='text-base font-normal whitespace-nowrap'>{restInfo && restInfo.store_detail.user_rate} ({restInfo && restInfo.store_detail.user_rate_count} reviews)</p>
+                            </div>
+                        </div>
+                        <div className='px-4 mt-5 flex items-center gap-5'>
+                            <div className='flex items-center gap-2' onClick={() => setDeliverPop(true)}>
+                                <img src={assets.scooter_img} alt="" />
+                                <p className='text-base text-[#646464]' unselectable='on'>Delivery</p>
+                            </div>
+                            <div className='flex items-center gap-2' onClick={() => setPickupPop(true)}>
+                                <img src={assets.location_user} alt="" />
+                                <p className='text-base text-[#646464]'>Pickup</p>
                             </div>
                             <div className='flex items-center gap-2'>
-                                <img src={assets.discount_tag} alt="" />
-                                <p className='text-xs text-[#2F2F3F]'>{restInfo && restInfo.store_detail.store_discount ? restInfo.store_detail.store_discount : "0"}% off on their entire menu</p>
+                                <img src={assets.calendar} alt="" />
+                                <label onClick={handleDateLabelClick} htmlFor='sched' className='text-base text-[#646464]'>{selectedDate ? selectedDate : "Schedule"}</label>
+                                <input ref={dateInputRef} onChange={handleDateChange} type="date" name="" id="sched" className='absolute left-[-9999px]' />
                             </div>
                         </div>
-                        <div onClick={() => navigate('/restaurantsupport')}>
-                            <img src={assets.arrow_right} alt="" />
+                        {/* Delivery Details */}
+                        <div className='mt-7 px-4'>
+                            <div className='flex items-center gap-2 mb-4'>
+                                <img src={assets.clock_green} alt="" />
+                                <label className='text-base text-[#1E1E1E]'>{restInfo && restInfo.store_detail.delivery_time + " mins"}</label>
+
+                            </div>
+                            <div className='flex items-center gap-2'>
+                                <img src={assets.location_green} alt="" />
+                                <p className='text-base text-[#1E1E1E]'>{restInfo && restInfo.store_detail.store_Address}</p>
+                            </div>
                         </div>
-                    </div>
-                    {/* Categories */}
-                    <div className='px-4 mt-7 sticky top-0 bg-white py-5'>
+
+                        {/* Help Cirlce */}
+                        <div className='mt-7 px-4 flex items-center justify-between gap-4'>
+                            <div className='flex flex-col gap-4'>
+                                <div className='flex items-center gap-2'>
+                                    <img src={assets.scooter_green} alt="" />
+                                    <p className='text-xs text-[#2F2F3F]'>EBT 150</p>
+                                </div>
+                                <div className='flex items-center gap-2' onClick={() => navigate('/restaurantsupport')}>
+                                    <img src={assets.help_circle} alt="" />
+                                    <p className='text-xs text-[#2F2F3F]'>Allergies and contact details</p>
+                                </div>
+                                <div className='flex items-center gap-2'>
+                                    <img src={assets.discount_tag} alt="" />
+                                    <p className='text-xs text-[#2F2F3F]'>{restInfo && restInfo.store_detail.store_discount ? restInfo.store_detail.store_discount : "0"}% off on their entire menu</p>
+                                </div>
+                            </div>
+                            <div onClick={() => navigate('/restaurantsupport')}>
+                                <img src={assets.arrow_right} alt="" />
+                            </div>
+                        </div>
+                        {/* Categories */}
+                        {/* <div className='px-4 mt-7 sticky top-0 bg-white py-5'>
                         <div className='flex items-center justify-between'>
                             <h2 className='text-[#2F2F3F] text-lg'>Categories</h2>
                             <Link className='text-[#979797] text-base' to={`/restaurant/${id}/categories`}>View all</Link>
-                        </div>
+                        </div> */}
 
 
                         {/* Category Buttons */}
 
-                        <div className='mt-6 flex gap-3 overflow-auto category-btns'>
+                        {/* <div className='mt-6 flex gap-3 overflow-auto category-btns'>
                             {isLoading ? <div>Loading...</div> : menuItems && menuItems.store.products.map((product, index) => (
                                 <button key={index} className={`${categoryBtn === product.name ? 'active' : 'inactive'}  rounded-xl px-[10px] py-[5px] whitespace-nowrap`} onClick={() => setCategoryBtn(product.name)}>{product.name}</button>
                             ))}
                         </div>
 
-                    </div>
+                    </div> */}
 
-                    {/* Delivered By Feres Popup*/}
+                        <MealsCategoriesAndItems />
 
-                    {pickupPop ? <PickupPopup /> : null}
+                        {/* Delivered By Feres Popup*/}
 
-                    {deliverPop ? <DeliveredPopup /> : null}
+                        {pickupPop ? <PickupPopup /> : null}
 
-                    {/* Add To Basket Button */}
+                        {deliverPop ? <DeliveredPopup /> : null}
 
-                    {/* Menu */}
+                        {/* Add To Basket Button */}
 
-                    <div className='px-4 mt-7 mb-28'>
+                        {/* Menu */}
+
+                        {/* <div className='px-4 mt-7 mb-28'>
                         <h2 className='text-[#2F2F3F] font-medium text-lg mb-4'>
                             All Menu</h2>
                         {isLoading ? <div>Loading...</div> : menuItems && menuItems.store.products.map((product) => (
@@ -253,27 +256,28 @@ const Restaurant = () => {
                                 <MenuCard key={item.unique_id} onClick={() => handleClick(item.unique_id, item)} title={item.name} price={item.price} desc={item.details && item.details} image={item.image_url.length > 0 ? item.image_url[0] : assets.item_placeholder} className={`${selectedItem.includes(item.unique_id) ? 'border border-[#0AB247]' : ''}`} />
                             ))
                         ))}
+                    </div> */}
+
+                        {/* <NewOrderPopUp /> */}
+
+                        {foodSearch ? <FoodSearchPopUp /> : null}
+
+
+                        {/* Food Popup */}
+
+                        {
+                            foodPopup === 'beef' ? <>
+                                <FoodPopUp text={"Beef Burger"} img={assets.burger_img_lg} />
+                            </> : foodPopup === 'orange' ? <> <FoodPopUp text={"Fresh orange juice"} img={assets.burger_img_lg} /></> : foodPopup === 'mango' ? <> <FoodPopUp img={assets.burger_img_lg} text={"Fresh mango juice"} /> </> : foodPopup === 'cream' ? <> <FoodPopUp text={"Ice cream"} img={assets.burger_img_lg} /> </> : null
+                        }
+
+
+                        {sharePop ? <SharePopUp /> : null}
+
+                        {items.length === 0 ? <AddBi items={items} /> : <AddBii items={items} />}
                     </div>
-
-                    {/* <NewOrderPopUp /> */}
-
-                    {foodSearch ? <FoodSearchPopUp /> : null}
-
-
-                    {/* Food Popup */}
-
-                    {
-                        foodPopup === 'beef' ? <>
-                            <FoodPopUp text={"Beef Burger"} img={assets.burger_img_lg} />
-                        </> : foodPopup === 'orange' ? <> <FoodPopUp text={"Fresh orange juice"} img={assets.burger_img_lg} /></> : foodPopup === 'mango' ? <> <FoodPopUp img={assets.burger_img_lg} text={"Fresh mango juice"} /> </> : foodPopup === 'cream' ? <> <FoodPopUp text={"Ice cream"} img={assets.burger_img_lg} /> </> : null
-                    }
-
-
-                    {sharePop ? <SharePopUp /> : null}
-
-                    {items.length === 0 ? <AddBi items={items} /> : <AddBii items={items} />}
-                </div>
-            </div> : <div><Food itemFoodPopup={itemFoodPopup} /></div>}
+                </div> : <div><Food itemFoodPopup={itemFoodPopup} /></div>}
+            </div>
         </>
     )
 }

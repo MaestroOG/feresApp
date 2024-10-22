@@ -216,8 +216,24 @@ import bubble_chat from './bubble_chat.png'
 import image_01 from './image_01.png'
 import support_team_img from './support_team_img.png'
 import support_team_green from './support_team_green.png'
+import table from './table.png'
+import list from './list.png'
+import trending_items_img_01 from './trending_items_img_01.png'
+import trending_items_img_02 from './trending_items_img_02.png'
+import trending_items_img_03 from './trending_items_img_03.png'
+import add_green from './add_green.png'
+import table_green from './table_green.png'
+import list_black from './list_black.png'
 
 export const assets = {
+    list_black,
+    table_green,
+    add_green,
+    trending_items_img_01,
+    trending_items_img_02,
+    trending_items_img_03,
+    table,
+    list,
     support_team_green,
     support_team_img,
     image_01,
