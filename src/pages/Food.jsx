@@ -8,12 +8,15 @@ import ExtraNote from '../components/FoodComps/ExtraNote'
 import ExtraNotePopUp from '../components/FoodComps/ExtraNotePopUp'
 import { FeresContext } from '../context/FeresContext'
 
-const Food = () => {
+const Food = ({ itemFoodPopup }) => {
     const { notePop, setNotePop } = useContext(FeresContext)
+
+
+    console.log("here is a item for food popup", itemFoodPopup);
     return (
         <div className='bg-[#E7E7E7] h-screen'>
-            <FoodTopBar />
-            <FoodIntroBox />
+            <FoodTopBar itemImg={itemFoodPopup?.image_url} />
+            <FoodIntroBox itemName={itemFoodPopup?.name} itemPrice={itemFoodPopup?.price} itemDesc={itemFoodPopup?.details} />
             <FoodOptions />
             <FoodOptions />
             <ExtraNote onClick={() => setNotePop(true)} />
