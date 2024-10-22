@@ -49,6 +49,7 @@ import SelectOrder from './SelectOrder'
 import OrderIssues from '../components/SelectOrderComps/OrderIssues'
 import IssueDetails from '../components/SelectOrderComps/IssueDetails'
 import IssueDetailMessage from '../components/SelectOrderComps/IssueDetailMessage'
+import SupportMessage from './SupportMessage'
 
 const Outlet = () => {
     return (
@@ -103,6 +104,7 @@ const Outlet = () => {
                 <Route path='/support/selectorder/orderissues' element={<OrderIssues />} />
                 <Route path='/support/selectorder/orderissues/orderdetails' element={<IssueDetails />} />
                 <Route path='/support/selectorder/orderissues/orderdetails/sendmessage' element={<IssueDetailMessage />} />
+                <Route path='/supportmessage' element={<SupportMessage />} />
             </Routes>
         </>
     )
