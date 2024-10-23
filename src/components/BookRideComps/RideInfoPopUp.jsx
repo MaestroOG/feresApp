@@ -8,7 +8,7 @@ const RideInfoPopUp = () => {
     const [progress, setProgress] = useState(0);
     const navigate = useNavigate();
     return (
-        <div className='fixed bottom-0 left-0 max-h-[90vh] w-full bg-white px-3 rounded-tr-[13px] rounded-tl-[13px] overflow-y-auto pb-48'>
+        <div className='fixed bottom-0 left-0 max-h-[90vh] w-full bg-white px-3 rounded-tr-[13px] rounded-tl-[13px] overflow-y-auto pb-48 transition-all'>
             <div className='sticky top-0 bg-white w-full z-20 py-2'>
                 <div className='mb-4 pt-2'>
                     <img src={assets.popup_down_arrow} alt="" className='mx-auto' onClick={() => setRideInfoPop(false)} />

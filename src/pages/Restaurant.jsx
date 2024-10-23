@@ -37,6 +37,8 @@ const Restaurant = () => {
     const [itemFoodPopup, setitemFoodPopup] = useState(null)
     const [selectedDate, setSelectedDate] = useState('')
     const [selectedItem, setSelectedItem] = useState([])
+    const [successPop, setSuccessPop] = useState(false)
+    const [scrolled, setScrolled] = useState(false)
 
     const handleDateLabelClick = () => {
         // Trigger click event on the hidden time input
@@ -107,7 +109,6 @@ const Restaurant = () => {
             console.error('Fetch error: ', error);
         }
     }
-
     const handleClick = (index, item) => {
         setitemFoodPopup(item)
         // Add the clicked card's index to the array if it's not already there
@@ -122,6 +123,24 @@ const Restaurant = () => {
         console.log("Added");
         setFoodDetailShow(true)
     };
+
+    useEffect(() => {
+        const handleScroll = () => {
+            // Check if the page has been scrolled 50px or more
+            if (window.scrollY > 207) {
+                setScrolled(true);
+            } else {
+                setScrolled(false);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+
+        // Cleanup event listener when the component unmounts
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
     useEffect(() => {
         fetchRestInfo();
         fetchMenuItems();
@@ -137,24 +156,27 @@ const Restaurant = () => {
             <div className='pb-32'>
                 {!foodDetailShow ? <div>
                     {/* Feature */}
-                    <div className='relative'>
+                    <div className={`relative`}>
                         {isLoading ? <div>Loading...</div> : (
                             <img src={restInfo && restInfo.store_detail.cover_image_url ? restInfo.store_detail.cover_image_url : assets.cover_placeholder} alt="" />
                         )}
-                        <button className='absolute top-[10%] left-[4%] bg-[#06060666] p-3 rounded-xl'>
-                            <img onClick={() => navigate(-1)} src={assets.arrow_left_02} alt="" className='invert' />
+                    </div>
+                    <div className={`flex items-center justify-between px-4 py-6 fixed top-0 w-full transition-all z-40 ${scrolled ? 'bg-white' : 'bg-transparent'}`}>
+                        <button className={`p-3 rounded-xl ${scrolled ? 'bg-transparent border border-[#EEEEEE]' : 'bg-[#06060666]'}`}>
+                            <img src={assets.arrow_left} alt="" className={`${scrolled ? 'invert' : ''}`} />
                         </button>
-                        <div className='absolute top-[10%] right-[4%]'>
-                            <button className='bg-[#06060666] p-3 rounded-xl ml-4'>
-                                <img src={assets.add_team} alt="" />
+                        <div className='flex items-center gap-2'>
+                            <button className={`p-3 rounded-xl ${scrolled ? 'bg-transparent border border-[#EEEEEE]' : 'bg-[#06060666]'}`}>
+                                <img src={assets.add_team} alt="" className={`${scrolled ? 'invert' : ''}`} />
                             </button>
-                            <button className='bg-[#06060666] p-3 rounded-xl ml-4' onClick={() => setSharePop(true)}>
-                                <img src={assets.share} alt="" />
+                            <button className={`p-3 rounded-xl ${scrolled ? 'bg-transparent border border-[#EEEEEE]' : 'bg-[#06060666]'}`}>
+                                <img src={assets.share} alt="" className={`${scrolled ? 'invert' : ''}`} />
                             </button>
-                            <button className='bg-[#06060666] p-3 rounded-xl ml-4' onClick={() => setFoodSearch(true)}>
-                                <img className='invert' src={assets.search} alt="" />
+                            <button className={`p-3 rounded-xl ${scrolled ? 'bg-transparent border border-[#EEEEEE]' : 'bg-[#06060666]'}`}>
+                                <img src={assets.search} alt="" className={`${!scrolled ? 'invert' : ''}`} />
                             </button>
                         </div>
+
                     </div>
 
                     {/* Restaurant Title */}
@@ -163,7 +185,7 @@ const Restaurant = () => {
                         <div className="flex items-center justify-between pt-5 px-4">
                             <div className='flex items-center gap-2'>
                                 <img src={assets.logo_placeholder} alt="" />
-                                {isLoading ? <div>Loading...</div> : restInfo && <h2 className='text-xl font-bold text-[#2F2F3F]'>{restInfo.store_detail.name}</h2>}
+                                {isLoading ? <div>Loading...</div> : restInfo && <h2 className={`transition-all text-xl font-bold text-[#2F2F3F] ${scrolled ? 'fixed left-20 top-9 z-50' : ''}`}>{restInfo.store_detail.name}</h2>}
                             </div>
                             <div className='flex items-center gap-1' onClick={() => navigate('/review')}>
                                 <img src={assets.star} alt="" />
@@ -209,7 +231,7 @@ const Restaurant = () => {
                                     <img src={assets.help_circle} alt="" />
                                     <p className='text-xs text-[#2F2F3F]'>Allergies and contact details</p>
                                 </div>
-                                <div className='flex items-center gap-2'>
+                                <div className='flex items-center gap-2' onClick={() => setSuccessPop(true)}>
                                     <img src={assets.discount_tag} alt="" />
                                     <p className='text-xs text-[#2F2F3F]'>{restInfo && restInfo.store_detail.store_discount ? restInfo.store_detail.store_discount : "0"}% off on their entire menu</p>
                                 </div>
@@ -218,23 +240,6 @@ const Restaurant = () => {
                                 <img src={assets.arrow_right} alt="" />
                             </div>
                         </div>
-                        {/* Categories */}
-                        {/* <div className='px-4 mt-7 sticky top-0 bg-white py-5'>
-                        <div className='flex items-center justify-between'>
-                            <h2 className='text-[#2F2F3F] text-lg'>Categories</h2>
-                            <Link className='text-[#979797] text-base' to={`/restaurant/${id}/categories`}>View all</Link>
-                        </div> */}
-
-
-                        {/* Category Buttons */}
-
-                        {/* <div className='mt-6 flex gap-3 overflow-auto category-btns'>
-                            {isLoading ? <div>Loading...</div> : menuItems && menuItems.store.products.map((product, index) => (
-                                <button key={index} className={`${categoryBtn === product.name ? 'active' : 'inactive'}  rounded-xl px-[10px] py-[5px] whitespace-nowrap`} onClick={() => setCategoryBtn(product.name)}>{product.name}</button>
-                            ))}
-                        </div>
-
-                    </div> */}
 
                         <MealsCategoriesAndItems />
 
@@ -246,18 +251,6 @@ const Restaurant = () => {
 
                         {/* Add To Basket Button */}
 
-                        {/* Menu */}
-
-                        {/* <div className='px-4 mt-7 mb-28'>
-                        <h2 className='text-[#2F2F3F] font-medium text-lg mb-4'>
-                            All Menu</h2>
-                        {isLoading ? <div>Loading...</div> : menuItems && menuItems.store.products.map((product) => (
-                            product.items.map((item, index) => (
-                                <MenuCard key={item.unique_id} onClick={() => handleClick(item.unique_id, item)} title={item.name} price={item.price} desc={item.details && item.details} image={item.image_url.length > 0 ? item.image_url[0] : assets.item_placeholder} className={`${selectedItem.includes(item.unique_id) ? 'border border-[#0AB247]' : ''}`} />
-                            ))
-                        ))}
-                    </div> */}
-
                         {/* <NewOrderPopUp /> */}
 
                         {foodSearch ? <FoodSearchPopUp /> : null}
@@ -265,12 +258,7 @@ const Restaurant = () => {
 
                         {/* Food Popup */}
 
-                        {
-                            foodPopup === 'beef' ? <>
-                                <FoodPopUp text={"Beef Burger"} img={assets.burger_img_lg} />
-                            </> : foodPopup === 'orange' ? <> <FoodPopUp text={"Fresh orange juice"} img={assets.burger_img_lg} /></> : foodPopup === 'mango' ? <> <FoodPopUp img={assets.burger_img_lg} text={"Fresh mango juice"} /> </> : foodPopup === 'cream' ? <> <FoodPopUp text={"Ice cream"} img={assets.burger_img_lg} /> </> : null
-                        }
-
+                        {successPop && <SuccessPopup image={assets.success_img} title={"Get 30% off everything up to EBT 150.00"} desc={"The maximum discount for preorders is EBT 150, usable once, and valid until February 22, 2024."} />}
 
                         {sharePop ? <SharePopUp /> : null}
 

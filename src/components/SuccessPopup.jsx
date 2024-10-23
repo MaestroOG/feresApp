@@ -15,7 +15,7 @@ const SuccessPopup = ({ image, title, desc }) => {
                 <p className='text-sm text-[#2F2F3F] text-center mt-2'>{desc}</p>
                 <button onClick={() => {
                     setSuccessVisible(false)
-                    navigate('/')
+                    navigate('/services')
                 }} className='bg-[#0AB247] px-8 py-4 text-white rounded-full w-3/4 mt-4 font-medium text-xl'>Got it</button>
             </div>
 

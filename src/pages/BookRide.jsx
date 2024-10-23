@@ -7,7 +7,7 @@ import { FeresContext } from '../context/FeresContext'
 const BookRide = () => {
     const { rideInfoPop, setRideInfoPop } = useContext(FeresContext)
     return (
-        <div className='relative h-[100vh] overflow-hidden'>
+        <div className='relative h-[100vh] overflow-hidden transition-all'>
             <BookRideNav />
             <p className='text-[#2F2F3F] text-lg text-center py-3 pb-8'>Waiting for restaurant to confirm your order...</p>
             <img src={assets.book_ride_img} alt="" className='w-screen' />

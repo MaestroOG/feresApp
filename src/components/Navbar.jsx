@@ -7,7 +7,7 @@ const Navbar = () => {
     const navigate = useNavigate();
 
     return (
-        <div className='w-full flex items-center justify-between pt-6 px-2'>
+        <div className='w-full flex items-center justify-between pt-6 px-2 sticky top-0 bg-white z-50 '>
             {/* Top Bar */}
 
             <button>
