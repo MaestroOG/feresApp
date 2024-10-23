@@ -6,12 +6,21 @@ import orderReducer from "./slices/orderSlice";
 import searchReducer from "./slices/searchSlice";
 
 const store = configureStore({
+<<<<<<< HEAD
     reducer: {
         userAuth: userAuthReducer,
         food: foodReducer,
         orders: orderReducer,
         search: searchReducer,
     },
+=======
+  reducer: {
+    userAuth: userAuthReducer,
+    food: foodReducer,
+    orders: orderReducer,
+    search: searchReducer,
+  },
+>>>>>>> origin/date-time-model-fixes
 });
 
 export default store;

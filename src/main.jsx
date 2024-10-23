@@ -5,14 +5,18 @@ import './index.css'
 import { BrowserRouter } from 'react-router-dom'
 import FeresContextProvider from './context/FeresContext.jsx'
 import ScrollToTop from './components/ScrollToTop.jsx'
+import { Provider } from 'react-redux';  // Import Redux Provider
+import store from './redux/store.js'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <FeresContextProvider>
-      <BrowserRouter>
-        <ScrollToTop />
-        <App />
-      </BrowserRouter>
-    </FeresContextProvider>
+    <Provider store={store}>
+      <FeresContextProvider>
+        <BrowserRouter>
+          <ScrollToTop />
+          <App />
+        </BrowserRouter>
+      </FeresContextProvider>
+    </Provider>
   </StrictMode>,
 )

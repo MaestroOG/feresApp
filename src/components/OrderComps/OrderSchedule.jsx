@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useContext, useState } from 'react';
+=======
+import React, { useState } from 'react';
+>>>>>>> origin/date-time-model-fixes
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './datepicker-custom.css';  // Import your custom CSS for the DatePicker
@@ -6,14 +10,20 @@ import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
 import { assets } from '../../assets/assets';
 import CustomTimePicker from '../CustomTimePicker';
+<<<<<<< HEAD
 import { FeresContext } from '../../context/FeresContext';
+=======
+>>>>>>> origin/date-time-model-fixes
 
 const OrderSchedule = ({ onThirtyClick }) => {
     const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
     const [isTimePickerOpen, setIsTimePickerOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTime, setSelectedTime] = useState('16:00');
+<<<<<<< HEAD
     const { smValue, deliveryPickup, setDeliveryPick } = useContext(FeresContext)
+=======
+>>>>>>> origin/date-time-model-fixes
 
     const handleDateClick = () => {
         setIsDatePickerOpen(true);
@@ -50,6 +60,7 @@ const OrderSchedule = ({ onThirtyClick }) => {
     return (
         <div className='px-4 mt-5 bg-white rounded-tl-3xl rounded-tr-3xl flex flex-col gap-5'>
             {/* Schedule Order Section */}
+<<<<<<< HEAD
             {!deliveryPickup && <>
                 <div className='flex items-center justify-between' onClick={handleDateClick}>
                     <div className='flex items-center gap-2'>
@@ -87,6 +98,37 @@ const OrderSchedule = ({ onThirtyClick }) => {
                 <hr />
             </>}
 
+=======
+            <div className='flex items-center justify-between' onClick={handleDateClick}>
+                <div className='flex items-center gap-2'>
+                    <img src={assets.calendar_03} alt="" />
+                    <label htmlFor='date' className='text-base text-[#2F2F3F]'>{selectedDate ? selectedDate.toDateString() : "Schedule order"}</label>
+                </div>
+                <img src={assets.arrow_right} alt="" />
+            </div>
+            <hr />
+
+            {/* 30 Minutes Section */}
+            <div className='flex items-center justify-between' onClick={onThirtyClick}>
+                <div className='flex items-center gap-2'>
+                    <img src={assets.clock_light_green} alt="" />
+                    <label htmlFor='time' className='text-base text-[#2F2F3F]'>30 mins</label>
+                </div>
+                <img src={assets.arrow_right} alt="" />
+            </div>
+            <hr />
+
+            {/* Location Section */}
+            <div className='flex items-center justify-between'>
+                <div className='flex items-center gap-2'>
+                    <img src={assets.location_light_green} alt="" />
+                    <p className='text-base text-[#2F2F3F]'>Elgin St. Celina, Delaware 10299</p>
+                </div>
+                <img src={assets.arrow_right} alt="" />
+            </div>
+            <hr />
+
+>>>>>>> origin/date-time-model-fixes
             {/* Date Picker Modal */}
             {isDatePickerOpen && (
                 <div className="modal fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex justify-center items-center">
