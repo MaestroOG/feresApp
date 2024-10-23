@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { assets } from '../../assets/assets'
 import { trendingItems } from './trendingItems';
 import MenuList from './MenuList';
@@ -8,8 +8,39 @@ import TableList from './TableList';
 
 const MealsCategoriesAndItems = () => {
     const { tableList, setTableList } = useContext(FeresContext)
+    const [activeButtonIndex, setActiveButtonIndex] = useState(0);
+    const [scrollActive, setScrollActive] = useState(false);
+    const buttons = ['Most Trending', 'Chicken Shawarma', 'Lamb Shawarma', 'Beef Shawarma'];
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollY = window.scrollY; // Get the current vertical scroll position
+
+            if (scrollY >= 597) {
+                setScrollActive(true); // Start the animation after passing 597px
+                const activeIndex = Math.floor((scrollY - 597) / 335); // Subtract 597 from scrollY for smooth transition
+                if (activeIndex >= 0 && activeIndex < buttons.length) {
+                    setActiveButtonIndex(activeIndex);
+                }
+            } else {
+                setScrollActive(false); // Reset if the user scrolls back above 597px
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+
+        // Clean up the event listener when the component unmounts
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [buttons.length]);
+
+    useEffect(() => {
+        console.log(window.scrollY);
+
+    }, [window.scrollY])
     return (
-        <div>
+        <div className='h-[125vh]'>
             {/* Table Or List Row */}
             <div className='px-4 pt-9 pb-4 flex items-center justify-between'>
                 <h2 className='text-[#2F2F3F] text-xl font-medium'>Meals Categories</h2>
@@ -24,11 +55,12 @@ const MealsCategoriesAndItems = () => {
             </div>
 
             {/* Category Buttons */}
-            <div className='px-3 flex items-center gap-4 overflow-auto no-scrollbar'>
-                <button className={`active rounded-full p-3 whitespace-nowrap text-lg`}>Most Trending</button>
-                <button className={`inactive rounded-full p-3 whitespace-nowrap text-lg`}>Chicken Shawarma</button>
-                <button className={`inactive rounded-full p-3 whitespace-nowrap text-lg`}>Lamb Shawarma</button>
-                <button className={`inactive rounded-full p-3 whitespace-nowrap text-lg`}>Beef Shawarma</button>
+            <div className='px-3 flex items-center gap-4 overflow-auto no-scrollbar sticky top-24 bg-white z-30 pb-3'>
+                {buttons.map((button, index) => (
+                    <button key={index} className={`${activeButtonIndex === index ? 'active' : 'inactive'} rounded-full p-3 whitespace-nowrap text-lg`}>
+                        {button}
+                    </button>
+                ))}
             </div>
 
             {/* Trending Items Row */}

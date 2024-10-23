@@ -1,12 +1,10 @@
 import React, { useContext, useState, useRef, useEffect } from 'react'
 import { assets } from '../assets/assets';
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { FeresContext } from '../context/FeresContext';
 import PickupPopup from '../components/RestaurantComps/PickupPopup';
 import DeliveredPopup from '../components/RestaurantComps/DeliveredPopup';
-import MenuCard from '../components/RestaurantComps/MenuCard';
 import SuccessPopup from '../components/SuccessPopup';
-import { NewOrderPopUp } from '../components/RestaurantComps/NewOrderPopUp';
 import FoodSearchPopUp from '../components/RestaurantComps/FoodSearchPopUp';
 import FoodPopUp from '../components/RestaurantComps/FoodPopUp';
 import SharePopUp from '../components/RestaurantComps/SharePopUp';
