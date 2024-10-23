@@ -3,8 +3,12 @@ import FeaturedRestsCard from './FeaturedRestsCard'
 import { useNavigate } from 'react-router-dom'
 import { assets } from '../../assets/assets';
 import { FeresContext } from '../../context/FeresContext';
+import { useDispatch, useSelector } from 'react-redux';
+
 
 const FeaturedRests = () => {
+    const searchData = useSelector((state) => state.search.searchData);
+
     const [searchResult, setSearchResult] = useState(null)
     const [isLoading, setIsLoading] = useState(null)
     const { searchTerm } = useContext(FeresContext)
@@ -18,7 +22,7 @@ const FeaturedRests = () => {
             "country": "Ethiopia",
             "latitude": 9.03,
             "longitude": 38.74,
-            "search_value": searchTerm,
+            "search_value": searchData,
             "type": 1
         }
 
@@ -47,11 +51,11 @@ const FeaturedRests = () => {
     }
 
     useEffect(() => {
-        console.log(searchTerm)
-        if (searchTerm.length > 0) {
+        console.log(searchData)
+        if (searchData.length > 0) {
             fetchSearchResult();
         }
-    }, [searchTerm])
+    }, [searchData])
     return (
         <div className='mt-12 px-4'>
             {searchResult && <h2 className='text-base text-[#2F2F3F] font-medium'>Featured restaurants</h2>}
