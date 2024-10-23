@@ -1,0 +1,72 @@
+/* Remove borders and adjust the calendar style */
+.react-datepicker {
+    border: none !important;
+    box-shadow: none !important;
+    font-family: 'Arial', sans-serif;
+}
+
+.react-datepicker__header {
+    background-color: white !important;
+    /* Set header background color to white */
+    color: black !important;
+    /* Set header text color to black */
+    border-bottom: none !important;
+}
+
+.react-datepicker__current-month {
+    color: black !important;
+    /* Set the current month text color to black */
+    font-weight: bold !important;
+}
+
+.react-datepicker__day-name {
+    color: black !important;
+    /* Set day names text color to black */
+    font-weight: bold !important;
+}
+
+.react-datepicker__day,
+.react-datepicker__day-name {
+    border-radius: 50% !important;
+    /* Make the date round */
+    justify-content: center;
+    align-items: center;
+    margin: 5px !important;
+    border: none !important;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected {
+    background-color: #4CAF50 !important;
+    /* Change selected date color to green */
+    color: white !important;
+    border-radius: 50% !important;
+    border: none !important;
+}
+
+.react-datepicker__day:hover {
+    background-color: #81C784 !important;
+    /* Hover effect on days */
+    border-radius: 50% !important;
+}
+
+.react-datepicker__navigation--previous,
+.react-datepicker__navigation--next {
+    top: 20px !important;
+    background: none !important;
+    /* Remove default background */
+}
+
+.react-datepicker__navigation--previous {
+    border-right-color: black !important;
+    /* Set previous arrow color to black */
+}
+
+.react-datepicker__navigation--next {
+    border-left-color: black !important;
+    /* Set next arrow color to black */
+}
+
+.react-datepicker__month-container {
+    padding-top: 10px;
+}

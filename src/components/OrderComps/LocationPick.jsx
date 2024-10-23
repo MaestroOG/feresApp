@@ -8,7 +8,7 @@ const LocationPick = () => {
 
     return (
         <div className='px-4 rounded-[13px]'>
-            <div className='relative'>
+            <div className='relative -z-10'>
                 <img src={assets.map_2} alt="" />
                 <img src={assets.location_dot_2} alt="" className='absolute top-[20%] left-[30%]' />
             </div>

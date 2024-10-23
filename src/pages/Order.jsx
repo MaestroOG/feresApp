@@ -32,7 +32,8 @@ const Order = () => {
     const { cartItems } = useContext(FeresContext)
     const [delPop, setDelPop] = useState(false)
     const [servicePop, setServicePop] = useState(false)
-    const [smPop, setSmPop] = useState(false)
+    const { smPop, setSmPop } = useContext(FeresContext)
+    const { deliveryPickup } = useContext(FeresContext)
 
     useEffect(() => {
         console.log(cartItems);
@@ -41,7 +42,8 @@ const Order = () => {
         <div className='pb-24'>
             <OrderNav />
             <DelOrPickBtn />
-            <SelectRide />
+            {!deliveryPickup && <SelectRide />}
+
             {cartItems.slice(0, -1).map(item => (
                 <OrderedFoodCard key={item.unique_id} title={item.name} price={item.price} desc={item.details} quantity={cartItems[cartItems.length - 1].quantity} />
             ))}
@@ -53,9 +55,10 @@ const Order = () => {
             <ExtraOrder />
             <OrderSchedule onThirtyClick={() => setSmPop(true)} />
 
-            <LocationPick />
+            {!deliveryPickup && <LocationPick />}
 
-            <TipRider />
+            {!deliveryPickup && <TipRider />}
+
 
             {tipBtn == 'other' ? <OtherTip /> : null}
 

@@ -3,14 +3,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import userAuthReducer from "./slices/userAuthSlice";
 import foodReducer from "./slices/foodSlice";
 import orderReducer from "./slices/orderSlice";
-import servicesReducer from "./slices/servicesSlice";
+import searchReducer from "./slices/searchSlice";
 
 const store = configureStore({
     reducer: {
         userAuth: userAuthReducer,
         food: foodReducer,
         orders: orderReducer,
-        services: servicesReducer,
+        search: searchReducer,
     },
 });
 

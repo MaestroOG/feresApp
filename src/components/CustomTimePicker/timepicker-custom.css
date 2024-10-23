@@ -1,0 +1,89 @@
+.App {
+    font-family: sans-serif;
+    text-align: center;
+    color: #E0E0E0;  /* Light grey text for dark background */
+    background-color: #121212; /* Dark background for the app */
+}
+.atp{
+    box-shadow: none;
+}
+/* Hiding the clock button */
+.atp-clock-btn {
+    display: none !important;
+}
+
+/* Dark theme for buttons */
+.button {
+    background-color: #0AB247; /* Dark grey */
+    border: none;
+    color: #FFFFFF; /* White text */
+    margin-top: 13px;
+    padding: 10px 20px;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px; /* Optional: smoother button edges */
+}
+
+/* Card layout */
+.mat-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #0AB247; /* Slightly lighter dark background */
+    padding: 10px;
+    border-radius: 8px;
+}
+
+/* Styling for the time display in dark mode */
+.atp-time {
+    background-color: #0AB247 !important; /* Dark grey background */
+    color: #FFFFFF !important; /* White text */
+    text-align: center !important;
+    font-size: 35px;
+    padding: 10px;
+    border-radius: 5px; /* Optional: smoother edges */
+}
+
+
+.atp-color--primary {
+    background-color: #0AB247;
+}
+
+/* Clock container in dark mode */
+.atp-clock-cnt {
+    background-color: white !important; /* Dark background */
+    border-radius: 50%;
+}
+
+/* Clock itself */
+.atp-clock {
+    background-color: white !important; /* Darker clock face */
+    border-radius: 50%;
+}
+
+/* Face color for clock */
+.atp-face-color {
+    background-color: #efefef !important;
+}
+
+/* Text color for numbers on the clock */
+.atp-n {
+    color: black !important; /* White text */
+}
+
+/* Highlighted hour (when adjusting time) */
+.atp-h {
+    background-color: #0AB247 !important; 
+}
+
+/* Optional: Hover and active effects for buttons */
+.button:hover {
+    background-color: #444444; /* Lighter grey on hover */
+}
+
+.button:active {
+    background-color: #555555; /* Even lighter grey on click */
+}
