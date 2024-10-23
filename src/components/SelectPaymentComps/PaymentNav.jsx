@@ -7,7 +7,7 @@ const PaymentNav = ({ onDelClick }) => {
     return (
         <div className='flex items-center justify-between pt-5 gap-24'>
             <img src={assets.arrow_left} alt="" className='invert' onClick={() => navigate(-1)} />
-            <h2 className='text-[#2F2F3F] font-bold text-xl'>Payment method</h2>
+            <h2 className='text-[#2F2F3F] font-bold text-xl whitespace-nowrap'>Payment method</h2>
             <img src={assets.delete_02} alt="" onClick={onDelClick} />
         </div>
     )
