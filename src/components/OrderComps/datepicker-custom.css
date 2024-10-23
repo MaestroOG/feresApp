@@ -6,30 +6,20 @@
 }
 
 .react-datepicker__header {
-<<<<<<< HEAD
     background-color: white !important;
     /* Set header background color to white */
     color: black !important;
     /* Set header text color to black */
-=======
-    background-color: white !important; /* Set header background color to white */
-    color: black !important; /* Set header text color to black */
->>>>>>> origin/date-time-model-fixes
     border-bottom: none !important;
 }
 
 .react-datepicker__current-month {
-<<<<<<< HEAD
     color: black !important;
     /* Set the current month text color to black */
-=======
-    color: black !important; /* Set the current month text color to black */
->>>>>>> origin/date-time-model-fixes
     font-weight: bold !important;
 }
 
 .react-datepicker__day-name {
-<<<<<<< HEAD
     color: black !important;
     /* Set day names text color to black */
     font-weight: bold !important;
@@ -39,49 +29,30 @@
 .react-datepicker__day-name {
     border-radius: 50% !important;
     /* Make the date round */
-=======
-    color: black !important; /* Set day names text color to black */
-    font-weight: bold !important;
-}
-
-.react-datepicker__day, .react-datepicker__day-name {
-    border-radius: 50% !important; /* Make the date round */
->>>>>>> origin/date-time-model-fixes
     justify-content: center;
     align-items: center;
     margin: 5px !important;
     border: none !important;
 }
 
-<<<<<<< HEAD
 .react-datepicker__day--selected,
 .react-datepicker__day--keyboard-selected {
     background-color: #4CAF50 !important;
     /* Change selected date color to green */
-=======
-.react-datepicker__day--selected, 
-.react-datepicker__day--keyboard-selected {
-    background-color: #4CAF50 !important; /* Change selected date color to green */
->>>>>>> origin/date-time-model-fixes
     color: white !important;
     border-radius: 50% !important;
     border: none !important;
 }
 
 .react-datepicker__day:hover {
-<<<<<<< HEAD
     background-color: #81C784 !important;
     /* Hover effect on days */
-=======
-    background-color: #81C784 !important; /* Hover effect on days */
->>>>>>> origin/date-time-model-fixes
     border-radius: 50% !important;
 }
 
 .react-datepicker__navigation--previous,
 .react-datepicker__navigation--next {
     top: 20px !important;
-<<<<<<< HEAD
     background: none !important;
     /* Remove default background */
 }
@@ -94,23 +65,8 @@
 .react-datepicker__navigation--next {
     border-left-color: black !important;
     /* Set next arrow color to black */
-=======
-    background: none !important; /* Remove default background */
-}
-
-.react-datepicker__navigation--previous {
-    border-right-color: black !important; /* Set previous arrow color to black */
-}
-
-.react-datepicker__navigation--next {
-    border-left-color: black !important; /* Set next arrow color to black */
->>>>>>> origin/date-time-model-fixes
 }
 
 .react-datepicker__month-container {
     padding-top: 10px;
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/date-time-model-fixes
