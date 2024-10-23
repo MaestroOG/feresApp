@@ -15,6 +15,11 @@ import AddBii from '../components/RestaurantComps/AddBii';
 import './Restaurant.css'
 import Food from './Food';
 import MealsCategoriesAndItems from '../components/RestaurantComps/MealsCategoriesAndItems';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import '../components/OrderComps/datepicker-custom.css'
+import 'react-time-picker/dist/TimePicker.css';
+import CustomTimePicker from '../components/CustomTimePicker';
 
 const Restaurant = () => {
 
@@ -35,19 +40,43 @@ const Restaurant = () => {
     const [pickupPop, setPickupPop] = useState(false)
     const [foodDetailShow, setFoodDetailShow] = useState(false)
     const [itemFoodPopup, setitemFoodPopup] = useState(null)
-    const [selectedDate, setSelectedDate] = useState('')
     const [selectedItem, setSelectedItem] = useState([])
     const [successPop, setSuccessPop] = useState(false)
     const [scrolled, setScrolled] = useState(false)
+    const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
+    const [isTimePickerOpen, setIsTimePickerOpen] = useState(false);
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [selectedTime, setSelectedTime] = useState('16:00');
 
-    const handleDateLabelClick = () => {
-        // Trigger click event on the hidden time input
-        dateInputRef.current.click();
+    const handleDateClick = () => {
+        setIsDatePickerOpen(true);
     };
 
-    const handleDateChange = (e) => {
-        setSelectedDate(e.target.value)
-    }
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+    };
+
+    const handleDateConfirm = () => {
+        setIsDatePickerOpen(false);
+        setIsTimePickerOpen(true);
+    };
+
+    const handleTimeConfirm = (time) => {
+        setSelectedTime(time);
+        setIsTimePickerOpen(false);
+    };
+
+    const handleTimeClose = () => {
+        setIsTimePickerOpen(false);
+    };
+
+    const formattedDate = selectedDate
+        ? {
+            year: selectedDate.getFullYear(),
+            day: selectedDate.toLocaleDateString('en-US', { weekday: 'short' }),
+            monthDay: selectedDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short' }),
+        }
+        : { year: '2024', day: 'Thu', monthDay: '22 Feb' }; // Default text when no date is selected
 
     const fetchRestInfo = async () => {
         const requestBody = {
@@ -203,8 +232,7 @@ const Restaurant = () => {
                             </div>
                             <div className='flex items-center gap-2'>
                                 <img src={assets.calendar} alt="" />
-                                <label onClick={handleDateLabelClick} htmlFor='sched' className='text-base text-[#646464]'>{selectedDate ? selectedDate : "Schedule"}</label>
-                                <input ref={dateInputRef} onChange={handleDateChange} type="date" name="" id="sched" className='absolute left-[-9999px]' />
+                                <label onClick={handleDateClick} htmlFor='sched' className='text-base text-[#646464]'>{selectedDate ? selectedDate.toDateString() : "Schedule"}</label>
                             </div>
                         </div>
                         {/* Delivery Details */}
@@ -263,6 +291,36 @@ const Restaurant = () => {
                         {sharePop ? <SharePopUp /> : null}
 
                         {items.length === 0 ? <AddBi items={items} /> : <AddBii items={items} />}
+
+                        {/* Date Picker Modal */}
+                        {isDatePickerOpen && (
+                            <div className="modal fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex justify-center items-center">
+                                <div className="modal-content bg-white rounded-lg flex flex-col">
+                                    <div className='flex-[2] bg-[#0AB247] p-4 text-white rounded-t-lg w-[100%]'>
+                                        <h4 className='bold text-16'>{formattedDate.year}</h4>
+                                        <h2>{`${formattedDate.day}, ${formattedDate.monthDay}`}</h2>
+                                    </div>
+                                    <div className='flex-[4] p-5'>
+                                        <DatePicker
+                                            selected={selectedDate}
+                                            onChange={handleDateChange}
+                                            inline
+                                            minDate={new Date()}  /* Disable previous dates */
+                                        />
+                                        <div className="flex justify-end gap-3 mt-2 mr-4">
+                                            <button onClick={() => setIsDatePickerOpen(false)} className="text-black rounded">Cancel</button>
+                                            <button onClick={handleDateConfirm} className="text-green-500 rounded">OK</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Time Picker Modal */}
+                        {isTimePickerOpen && (
+                            <CustomTimePicker onTimeConfirm={handleTimeConfirm}
+                                onClose={handleTimeClose} />
+                        )}
                     </div>
                 </div> : <div><Food itemFoodPopup={itemFoodPopup} /></div>}
             </div>
