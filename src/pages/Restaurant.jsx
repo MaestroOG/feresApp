@@ -18,11 +18,14 @@ import 'react-datepicker/dist/react-datepicker.css';
 import '../components/OrderComps/datepicker-custom.css'
 import 'react-time-picker/dist/TimePicker.css';
 import CustomTimePicker from '../components/CustomTimePicker';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSelectedResturant } from '../redux/slices/selectedResturantSlice';
+
 
 const Restaurant = () => {
 
     const { id } = useParams();
-
+    const dispatch = useDispatch()
     const [items, setItems] = useState([])
     const [isLoading, setLoading] = useState(true)
     const [restInfo, setRestInfo] = useState(null)
@@ -45,6 +48,12 @@ const Restaurant = () => {
     const [isTimePickerOpen, setIsTimePickerOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTime, setSelectedTime] = useState('16:00');
+    const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
+    const showModel = useSelector((state) => state.modelToggle.showModel);
+    const selectedFood = useSelector((state) => state.selectedFood.selectedFood);
+
+
+
 
     const handleDateClick = () => {
         setIsDatePickerOpen(true);
@@ -96,7 +105,6 @@ const Restaurant = () => {
 
             const data = await res.json();
             setRestInfo(data)
-            // console.log(restInfo);
             setLoading(false)
 
 
@@ -128,7 +136,7 @@ const Restaurant = () => {
             const data = await res.json();
 
             setMenuItems(data)
-            console.log(menuItems);
+            dispatch(setSelectedResturant(data))
             setLoading(false);
 
 
@@ -178,10 +186,11 @@ const Restaurant = () => {
         console.log(items)
     }, [items])
 
+
     return (
         <>
             <div className='pb-32'>
-                {!foodDetailShow ? <div>
+                {!showModel ? <div>
                     {/* Feature */}
                     <div className={`relative`}>
                         {isLoading ? <div>Loading...</div> : (
@@ -267,7 +276,7 @@ const Restaurant = () => {
                             </div>
                         </div>
 
-                        <MealsCategoriesAndItems />
+                        <MealsCategoriesAndItems categoryItems={selectedResturant?.store?.products} />
 
                         {/* Delivered By Feres Popup*/}
 
@@ -320,7 +329,7 @@ const Restaurant = () => {
                                 onClose={handleTimeClose} />
                         )}
                     </div>
-                </div> : <div><Food itemFoodPopup={itemFoodPopup} /></div>}
+                </div> : <div><Food itemFoodPopup={selectedFood} /></div>}
             </div>
         </>
     )

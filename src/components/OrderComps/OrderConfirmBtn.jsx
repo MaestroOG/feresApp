@@ -51,9 +51,9 @@ const OrderConfirmBtn = () => {
                     onChange={handleChange} />
                 <div
                     ref={thumbRef}
-                    className="absolute pointer-events-none"
+                    className=" absolute pointer-events-none"
                 >
-                    <img src={assets.arrow_right_02} alt="" />
+                    <img src={assets.arrow_right_02} alt="" className="w-[20px] h-[20px]" />
                 </div>
                 <div className='absolute left-[40%]'>
                     <h4 className='text-lg font-medium text-white text-center'>Place order</h4>
