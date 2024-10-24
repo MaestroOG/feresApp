@@ -9,9 +9,9 @@ const MenuList = ({ products }) => {
     console.log(products)
     return (
         <>
-            <div className='bg-[#FFD335] p-2 rounded-lg text-[#2F2F3F] text-xs font-medium w-max mb-1'>Trending</div>
+            <div className='bg-[#FFD335] p-2 rounded-lg text-[#2F2F3F] text-xs font-medium w-max mt-6 mb-1'>Trending</div>
             {products?.map((item) => <div>
-                <div className='my-5'>
+                <div className='my-4'>
                     <div className='flex items-center justify-between' onClick={() => {
                         dispatch(setShowModel(true))
                         dispatch(setSelectedFood(item))
@@ -24,9 +24,9 @@ const MenuList = ({ products }) => {
                                 <p className='text-[#0AB247] text-sm font-bold'>{`ETB ${item?.price}`}</p>
                             </div>
                         </div>
-                        <div className='relative'>
+                        <div className='relative flex items-center justify-center'>
                             <img src={item?.image_url[0]} alt="" width={'130px'} />
-                            <button className='border border-[#0AB247] bg-white p-2 rounded-full text-[#0AB247] text-sm font-medium absolute bottom-1 left-9'>Add</button>
+                            <button className='border border-[#0AB247] bg-white p-2 rounded-full text-[#0AB247] text-sm font-medium absolute bottom-1 right-9'>Add</button>
                         </div>
                     </div>
                 </div>

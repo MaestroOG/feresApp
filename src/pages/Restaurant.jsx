@@ -189,7 +189,7 @@ const Restaurant = () => {
 
     return (
         <>
-            <div className='pb-32'>
+            <div className='pb-16'>
                 {!showModel ? <div>
                     {/* Feature */}
                     <div className={`relative`}>
@@ -198,7 +198,7 @@ const Restaurant = () => {
                         )}
                     </div>
                     <div className={`flex items-center justify-between px-4 py-6 fixed top-0 w-full transition-all z-40 ${scrolled ? 'bg-white' : 'bg-transparent'}`}>
-                        <button className={`p-3 rounded-xl ${scrolled ? 'bg-transparent border border-[#EEEEEE]' : 'bg-[#06060666]'}`}>
+                        <button onClick={() => navigate(-1)} className={`p-3 rounded-xl ${scrolled ? 'bg-transparent border border-[#EEEEEE]' : 'bg-[#06060666]'}`}>
                             <img src={assets.arrow_left} alt="" className={`${scrolled ? 'invert' : ''}`} />
                         </button>
                         <div className='flex items-center gap-2'>
@@ -221,7 +221,7 @@ const Restaurant = () => {
                         <div className="flex items-center justify-between pt-5 px-4">
                             <div className='flex items-center gap-2'>
                                 <img src={assets.logo_placeholder} alt="" />
-                                {isLoading ? <div>Loading...</div> : restInfo && <h2 className={`transition-all text-xl font-bold text-[#2F2F3F] ${scrolled ? 'fixed left-20 top-9 z-50' : ''}`}>{restInfo.store_detail.name}</h2>}
+                                {isLoading ? <div>Loading...</div> : restInfo && <h2 className={`transition-all text-xl font-bold text-[#2F2F3F] ${scrolled ? 'fixed left-20 top-9 z-50' : ''}`}>{restInfo.store_detail.name.slice(0, 11)}..</h2>}
                             </div>
                             <div className='flex items-center gap-1' onClick={() => navigate('/review')}>
                                 <img src={assets.star} alt="" />

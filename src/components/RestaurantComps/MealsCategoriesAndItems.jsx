@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect, useRef } from 'react'
 import { assets } from '../../assets/assets'
 import { trendingItems } from './trendingItems';
 import MenuList from './MenuList';
@@ -8,39 +8,68 @@ import TableList from './TableList';
 
 const MealsCategoriesAndItems = ({ categoryItems }) => {
     const { tableList, setTableList } = useContext(FeresContext)
-    const [activeButtonIndex, setActiveButtonIndex] = useState(0);
     const [scrollActive, setScrollActive] = useState(false);
-    const buttons = ["Trending Meals", "Chicken Shawarma", "Lamb Shawarma"]
+    const [activeButtonIndex, setActiveButtonIndex] = useState(0);
+    const headingRefs = useRef([]); // Refs for each heading
+
+    // useEffect(() => {
+    //     const handleScroll = () => {
+    //         const scrollY = window.scrollY;
+
+    //         if (scrollY >= 597) {
+    //             setScrollActive(true); // Start the animation after passing 597px
+    //             const activeIndex = Math.floor((scrollY - 597) / 335); // Subtract 597 from scrollY for smooth transition
+    //             if (activeIndex >= 0 && activeIndex < buttons.length) {
+    //                 setActiveButtonIndex(activeIndex);
+    //             }
+    //         } else {
+    //             setScrollActive(false);
+    //         }
+    //     };
+
+    //     window.addEventListener('scroll', handleScroll);
+
+
+    //     return () => {
+    //         window.removeEventListener('scroll', handleScroll);
+    //     };
+    // }, [buttons.length]);
 
     useEffect(() => {
-        const handleScroll = () => {
-            const scrollY = window.scrollY;
+        const options = {
+            root: null, // viewport
+            threshold: 0.3, // Adjusted to 30% visibility to detect headings earlier
+        };
 
-            if (scrollY >= 597) {
-                setScrollActive(true); // Start the animation after passing 597px
-                const activeIndex = Math.floor((scrollY - 597) / 335); // Subtract 597 from scrollY for smooth transition
-                if (activeIndex >= 0 && activeIndex < buttons.length) {
-                    setActiveButtonIndex(activeIndex);
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const index = headingRefs.current.indexOf(entry.target);
+                    if (index !== -1) {
+                        setActiveButtonIndex(index);
+                    }
                 }
-            } else {
-                setScrollActive(false);
+            });
+        }, options);
+
+        // Observe all headings
+        headingRefs.current.forEach((heading) => {
+            if (heading) {
+                observer.observe(heading);
             }
-        };
+        });
 
-        window.addEventListener('scroll', handleScroll);
-
-
+        // Cleanup observer on unmount
         return () => {
-            window.removeEventListener('scroll', handleScroll);
+            headingRefs.current.forEach((heading) => {
+                if (heading) {
+                    observer.unobserve(heading);
+                }
+            });
         };
-    }, [buttons.length]);
-
-    useEffect(() => {
-        console.log(window.scrollY);
-
-    }, [window.scrollY])
+    }, []);
     return (
-        <div className='h-[125vh]'>
+        <div className='relative'>
             {/* Table Or List Row */}
             <div className='px-4 pt-9 pb-4 flex items-center justify-between'>
                 <h2 className='text-[#2F2F3F] text-xl font-medium'>Meals Categories</h2>
@@ -55,7 +84,7 @@ const MealsCategoriesAndItems = ({ categoryItems }) => {
             </div>
 
             {/* Category Buttons */}
-            <div className='px-3 flex items-center gap-4 overflow-auto no-scrollbar sticky top-24 bg-white z-30 pb-3'>
+            <div className='px-3 flex items-center gap-4 overflow-auto no-scrollbar sticky top-24 bg-white z-50 pb-3'>
                 {categoryItems?.map((button, index) => (
                     <button key={index} className={`${activeButtonIndex === index ? 'active' : 'inactive'} rounded-full p-3 whitespace-nowrap text-lg`}>
                         {button?.name}
@@ -100,18 +129,20 @@ const MealsCategoriesAndItems = ({ categoryItems }) => {
 
             {/* Items Menu Table Or List */}
 
-            <div className='px-4 mt-4'>
-                {!tableList ? categoryItems?.map(cateItems => (
-                    <>
-                        <h3 className='text-xl font-bold text-[#2F2F3F]'>{cateItems?.name}</h3>
+            <div className='px-4 mt-6'>
+                {!tableList ? categoryItems?.map((cateItems, index) => (
+                    <div className='mt-3'>
+                        <h3 key={index} ref={(el) => headingRefs.current[index] = el} className='heading-class text-xl font-bold text-[#2F2F3F]'>{cateItems?.name}</h3>
                         <MenuList key={"item.id"} img={"item.img"} name={"item.name"} desc={"item.desc"} products={cateItems?.items} />
-                    </>
+                    </div>
                 )) : <div className='my-5 flex items-center gap-2 overflow-auto no-scrollbar flex-shrink-0'>
-                    {categoryItems.map(cateItems => (
-                        <>
-                            <h3 className='text-xl font-bold text-[#2F2F3F]'>{cateItems?.name}</h3>
-                            <TableList key={"item.id"} img={"item.img"} name={"item.name"} desc={"item.desc"} products={cateItems?.items} />
-                        </>
+                    {categoryItems.map((cateItems, index) => (
+                        <div className='mt-3'>
+                            <h3 key={index} ref={(el) => headingRefs.current[index] = el} className='heading-class text-xl font-bold text-[#2F2F3F]'>{cateItems?.name}</h3>
+                            <div className='flex items-center gap-2 overflow-auto no-scrollbar flex-shrink-0'>
+                                <TableList products={cateItems?.items} />
+                            </div>
+                        </div>
                     ))}
                 </div>}
             </div>
