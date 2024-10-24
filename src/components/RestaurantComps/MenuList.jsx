@@ -6,6 +6,7 @@ import { setSelectedFood } from '../../redux/slices/selectedFoodSlice'
 
 const MenuList = ({ products }) => {
     const dispatch = useDispatch()
+    console.log(products)
     return (
         <>
             <div className='bg-[#FFD335] p-2 rounded-lg text-[#2F2F3F] text-xs font-medium w-max mb-1'>Trending</div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './datepicker-custom.css';  // Import your custom CSS for the DatePicker
@@ -6,13 +6,14 @@ import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
 import { assets } from '../../assets/assets';
 import CustomTimePicker from '../CustomTimePicker';
+import { FeresContext } from '../../context/FeresContext';
 
 const OrderSchedule = ({ onThirtyClick }) => {
     const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
     const [isTimePickerOpen, setIsTimePickerOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTime, setSelectedTime] = useState('16:00');
-
+    const { smValue } = useContext(FeresContext)
     const handleDateClick = () => {
         setIsDatePickerOpen(true);
     };
@@ -61,21 +62,21 @@ const OrderSchedule = ({ onThirtyClick }) => {
             <div className='flex items-center justify-between' onClick={onThirtyClick}>
                 <div className='flex items-center gap-2'>
                     <img src={assets.clock_light_green} alt="" />
-                    <label htmlFor='time' className='text-base text-[#2F2F3F]'>30 mins</label>
+                    <label htmlFor='time' className='text-base text-[#2F2F3F]'>{smValue}</label>
                 </div>
                 <img src={assets.arrow_right} alt="" />
             </div>
             <hr />
 
             {/* Location Section */}
-            <div className='flex items-center justify-between'>
+            {/* <div className='flex items-center justify-between'>
                 <div className='flex items-center gap-2'>
                     <img src={assets.location_light_green} alt="" />
                     <p className='text-base text-[#2F2F3F]'>Elgin St. Celina, Delaware 10299</p>
                 </div>
                 <img src={assets.arrow_right} alt="" />
             </div>
-            <hr />
+            <hr /> */}
 
             {/* Date Picker Modal */}
             {isDatePickerOpen && (

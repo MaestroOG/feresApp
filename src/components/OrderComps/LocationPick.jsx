@@ -61,7 +61,7 @@ const LocationPick = () => {
             <div className='relative '>
                 {/* Load Google Maps */}
                 <LoadScript
-                    googleMapsApiKey={import.meta.env.VITE_API_GOOGLE_MAPS_API_KEY}
+                    googleMapsApiKey={import.meta.env.VITE_MAP_API_KEY}
                     onLoad={() => setIsApiLoaded(true)} // Set API load status to true
                 >
                     <GoogleMap

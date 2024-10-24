@@ -10,6 +10,7 @@ const MealsCategoriesAndItems = ({ categoryItems }) => {
     const { tableList, setTableList } = useContext(FeresContext)
     const [activeButtonIndex, setActiveButtonIndex] = useState(0);
     const [scrollActive, setScrollActive] = useState(false);
+    const buttons = ["Trending Meals", "Chicken Shawarma", "Lamb Shawarma"]
 
     useEffect(() => {
         const handleScroll = () => {
