@@ -14,31 +14,26 @@ const MealsCategoriesAndItems = () => {
 
     useEffect(() => {
         const handleScroll = () => {
-            const scrollY = window.scrollY; // Get the current vertical scroll position
+            const scrollY = window.scrollY;
 
             if (scrollY >= 597) {
-                setScrollActive(true); // Start the animation after passing 597px
-                const activeIndex = Math.floor((scrollY - 597) / 335); // Subtract 597 from scrollY for smooth transition
+                setScrollActive(true);
+                const activeIndex = Math.floor((scrollY - 597) / 335);
                 if (activeIndex >= 0 && activeIndex < buttons.length) {
                     setActiveButtonIndex(activeIndex);
                 }
             } else {
-                setScrollActive(false); // Reset if the user scrolls back above 597px
+                setScrollActive(false);
             }
         };
 
         window.addEventListener('scroll', handleScroll);
 
-        // Clean up the event listener when the component unmounts
+
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
     }, [buttons.length]);
-
-    useEffect(() => {
-        console.log(window.scrollY);
-
-    }, [window.scrollY])
     return (
         <div className='h-[125vh]'>
             {/* Table Or List Row */}
