@@ -80,7 +80,7 @@ const OrderSchedule = ({ onThirtyClick }) => {
 
             {/* Date Picker Modal */}
             {isDatePickerOpen && (
-                <div className="modal fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex justify-center items-center">
+                <div className="modal z-50 fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex justify-center items-center">
                     <div className="modal-content bg-white rounded-lg flex flex-col">
                         <div className='flex-[2] bg-[#0AB247] p-4 text-white rounded-t-lg w-[100%]'>
                             <h4 className='bold text-16'>{formattedDate.year}</h4>
