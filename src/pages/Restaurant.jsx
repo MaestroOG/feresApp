@@ -288,7 +288,7 @@ const Restaurant = () => {
 
                         {/* <NewOrderPopUp /> */}
 
-                        {foodSearch ? <FoodSearchPopUp /> : null}
+                        {foodSearch ? <FoodSearchPopUp itemFoodPopup={selectedFood} /> : null}
 
 
                         {/* Food Popup */}
@@ -298,6 +298,8 @@ const Restaurant = () => {
                         {sharePop ? <SharePopUp /> : null}
 
                         {items.length === 0 ? <AddBi items={items} /> : <AddBii items={items} />}
+
+                        {/* {foodPopup ? <FoodPopUp /> : null} */}
 
                         {/* Date Picker Modal */}
                         {isDatePickerOpen && (
@@ -336,3 +338,5 @@ const Restaurant = () => {
 }
 
 export default Restaurant
+
+{/* */ }
