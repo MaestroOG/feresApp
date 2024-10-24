@@ -6,7 +6,7 @@ import { FeresContext } from '../../context/FeresContext';
 import { useDispatch, useSelector } from 'react-redux';
 
 
-const FeaturedRests = () => {
+const FeaturedRests = ({ type }) => {
     const searchData = useSelector((state) => state.search.searchData);
 
     const [searchResult, setSearchResult] = useState(null)
@@ -58,7 +58,7 @@ const FeaturedRests = () => {
     }, [searchData])
     return (
         <div className='mt-12 px-4'>
-            {searchResult && <h2 className='text-base text-[#2F2F3F] font-medium'>Featured restaurants</h2>}
+            {searchResult && <h2 className='text-base text-[#2F2F3F] font-medium'>Featured {type}</h2>}
             {isLoading ? <div className='text-center'>Loading...</div> : searchResult && searchResult.hasOwnProperty('message') ? searchResult.stores.map(store => (
                 store.stores.map((store, index) => (
                     <FeaturedRestsCard key={index} title={store.name} desc={store.Description} userRate={store.user_rate} userRateQuantity={store.user_rate_count} img={store.image_url} delivery={store.delivery_time} onClick={() => navigate(`/restaurant/${store._id}`)} />

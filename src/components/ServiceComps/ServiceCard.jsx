@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 const ServiceCard = () => {
 
-    const cardImgSrc = [assets.service_card_img, assets.service_card_img_2]
+    const cardImgSrc = [assets.service_card_img, assets.service_card_img_3]
     const [index, setIndex] = useState(0);
 
     const navigate = useNavigate();

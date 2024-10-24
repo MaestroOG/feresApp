@@ -47,7 +47,7 @@ const SearchPage = () => {
             </div>
 
             <div>
-                <FeaturedRests />
+                <FeaturedRests type={"restaurants"} />
             </div>
             <div>
                 {filterPop ? <FilterPopUp /> : null}

@@ -224,8 +224,24 @@ import trending_items_img_03 from './trending_items_img_03.png'
 import add_green from './add_green.png'
 import table_green from './table_green.png'
 import list_black from './list_black.png'
+import service_card_img_3 from './service_card_img_3.png'
+import bakery_01 from './bakery_01.png'
+import shopping_bag_01 from './shopping_bag_01.png'
+import store_01 from './store_01.png'
+import coke from './coke.png'
+import ecommerce_card_shape from './ecommerce_card_shape.png'
+import healthy_fruits from './healthy_fruits.png'
+import apple_store from './apple_store.png'
 
 export const assets = {
+    apple_store,
+    healthy_fruits,
+    ecommerce_card_shape,
+    coke,
+    bakery_01,
+    shopping_bag_01,
+    store_01,
+    service_card_img_3,
     list_black,
     table_green,
     add_green,

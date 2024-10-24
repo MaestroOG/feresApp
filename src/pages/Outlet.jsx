@@ -50,6 +50,8 @@ import OrderIssues from '../components/SelectOrderComps/OrderIssues'
 import IssueDetails from '../components/SelectOrderComps/IssueDetails'
 import IssueDetailMessage from '../components/SelectOrderComps/IssueDetailMessage'
 import SupportMessage from './SupportMessage'
+import Ecommerce from './Ecommerce'
+import EcommerceSearch from './EcommercePages/EcommerceSearch'
 
 const Outlet = () => {
     return (
@@ -106,6 +108,10 @@ const Outlet = () => {
                 <Route path='/support/selectorder/orderissues/orderdetails' element={<IssueDetails />} />
                 <Route path='/support/selectorder/orderissues/orderdetails/sendmessage' element={<IssueDetailMessage />} />
                 <Route path='/supportmessage' element={<SupportMessage />} />
+
+                {/* Ecommerce Routes */}
+                <Route path='/ecommerce' element={<Ecommerce />} />
+                <Route path='/ecommercesearch' element={<EcommerceSearch />} />
             </Routes>
         </>
     )
