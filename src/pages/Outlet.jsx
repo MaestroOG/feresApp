@@ -55,8 +55,9 @@ const Outlet = () => {
     return (
         <>
             <Routes>
-                <Route path='/' element={<MapScreen />} />
-                <Route path='/services' element={<Services />} />
+                {/* <Route path='/' element={<MapScreen />} /> */}
+                <Route path='/' element={<Services />} />
+                {/* <Route path='/services' element={<Services />} /> */}
                 <Route path='/spinwheel' element={<SpinWheel />} />
                 <Route path='/search' element={<SearchPage />} />
                 <Route path='/allrestaurants' element={<AllRestaurants />} />

@@ -6,19 +6,18 @@ import { menuListItems } from './menuListItems';
 import { FeresContext } from '../../context/FeresContext';
 import TableList from './TableList';
 
-const MealsCategoriesAndItems = () => {
+const MealsCategoriesAndItems = ({ categoryItems }) => {
     const { tableList, setTableList } = useContext(FeresContext)
     const [activeButtonIndex, setActiveButtonIndex] = useState(0);
     const [scrollActive, setScrollActive] = useState(false);
-    const buttons = ['Most Trending', 'Chicken Shawarma', 'Lamb Shawarma', 'Beef Shawarma'];
 
     useEffect(() => {
         const handleScroll = () => {
             const scrollY = window.scrollY;
 
             if (scrollY >= 597) {
-                setScrollActive(true);
-                const activeIndex = Math.floor((scrollY - 597) / 335);
+                setScrollActive(true); // Start the animation after passing 597px
+                const activeIndex = Math.floor((scrollY - 597) / 335); // Subtract 597 from scrollY for smooth transition
                 if (activeIndex >= 0 && activeIndex < buttons.length) {
                     setActiveButtonIndex(activeIndex);
                 }
@@ -34,6 +33,11 @@ const MealsCategoriesAndItems = () => {
             window.removeEventListener('scroll', handleScroll);
         };
     }, [buttons.length]);
+
+    useEffect(() => {
+        console.log(window.scrollY);
+
+    }, [window.scrollY])
     return (
         <div className='h-[125vh]'>
             {/* Table Or List Row */}
@@ -51,9 +55,9 @@ const MealsCategoriesAndItems = () => {
 
             {/* Category Buttons */}
             <div className='px-3 flex items-center gap-4 overflow-auto no-scrollbar sticky top-24 bg-white z-30 pb-3'>
-                {buttons.map((button, index) => (
+                {categoryItems?.map((button, index) => (
                     <button key={index} className={`${activeButtonIndex === index ? 'active' : 'inactive'} rounded-full p-3 whitespace-nowrap text-lg`}>
-                        {button}
+                        {button?.name}
                     </button>
                 ))}
             </div>
@@ -96,12 +100,17 @@ const MealsCategoriesAndItems = () => {
             {/* Items Menu Table Or List */}
 
             <div className='px-4 mt-4'>
-                <h3 className='text-xl font-bold text-[#2F2F3F]'>Chicken Shawarma</h3>
-                {!tableList ? menuListItems.map(item => (
-                    <MenuList key={item.id} img={item.img} name={item.name} desc={item.desc} />
+                {!tableList ? categoryItems?.map(cateItems => (
+                    <>
+                        <h3 className='text-xl font-bold text-[#2F2F3F]'>{cateItems?.name}</h3>
+                        <MenuList key={"item.id"} img={"item.img"} name={"item.name"} desc={"item.desc"} products={cateItems?.items} />
+                    </>
                 )) : <div className='my-5 flex items-center gap-2 overflow-auto no-scrollbar flex-shrink-0'>
-                    {menuListItems.map(item => (
-                        <TableList key={item.id} img={item.img} name={item.name} desc={item.desc} />
+                    {categoryItems.map(cateItems => (
+                        <>
+                            <h3 className='text-xl font-bold text-[#2F2F3F]'>{cateItems?.name}</h3>
+                            <TableList key={"item.id"} img={"item.img"} name={"item.name"} desc={"item.desc"} products={cateItems?.items} />
+                        </>
                     ))}
                 </div>}
             </div>
