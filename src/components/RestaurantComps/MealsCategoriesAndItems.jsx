@@ -11,30 +11,6 @@ const MealsCategoriesAndItems = ({ categoryItems }) => {
     const [scrollActive, setScrollActive] = useState(false);
     const [activeButtonIndex, setActiveButtonIndex] = useState(0);
     const headingRefs = useRef([]); // Refs for each heading
-
-    // useEffect(() => {
-    //     const handleScroll = () => {
-    //         const scrollY = window.scrollY;
-
-    //         if (scrollY >= 597) {
-    //             setScrollActive(true); // Start the animation after passing 597px
-    //             const activeIndex = Math.floor((scrollY - 597) / 335); // Subtract 597 from scrollY for smooth transition
-    //             if (activeIndex >= 0 && activeIndex < buttons.length) {
-    //                 setActiveButtonIndex(activeIndex);
-    //             }
-    //         } else {
-    //             setScrollActive(false);
-    //         }
-    //     };
-
-    //     window.addEventListener('scroll', handleScroll);
-
-
-    //     return () => {
-    //         window.removeEventListener('scroll', handleScroll);
-    //     };
-    // }, [buttons.length]);
-
     useEffect(() => {
         const options = {
             root: null, // viewport

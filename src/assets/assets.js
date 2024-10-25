@@ -232,8 +232,36 @@ import coke from './coke.png'
 import ecommerce_card_shape from './ecommerce_card_shape.png'
 import healthy_fruits from './healthy_fruits.png'
 import apple_store from './apple_store.png'
+import mart_featured from './mart_featured.png'
+import costco from './costco.png'
+import bread from './bread.png'
+import fruit_veg from './fruit_veg.png'
+import meat from './meat.png'
+import antiseptic from './antiseptic.png'
+import dishwasher from './dishwasher.png'
+import toilet_cleaner from './toilet_cleaner.png'
+import chicken_card from './chicken_card.png'
+import funtuna_eggs from './funtuna_eggs.png'
+import beverages from './beverages.png'
+import dairy_eggs from './dairy_eggs.png'
+import deli from './deli.png'
+import egg_featured from './egg_featured.png'
 
 export const assets = {
+    egg_featured,
+    beverages,
+    dairy_eggs,
+    deli,
+    funtuna_eggs,
+    chicken_card,
+    antiseptic,
+    dishwasher,
+    toilet_cleaner,
+    bread,
+    fruit_veg,
+    meat,
+    costco,
+    mart_featured,
     apple_store,
     healthy_fruits,
     ecommerce_card_shape,
