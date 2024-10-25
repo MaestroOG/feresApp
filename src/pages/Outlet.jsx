@@ -52,6 +52,10 @@ import IssueDetailMessage from '../components/SelectOrderComps/IssueDetailMessag
 import SupportMessage from './SupportMessage'
 import Ecommerce from './Ecommerce'
 import EcommerceSearch from './EcommercePages/EcommerceSearch'
+import EcommerceCategories from './EcommercePages/EcommerceCategories'
+import EcommerceCategoriesResult from './EcommercePages/EcommerceCategoriesResult'
+import EcommerceMart from './EcommercePages/EcommerceMart'
+import EcommerceMartCategories from './EcommercePages/EcommerceMartCategories'
 
 const Outlet = () => {
     return (
@@ -112,6 +116,10 @@ const Outlet = () => {
                 {/* Ecommerce Routes */}
                 <Route path='/ecommerce' element={<Ecommerce />} />
                 <Route path='/ecommercesearch' element={<EcommerceSearch />} />
+                <Route path='/ecommerce/categories' element={<EcommerceCategories />} />
+                <Route path='/ecommerce/categories/results' element={<EcommerceCategoriesResult />} />
+                <Route path='/ecommerce/mart' element={<EcommerceMart />} />
+                <Route path='/ecommerce/mart/categories' element={<EcommerceMartCategories />} />
             </Routes>
         </>
     )
