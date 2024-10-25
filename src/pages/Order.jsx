@@ -36,9 +36,12 @@ const Order = () => {
     const { smPop, setSmPop } = useContext(FeresContext)
     const { deliveryPickup } = useContext(FeresContext)
     const cartData = useSelector((state) => state.cart.items);
+    const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
+
+
 
     useEffect(() => {
-        console.log(cartData, 'here is the data ');
+        console.log(selectedResturant, 'here is the data ');
     }, [])
     return (
         <div className='pb-24'>
@@ -47,7 +50,7 @@ const Order = () => {
             {!deliveryPickup && <SelectRide />}
 
             {cartData.map(item => (
-                <OrderedFoodCard key={item?.unique_id} title={item?.name} price={item?.price} desc={item?.details} img={item?.image_url} quantity={cartData[cartData?.length - 1]?.quantity} />
+                <OrderedFoodCard key={item?.unique_id} title={item?.name} price={item?.price} desc={item?.details} img={item?.image_url} quantity={cartData[cartData?.length - 1]?.quantity} item={item} />
             ))}
             {/* <OrderedFoodCard title={item.name} price={item.price} desc={item.details} quantity={item.quantity} /> */}
             <AddItemBtn />
@@ -67,7 +70,7 @@ const Order = () => {
             <PaymentMethods img={assets.wallet_01} text={"Payment Methods"} isCard={true} onClick={() => navigate('/selectpayment')} />
             <PaymentMethods img={assets.discount} text={"Get Discounts"} isDiscount={true} onClick={() => navigate('/getdiscount')} />
 
-            <TotalBill onDelClick={() => setDelPop(true)} onServiceClick={() => setServicePop(true)} />
+            <TotalBill onDelClick={() => setDelPop(true)} onServiceClick={() => setServicePop(true)} selectedResturant={selectedResturant} />
 
             {riderNote ? <RiderNote /> : null}
 

@@ -12,19 +12,23 @@ const Food = ({ itemFoodPopup }) => {
     const { notePop, setNotePop } = useContext(FeresContext)
 
 
-    console.log("here is a item for food popup", itemFoodPopup);
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     return (
-        <div className='bg-[#E7E7E7] h-screen'>
+        <div className='bg-[#E7E7E7] h-screen overflow-auto'>
             <FoodTopBar itemImg={itemFoodPopup?.image_url} />
             <FoodIntroBox itemName={itemFoodPopup?.name} itemPrice={itemFoodPopup?.price} itemDesc={itemFoodPopup?.details} />
-            <FoodOptions />
-            <FoodOptions />
+            {itemFoodPopup?.attributes?.length < 0 && (
+                <>
+                    <FoodOptions />
+                    <FoodOptions />
+                </>
+            )}
             <ExtraNote onClick={() => setNotePop(true)} />
             {notePop ? <ExtraNotePopUp placeholder={"Write your review here"} /> : null}
-
-
             {!notePop ? <OrderQuantityBtn itemFoodPopup={itemFoodPopup} /> : null}
-
         </div>
     )
 }

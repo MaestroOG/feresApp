@@ -133,7 +133,7 @@ const MealsCategoriesAndItems = ({ categoryItems }) => {
                 {!tableList ? categoryItems?.map((cateItems, index) => (
                     <div className='mt-3'>
                         <h3 key={index} ref={(el) => headingRefs.current[index] = el} className='heading-class text-xl font-bold text-[#2F2F3F]'>{cateItems?.name}</h3>
-                        <MenuList key={"item.id"} img={"item.img"} name={"item.name"} desc={"item.desc"} products={cateItems?.items} />
+                        <MenuList products={cateItems?.items} />
                     </div>
                 )) : <div className='my-5 flex items-center gap-2 overflow-auto no-scrollbar flex-shrink-0'>
                     {categoryItems.map((cateItems, index) => (

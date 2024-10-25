@@ -9,6 +9,7 @@ const LocationPick = () => {
     const [currentLocation, setCurrentLocation] = useState(null);
     const [address, setAddress] = useState(''); // Store the address in state
     const [isApiLoaded, setIsApiLoaded] = useState(false); // Track API load status
+    const [mapKey, setMapKey] = useState(0); // Key to force re-render map when necessary
 
     // Function to handle marker position change
     const handleLocationChange = (event) => {
@@ -36,6 +37,7 @@ const LocationPick = () => {
                 }
             );
         }
+        setMapKey((prevKey) => prevKey + 1); // Force re-render of map when component mounts
     }, [isApiLoaded]); // Re-run when the API is loaded
 
     // Function to get the address using reverse geocoding
@@ -58,25 +60,28 @@ const LocationPick = () => {
 
     return (
         <div className='px-4 rounded-[13px]'>
-            <div className='relative '>
+            <div className='relative'>
                 {/* Load Google Maps */}
                 <LoadScript
                     googleMapsApiKey={import.meta.env.VITE_MAP_API_KEY}
-                    onLoad={() => setIsApiLoaded(true)} // Set API load status to true
+                    onLoad={() => setIsApiLoaded(true)}
                 >
-                    <GoogleMap
-                        mapContainerStyle={{ width: '100%', height: '200px' }}
-                        center={selectedLocation}
-                        zoom={15}
-                    >
-                        {selectedLocation && (
-                            <Marker
-                                position={selectedLocation}
-                                draggable={true}
-                                onDragEnd={handleLocationChange}
-                            />
-                        )}
-                    </GoogleMap>
+                    {isApiLoaded && (
+                        <GoogleMap
+                            key={mapKey}
+                            mapContainerStyle={{ width: '100%', height: '200px' }}
+                            center={selectedLocation}
+                            zoom={15}
+                        >
+                            {selectedLocation && (
+                                <Marker
+                                    position={selectedLocation}
+                                    draggable={true}
+                                    onDragEnd={handleLocationChange}
+                                />
+                            )}
+                        </GoogleMap>
+                    )}
                 </LoadScript>
             </div>
             <div className='w-full mt-4 flex flex-col gap-3 pb-5'>

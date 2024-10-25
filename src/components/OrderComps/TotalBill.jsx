@@ -1,9 +1,10 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { assets } from '../../assets/assets'
 import { FeresContext } from '../../context/FeresContext'
 
-const TotalBill = ({ onDelClick, onServiceClick }) => {
+const TotalBill = ({ onDelClick, onServiceClick, selectedResturant, cartData }) => {
     const { tipBtn, setTipBtn, discount, customTip, deliveryPickup } = useContext(FeresContext)
+
     return (
         <div className='px-4 mt-7 pb-4'>
             <div className='flex items-center justify-between'>
@@ -34,13 +35,13 @@ const TotalBill = ({ onDelClick, onServiceClick }) => {
                     <p className='text-[#0AB247] font-medium text-base'>ETB{tipBtn === '50' || tipBtn === '80' ? tipBtn : customTip}</p>
                 </div> : null
             }
-            {
+            {selectedResturant?.discount &&
                 <div className='flex items-center justify-between mt-2'>
                     <div className='flex items-center gap-2'>
                         <h3 className='text-[#767578]'>Discount</h3>
                         <img src={assets.information_circle} alt="" />
                     </div>
-                    <p className='text-[#0AB247] font-medium text-base'>-ETB81</p>
+                    <p className='text-[#0AB247] font-medium text-base'>{`-ETB${selectedResturant?.discount}`}</p>
                 </div>
             }
             <div className='flex items-center justify-between mt-2'>

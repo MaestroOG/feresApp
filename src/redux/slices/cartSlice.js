@@ -1,4 +1,3 @@
-// src/slices/cartSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -10,15 +9,16 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addItem: (state, action) => {
+      // Check if the item with the same product_id (or sub_product_id) exists in the cart
       const itemIndex = state.items.findIndex(
-        (item) => item.id === action.payload.id
+        (item) => item.product_id === action.payload.product_id
       );
 
       if (itemIndex >= 0) {
-        // Item exists, so update the quantity
+        // If item already exists, update the quantity
         state.items[itemIndex].quantity += action.payload.quantity;
       } else {
-        // New item, add it to the cart with the quantity
+        // If new item, add it to the cart
         state.items.push({
           ...action.payload,
           quantity: action.payload.quantity,
@@ -26,12 +26,14 @@ const cartSlice = createSlice({
       }
     },
     removeItem: (state, action) => {
-      state.items = state.items.filter((item) => item.id !== action.payload);
+      // Remove the item using its product_id (or sub_product_id)
+      state.items = state.items.filter(
+        (item) => item.product_id !== action.payload.product_id
+      );
     },
-    // Optional: You could add a separate action for updating the quantity directly
     updateQuantity: (state, action) => {
       const itemIndex = state.items.findIndex(
-        (item) => item.id === action.payload.id
+        (item) => item.product_id === action.payload.product_id
       );
 
       if (itemIndex >= 0) {

@@ -42,7 +42,7 @@ const OrderQuantityBtn = ({ itemFoodPopup }) => {
                 </button>
             </div>
             <button className='bg-[#0AB247] py-[12px] px-[16px] rounded-3xl text-white w-[50%]' onClick={handleAddItem}>
-                {`Add EBT ${orderCount == 1 ? itemFoodPopup?.price : itemFoodPopup?.price * orderCount}`}
+                {`Add EBT ${orderCount == 1 ? itemFoodPopup?.price : (itemFoodPopup?.price * orderCount).toFixed(2)}`}
             </button>
         </div>
     )
