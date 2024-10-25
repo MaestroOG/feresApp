@@ -245,8 +245,10 @@ import funtuna_eggs from './funtuna_eggs.png'
 import beverages from './beverages.png'
 import dairy_eggs from './dairy_eggs.png'
 import deli from './deli.png'
+import egg_featured from './egg_featured.png'
 
 export const assets = {
+    egg_featured,
     beverages,
     dairy_eggs,
     deli,
