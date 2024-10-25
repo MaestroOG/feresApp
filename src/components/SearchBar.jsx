@@ -5,7 +5,7 @@ import { FeresContext } from '../context/FeresContext';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSearchData } from '../redux/slices/searchSlice';
 
-const SearchBar = ({ onKeyDown, className, onClick }) => {
+const SearchBar = ({ onKeyDown, className, onClick, placeholder = "Search for food, groceries..." }) => {
     const dispatch = useDispatch();
     const searchData = useSelector((state) => state.search.searchData);
 
@@ -22,7 +22,7 @@ const SearchBar = ({ onKeyDown, className, onClick }) => {
 
             <div className='flex gap-2 items-center bg-[#F8F8F8] rounded-lg px-4 w-4/5'>
                 <img src={assets.search} alt="" />
-                <input onKeyDown={onKeyDown} onChange={handleChange} type="text" value={searchData} placeholder='Search for food, groceries...' className='w-full bg-[#F8F8F8] px-2 py-5 rounded-lg outline-none placeholder:text-[#767578] placeholder:text-[16px] border-none'>
+                <input onKeyDown={onKeyDown} onChange={handleChange} type="text" value={searchData} placeholder={placeholder} className='w-full bg-[#F8F8F8] px-2 py-5 rounded-lg outline-none placeholder:text-[#767578] placeholder:text-[16px] border-none'>
                 </input>
             </div>
             <button className='bg-[#F8F8F8] p-4 rounded-lg h-[61px]'>

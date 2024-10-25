@@ -15,7 +15,7 @@ const FilterPopUp = () => {
     }
 
     return (
-        <div className='h-[90vh] w-full bg-[#F8F8F8] fixed bottom-0 left-0 rounded-2xl overflow-y-scroll pb-20'>
+        <div className='h-[90vh] w-full bg-[#F8F8F8] fixed bottom-0 left-0 rounded-2xl overflow-y-scroll pb-20 z-50'>
             {/* Top Bar */}
             <form>
                 <div className='flex items-center justify-between px-2 py-2 bg-white sticky top-0'>

@@ -6,6 +6,7 @@ import { assets } from '../assets/assets'
 import ExploreCard from '../components/ServiceComps/ExploreCard'
 import Container from '../components/Container'
 import PopularStoreCard from '../components/EcommerceComps/MainPageComps/PopularStoreCard'
+import { Link } from 'react-router-dom'
 
 const Ecommerce = () => {
     const [activeButtonIndex, setActiveButtonIndex] = useState(0);
@@ -23,7 +24,7 @@ const Ecommerce = () => {
             <div className='mt-8 w-full'>
                 <div className='flex items-center justify-between px-4'>
                     <h3 className='text-[18px] font-medium'>Categories</h3>
-                    <p className='text-[#0AB247] font-medium'>View all</p>
+                    <Link to={'/ecommerce/categories'} className='text-[#0AB247] font-medium'>View all</Link>
                 </div>
 
                 <div className='flex flex-row gap-5 overflow-y-scroll explore-card'>
