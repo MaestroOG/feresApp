@@ -246,8 +246,16 @@ import beverages from './beverages.png'
 import dairy_eggs from './dairy_eggs.png'
 import deli from './deli.png'
 import egg_featured from './egg_featured.png'
+import funtuna_egg_featured from './funtuna_egg_featured.png'
+import delivery_truck_green from './delivery_truck_green.png'
+import dashboard_square_green from './dashboard_square_green.png'
+import dashboard_square_black from './dashboard_square_black.png'
 
 export const assets = {
+    dashboard_square_black,
+    dashboard_square_green,
+    delivery_truck_green,
+    funtuna_egg_featured,
     egg_featured,
     beverages,
     dairy_eggs,
