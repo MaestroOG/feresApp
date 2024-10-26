@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 
 const MartAllProducts = () => {
 
-    const [tableList, setTableList] = useState(false)
+    const [tableList, setTableList] = useState(true)
     const buttons = ["All", "Toiletries", "Kitchen Cleaners"];
 
 
