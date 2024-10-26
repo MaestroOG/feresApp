@@ -58,6 +58,7 @@ import EcommerceMart from './EcommercePages/EcommerceMart'
 import EcommerceMartCategories from './EcommercePages/EcommerceMartCategories'
 import MartProduct from './EcommercePages/MartProduct'
 import MartItemDetail from './EcommercePages/MartItemDetail'
+import MartAllProducts from './EcommercePages/MartAllProducts'
 
 const Outlet = () => {
     return (
@@ -124,6 +125,7 @@ const Outlet = () => {
                 <Route path='/ecommerce/mart/categories' element={<EcommerceMartCategories />} />
                 <Route path='/ecommerce/mart/martproduct' element={<MartProduct />} />
                 <Route path='/ecommerce/mart/martproduct/item' element={<MartItemDetail />} />
+                <Route path='/ecommerce/mart/martallproducts' element={<MartAllProducts />} />
             </Routes>
         </>
     )
