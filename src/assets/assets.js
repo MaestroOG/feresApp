@@ -250,8 +250,38 @@ import funtuna_egg_featured from './funtuna_egg_featured.png'
 import delivery_truck_green from './delivery_truck_green.png'
 import dashboard_square_green from './dashboard_square_green.png'
 import dashboard_square_black from './dashboard_square_black.png'
+import electronic_featured from './electronic_featured.png'
+import wap_logo from './wap_logo.png'
+import laptop_01 from './laptop_01.png'
+import mobile_phone_01 from './mobile_phone_01.png'
+import television_01 from './television_01.png'
+import infinix_phone from './infinix_phone.png'
+import itel_phone from './itel_phone.png'
+import redmi_phone from './redmi_phone.png'
+import redmi_featured from './redmi_featured.png'
+import zoom_in_area from './zoom_in_area.png'
+import search_add from './search_add.png'
+import search_minus from './search_minus.png'
+import redmi_featured_2 from './redmi_featured_2.png'
+import redmi_featured_3 from './redmi_featured_3.png'
+import redmi_featured_4 from './redmi_featured_4.png'
 
 export const assets = {
+    redmi_featured_2,
+    redmi_featured_3,
+    redmi_featured_4,
+    search_add,
+    search_minus,
+    zoom_in_area,
+    redmi_featured,
+    infinix_phone,
+    itel_phone,
+    redmi_phone,
+    television_01,
+    mobile_phone_01,
+    laptop_01,
+    wap_logo,
+    electronic_featured,
     dashboard_square_black,
     dashboard_square_green,
     delivery_truck_green,
