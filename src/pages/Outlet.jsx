@@ -59,6 +59,10 @@ import EcommerceMartCategories from './EcommercePages/EcommerceMartCategories'
 import MartProduct from './EcommercePages/MartProduct'
 import MartItemDetail from './EcommercePages/MartItemDetail'
 import MartAllProducts from './EcommercePages/MartAllProducts'
+import EcommerceElectronics from './EcommercePages/ElectronicsPages/EcommerceElectronics'
+import ElectronicsAllProducts from './EcommercePages/ElectronicsPages/ElectronicsAllProducts'
+import ElectronicItemDetail from './EcommercePages/ElectronicsPages/ElectronicItemDetail'
+import ItemZoom from './EcommercePages/ElectronicsPages/ItemZoom'
 
 const Outlet = () => {
     return (
@@ -126,6 +130,12 @@ const Outlet = () => {
                 <Route path='/ecommerce/mart/martproduct' element={<MartProduct />} />
                 <Route path='/ecommerce/mart/martproduct/item' element={<MartItemDetail />} />
                 <Route path='/ecommerce/mart/martallproducts' element={<MartAllProducts />} />
+
+                {/* Ecommerce Electronic Store Routes */}
+                <Route path='/ecommerce/electronic' element={<EcommerceElectronics />} />
+                <Route path='/ecommerce/electronic/allproducts' element={<ElectronicsAllProducts />} />
+                <Route path='/ecommerce/electronic/allproducts/item' element={<ElectronicItemDetail />} />
+                <Route path='/ecommerce/electronic/allproducts/item/itemzoom' element={<ItemZoom />} />
             </Routes>
         </>
     )
