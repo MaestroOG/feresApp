@@ -8,15 +8,15 @@ const TableList = ({ products }) => {
     const dispatch = useDispatch()
     return (
         products.map((item) =>
-            <div className='flex overflow-auto'>
+            <div className='flex overflow-auto' key={item?._id}>
                 {/* Example for one card, repeat or dynamically render */}
                 <div className='min-w-[170px]' >
                     <div className='relative w-max' onClick={() => {
                         dispatch(setShowModel(true))
                         dispatch(setSelectedFood(item))
                     }}>
-                        <img src={item?.image_url[0]} alt="" width={'120px'} />
-                        {item.image_url.length > 0 && <div className='bg-[#0AB247] rounded-lg p-2 text-xs text-white absolute top-2 left-2'>-35%</div>}
+                        <img src={item?.image_url[0]} alt="" className='rounded-2xl' width={'120px'} />
+                        {/* {item.image_url.length > 0 && <div className='bg-[#0AB247] rounded-lg p-2 text-xs text-white absolute top-2 left-2'>-35%</div>} */}
 
                         <div className='rounded-full bg-white p-2 absolute bottom-2 right-2'>
                             <img src={assets.add_green} alt="" />

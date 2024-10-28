@@ -13,7 +13,7 @@ const Explore = () => {
                 {/* Card */}
                 <ExploreCard name={"Ride"} img={assets.car} />
                 <ExploreCard name={"Food"} img={assets.food_img} onClick={() => navigate('/allrestaurants')} />
-                <ExploreCard name={"Mart"} img={assets.mart_bucket} />
+                <ExploreCard name={"Mart"} img={assets.mart_bucket} onClick={() => navigate('/ecommerce')} />
                 <ExploreCard name={"Car"} img={assets.car} />
                 <ExploreCard name={"Food"} img={assets.food_img} />
             </div>

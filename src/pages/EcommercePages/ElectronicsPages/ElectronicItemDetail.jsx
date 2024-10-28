@@ -1,8 +1,10 @@
 import React from 'react'
-import Container from '../../components/Container'
-import { assets } from '../../assets/assets'
+import { assets } from '../../../assets/assets'
+import Container from '../../../components/Container'
+import { Link, useNavigate } from 'react-router-dom'
 
-const MartItemDetail = () => {
+const ElectronicItemDetail = () => {
+    const navigate = useNavigate();
     return (
         <div>
             {/* Top Bar */}
@@ -16,23 +18,22 @@ const MartItemDetail = () => {
 
             {/* Details */}
             <Container>
-                <div className='bg-[#F1F1F1] rounded-2xl'>
-                    <img src={assets.funtuna_egg_featured} alt="" />
+                <div className='bg-[#F1F1F1] rounded-2xl flex items-center justify-center w-[398px] h-[297px] relative'>
+                    <img src={assets.zoom_in_area} alt="" className='absolute top-4 right-4' onClick={() => navigate('/ecommerce/electronic/allproducts/item/itemzoom')} />
+                    <img src={assets.redmi_featured} alt="" />
                 </div>
 
-
-                {/* Detail Text */}
                 <div className='flex items-center justify-between mt-5'>
-                    <h1 className='text-[#2F2F3F] text-2xl font-medium'>Funtuna Eggs x30</h1>
+                    <h1 className='text-[#2F2F3F] text-2xl font-medium'>XIAOMI Redmi 13C</h1>
                     <div className='flex items-center gap-2'>
                         <img src={assets.star} alt="" />
-                        <p className='text-lg font-medium text-[#2F2F3F]'>4.5 <span className='text-[#CCCCCC]'>(3)</span></p>
+                        <Link to={'/review'} className='text-lg font-medium text-[#2F2F3F]'>4.5 <span className='text-[#CCCCCC]'>(3)</span></Link>
                     </div>
                 </div>
 
                 {/* Price */}
                 <div className='flex items-center gap-2 my-3'>
-                    <p className='text-[#0AB247] text-lg font-bold'>EBT 140.00</p>
+                    <p className='text-[#0AB247] text-lg font-bold'>EBT 26,500</p>
                     <p className='text-sm text-[#767578]'>(Incl. VAT)</p>
                 </div>
 
@@ -58,8 +59,6 @@ const MartItemDetail = () => {
                     </div>
                 </div>
             </Container>
-
-
             {/* Bottom Buttons */}
             <Container className={'py-4 fixed w-full bottom-0 left-0 bg-white flex items-center justify-between gap-3 rounded-[13px]'}>
                 <div className='w-[158px] h-[58px] flex items-center justify-between border border-[#EEEEEE] px-3 rounded-2xl'>
@@ -81,4 +80,4 @@ const MartItemDetail = () => {
     )
 }
 
-export default MartItemDetail
+export default ElectronicItemDetail

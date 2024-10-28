@@ -246,8 +246,62 @@ import beverages from './beverages.png'
 import dairy_eggs from './dairy_eggs.png'
 import deli from './deli.png'
 import egg_featured from './egg_featured.png'
+import funtuna_egg_featured from './funtuna_egg_featured.png'
+import delivery_truck_green from './delivery_truck_green.png'
+import dashboard_square_green from './dashboard_square_green.png'
+import dashboard_square_black from './dashboard_square_black.png'
+import electronic_featured from './electronic_featured.png'
+import wap_logo from './wap_logo.png'
+import laptop_01 from './laptop_01.png'
+import mobile_phone_01 from './mobile_phone_01.png'
+import television_01 from './television_01.png'
+import infinix_phone from './infinix_phone.png'
+import itel_phone from './itel_phone.png'
+import redmi_phone from './redmi_phone.png'
+import redmi_featured from './redmi_featured.png'
+import zoom_in_area from './zoom_in_area.png'
+import search_add from './search_add.png'
+import search_minus from './search_minus.png'
+import redmi_featured_2 from './redmi_featured_2.png'
+import redmi_featured_3 from './redmi_featured_3.png'
+import redmi_featured_4 from './redmi_featured_4.png'
+import location_blue from './location_blue.svg'
+import add_button from './add_button.svg'
+import shipping_truck_02 from './shipping_truck_02.png'
+import delivery_box_01 from './delivery_box_01.png'
+import truck_delivery from './truck_delivery.png'
+import bike_character from './bike_character.png'
+import motor_bike from './motor_bike.png'
+import package_01 from './package_01.png'
 
 export const assets = {
+    bike_character,
+    motor_bike,
+    package_01,
+    shipping_truck_02,
+    delivery_box_01,
+    truck_delivery,
+    add_button,
+    location_blue,
+    redmi_featured_2,
+    redmi_featured_3,
+    redmi_featured_4,
+    search_add,
+    search_minus,
+    zoom_in_area,
+    redmi_featured,
+    infinix_phone,
+    itel_phone,
+    redmi_phone,
+    television_01,
+    mobile_phone_01,
+    laptop_01,
+    wap_logo,
+    electronic_featured,
+    dashboard_square_black,
+    dashboard_square_green,
+    delivery_truck_green,
+    funtuna_egg_featured,
     egg_featured,
     beverages,
     dairy_eggs,
