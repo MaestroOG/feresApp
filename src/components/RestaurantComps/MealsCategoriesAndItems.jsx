@@ -14,39 +14,29 @@ const MealsCategoriesAndItems = ({ categoryItems }) => {
 
     useEffect(() => {
         const observerOptions = {
-            root: null, // viewport as the root
-            threshold: 0.2, // at least 60% of a heading must be visible to activate
+            root: null,
+            threshold: 0.5, // Adjust visibility threshold to test
         };
 
         const observer = new IntersectionObserver((entries) => {
-            let highestRatioIndex = -1;
-            let highestRatio = 0;
-
             entries.forEach((entry) => {
                 const index = headingRefs.current.indexOf(entry.target);
-                if (entry.isIntersecting && entry.intersectionRatio > highestRatio) {
-                    highestRatio = entry.intersectionRatio;
-                    highestRatioIndex = index;
+                if (entry.isIntersecting) {
+                    setActiveButtonIndex(index);
                 }
             });
-
-            if (highestRatioIndex !== -1 && highestRatioIndex !== activeButtonIndex) {
-                setActiveButtonIndex(highestRatioIndex);
-            }
         }, observerOptions);
 
-        // Attach observer to each heading
         headingRefs.current.forEach((heading) => {
             if (heading) observer.observe(heading);
         });
 
-        // Cleanup observer on unmount
         return () => {
             headingRefs.current.forEach((heading) => {
                 if (heading) observer.unobserve(heading);
             });
         };
-    }, [activeButtonIndex]);
+    }, []);
 
     const handleButtonClick = (index) => {
         headingRefs.current[index]?.scrollIntoView({
