@@ -15,7 +15,7 @@ const TableList = ({ products }) => {
                         dispatch(setShowModel(true))
                         dispatch(setSelectedFood(item))
                     }}>
-                        <img src={item?.image_url[0]} alt="" className='w-[132px] h-[123px] object-contain rounded-2xl' />
+                        <img src={item?.image_url[0]} alt="" className='rounded-2xl' width={'120px'} />
                         {/* {item.image_url.length > 0 && <div className='bg-[#0AB247] rounded-lg p-2 text-xs text-white absolute top-2 left-2'>-35%</div>} */}
 
                         <div className='rounded-full bg-white p-2 absolute bottom-2 right-2'>
