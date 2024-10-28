@@ -9,7 +9,7 @@ import TableList from './TableList';
 const MealsCategoriesAndItems = ({ categoryItems }) => {
     const { tableList, setTableList } = useContext(FeresContext)
     const [scrollActive, setScrollActive] = useState(false);
-    const [activeButtonIndex, setActiveButtonIndex] = useState(null);
+    const [activeButtonIndex, setActiveButtonIndex] = useState(0);
     const headingRefs = useRef([]);
 
     useEffect(() => {
@@ -63,7 +63,7 @@ const MealsCategoriesAndItems = ({ categoryItems }) => {
             {/* Category Buttons */}
             <div className='px-3 flex items-center gap-4 overflow-auto no-scrollbar sticky top-24 bg-white z-50 pb-3'>
                 {categoryItems?.map((button, index) => (
-                    <button key={index} className={`${index === activeButtonIndex ? 'active' : 'inactive'} rounded-full p-3 whitespace-nowrap text-lg`} onClick={() => handleButtonClick(index)}>
+                    <button key={index} className={`${activeButtonIndex === index ? 'active' : 'inactive'} rounded-full p-3 whitespace-nowrap text-lg`} onClick={() => handleButtonClick(index)}>
                         {button?.name}
                     </button>
                 ))}
