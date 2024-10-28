@@ -15,7 +15,7 @@ const MealsCategoriesAndItems = ({ categoryItems }) => {
     useEffect(() => {
         const observerOptions = {
             root: null,
-            threshold: 0.2, // Adjust visibility threshold to test
+            threshold: 1, // Adjust visibility threshold to test
         };
 
         const observer = new IntersectionObserver((entries) => {
