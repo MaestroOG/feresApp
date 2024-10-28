@@ -25,7 +25,7 @@ const MenuList = ({ products }) => {
                             </div>
                         </div>
                         <div className='relative flex items-center justify-center'>
-                            <img src={item?.image_url[0]} alt="" className='w-[132px] h-[123px] rounded-2xl' />
+                            <img src={item?.image_url[0]} alt="" className='w-[132px] h-[123px] rounded-2xl object-cover' />
                             {/* <button className='border border-[#0AB247] bg-white p-2 rounded-full text-[#0AB247] text-sm font-medium absolute bottom-1 right-9'>Add</button> */}
                         </div>
                     </div>
