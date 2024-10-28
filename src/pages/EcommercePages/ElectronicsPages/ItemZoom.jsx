@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import Container from '../../../components/Container'
 import { assets } from '../../../assets/assets'
+import { useNavigate } from 'react-router-dom'
 
 const ItemZoom = () => {
     const cardImgSrc = [assets.redmi_featured, assets.redmi_featured_2, assets.redmi_featured_3, assets.redmi_featured_4]
+    const navigate = useNavigate()
 
     const [index, setIndex] = useState(0);
 
@@ -28,10 +30,10 @@ const ItemZoom = () => {
         <div className='flex items-center justify-center h-screen w-full'>
             <div className='w-[398px] h-[811px] flex flex-col justify-between rounded-xl bg-[#00000008] py-3'>
                 <Container className={'flex items-center justify-between'}>
-                    <img src={assets.cancel_icon} alt="" />
+                    <img src={assets.cancel_icon} alt="" onClick={() => navigate(-1)} />
                     <p className='text-[#2F2F3F] text-lg font-medium'>10%</p>
                 </Container>
-                <img src={cardImgSrc[current]} alt="" onClick={nextSlide} />
+                <img src={cardImgSrc[current]} alt="" onClick={nextSlide} className='w-[398px] h-[514px] object-contain' />
                 <Container className={'flex items-end justify-between'}>
                     <img src={assets.search_minus} alt="" />
                     <img src={assets.search_add} alt="" />
