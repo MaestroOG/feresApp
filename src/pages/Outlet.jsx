@@ -63,6 +63,9 @@ import EcommerceElectronics from './EcommercePages/ElectronicsPages/EcommerceEle
 import ElectronicsAllProducts from './EcommercePages/ElectronicsPages/ElectronicsAllProducts'
 import ElectronicItemDetail from './EcommercePages/ElectronicsPages/ElectronicItemDetail'
 import ItemZoom from './EcommercePages/ElectronicsPages/ItemZoom'
+import DeliveryService from './DeliveryServicePages/DeliveryService'
+import DeliveryOptions from './DeliveryServicePages/DeliveryOptions'
+import DeliveryDetails from './DeliveryServicePages/DeliveryDetails'
 
 const Outlet = () => {
     return (
@@ -87,8 +90,6 @@ const Outlet = () => {
                 <Route path='/chatsupport' element={<ChatSupport />} />
                 <Route path='/food' element={<Food />} />
                 <Route path='/cart/:id' element={<Order />} />
-                <Route path='/selectlocation' element={<SelectLocation />} />
-                <Route path='/selectlocation/locationsearch' element={<LocationSearch />} />
                 <Route path='/selectpayment' element={<SelectPayment />} />
                 <Route path='/selectpayment/deletecard' element={<DeleteCard />} />
                 <Route path='/selectpayment/addcard' element={<AddCard />} />
@@ -136,6 +137,13 @@ const Outlet = () => {
                 <Route path='/ecommerce/electronic/allproducts' element={<ElectronicsAllProducts />} />
                 <Route path='/ecommerce/electronic/allproducts/item' element={<ElectronicItemDetail />} />
                 <Route path='/ecommerce/electronic/allproducts/item/itemzoom' element={<ItemZoom />} />
+
+                {/* Delivery Service Routes */}
+                <Route path='/deliveryservice' element={<DeliveryService />} />
+                <Route path='/selectlocation' element={<SelectLocation />} />
+                <Route path='/selectlocation/locationsearch' element={<LocationSearch />} />
+                <Route path='/deliveryservice/deliveryoptions' element={<DeliveryOptions />} />
+                <Route path='/deliveryservice/deliverydetails' element={<DeliveryDetails />} />
             </Routes>
         </>
     )

@@ -265,8 +265,24 @@ import search_minus from './search_minus.png'
 import redmi_featured_2 from './redmi_featured_2.png'
 import redmi_featured_3 from './redmi_featured_3.png'
 import redmi_featured_4 from './redmi_featured_4.png'
+import location_blue from './location_blue.svg'
+import add_button from './add_button.svg'
+import shipping_truck_02 from './shipping_truck_02.png'
+import delivery_box_01 from './delivery_box_01.png'
+import truck_delivery from './truck_delivery.png'
+import bike_character from './bike_character.png'
+import motor_bike from './motor_bike.png'
+import package_01 from './package_01.png'
 
 export const assets = {
+    bike_character,
+    motor_bike,
+    package_01,
+    shipping_truck_02,
+    delivery_box_01,
+    truck_delivery,
+    add_button,
+    location_blue,
     redmi_featured_2,
     redmi_featured_3,
     redmi_featured_4,

@@ -8,7 +8,7 @@ const TableList = ({ products }) => {
     const dispatch = useDispatch()
     return (
         products.map((item) =>
-            <div className='flex overflow-auto'>
+            <div className='flex overflow-auto' key={item?._id}>
                 {/* Example for one card, repeat or dynamically render */}
                 <div className='min-w-[170px]' >
                     <div className='relative w-max' onClick={() => {
