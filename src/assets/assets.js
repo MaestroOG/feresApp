@@ -273,8 +273,22 @@ import truck_delivery from './truck_delivery.png'
 import bike_character from './bike_character.png'
 import motor_bike from './motor_bike.png'
 import package_01 from './package_01.png'
+import scooter_03 from './scooter_03.png'
+import car_02 from './car_02.png'
+import map_placeholder from './map_placeholder.png'
+import pointer_placeholder from './pointer_placeholder.png'
+import map_full from './map_full.png'
+import map_pointer from './map_pointer.png'
+import gps_01 from './gps_01.png'
 
 export const assets = {
+    gps_01,
+    map_pointer,
+    map_full,
+    map_placeholder,
+    pointer_placeholder,
+    car_02,
+    scooter_03,
     bike_character,
     motor_bike,
     package_01,
