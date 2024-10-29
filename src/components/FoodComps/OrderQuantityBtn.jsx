@@ -59,7 +59,7 @@ const OrderQuantityBtn = ({ itemFoodPopup }) => {
             // Dispatch both item and its quantity
             dispatch(addItem({ ...itemFoodPopup, quantity: orderCount }))
         }
-        // dispatch(setShowModel(false))
+        dispatch(setShowModel(false))
     }
 
     console.log(itemFoodPopup, "placing order");
