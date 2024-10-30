@@ -286,8 +286,12 @@ import google_doc_green from './google_doc_green.png'
 import camera_01 from './camera_01.svg'
 import image_02 from './image_02.svg'
 import delete_red from './delete_red.png'
+import copy_sm from './copy_sm.png'
+import message_white from './message_white.png'
 
 export const assets = {
+    message_white,
+    copy_sm,
     delete_red,
     camera_01,
     image_02,
