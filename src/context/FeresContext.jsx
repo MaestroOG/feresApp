@@ -42,6 +42,8 @@ const FeresContextProvider = (props) => {
     const [smValue, setSmValue] = useState('30 mins')
     const [smPop, setSmPop] = useState(false)
     const [deliveryPickup, setDeliveryPick] = useState(false)
+    const [vehicleTypePopup, setVehicleTypePopup] = useState(false)
+    const [deliveryItemDetail, setDeliveryItemDetail] = useState(false)
 
     const addToCart = (item) => {
         const isItemInCart = cartItems.find((cartItem) => cartItem._id === item._id); // check if the item is already in the cart
@@ -96,6 +98,10 @@ const FeresContextProvider = (props) => {
     }
 
     const value = {
+        deliveryItemDetail,
+        setDeliveryItemDetail,
+        vehicleTypePopup,
+        setVehicleTypePopup,
         deliveryPickup,
         setDeliveryPick,
         smPop,

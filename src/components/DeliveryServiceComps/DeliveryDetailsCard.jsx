@@ -1,10 +1,10 @@
 import React from 'react'
 import { assets } from '../../assets/assets'
 
-const DeliveryDetailsCard = ({ isPriority, img, name, desc, isLast }) => {
+const DeliveryDetailsCard = ({ isPriority, img, name, desc, isLast, onClick }) => {
     return (
         <>
-            <div className='flex items-center justify-between'>
+            <div className='flex items-center justify-between' onClick={onClick}>
                 <div className='flex items-center gap-3'>
                     <div className='p-3 rounded-full bg-[#EBF9EE]'>
                         <img src={img} alt="" className='w-[32.73px] h-[28.99px]' />

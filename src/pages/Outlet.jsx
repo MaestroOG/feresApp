@@ -66,6 +66,12 @@ import ItemZoom from './EcommercePages/ElectronicsPages/ItemZoom'
 import DeliveryService from './DeliveryServicePages/DeliveryService'
 import DeliveryOptions from './DeliveryServicePages/DeliveryOptions'
 import DeliveryDetails from './DeliveryServicePages/DeliveryDetails'
+import SenderDetails from './DeliveryServicePages/SenderDetails'
+import SenderLocation from './DeliveryServicePages/SenderLocation'
+import SenderLocationSearch from './DeliveryServicePages/SenderLocationSearch'
+import UpdatePhone from './DeliveryServicePages/UpdatePhone'
+import SelectPhoneCountry from './DeliveryServicePages/SelectPhoneCountry'
+import VerifyPhone from './DeliveryServicePages/VerifyPhone'
 
 const Outlet = () => {
     return (
@@ -144,6 +150,12 @@ const Outlet = () => {
                 <Route path='/selectlocation/locationsearch' element={<LocationSearch />} />
                 <Route path='/deliveryservice/deliveryoptions' element={<DeliveryOptions />} />
                 <Route path='/deliveryservice/deliverydetails' element={<DeliveryDetails />} />
+                <Route path='/deliveryservice/deliverydetails/senderdetails' element={<SenderDetails />} />
+                <Route path='/deliveryservice/deliverydetails/senderdetails/senderlocation' element={<SenderLocation />} />
+                <Route path='/deliveryservice/deliverydetails/senderdetails/senderlocation/search' element={<SenderLocationSearch />} />
+                <Route path='/deliveryservice/deliverydetails/senderdetails/updatephone' element={<UpdatePhone />} />
+                <Route path='/deliveryservice/deliverydetails/senderdetails/updatephone/selectphonecountry' element={<SelectPhoneCountry />} />
+                <Route path='/deliveryservice/deliverydetails/senderdetails/updatephone/verifyphone' element={<VerifyPhone />} />
             </Routes>
         </>
     )
