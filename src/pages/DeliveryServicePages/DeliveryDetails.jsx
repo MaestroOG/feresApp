@@ -14,7 +14,7 @@ const DeliveryDetails = () => {
     const { deliveryItemDetail, setDeliveryItemDetail } = useContext(FeresContext)
     return (
         <>
-            <div className={`bg-[#F8F8F8] h-screen overflow-auto ${vehicleTypePopup || deliveryItemDetail && 'blur-sm'}`}>
+            <div className={`bg-[#F8F8F8] pb-[158px] sticky top-0 left-0 z-30 ${vehicleTypePopup || deliveryItemDetail && 'blur-sm'}`}>
                 <Container className={'py-5 flex items-center justify-between bg-white'}>
                     <img src={assets.arrow_left} alt="" className='invert' onClick={() => navigate(-1)} />
                     <h1 className='text-[#2F2F3F] text-xl font-bold'>Enter destination</h1>

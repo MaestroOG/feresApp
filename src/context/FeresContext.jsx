@@ -44,6 +44,10 @@ const FeresContextProvider = (props) => {
     const [deliveryPickup, setDeliveryPick] = useState(false)
     const [vehicleTypePopup, setVehicleTypePopup] = useState(false)
     const [deliveryItemDetail, setDeliveryItemDetail] = useState(false)
+    const [selectWeight, setSelectWeight] = useState(false)
+    const [weightValue, setWeightValue] = useState("Small")
+    const [picturePop, setPicturePop] = useState(false)
+    const [delItemPhoto, setDelItemPhoto] = useState(null)
 
     const addToCart = (item) => {
         const isItemInCart = cartItems.find((cartItem) => cartItem._id === item._id); // check if the item is already in the cart
@@ -98,6 +102,14 @@ const FeresContextProvider = (props) => {
     }
 
     const value = {
+        picturePop,
+        setPicturePop,
+        delItemPhoto,
+        setDelItemPhoto,
+        weightValue,
+        setWeightValue,
+        selectWeight,
+        setSelectWeight,
         deliveryItemDetail,
         setDeliveryItemDetail,
         vehicleTypePopup,

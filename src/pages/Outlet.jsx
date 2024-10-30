@@ -72,6 +72,8 @@ import SenderLocationSearch from './DeliveryServicePages/SenderLocationSearch'
 import UpdatePhone from './DeliveryServicePages/UpdatePhone'
 import SelectPhoneCountry from './DeliveryServicePages/SelectPhoneCountry'
 import VerifyPhone from './DeliveryServicePages/VerifyPhone'
+import DeliveryItemDetailsPage from './DeliveryServicePages/DeliveryItemDetailsPage'
+import ReviewDeliveryOrder from './DeliveryServicePages/ReviewDeliveryOrder'
 
 const Outlet = () => {
     return (
@@ -156,6 +158,8 @@ const Outlet = () => {
                 <Route path='/deliveryservice/deliverydetails/senderdetails/updatephone' element={<UpdatePhone />} />
                 <Route path='/deliveryservice/deliverydetails/senderdetails/updatephone/selectphonecountry' element={<SelectPhoneCountry />} />
                 <Route path='/deliveryservice/deliverydetails/senderdetails/updatephone/verifyphone' element={<VerifyPhone />} />
+                <Route path='/deliveryservice/deliveryitemdetails' element={<DeliveryItemDetailsPage />} />
+                <Route path='/deliveryservice/reviewdeliveryorder' element={<ReviewDeliveryOrder />} />
             </Routes>
         </>
     )
