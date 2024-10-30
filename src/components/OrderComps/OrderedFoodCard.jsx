@@ -30,7 +30,7 @@ const OrderedFoodCard = ({ title, desc, price, quantity, img, item }) => {
     return (
         <>
             <div className='mt-6 flex items-center gap-3 rounded-2xl px-6'>
-                <img src={img[0]} alt="" className='w-28 mb-auto py-[6px] rounded-2xl' />
+                <img src={img && img[0]} alt="" className='w-28 mb-auto py-[6px] rounded-2xl' />
                 <div className='pr-1 w-[100%]'>
                     <h2 className='text-[#2F2F3F] font-medium text-base'>{title}</h2>
                     <p className='text-[#2F2F3F66] text-xs'>{desc}</p>
