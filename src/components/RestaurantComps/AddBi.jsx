@@ -10,8 +10,6 @@ const AddBi = ({ items, cartResponse, total_item_count, total_cart_price, loadin
     const { id } = useParams();
     const cartItems = useSelector((state) => state.cart.items)
 
-
-    console.log('cart response', cartResponse);
     return (
         <div className='bg-white px-2 py-4 fixed bottom-0 w-full z-[999]'>
             {total_item_count < 1 ? <button onClick={() => {

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import OrderNav from '../components/OrderComps/OrderNav';
 import DelOrPickBtn from '../components/OrderComps/DelOrPickBtn';
 import SelectRide from '../components/OrderComps/SelectRide';
@@ -40,10 +40,11 @@ const Order = () => {
     const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
     const { loading, error, response, postRequest } = usePostRequest();
     const [dataFetched, setDataFetched] = useState(false); // Track if data is fetched
+    const [quantityUpdate, setQuantityUpdate] = useState()
 
     useEffect(() => {
-        if (!loading && !dataFetched && !response) {
-            postRequest('/api/user/get_cart', { cart_unique_token: "i5H3Gacl5CPbcOSY4Wip" });
+        if ((!loading && !dataFetched && !response)) {
+            let data = postRequest('/api/user/get_cart', { cart_unique_token: "i5H3Gacl5CPbcOSY4Wip" });
             setDataFetched(true); // Mark data as fetched
         }
 
@@ -51,6 +52,12 @@ const Order = () => {
             setCartItemsData(response.cart);
         }
     }, [loading, response, dataFetched]);
+
+
+    const quaUpdate = useCallback((data) => {
+        setQuantityUpdate(data)
+        postRequest('/api/user/get_cart', { cart_unique_token: "i5H3Gacl5CPbcOSY4Wip" });
+    }, [])
 
 
     return (
@@ -62,7 +69,7 @@ const Order = () => {
             {/* Nested mapping to show each store and their items */}
             {cartItemsData?.stores?.map((store) => (
                 <div key={store._id}>
-                    {store.items?.map((item) => (
+                    {store?.items?.map((item) => (
                         <OrderedFoodCard
                             key={item.unique_id}
                             title={item.name}
@@ -71,6 +78,7 @@ const Order = () => {
                             img={item.image_url}
                             quantity={item.quantity}
                             item={item}
+                            quaUpdate={quaUpdate}
                         />
                     ))}
                 </div>

@@ -1,31 +1,75 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { assets } from '../../assets/assets'
 import { useDispatch } from 'react-redux'
 import { updateQuantity, removeItem } from '../../redux/slices/cartSlice'
+import { usePostRequest } from '../../servies/usePostRequest'
 
-const OrderedFoodCard = ({ title, desc, price, quantity, img, item }) => {
+const OrderedFoodCard = ({ title, desc, price, quantity, img, item, quaUpdate }) => {
+    const { error, loading, postRequest, response } = usePostRequest()
     const dispatch = useDispatch()
 
     const handleIncrease = () => {
-        // Increase the item quantity by 1 and dispatch updateQuantity action
-        dispatch(updateQuantity({
-            product_id: item.product_id, // or sub_product_id if needed
-            quantity: quantity + 1
-        }));
+        // console.log(item, 'myitemhere');
+        postRequest('/api/user/new_update_item_quantity', {
+            cart_unique_token: "i5H3Gacl5CPbcOSY4Wip",
+            item: {
+                _id: item?._id,
+                image_url: item?.image_url,
+                is_promotion_available: item?.is_promotion_available,
+                name: item?.name,
+                order_item_description: item?.order_item_description,
+                price: item?.price,
+                product_id: item?.product_id,
+                promotion: item?.promotion,
+                quantity: (item?.quantity + 1),
+                sales_commission: item?.sales_commission,
+                shipment_commission: item?.shipment_commission,
+                specificationLast: [],
+                specification: [],
+                store_id: item?.store_id,
+                total_item_price: item?.total_item_price,
+                total_quantity: item?.total_quantity,
+                unique_id: item?.unique_id
+            },
+            server_token: "tGcbRdCTBt3a31WLX48HxC795z83dmQH"
+        })
+
+
     }
 
     const handleDecrease = () => {
-        if (quantity > 1) {
-            // Decrease the item quantity by 1 and dispatch updateQuantity action
-            dispatch(updateQuantity({
-                product_id: item.product_id, // or sub_product_id if needed
-                quantity: quantity - 1
-            }));
-        } else {
-            // If quantity is 1, remove the item from the cart
-            dispatch(removeItem({ product_id: item.product_id }));
-        }
+        postRequest('/api/user/new_update_item_quantity', {
+            cart_unique_token: "i5H3Gacl5CPbcOSY4Wip",
+            item: {
+                _id: item?._id,
+                image_url: item?.image_url,
+                is_promotion_available: item?.is_promotion_available,
+                name: item?.name,
+                order_item_description: item?.order_item_description,
+                price: item?.price,
+                product_id: item?.product_id,
+                promotion: item?.promotion,
+                quantity: (item?.quantity - 1),
+                sales_commission: item?.sales_commission,
+                shipment_commission: item?.shipment_commission,
+                specificationLast: [],
+                specification: [],
+                store_id: item?.store_id,
+                total_item_price: item?.total_item_price,
+                total_quantity: item?.total_quantity,
+                unique_id: item?.unique_id
+            },
+            server_token: "tGcbRdCTBt3a31WLX48HxC795z83dmQH"
+        })
     }
+
+    useEffect(() => {
+        if (response) {
+            quaUpdate(response)
+        }
+
+    }, [response])
+
 
     return (
         <>
