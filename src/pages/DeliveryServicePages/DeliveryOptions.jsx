@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import Container from '../../components/Container'
 import { assets } from '../../assets/assets'
+import { useNavigate } from 'react-router-dom'
 
 const DeliveryOptions = () => {
     const [selectedOption, setSelectedOption] = useState("")
+    const navigate = useNavigate();
 
     const handleOptionChange = (event) => {
         setSelectedOption(event.target.value);
@@ -60,7 +62,7 @@ const DeliveryOptions = () => {
                 </Container>
             </div>
 
-            <div className='w-full fixed px-4 py-5 bottom-0 left-0 bg-white'>
+            <div className='w-full fixed px-4 py-5 bottom-0 left-0 bg-white' onClick={() => selectedOption.length > 0 && navigate('/deliveryservice/deliverydetails')}>
                 <button className={`${selectedOption.length > 0 ? 'bg-[#0AB247] text-white' : 'bg-[#F8F8F8] text-[#767578]'} rounded-full p-4 w-full font-medium text-lg`}>Confirm</button>
             </div>
         </div>

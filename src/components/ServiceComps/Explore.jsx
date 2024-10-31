@@ -11,11 +11,9 @@ const Explore = () => {
 
             <div className='flex flex-row gap-5 overflow-y-scroll explore-card'>
                 {/* Card */}
-                <ExploreCard name={"Ride"} img={assets.car} />
+                <ExploreCard name={"Delivery"} img={assets.car} onClick={() => navigate('/deliveryservice')} />
                 <ExploreCard name={"Food"} img={assets.food_img} onClick={() => navigate('/allrestaurants')} />
                 <ExploreCard name={"Mart"} img={assets.mart_bucket} onClick={() => navigate('/ecommerce')} />
-                <ExploreCard name={"Car"} img={assets.car} />
-                <ExploreCard name={"Food"} img={assets.food_img} />
             </div>
         </div>
     )

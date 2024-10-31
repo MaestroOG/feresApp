@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Container from '../Container'
 import { assets } from '../../assets/assets'
+import { Link } from 'react-router-dom'
 
 const DeliveryLocationForm = () => {
     const [location, setLocation] = useState("")
@@ -18,7 +19,9 @@ const DeliveryLocationForm = () => {
                     {location.length > 0 && <img src={assets.close} alt="" onClick={() => setLocation("")} />}
                 </div>
             </div>
-            <img src={assets.add_button} alt="" />
+            <Link to={'/selectlocation'}>
+                <img src={assets.add_button} alt="" />
+            </Link>
         </Container>
     )
 }

@@ -3,7 +3,7 @@ import { assets } from '../../assets/assets'
 import Container from '../../components/Container'
 import { useNavigate } from 'react-router-dom'
 
-const SenderLocation = () => {
+const RecipientLocation = () => {
     const navigate = useNavigate()
     return (
         <div className='relative'>
@@ -21,12 +21,12 @@ const SenderLocation = () => {
                         <h4 className='text-[#767578] text-lg'>Deliver to</h4>
                         <h3 className='text-[#2F2F3F] font-medium text-lg'>Elgin St. Celina, Delaware 10299</h3>
                     </div>
-                    <img src={assets.search} alt="" onClick={() => navigate('/deliveryservice/deliverydetails/senderdetails/senderlocation/search')} />
+                    <img src={assets.search} alt="" onClick={() => navigate('/deliveryservice/deliverydetails/recipientdetails/recipientlocation/search')} />
                 </div>
-                <button className='p-4 rounded-full w-full bg-[#0AB247] text-white text-xl font-medium mt-5' onClick={() => navigate('/deliveryservice/deliverydetails/senderdetails')}>Confirm location</button>
+                <button className='p-4 rounded-full w-full bg-[#0AB247] text-white text-xl font-medium mt-5' onClick={() => navigate('/deliveryservice/deliverydetails/recepientdetails')}>Confirm location</button>
             </Container>
         </div>
     )
 }
 
-export default SenderLocation
+export default RecipientLocation

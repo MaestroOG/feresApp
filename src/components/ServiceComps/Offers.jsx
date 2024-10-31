@@ -9,12 +9,16 @@ const Offers = () => {
     const navigate = useNavigate();
 
     const getData = async () => {
+        const body = {
+            "user_id": "667bf7ce908d766ee16482da"
+        }
         try {
             const res = await fetch(import.meta.env.VITE_API_URI + '/get_all_promotions', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                }
+                },
+                body: JSON.stringify(body)
             });
 
             if (!res.ok) {

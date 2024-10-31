@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Container from '../../components/Container'
 import { assets } from '../../assets/assets'
 import { useNavigate } from 'react-router-dom'
 import DeliveryDetailsCard from '../../components/DeliveryServiceComps/DeliveryDetailsCard'
+import { FeresContext } from '../../context/FeresContext'
 
 const ReviewDeliveryOrder = () => {
+    const { deliveryPayment, discountOpt } = useContext(FeresContext)
     const navigate = useNavigate()
     return (
         <div className={`bg-[#F8F8F8] pb-[158px]`}>
@@ -60,7 +62,33 @@ const ReviewDeliveryOrder = () => {
                         <img src={assets.wallet_01} alt="" />
                         <p className='font-medium text-[#2F2F3F]'>Payment methods</p>
                     </div>
-                    <img src={assets.arrow_right} alt="" />
+                    <div className='flex items-center gap-1'>
+                        {deliveryPayment === 'ebirr' && <div className='flex items-center gap-2'>
+                            <img src={assets.ebirr_sticker} alt="" className='w-8 h-6 object-contain' />
+                            <p className='text-[#2F2F3F] text-sm font-medium'>E-birr</p>
+                        </div>}
+
+                        {deliveryPayment === 'cash' && <div className='flex items-center gap-2'>
+                            <img src={assets.cash_sticker} alt="" className='w-8 h-6 object-contain' />
+                            <p className='text-[#2F2F3F] text-sm font-medium'>Cash</p>
+                        </div>}
+
+                        {deliveryPayment === 'kaafi' && <div className='flex items-center gap-2'>
+                            <img src={assets.kaafi} alt="" className='w-8 h-6 object-contain' />
+                            <p className='text-[#2F2F3F] text-sm font-medium'>Kaafi</p>
+                        </div>}
+
+                        {deliveryPayment === 'visa' && <div className='flex items-center gap-2'>
+                            <img src={assets.visa_sticker} alt="" className='w-8 h-6 object-contain' />
+                            <p className='text-[#2F2F3F] text-sm font-medium'>Visa</p>
+                        </div>}
+
+                        {deliveryPayment === 'master' && <div className='flex items-center gap-2'>
+                            <img src={assets.mastercard} alt="" className='w-8 h-6 object-contain' />
+                            <p className='text-[#2F2F3F] text-sm font-medium'>MasterCard</p>
+                        </div>}
+                        <img src={assets.arrow_right} alt="" />
+                    </div>
                 </div>
                 <hr className='my-4' />
                 <div className='flex items-center justify-between'>
@@ -68,7 +96,10 @@ const ReviewDeliveryOrder = () => {
                         <img src={assets.discount} alt="" />
                         <p className='font-medium text-[#2F2F3F]'>Get discounts</p>
                     </div>
-                    <img src={assets.arrow_right} alt="" />
+                    <div className='flex items-center gap-2'>
+                        {discountOpt && <div className='text-white p-[10px] flex items-center justify-center bg-[#0AB247] rounded-full text-xs font-medium'>Discounts 30%</div>}
+                        <img src={assets.arrow_right} alt="" />
+                    </div>
                 </div>
             </Container>
 
@@ -78,7 +109,7 @@ const ReviewDeliveryOrder = () => {
                     <h3 className='text-[#2F2F3F] text-lg'>Total</h3>
                     <p className='text-[#2F2F3F] text-xl font-bold'>ETB90.00</p>
                 </div>
-                <button className='w-full rounded-full bg-[#F8F8F8] p-4 text-[#767578] text-lg font-medium'>Review order</button>
+                <button className='w-full rounded-full bg-[#0AB247] p-4 text-white text-lg font-medium' onClick={() => navigate('/deliveryservice/ridemap')}>Book delivery</button>
             </Container>
         </div>
     )

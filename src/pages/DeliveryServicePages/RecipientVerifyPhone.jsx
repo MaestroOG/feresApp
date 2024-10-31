@@ -3,7 +3,7 @@ import Container from '../../components/Container'
 import { assets } from '../../assets/assets'
 import { useNavigate } from 'react-router-dom';
 
-const VerifyPhone = () => {
+const RecipientVerifyPhone = () => {
     const [values, setValues] = useState(["", "", "", ""]);
     const [showSuccess, setShowSuccess] = useState(false);
     const inputRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
@@ -74,9 +74,9 @@ const VerifyPhone = () => {
                     {time > 0 ? <p className='text-[#2F2F3F] mt-3'>You can resend code in <span className='text-[#0AB247] font-medium'>{time}</span> s</p> : <span className='text-[#0AB247] font-medium mt-3'>Resend</span>}
                 </div>
             </Container>
-            {showSuccess && navigate('/deliveryservice/deliverydetails/senderdetails')}
+            {showSuccess && navigate('/deliveryservice/deliverydetails/recepientdetails')}
         </>
     )
 }
 
-export default VerifyPhone
+export default RecipientVerifyPhone
