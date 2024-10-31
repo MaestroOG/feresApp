@@ -3,7 +3,7 @@ import { assets } from '../../assets/assets'
 import { RecentLocations } from '../../components/LocationSeachComps/RecentLocations'
 import { useNavigate } from 'react-router-dom'
 
-const SenderLocationSearch = () => {
+const RecipientLocationSearch = () => {
     const navigate = useNavigate()
     return (
         <div>
@@ -11,7 +11,7 @@ const SenderLocationSearch = () => {
             <div className='shadow pb-6'>
                 <div className='flex items-center justify-between px-3 py-5'>
                     <img src={assets.arrow_left} alt="" className='invert' onClick={() => navigate(-1)} />
-                    <h1 className='text-[#2F2F3F] font-bold text-xl'>Sender address</h1>
+                    <h1 className='text-[#2F2F3F] font-bold text-xl'>Recipient address</h1>
                     <img src={assets.maps_location_02} alt="" />
                 </div>
 
@@ -33,4 +33,4 @@ const SenderLocationSearch = () => {
     )
 }
 
-export default SenderLocationSearch
+export default RecipientLocationSearch

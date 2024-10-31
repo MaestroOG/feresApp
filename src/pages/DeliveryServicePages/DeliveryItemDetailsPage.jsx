@@ -5,11 +5,13 @@ import { assets } from '../../assets/assets'
 import SelectWeightPopup from '../../components/DeliveryItemDetailsComps/SelectWeightPopup'
 import { FeresContext } from '../../context/FeresContext'
 import UploadPhotoPopup from '../../components/DeliveryItemDetailsComps/UploadPhotoPopup'
+import { useNavigate } from 'react-router-dom'
 
 const DeliveryItemDetailsPage = () => {
-    const { selectWeight, setSelectWeight, weightValue, picturePop, delItemPhoto, setPicturePop } = useContext(FeresContext)
+    const { selectWeight, setSelectWeight, weightValue, picturePop, delItemPhoto, setDelItemPhoto, setPicturePop } = useContext(FeresContext)
     const [kilos, setKilos] = useState("")
     const [activeBtn, setActiveBtn] = useState(null)
+    const navigate = useNavigate();
 
     const handleActiveClick = (id) => {
         setActiveBtn(id)
@@ -62,7 +64,7 @@ const DeliveryItemDetailsPage = () => {
                             </div>
                         </div>
                         <div className='p-3 bg-[#E92D530D] rounded-full flex items-center justify-center'>
-                            <img src={assets.delete_red} alt="" />
+                            <img src={assets.delete_red} alt="" onClick={() => setDelItemPhoto(null)} />
                         </div>
                     </Container>}
                 </Container>
@@ -81,7 +83,7 @@ const DeliveryItemDetailsPage = () => {
 
 
                 <Container className={'py-5 bg-white w-full fixed bottom-0 left-0'}>
-                    <button className='text-lg text-white font-medium w-full rounded-full p-4 bg-[#0AB247]'>Confirm</button>
+                    <button className='text-lg text-white font-medium w-full rounded-full p-4 bg-[#0AB247]' onClick={() => navigate('/deliveryservice/deliverydetails')}>Confirm</button>
                 </Container>
             </div>
             {selectWeight && <SelectWeightPopup />}

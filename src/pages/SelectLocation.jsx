@@ -17,7 +17,7 @@ const SelectLocation = () => {
                     <input type="text" className='w-full bg-transparent outline-none placeholder:text-lg placeholder:text-[#646464]' placeholder='Royal Ln. Mesa, New Jersey 454' />
                 </div>
             </Container>
-            <div className='w-full px-4 bg-transparent fixed bottom-4 left-0'>
+            <div className='w-full px-4 bg-transparent fixed bottom-4 left-0' onClick={() => navigate('/deliveryservice/deliveryoptions')}>
                 <button className='text-white text-xl font-medium bg-[#0AB247] rounded-full p-4 w-full'>Confirm your drop off location</button>
             </div>
         </>
