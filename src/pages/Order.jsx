@@ -27,9 +27,13 @@ import ServiceFeePopup from '../components/OrderComps/ServiceFeePopup';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { usePostRequest } from '../servies/usePostRequest';
+import { usePost } from '../servies/usePost';
+import { useDispatch } from 'react-redux';
+import { setCartDetails } from '../redux/slices/cartDetail';
 
 const Order = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch()
     const { orderNote, riderNote, tipBtn, tipRidePop } = useContext(FeresContext);
     const { deliveryPickup } = useContext(FeresContext);
     const [delPop, setDelPop] = useState(false);
@@ -39,24 +43,43 @@ const Order = () => {
     const cartData = useSelector((state) => state.cart.items);
     const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
     const { loading, error, response, postRequest } = usePostRequest();
+    const { post } = usePost()
     const [dataFetched, setDataFetched] = useState(false); // Track if data is fetched
     const [quantityUpdate, setQuantityUpdate] = useState()
+    const [cartDetail, setCartDetail] = useState()
+
 
     useEffect(() => {
-        if ((!loading && !dataFetched && !response)) {
-            let data = postRequest('/api/user/get_cart', { cart_unique_token: "i5H3Gacl5CPbcOSY4Wip" });
-            setDataFetched(true); // Mark data as fetched
+        const fetchCart = async () => {
+            const cartItemData = await post('/api/user/get_cart', { cart_unique_token: "i5H3Gacl5CPbcOSY4Wip" });
+            setCartItemsData(cartItemData.cart)
+            const cartDetail = await post('/api/user/get_order_cart_invoice', {
+                is_user_pick_up_order: false,
+                server_token: "tGcbRdCTBt3a31WLX48HxC795z83dmQH",
+                order_type: 7,
+                total_distance: 2.096696376800537,
+                total_time: 5.0,
+                cart_id: cartItemData?.cart?._id,
+                cart_unique_token: "i5H3Gacl5CPbcOSY4Wip",
+                user_id: "621fc0e0c2545594abfd644e",
+                vehicle_id: "",
+                tip_payment_id: "",
+                tipPaymeny_other_amount: "0",
+                is_delivery_keeper: true
+            });
+            setCartDetail(cartDetail)
+            dispatch(setCartDetails(cartDetail))
+            console.log(cartDetail, 'here is a data of detail carts');
+
         }
 
-        if (response && response.cart) {
-            setCartItemsData(response.cart);
-        }
-    }, [loading, response, dataFetched]);
+        fetchCart()
+    }, [quantityUpdate]);
 
 
     const quaUpdate = useCallback((data) => {
         setQuantityUpdate(data)
-        postRequest('/api/user/get_cart', { cart_unique_token: "i5H3Gacl5CPbcOSY4Wip" });
+        // postRequest('/api/user/get_cart', { cart_unique_token: "i5H3Gacl5CPbcOSY4Wip" });
     }, [])
 
 
@@ -92,7 +115,7 @@ const Order = () => {
             <OrderSchedule onThirtyClick={() => setSmPop(true)} />
 
             {!deliveryPickup && <LocationPick />}
-            {!deliveryPickup && <TipRider />}
+            {!deliveryPickup && <TipRider tips_list={cartDetail?.tips_list} />}
 
             {tipBtn === 'other' && <OtherTip />}
             <PaymentMethods img={assets.wallet_01} text={"Payment Methods"} isCard={true} onClick={() => navigate('/selectpayment')} />
@@ -105,7 +128,7 @@ const Order = () => {
             {delPop && <DeliveryFeePopup />}
             {servicePop && <ServiceFeePopup />}
             <DelOrderPopUp />
-            <SelectDeliveryPopup />
+            <SelectDeliveryPopup service={cartDetail?.service} />
             {orderNote && <ExtraNotePopUp placeholder={"Write anything else we need to know"} />}
             <OrderConfirmBtn orderData={response} />
         </div>

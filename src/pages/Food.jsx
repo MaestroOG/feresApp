@@ -28,7 +28,7 @@ const Food = ({ itemFoodPopup }) => {
             )}
             <ExtraNote onClick={() => setNotePop(true)} />
             {notePop ? <ExtraNotePopUp placeholder={"Write your review here"} /> : null}
-            {!notePop ? <OrderQuantityBtn itemFoodPopup={itemFoodPopup} /> : null}
+            <OrderQuantityBtn itemFoodPopup={itemFoodPopup} />
         </div>
     )
 }

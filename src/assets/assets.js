@@ -280,8 +280,24 @@ import pointer_placeholder from './pointer_placeholder.png'
 import map_full from './map_full.png'
 import map_pointer from './map_pointer.png'
 import gps_01 from './gps_01.png'
+import package_lg from './package_lg.png'
+import image_add_01 from './image_add_01.png'
+import google_doc_green from './google_doc_green.png'
+import camera_01 from './camera_01.svg'
+import image_02 from './image_02.svg'
+import delete_red from './delete_red.png'
+import copy_sm from './copy_sm.png'
+import message_white from './message_white.png'
 
 export const assets = {
+    message_white,
+    copy_sm,
+    delete_red,
+    camera_01,
+    image_02,
+    google_doc_green,
+    image_add_01,
+    package_lg,
     gps_01,
     map_pointer,
     map_full,
