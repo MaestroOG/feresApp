@@ -20,6 +20,11 @@ import 'react-time-picker/dist/TimePicker.css';
 import CustomTimePicker from '../components/CustomTimePicker';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedResturant } from '../redux/slices/selectedResturantSlice';
+import GroupOrder1 from '../components/GroupOrderComps/GroupOrder1';
+import OrderDeadline from '../components/GroupOrderComps/OrderDeadline';
+import InviteSharePopup from '../components/GroupOrderComps/InviteSharePopup';
+import JoinQrPopup from '../components/GroupOrderComps/JoinQrPopup';
+import Container from '../components/Container';
 
 
 const Restaurant = () => {
@@ -206,14 +211,26 @@ const Restaurant = () => {
                                 <img src={assets.add_team} alt="" className={`${scrolled ? 'invert' : ''}`} />
                             </button>
                             <button className={`p-3 rounded-xl ${scrolled ? 'bg-transparent border border-[#EEEEEE]' : 'bg-[#06060666]'}`}>
-                                <img src={assets.share} alt="" className={`${scrolled ? 'invert' : ''}`} />
+                                <img src={assets.share} alt="" className={`${scrolled ? 'invert' : ''}`} onClick={() => setSharePop(true)} />
                             </button>
                             <button className={`p-3 rounded-xl ${scrolled ? 'bg-transparent border border-[#EEEEEE]' : 'bg-[#06060666]'}`}>
-                                <img src={assets.search} alt="" className={`${!scrolled ? 'invert' : ''}`} />
+                                <img src={assets.search} alt="" className={`${!scrolled ? 'invert' : ''}`} onClick={() => setFoodSearch(true)} />
                             </button>
                         </div>
-
                     </div>
+
+                    <Container className={'absolute top-[23%] w-full'}>
+                        <div className='bg-[#E8E8E8] rounded-2xl p-3 flex items-center justify-between'>
+                            <div className='flex items-center gap-1'>
+                                <img src={assets.rice_bowl_green} alt="" />
+                                <p className='text-[#0AB247] text-sm font-medium'>Group order</p>
+                            </div>
+                            <div className='flex items-center gap-1'>
+                                <img src={assets.add_team} alt="" className='invert' />
+                                <p className='text-[#0D343F] text-sm font-medium'>Invite</p>
+                            </div>
+                        </div>
+                    </Container>
 
                     {/* Restaurant Title */}
 
@@ -333,10 +350,13 @@ const Restaurant = () => {
                     </div>
                 </div> : <div><Food itemFoodPopup={selectedFood} /></div>}
             </div>
+
+            {/* <GroupOrder1 /> */}
+            {/* <OrderDeadline /> */}
+            {/* <InviteSharePopup /> */}
+            {/* <JoinQrPopup /> */}
         </>
     )
 }
 
 export default Restaurant
-
-{/* */ }

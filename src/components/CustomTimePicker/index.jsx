@@ -28,7 +28,7 @@ const CustomTimePicker = ({ onTimeConfirm, onClose }) => {
     };
 
     return (
-        <div className="modal fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex justify-center items-center z-[999]">
+        <div className="modal fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex justify-center items-center z-[99999]">
             <div className="modal-content bg-white rounded-t-lg flex flex-col ">
                 <div id="clock" className="rounded-t-lg"></div>
                 <div className="flex justify-end gap-3 mt-2 mr-4">

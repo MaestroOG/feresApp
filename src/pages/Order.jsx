@@ -50,7 +50,7 @@ const Order = () => {
                 <OrderedFoodCard key={item?.unique_id} title={item?.name} price={item?.price} desc={item?.details} img={item?.image_url} quantity={cartData[cartData?.length - 1]?.quantity} />
             ))}
             {/* <OrderedFoodCard title={item.name} price={item.price} desc={item.details} quantity={item.quantity} /> */}
-            <AddItemBtn />
+            <AddItemBtn isHr={true} />
             <SpecialReq />
             <AddNoteBtn />
             <hr className='my-3' />

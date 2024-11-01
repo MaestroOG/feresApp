@@ -7,7 +7,7 @@ const AddBi = ({ items }) => {
     const { addToCart } = useContext(FeresContext)
     const { id } = useParams();
     return (
-        <div className='bg-white px-2 py-4 fixed bottom-0 w-full z-[999]'>
+        <div className='bg-white px-2 py-4 fixed bottom-0 w-full z-[99]'>
             <button onClick={() => {
                 addToCart(items)
                 navigate(`/cart/${id}`)

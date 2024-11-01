@@ -289,8 +289,28 @@ import delete_red from './delete_red.png'
 import copy_sm from './copy_sm.png'
 import waypoint from './waypoint.png'
 import message_white from './message_white.png'
+import group_order_img from './group_order_img.png'
+import clock_blue from './clock_blue.png'
+import edit_blue from './edit_blue.png'
+import qr_code_green from './qr_code_green.png'
+import feres_share_icon from './feres_share_icon.png'
+import qr_feres from './qr_feres.png'
+import rice_bowl_green from './rice_bowl_green.png'
+import add_circle_blue from './add_circle_blue.png'
+import user_group from './user_group.png'
+import user_blue from './user_blue.png'
 
 export const assets = {
+    user_blue,
+    add_circle_blue,
+    user_group,
+    rice_bowl_green,
+    qr_feres,
+    feres_share_icon,
+    qr_code_green,
+    clock_blue,
+    edit_blue,
+    group_order_img,
     waypoint,
     message_white,
     copy_sm,

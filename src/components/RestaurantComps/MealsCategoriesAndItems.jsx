@@ -61,7 +61,7 @@ const MealsCategoriesAndItems = ({ categoryItems }) => {
             </div>
 
             {/* Category Buttons */}
-            <div className='px-3 flex items-center gap-4 overflow-auto no-scrollbar sticky top-24 bg-white z-50 pb-3'>
+            <div className='px-3 flex items-center gap-4 overflow-auto no-scrollbar sticky top-24 z-20 bg-white pb-3'>
                 {categoryItems?.map((button, index) => (
                     <button key={index} className={`${activeButtonIndex === index ? 'active' : 'inactive'} rounded-full p-3 whitespace-nowrap text-lg`} onClick={() => handleButtonClick(index)}>
                         {button?.name}
@@ -80,7 +80,7 @@ const MealsCategoriesAndItems = ({ categoryItems }) => {
 
             {/* Trending Items Slider Row */}
 
-            <div className='px-4 my-7 flex items-center overflow-auto no-scrollbar flex-shrink-0'>
+            <div className='px-4 my-7 flex items-center overflow-auto no-scrollbar flex-shrink-0 z-10'>
                 <div className='flex'>
                     {/* Example for one card, repeat or dynamically render */}
                     {trendingItems.map(item => (
