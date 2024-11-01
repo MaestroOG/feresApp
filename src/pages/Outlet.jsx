@@ -88,6 +88,7 @@ import DeliveryDiscounts from './DeliveryServicePages/DeliveryDiscounts'
 import RideMap from './DeliveryServicePages/RideMap'
 import GroupOrderReview from '../components/GroupOrderComps/GroupOrderReview'
 import GroupOrderCart from '../components/GroupOrderComps/GroupOrderCart'
+import DeliveryRateRider from './DeliveryServicePages/DeliveryRateRider'
 
 const Outlet = () => {
     return (
@@ -179,6 +180,7 @@ const Outlet = () => {
                 <Route path='/deliveryservice/deliverydetails/deliverydiscounts' element={<DeliveryDiscounts />} />
                 <Route path='/deliveryservice/deliverydetails/selectpayment' element={<DeliverySelectPayment />} />
                 <Route path='/deliveryservice/ridemap' element={<RideMap />} />
+                <Route path='/deliveryservice/raterider' element={<DeliveryRateRider />} />
 
                 {/* Recipient Routes */}
                 <Route path='/deliveryservice/deliverydetails/recepientdetails' element={<RecipientDetails />} />

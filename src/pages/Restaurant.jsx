@@ -56,6 +56,7 @@ const Restaurant = () => {
     const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
     const showModel = useSelector((state) => state.modelToggle.showModel);
     const selectedFood = useSelector((state) => state.selectedFood.selectedFood);
+    const [showQr, setShowQr] = useState(true)
 
 
 
@@ -354,7 +355,7 @@ const Restaurant = () => {
             {/* <GroupOrder1 /> */}
             {/* <OrderDeadline /> */}
             {/* <InviteSharePopup /> */}
-            {/* <JoinQrPopup /> */}
+            {showQr && <JoinQrPopup onCancel={() => setShowQr(false)} />}
         </>
     )
 }

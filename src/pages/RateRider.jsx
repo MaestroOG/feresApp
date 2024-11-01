@@ -4,7 +4,7 @@ import RiderCard from '../components/RateRiderComps/RiderCard'
 import RateRiderFb from '../components/RateRiderComps/RateRiderFb'
 import { ContinueBlockBtn } from '../components/RateRiderComps/ContinueBlockBtn'
 
-const RateRider = ({ to }) => {
+const RateRider = () => {
     return (
         <div className='px-4'>
             <RateRiderNav />
