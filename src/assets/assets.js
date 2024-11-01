@@ -299,8 +299,12 @@ import rice_bowl_green from './rice_bowl_green.png'
 import add_circle_blue from './add_circle_blue.png'
 import user_group from './user_group.png'
 import user_blue from './user_blue.png'
+import time_up_img from './time_up_img.png'
+import del_by_host from './del_by_host.png'
 
 export const assets = {
+    del_by_host,
+    time_up_img,
     user_blue,
     add_circle_blue,
     user_group,

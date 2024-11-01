@@ -25,6 +25,8 @@ import OrderDeadline from '../components/GroupOrderComps/OrderDeadline';
 import InviteSharePopup from '../components/GroupOrderComps/InviteSharePopup';
 import JoinQrPopup from '../components/GroupOrderComps/JoinQrPopup';
 import Container from '../components/Container';
+import TimeUpPopup from '../components/GroupOrderComps/TimeUpPopup';
+import DelByHostPopup from '../components/GroupOrderComps/DelByHostPopup';
 
 
 const Restaurant = () => {
@@ -356,6 +358,8 @@ const Restaurant = () => {
             {/* <OrderDeadline /> */}
             {/* <InviteSharePopup /> */}
             {showQr && <JoinQrPopup onCancel={() => setShowQr(false)} />}
+            {/* <TimeUpPopup /> */}
+            {/* <DelByHostPopup /> */}
         </>
     )
 }
