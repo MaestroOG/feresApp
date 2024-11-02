@@ -1,12 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import { assets } from '../../assets/assets'
 import { useNavigate } from 'react-router-dom';
+import { FeresContext } from '../../context/FeresContext';
 
-const OrderConfirmBtn = () => {
+const OrderConfirmBtn = ({ setReview }) => {
     const navigate = useNavigate()
     const [value, setValue] = useState(0); // Initial slider value
     const rangeRef = useRef(null);
     const thumbRef = useRef(null);
+
+    const { paymentMethod } = useContext(FeresContext)
 
     // Update thumb tracker position
     const updateThumbPosition = () => {
@@ -34,7 +37,12 @@ const OrderConfirmBtn = () => {
 
 
         if (newValue === "100") {
-            navigate('/bookride');
+            if (paymentMethod === 'ebirr') {
+                setReview(true)
+            }
+            else {
+                navigate('/bookride');
+            }
         }
     }
 

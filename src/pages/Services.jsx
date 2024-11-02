@@ -89,7 +89,7 @@ const Services = () => {
         <div className='pb-24 overflow-hidden'>
             <Navbar />
             <SearchBar onClick={() => navigate('/search')} className="sticky top-0 left-0 bg-white" />
-            <ServiceCard />
+            <ServiceCard to={() => navigate('/allrestaurants')} />
             <Explore />
             <Offers />
             <>

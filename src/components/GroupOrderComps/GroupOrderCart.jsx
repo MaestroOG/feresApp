@@ -20,12 +20,14 @@ import SaveMoneyPopUp from '../OrderComps/SaveMoneyPopUp'
 import TIpRiderPopUp from '../OrderComps/TIpRiderPopUp'
 import RiderNote from '../OrderComps/RiderNote'
 import OrderConfirmBtn from '../OrderComps/OrderConfirmBtn'
+import ReviewPayPopup from '../../pages/DeliveryServicePages/ReviewPayPopup'
 
 const GroupOrderCart = () => {
     const navigate = useNavigate();
     const { deliveryPickup, smPop, setSmPop, tipBtn, tipRidePop, riderNote } = useContext(FeresContext)
     const [delPop, setDelPop] = useState(false)
     const [servicePop, setServicePop] = useState(false)
+    const [review, setReview] = useState(false)
     return (
         <>
             <div className='pb-24'>
@@ -68,7 +70,7 @@ const GroupOrderCart = () => {
 
                 <TotalBill onDelClick={() => setDelPop(true)} onServiceClick={() => setServicePop(true)} />
 
-                <OrderConfirmBtn />
+                <OrderConfirmBtn setReview={setReview} />
             </div>
 
             {riderNote ? <RiderNote /> : null}
@@ -77,6 +79,7 @@ const GroupOrderCart = () => {
             {smPop && <SaveMoneyPopUp />}
             {delPop && <DeliveryFeePopup />}
             {servicePop && <ServiceFeePopup />}
+            {review && <ReviewPayPopup onCancelClick={() => setReview(false)} onPayClick={() => navigate('/bookride')} onNotNowClick={() => setReview(false)} />}
         </>
     )
 }

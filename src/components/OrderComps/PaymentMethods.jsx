@@ -19,8 +19,30 @@ const PaymentMethods = ({ img, text, isCard, isDiscount, onClick }) => {
                 </div>
                 <div className='flex items-center gap-2'>
                     {isCard && <>
-                        <img src={paymentMethod === 'visa' ? assets.visa_sticker : paymentMethod === 'cash' ? assets.cash_sticker : null} alt="" />
-                        <p className='font-medium text-sm text-[#2F2F3F]'>{paymentMethod === 'visa' ? "**** 2305" : paymentMethod === 'cash' ? "Cash" : null}</p>
+                        {paymentMethod === 'master' && <>
+                            <img className='w-[32px] h-[24px] rounded-lg' src={assets.mastercard} alt="" />
+                            <p className='font-medium text-sm text-[#2F2F3F]'>Master</p>
+                        </>}
+
+                        {paymentMethod === 'visa' && <>
+                            <img className='w-[32px] h-[24px] rounded-lg' src={assets.visa_sticker} alt="" />
+                            <p className='font-medium text-sm text-[#2F2F3F]'>Visa</p>
+                        </>}
+
+                        {paymentMethod === 'cash' && <>
+                            <img className='w-[32px] h-[24px] rounded-lg' src={assets.cash_sticker} alt="" />
+                            <p className='font-medium text-sm text-[#2F2F3F]'>Cash</p>
+                        </>}
+
+                        {paymentMethod === 'ebirr' && <>
+                            <img className='w-[32px] h-[24px] rounded-lg' src={assets.ebirr_sticker} alt="" />
+                            <p className='font-medium text-sm text-[#2F2F3F]'>E-birr</p>
+                        </>}
+
+                        {paymentMethod === 'kaafi' && <>
+                            <img className='w-[32px] h-[24px] rounded-lg' src={assets.kaafi} alt="" />
+                            <p className='font-medium text-sm text-[#2F2F3F]'>Kaafi</p>
+                        </>}
                     </>}
                     {isDiscount && <>
                         <div className='bg-[#0AB247] rounded-full px-[10px] py-[5px] flex items-center justify-between'>

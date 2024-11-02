@@ -26,6 +26,7 @@ import DeliveryFeePopup from '../components/OrderComps/DeliveryFeePopup'
 import ServiceFeePopup from '../components/OrderComps/ServiceFeePopup'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import ReviewPayPopup from './DeliveryServicePages/ReviewPayPopup'
 
 const Order = () => {
     const navigate = useNavigate()
@@ -36,6 +37,7 @@ const Order = () => {
     const { smPop, setSmPop } = useContext(FeresContext)
     const { deliveryPickup } = useContext(FeresContext)
     const cartData = useSelector((state) => state.cart.items);
+    const [review, setReview] = useState(false)
 
     useEffect(() => {
         console.log(cartData, 'here is the data ');
@@ -82,8 +84,10 @@ const Order = () => {
 
             {orderNote ? <ExtraNotePopUp placeholder={"Write anything else we need to know"} /> : null}
 
-            <OrderConfirmBtn />
+            <OrderConfirmBtn setReview={setReview} />
             {/* <SwipeToConfirm /> */}
+
+            {review && <ReviewPayPopup onCancelClick={() => setReview(false)} onPayClick={() => navigate('/bookride')} onNotNowClick={() => setReview(false)} />}
         </div>
     )
 }
