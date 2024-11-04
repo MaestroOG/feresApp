@@ -2,7 +2,7 @@ import React from 'react'
 import Container from '../Container'
 import { assets } from '../../assets/assets'
 
-const InviteSharePopup = () => {
+const InviteSharePopup = ({ onCancel }) => {
     return (
         <div className='h-screen w-full fixed top-0 left-0 bg-[#06060626] z-[9999]'>
             <Container className={'z-30 w-full fixed bottom-0 left-0 bg-[#FAFAFAED] rounded-tr-[13px] rounded-tl-[13px] py-4 min-h-[656px]'}>
@@ -14,7 +14,7 @@ const InviteSharePopup = () => {
                             <p className='text-[#3C3C4399] text-sm'>Feres App</p>
                         </div>
                     </div>
-                    <img src={assets.close} alt="" />
+                    <img src={assets.close} alt="" onClick={onCancel} />
                 </div>
                 <hr className='my-4 mx-auto' />
 

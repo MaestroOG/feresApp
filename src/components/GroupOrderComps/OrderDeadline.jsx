@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Container from '../Container'
 import { assets } from '../../assets/assets'
 
-const OrderDeadline = () => {
+const OrderDeadline = ({ onCancel, onConfirm, time, setTime, handleSetClick, selectedDate }) => {
     return (
         <div className='h-screen w-full bg-[#06060626] fixed top-0 z-[100] left-0'>
 
@@ -15,7 +15,7 @@ const OrderDeadline = () => {
 
 
             <Container className={'w-full bg-white min-h-[394px] rounded-t-2xl fixed bottom-0 left-0 pt-4'}>
-                <img src={assets.cancel_icon} alt="" />
+                <img src={assets.cancel_icon} alt="" onClick={onCancel} />
 
                 <div className='mt-[10px] mb-6'>
                     <h3 className='text-[#2F2F3F] text-xl font-bold'>Order deadline</h3>
@@ -25,11 +25,14 @@ const OrderDeadline = () => {
                 </div>
 
                 <div className='flex items-center gap-6 w-full justify-around mb-7'>
-                    <div className='bg-[#EBF9EE] border border-[#0AB247] flex items-center justify-center w-1/2 py-6 rounded-2xl text-xl text-[#2F2F3F]'>Anytime</div>
-                    <div className='bg-white border border-[#EEEEEE] flex items-center justify-center w-1/2 py-6 rounded-2xl text-xl text-[#2F2F3F]'>Set time</div>
+                    <div className={`${time === 'any' ? 'bg-[#EBF9EE] border border-[#0AB247]' : 'bg-white border border-[#EEEEEE]'} text-[#2F2F3F] flex items-center justify-center w-1/2 py-6 rounded-2xl text-xl`} onClick={() => setTime('any')}>Anytime</div>
+                    <div className={`${time === 'set' ? 'bg-[#EBF9EE] border border-[#0AB247]' : 'bg-white border border-[#EEEEEE]'} text-[#2F2F3F] flex items-center justify-center w-1/2 py-6 rounded-2xl text-xl`} onClick={() => setTime('set')}>
+
+                        <label onClick={handleSetClick}>{selectedDate ? selectedDate.toDateString() : "Set Deadline"}</label>
+                    </div>
                 </div>
 
-                <button className='w-full bg-[#0AB247] rounded-full p-4 text-white text-lg font-medium mb-5'>Confirm</button>
+                <button className='w-full bg-[#0AB247] rounded-full p-4 text-white text-lg font-medium mb-5' onClick={onConfirm}>Confirm</button>
             </Container>
         </div>
     )

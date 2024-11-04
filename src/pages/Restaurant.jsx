@@ -58,12 +58,18 @@ const Restaurant = () => {
     const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
     const showModel = useSelector((state) => state.modelToggle.showModel);
     const selectedFood = useSelector((state) => state.selectedFood.selectedFood);
-    const [showQr, setShowQr] = useState(true)
+    const [showQr, setShowQr] = useState(false)
+    const [firstGroup, setFirstGroup] = useState(false)
+    const [ordDeadline, setOrdDeadline] = useState(false)
+    const [inviteShare, setInviteShare] = useState(false)
+
+    const [deadline, setDeadline] = useState('any')
 
 
 
 
     const handleDateClick = () => {
+        if (ordDeadline) setOrdDeadline(false)
         setIsDatePickerOpen(true);
     };
 
@@ -79,6 +85,10 @@ const Restaurant = () => {
     const handleTimeConfirm = (time) => {
         setSelectedTime(time);
         setIsTimePickerOpen(false);
+
+        if (!ordDeadline) {
+            setOrdDeadline(true)
+        }
     };
 
     const handleTimeClose = () => {
@@ -210,7 +220,7 @@ const Restaurant = () => {
                             <img src={assets.arrow_left} alt="" className={`${scrolled ? 'invert' : ''}`} />
                         </button>
                         <div className='flex items-center gap-2'>
-                            <button className={`p-3 rounded-xl ${scrolled ? 'bg-transparent border border-[#EEEEEE]' : 'bg-[#06060666]'}`}>
+                            <button onClick={() => setFirstGroup(true)} className={`p-3 rounded-xl ${scrolled ? 'bg-transparent border border-[#EEEEEE]' : 'bg-[#06060666]'}`}>
                                 <img src={assets.add_team} alt="" className={`${scrolled ? 'invert' : ''}`} />
                             </button>
                             <button className={`p-3 rounded-xl ${scrolled ? 'bg-transparent border border-[#EEEEEE]' : 'bg-[#06060666]'}`}>
@@ -228,7 +238,7 @@ const Restaurant = () => {
                                 <img src={assets.rice_bowl_green} alt="" />
                                 <p className='text-[#0AB247] text-sm font-medium'>Group order</p>
                             </div>
-                            <div className='flex items-center gap-1'>
+                            <div className='flex items-center gap-1' onClick={() => setInviteShare(true)}>
                                 <img src={assets.add_team} alt="" className='invert' />
                                 <p className='text-[#0D343F] text-sm font-medium'>Invite</p>
                             </div>
@@ -259,7 +269,7 @@ const Restaurant = () => {
                             </div>
                             <div className='flex items-center gap-2'>
                                 <img src={assets.calendar} alt="" />
-                                <label onClick={handleDateClick} htmlFor='sched' className='text-base text-[#646464]'>{selectedDate ? selectedDate.toDateString() : "Schedule"}</label>
+                                <label htmlFor='sched' className='text-base text-[#646464]'>{selectedDate ? selectedDate.toDateString() : "Schedule"}</label>
                             </div>
                         </div>
                         {/* Delivery Details */}
@@ -323,7 +333,7 @@ const Restaurant = () => {
 
                         {/* Date Picker Modal */}
                         {isDatePickerOpen && (
-                            <div className="modal fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex justify-center items-center">
+                            <div className="modal fixed top-0 left-0 w-full h-full bg-gray-800 z-[100] bg-opacity-50 flex justify-center items-center">
                                 <div className="modal-content bg-white rounded-lg flex flex-col">
                                     <div className='flex-[2] bg-[#0AB247] p-4 text-white rounded-t-lg w-[100%]'>
                                         <h4 className='bold text-16'>{formattedDate.year}</h4>
@@ -354,10 +364,29 @@ const Restaurant = () => {
                 </div> : <div><Food itemFoodPopup={selectedFood} /></div>}
             </div>
 
-            {/* <GroupOrder1 /> */}
-            {/* <OrderDeadline /> */}
-            {/* <InviteSharePopup /> */}
+            {firstGroup && <GroupOrder1 setIsOpen={setFirstGroup} onEdit={() => {
+                setFirstGroup(false)
+                setOrdDeadline(true)
+            }} onQr={() => {
+                setFirstGroup(false)
+                setShowQr(true)
+            }} onInvite={() => {
+                setFirstGroup(false)
+                setInviteShare(true)
+            }} />}
+
+            {ordDeadline && <OrderDeadline selectedDate={selectedDate} handleSetClick={handleDateClick} time={deadline} setTime={setDeadline} onCancel={() => {
+                setOrdDeadline(false)
+            }} onConfirm={() => {
+                setOrdDeadline(false)
+                setFirstGroup(true)
+            }} />}
+
             {showQr && <JoinQrPopup onCancel={() => setShowQr(false)} />}
+
+
+            {inviteShare && <InviteSharePopup onCancel={() => setInviteShare(false)} />}
+
             {/* <TimeUpPopup /> */}
             {/* <DelByHostPopup /> */}
         </>
