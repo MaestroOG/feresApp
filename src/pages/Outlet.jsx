@@ -89,6 +89,7 @@ import RideMap from './DeliveryServicePages/RideMap'
 import GroupOrderReview from '../components/GroupOrderComps/GroupOrderReview'
 import GroupOrderCart from '../components/GroupOrderComps/GroupOrderCart'
 import DeliveryRateRider from './DeliveryServicePages/DeliveryRateRider'
+import Login from './Login'
 
 const Outlet = () => {
     return (
@@ -196,6 +197,10 @@ const Outlet = () => {
                 {/* Group Order Routes */}
                 <Route path='/grouporder/review' element={<GroupOrderReview />} />
                 <Route path='/grouporder/cart' element={<GroupOrderCart />} />
+
+
+                {/* Auth Routes */}
+                <Route path='/login' element={<Login />} />
             </Routes>
         </>
     )

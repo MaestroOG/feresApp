@@ -301,8 +301,20 @@ import user_group from './user_group.png'
 import user_blue from './user_blue.png'
 import time_up_img from './time_up_img.png'
 import del_by_host from './del_by_host.png'
+import arrow_down_green from './arrow_down_green.png'
+import fb_icon from './fb_icon.png'
+import feres_icon from './feres_icon.png'
+import google_icon from './google_icon.png'
+import help_circle_green from './help_circle_green.png'
+import message_translate_green from './message_translate_green.png'
 
 export const assets = {
+    arrow_down_green,
+    fb_icon,
+    feres_icon,
+    google_icon,
+    help_circle_green,
+    message_translate_green,
     del_by_host,
     time_up_img,
     user_blue,
