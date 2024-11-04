@@ -2,12 +2,13 @@ import React, { useContext, useState } from 'react'
 import { assets } from '../../assets/assets'
 import Container from '../../components/Container'
 import { Link } from 'react-router-dom'
+import TotalBill from '../../components/OrderComps/TotalBill'
 
-const ReviewPayPopup = ({ onCancelClick, onNotNowClick, onPayClick }) => {
+const ReviewPayPopup = ({ onCancelClick, onNotNowClick, onPayClick, isDelivery = true }) => {
     const [number, setNumber] = useState("")
     return (
         <div className='bg-[#06060626] h-screen fixed top-0 left-0 w-full z-50'>
-            <div className='fixed bottom-0 left-0 w-full bg-white rounded-t-xl h-[584px]'>
+            <div className='fixed bottom-0 left-0 w-full bg-white rounded-t-xl overflow-y-auto pb-28 min-h-[584px]'>
                 <div className='flex items-center gap-[25vw] mt-5'>
                     <img src={assets.cancel_icon} alt="" className='pl-[10px]' onClick={onCancelClick} />
                     <h1 className='text-[#2F2F3F] text-xl font-bold'>Review and pay</h1>
@@ -46,18 +47,60 @@ const ReviewPayPopup = ({ onCancelClick, onNotNowClick, onPayClick }) => {
 
 
                 <Container>
-                    <Container className='mt-6 border border-[#EEEEEE] rounded-xl p-5 flex items-center justify-between'>
-                        <div className='flex items-center gap-3'>
-                            <img src={assets.jacob_jones} alt="" />
-                            <div>
-                                <h3 className='text-[#2F2F3F] font-medium mb-2'>Jacob Jones</h3>
-                                <p className='text-[#767578] text-sm'>22 Feb, 2024 15:50 PM</p>
+                    <Container className={`mt-6 border border-[#EEEEEE] rounded-xl p-5 flex items-center ${isDelivery && 'justify-between'}`}>
+                        {isDelivery ? <>
+                            <div className='flex items-center gap-3'>
+                                <img src={assets.jacob_jones} alt="" />
+                                <div>
+                                    <h3 className='text-[#2F2F3F] font-medium mb-2'>Jacob Jones</h3>
+                                    <p className='text-[#767578] text-sm'>22 Feb, 2024 15:50 PM</p>
+                                </div>
                             </div>
-                        </div>
-                        <div>
-                            <p className='text-[#767578] text-sm mb-2'>Amount</p>
-                            <h3 className='text-[#2F2F3F] font-medium'>ETB 40</h3>
-                        </div>
+                            <div>
+                                <p className='text-[#767578] text-sm mb-2'>Amount</p>
+                                <h3 className='text-[#2F2F3F] font-medium'>ETB 40</h3>
+                            </div>
+                        </> : <>
+                            <div className='w-full'>
+                                <div className='mb-6 flex items-center justify-between'>
+                                    <div className='flex items-center gap-2'>
+                                        <img src={assets.kfc_logo} alt="" />
+                                        <h2>KFC Eastlight</h2>
+                                    </div>
+                                    <div>
+                                        <p className='text-[#767578] text-sm mb-2'>Amount</p>
+                                        <h3 className='text-[#2F2F3F] font-medium'>ETB 40</h3>
+                                    </div>
+                                </div>
+                                <div className='flex items-center justify-between'>
+                                    <h3 className='text-[#767578]'>Subtotal</h3>
+                                    <p className='text-[#2F2F3F] font-medium text-base'>ETB280</p>
+                                </div>
+                                <div className='flex items-center justify-between mt-2'>
+                                    <div className='flex items-center gap-2'>
+                                        <h3 className='text-[#767578]'>Delivery Fee</h3>
+                                        <img src={assets.information_circle} alt="" />
+                                    </div>
+                                    <p className='text-[#2F2F3F] font-medium text-base'>ETB20</p>
+                                </div>
+
+                                <div className='flex items-center justify-between mt-2'>
+                                    <div className='flex items-center gap-2'>
+                                        <h3 className='text-[#767578]'>Service Fee</h3>
+                                        <img src={assets.information_circle} alt="" />
+                                    </div>
+                                    <p className='text-[#2F2F3F] font-medium text-base'>ETB10</p>
+                                </div>
+
+                                <div className='flex items-center justify-between mt-2'>
+                                    <div className='flex items-center gap-2'>
+                                        <h3 className='text-[#767578]'>Rider Tip</h3>
+                                        <img src={assets.information_circle} alt="" />
+                                    </div>
+                                    <p className='text-[#2F2F3F] font-medium text-base'>ETB 50</p>
+                                </div>
+                            </div>
+                        </>}
                     </Container>
                 </Container>
 

@@ -79,7 +79,7 @@ const GroupOrderCart = () => {
             {smPop && <SaveMoneyPopUp />}
             {delPop && <DeliveryFeePopup />}
             {servicePop && <ServiceFeePopup />}
-            {review && <ReviewPayPopup onCancelClick={() => setReview(false)} onPayClick={() => navigate('/bookride')} onNotNowClick={() => setReview(false)} />}
+            {review && <ReviewPayPopup isDelivery={false} onCancelClick={() => setReview(false)} onPayClick={() => navigate('/bookride')} onNotNowClick={() => setReview(false)} />}
         </>
     )
 }
