@@ -50,7 +50,7 @@ const Login = () => {
                         <h2 className='text-[#2F2F3F] text-[26px] font-bold text-center'>Enter your mobile number</h2>
 
                         <div className='flex items-center gap-3 mt-6'>
-                            <Link to={'/deliveryservice/deliverydetails/recipientdetails/updatephone/selectphonecountry'} className='w-[129px] h-[58px] p-2 rounded-xl bg-[#F8F8F8] flex items-center justify-between'>
+                            <Link className='w-[129px] h-[58px] p-2 rounded-xl bg-[#F8F8F8] flex items-center justify-between'>
                                 <img src={assets.country_flag} alt="" />
                                 <p className='font-medium text-[#2F2F3F]'>+44</p>
                                 <img src={assets.arrow_down} alt="" />

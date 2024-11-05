@@ -1,15 +1,13 @@
 import React, { useState, useEffect, useRef, useContext } from 'react'
 import { assets } from '../../assets/assets'
 import { useNavigate } from 'react-router-dom';
+import { FeresContext } from '../../context/FeresContext';
 
 import { usePostRequest } from '../../servies/usePostRequest';
 
 
-const OrderConfirmBtn = ({ orderData }) => {
+const OrderConfirmBtn = ({ orderData, setReview }) => {
 
-import { FeresContext } from '../../context/FeresContext';
-
-const OrderConfirmBtn = ({ setReview }) => {
 
     const navigate = useNavigate()
     const { loading, error, response, postRequest } = usePostRequest();
@@ -106,4 +104,3 @@ const OrderConfirmBtn = ({ setReview }) => {
 }
 
 export default OrderConfirmBtn
-
