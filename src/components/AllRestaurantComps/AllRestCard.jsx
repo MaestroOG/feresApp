@@ -6,6 +6,7 @@ const AllRestCard = () => {
     const navigate = useNavigate();
     const [allRests, setAllRests] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
+    const [error, setError] = useState(false)
 
 
     const fetchAllRests = async () => {
@@ -33,6 +34,7 @@ const AllRestCard = () => {
             });
 
             if (!res.ok) {
+                setError(true)
                 throw new Error('Network response was not ok');
             }
 
@@ -42,6 +44,8 @@ const AllRestCard = () => {
             console.log(allRests);
 
         } catch (error) {
+            setError(true)
+            setIsLoading(false)
             console.error('Fetch error: ', error);
         }
     }
@@ -53,8 +57,9 @@ const AllRestCard = () => {
         <div className='px-4 mt-6 relative'>
             <h2 className='text-[#2F2F3F] text-lg font-medium'>All restaurants</h2>
 
-            {isLoading ? <div className='text-center'>Loading...</div> : allRests && allRests.stores.map((store) => (
-                store.stores.map((store, index) => (
+            {error && <div className='my-5 text-center'>Error Fetching Stores</div>}
+            {isLoading ? <div className='text-center'>Loading...</div> : allRests && allRests?.stores.map((store) => (
+                store?.stores.map((store, index) => (
                     <>
                         <div key={index} className='w-full mt-8 mb-5 relative' onClick={() => navigate(`/restaurant/${store._id}`)}>
                             <img src={store.image_url} alt="" className='rounded-tr-2xl rounded-tl-2xl object-cover h-[154px] w-full' />

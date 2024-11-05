@@ -58,11 +58,11 @@ const RecommendedRests = () => {
         <div className='w-full px-2 mt-7'>
             <h2 className='text-[#2F2F3F] text-lg font-medium px-2'>Recommended restaurant</h2>
 
-            {recommendedRests && recommendedRests.success === false && <div className='text-center my-5'>Error Fetching Stores</div>}
+            {recommendedRests && recommendedRests.success === false || error && <div className='text-center my-5'>Error Fetching Stores</div>}
             {isLoading && <div>Loading...</div>}
             <div className='flex items-center gap-3 overflow-auto no-scrollbar'>
                 <div className="flex items-center gap-4">
-                    {recommendedRests && recommendedRests.success && recommendedRests.stores.map((store) => (
+                    {recommendedRests && recommendedRests.success && recommendedRests?.stores.map((store) => (
                         store.stores.map((store, index) => (
                             <div key={index} className='mt-6 w-max' onClick={() => navigate(`/restaurant/${store._id}`)}>
                                 {/* Top */}
