@@ -3,7 +3,7 @@ import { assets } from '../../assets/assets'
 import TipRiderBtn from './TipRiderBtn'
 import { FeresContext } from '../../context/FeresContext'
 
-const TipRider = () => {
+const TipRider = ({ tips_list }) => {
     const tipBtnTexts = ["ETB 50", "ETB 80", "Others"]
     const { tipBtn, setTipBtn, setTipRidePop } = useContext(FeresContext)
     return (
@@ -23,9 +23,8 @@ const TipRider = () => {
             </div>
             <div className='mt-6 flex items-center gap-2'>
                 <TipRiderBtn className={`${tipBtn == 'no' ? 'text-white bg-[#0AB247]' : 'text-[#2F2F3F] bg-[#F8F8F8]'}`} text={"No tips"} onClick={() => setTipBtn('no')} />
-                <TipRiderBtn className={`${tipBtn == '50' ? 'text-white bg-[#0AB247]' : 'text-[#2F2F3F] bg-[#F8F8F8]'}`} text={tipBtnTexts[0]} onClick={() => setTipBtn('50')} />
-                <TipRiderBtn className={`${tipBtn == '80' ? 'text-white bg-[#0AB247]' : 'text-[#2F2F3F] bg-[#F8F8F8]'}`} text={tipBtnTexts[1]} onClick={() => setTipBtn('80')} />
-                <TipRiderBtn className={`${tipBtn == 'other' ? 'text-white bg-[#0AB247]' : 'text-[#2F2F3F] bg-[#F8F8F8]'}`} text={tipBtnTexts[2]} onClick={() => setTipBtn('other')} />
+                {tips_list?.map((item) => <TipRiderBtn className={`${tipBtn == item?.tip_payment_value ? 'text-white bg-[#0AB247]' : 'text-[#2F2F3F] bg-[#F8F8F8]'}`} text={`ETB ${item?.tip_payment_value}`} onClick={() => setTipBtn(item?.tip_payment_value)} />)}
+                <TipRiderBtn className={`${tipBtn == 'other' ? 'text-white bg-[#0AB247]' : 'text-[#2F2F3F] bg-[#F8F8F8]'}`} text={'Others'} onClick={() => setTipBtn('other')} />
             </div>
         </div>
     )

@@ -20,6 +20,9 @@ import 'react-time-picker/dist/TimePicker.css';
 import CustomTimePicker from '../components/CustomTimePicker';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedResturant } from '../redux/slices/selectedResturantSlice';
+
+import { usePostRequest } from '../servies/usePostRequest';
+
 import GroupOrder1 from '../components/GroupOrderComps/GroupOrder1';
 import OrderDeadline from '../components/GroupOrderComps/OrderDeadline';
 import InviteSharePopup from '../components/GroupOrderComps/InviteSharePopup';
@@ -27,6 +30,7 @@ import JoinQrPopup from '../components/GroupOrderComps/JoinQrPopup';
 import Container from '../components/Container';
 import TimeUpPopup from '../components/GroupOrderComps/TimeUpPopup';
 import DelByHostPopup from '../components/GroupOrderComps/DelByHostPopup';
+
 
 
 const Restaurant = () => {
@@ -41,7 +45,7 @@ const Restaurant = () => {
     const navigate = useNavigate()
     const { deliverPopup, setDeliverPopup } = useContext(FeresContext)
     const [categories, setCategories] = useState([])
-
+    const { loading, error, response, postRequest } = usePostRequest();
     const { foodPopup, setSharePop, sharePop, addToCart } = useContext(FeresContext)
     const { foodSearch, setFoodSearch } = useContext(FeresContext)
     const [deliverPop, setDeliverPop] = useState(false)
@@ -133,6 +137,10 @@ const Restaurant = () => {
         }
     }
 
+    const fetchCart = () => {
+        postRequest('/api/user/get_cart', { cart_unique_token: "i5H3Gacl5CPbcOSY4Wip" })
+    }
+
     const fetchMenuItems = async () => {
         const requestBody = {
             store_id: id
@@ -197,12 +205,13 @@ const Restaurant = () => {
     useEffect(() => {
         fetchRestInfo();
         fetchMenuItems();
+
         // addCategories()
     }, [])
 
     useEffect(() => {
-        console.log(items)
-    }, [items])
+        fetchCart()
+    }, [])
 
 
     return (
@@ -327,7 +336,7 @@ const Restaurant = () => {
 
                         {sharePop ? <SharePopUp /> : null}
 
-                        {items.length === 0 ? <AddBi items={items} /> : <AddBii items={items} />}
+                        <AddBi items={items} cartResponse={response} loading={loading} total_item_count={response?.cart?.total_item_count} total_cart_price={response?.cart?.total_cart_price} />
 
                         {/* {foodPopup ? <FoodPopUp /> : null} */}
 

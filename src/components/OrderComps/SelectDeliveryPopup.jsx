@@ -1,9 +1,17 @@
 import React, { useContext } from 'react'
 import { assets } from '../../assets/assets'
 import { FeresContext } from '../../context/FeresContext'
+import { useDispatch } from 'react-redux'
+import { setSelectedService } from '../../redux/slices/deliveryServiceSlice'
+import { useSelector } from 'react-redux'
 
-const SelectDeliveryPopup = () => {
-    const { selectDel, setSelectDel, delRadio, setDelRadio, handleDelRadioChange } = useContext(FeresContext)
+const SelectDeliveryPopup = ({ service }) => {
+    const dispatch = useDispatch()
+    const selectedService = useSelector((state) => state.selectedService.selectedService)
+    const { selectDel, setSelectDel } = useContext(FeresContext)
+    const handleDelRadioChange = (item) => {
+        dispatch(setSelectedService(item))
+    }
     return (
         <div className={`${!selectDel ? 'hidden' : ''} fixed bottom-0 w-full z-30 pt-4 pb-2 bg-white rounded-tl-3xl rounded-tr-3xl shadow-md shadow-[#96969640]`}>
             <div className='w-full mb-3'>
@@ -17,27 +25,13 @@ const SelectDeliveryPopup = () => {
             </div>
             <hr className='my-4' />
             <div>
-                <div className='px-4 flex items-center justify-between mb-5'>
+                {service?.map((item) => <div className='px-4 flex items-center justify-between mb-5'>
                     <div className='flex items-center gap-2'>
-                        <img src={assets.scooter_02} alt="" className='w-6' />
-                        <p className='text-[#2F2F3F] text-xl'>Motor bike</p>
+                        <img src={item?.image_url} alt="" className='w-6' />
+                        <p className='text-[#2F2F3F] text-xl'>{item?.vehicle_name}</p>
                     </div>
-                    <input type="radio" name="delivery" id="" onChange={handleDelRadioChange} checked={delRadio === 'bike'} value={"bike"} />
-                </div>
-                <div className='px-4 flex items-center justify-between mb-5'>
-                    <div className='flex items-center gap-2'>
-                        <img src={assets.delivery_truck_02} alt="" className='w-6' />
-                        <p className='text-[#2F2F3F] text-xl'>Delivery truck</p>
-                    </div>
-                    <input type="radio" name="delivery" id="" onChange={handleDelRadioChange} checked={delRadio === 'truck'} value={"truck"} />
-                </div>
-                <div className='px-4 flex items-center justify-between mb-5'>
-                    <div className='flex items-center gap-2'>
-                        <img src={assets.user_full_view} alt="" className='w-6' />
-                        <p className='text-[#2F2F3F] text-xl'>Courier</p>
-                    </div>
-                    <input type="radio" name="delivery" id="" onChange={handleDelRadioChange} checked={delRadio === 'courier'} value={"courier"} />
-                </div>
+                    <input type="radio" name="delivery" id="" onChange={() => handleDelRadioChange(item)} checked={selectedService?.vehicle_name.toLowerCase().replace(/\s+/g, '') === item?.vehicle_name.toLowerCase().replace(/\s+/g, '')} value={item?.vehicle_id} />
+                </div>)}
             </div>
         </div>
     )

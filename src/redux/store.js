@@ -7,6 +7,8 @@ import searchReducer from "./slices/searchSlice";
 import selectedResturantReducer from "./slices/selectedResturantSlice";
 import modelToggleReducer from "./slices/modelToggleSlice";
 import selectedFoodReducer from "./slices/selectedFoodSlice";
+import selectedServiceReducer from "./slices/deliveryServiceSlice";
+import cartDetailsReducer from "./slices/cartDetail";
 
 const store = configureStore({
   reducer: {
@@ -17,6 +19,8 @@ const store = configureStore({
     selectedResturant: selectedResturantReducer,
     modelToggle: modelToggleReducer,
     selectedFood: selectedFoodReducer,
+    selectedService: selectedServiceReducer,
+    cartDetails: cartDetailsReducer,
   },
 });
 

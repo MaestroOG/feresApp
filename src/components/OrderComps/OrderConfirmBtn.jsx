@@ -1,15 +1,27 @@
 import React, { useState, useEffect, useRef, useContext } from 'react'
 import { assets } from '../../assets/assets'
 import { useNavigate } from 'react-router-dom';
+
+import { usePostRequest } from '../../servies/usePostRequest';
+
+
+const OrderConfirmBtn = ({ orderData }) => {
+
 import { FeresContext } from '../../context/FeresContext';
 
 const OrderConfirmBtn = ({ setReview }) => {
+
     const navigate = useNavigate()
+    const { loading, error, response, postRequest } = usePostRequest();
     const [value, setValue] = useState(0); // Initial slider value
     const rangeRef = useRef(null);
     const thumbRef = useRef(null);
 
+
+    console.log(orderData, 'here is a data for place oreder ');
+
     const { paymentMethod } = useContext(FeresContext)
+
 
     // Update thumb tracker position
     const updateThumbPosition = () => {
@@ -37,6 +49,27 @@ const OrderConfirmBtn = ({ setReview }) => {
 
 
         if (newValue === "100") {
+
+            postRequest('/api/user/pay_order_payment',
+                {
+                    cart_unique_token: orderData?.cart?.cart_unique_token,
+                    cart_id: orderData?.cart?._id,
+                    phone: "+49 1789372836",
+                    country_code: "Kenya",
+                    server_token: "HODx2SfZOxpAicYxEpWQb1MzFLOwddeh",
+                    user_id: "665ff60f83157cfd6e1b0b48",
+                    is_payment_mode_waafi: false,
+                    is_payment_mode_cash: true,
+                    is_brafo_payment_mode: false,
+                    payment_id: 0,
+                    order_payment_id: "147743944dc478124d753bcf",
+                    country_id: orderData?.cart?.stores[0]?.country_id,
+                    order_Kitchen_detail: "",
+                    last_address: "",
+                    normal_address: "",
+                    schedule_order_start_at: ""
+                })
+            navigate('/bookride');
             if (paymentMethod === 'ebirr') {
                 setReview(true)
             }
