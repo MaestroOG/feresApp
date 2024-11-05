@@ -5,16 +5,21 @@ import { assets } from '../../assets/assets';
 const Offers = () => {
 
     const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(false)
     const [promotionData, setPromotionData] = useState(null);
     const navigate = useNavigate();
 
     const getData = async () => {
+        const body = {
+            "user_id": "667bf7ce908d766ee16482da"
+        }
         try {
             const res = await fetch(import.meta.env.VITE_API_URI + '/get_all_promotions', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                }
+                },
+                body: JSON.stringify(body)
             });
 
             if (!res.ok) {
@@ -27,6 +32,8 @@ const Offers = () => {
             // console.log(promotionData);
 
         } catch (error) {
+            setError(true)
+            setIsLoading(false)
             console.error('Fetch error: ', error);
         }
 
@@ -50,7 +57,9 @@ const Offers = () => {
             <div className='flex items-center gap-2 overflow-x-auto offers mb-8 w-screen'>
                 {/* Card */}
                 {/* Card Top */}
-                {isLoading ? <div className='text-center'>Loading...</div> : <>
+                {isLoading && <div className='text-center'>Loading...</div>}
+                {error || promotionData && promotionData.success === false && <div className='text-center'>Error Fetching Stores</div>}
+                {promotionData && promotionData.success && <>
                     <div className='relative flex-shrink-0'>
                         {/* <img src={assets.offer_bg} alt="" /> */}
                         {promotionData && promotionData.promotions_list.map((item) => (
@@ -106,28 +115,30 @@ const Offers = () => {
                     </div>
                 </>}
 
-                {isLoading ? <div className='text-center'>Loading...</div> : <>
+                {isLoading && <div className='text-center'>Loading...</div>}
+                {error || promotionData && promotionData.success === false && <div className='text-center'>Error Fetching Stores</div>}
+                {promotionData && promotionData.success && <>
                     <div className='relative flex-shrink-0'>
                         {/* <img src={assets.offer_bg} alt="" /> */}
                         {promotionData && promotionData.promotions_list.map((item) => (
-                            item.store_info.map(store => (
-                                <img src={store.image_url} alt="" className='w-[365px] h-[140.98px] rounded-tr-3xl rounded-tl-3xl object-cover' />
+                            item.store_info.map((store, index) => (
+                                <img key={index} src={store.image_url} alt="" className='w-[365px] h-[140.98px] rounded-tr-3xl rounded-tl-3xl object-cover' onClick={() => navigate(`/restaurant/${store._id}`)} />
                             ))
                         ))}
                         {/* Card Top Stickers */}
-                        {promotionData && promotionData.promotions_list.map(item => (
-                            <div className='bg-[#F2FDF8] w-[154px] h-[34px] rounded-[30px] p-[10px] text-[#0AB247] font-medium text-xs text-center absolute top-2 left-2 whitespace-nowrap'>{item.discount_percent}% off selected items</div>
+                        {promotionData && promotionData.promotions_list.map((item, index) => (
+                            <div key={index} className='bg-[#F2FDF8] w-[154px] h-[34px] rounded-[30px] p-[10px] text-[#0AB247] font-medium text-xs text-center absolute top-2 left-2 whitespace-nowrap'>{item.discount_percent}% off selected items</div>
                         ))}
                         <div className='flex items-center gap-2 bg-white w-[91px] h-[40px] p-[10px] rounded-[30px] absolute bottom-14 right-28'>
                             <img src={assets.clock_01} alt="" className='w-5' />
                             {promotionData && promotionData.promotions_list.map(item => (
-                                item.store_info.map(store => (
-                                    <p className='text-xs font-medium text-[#1E1E1E] whitespace-nowrap'>{store.delivery_time} mins</p>
+                                item.store_info.map((store, index) => (
+                                    <p key={index} className='text-xs font-medium text-[#1E1E1E] whitespace-nowrap'>{store.delivery_time} mins</p>
                                 ))
                             ))}
 
                         </div>
-                        <div className='flex items-center gap-2 bg-white w-[91px] h-[40px] p-[10px] rounded-[30px] absolute bottom-14 right-4'>
+                        <div className='flex items-center gap-2 bg-white w-[91px] h-[40px] p-[10px] rounded-[30px] absolute bottom-14 right-3'>
                             <img src={assets.scooter_02} alt="" className='w-5' />
                             {promotionData && promotionData.promotions_list.map(item => (
                                 item.store_info.map(store => (

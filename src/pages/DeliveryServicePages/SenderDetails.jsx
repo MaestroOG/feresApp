@@ -10,10 +10,10 @@ const SenderDetails = () => {
     return (
         <>
             <div className={`bg-[#F8F8F8] h-screen overflow-auto ${notePopup && 'blur-sm'}`}>
-                <SenderDetailNav />
+                <SenderDetailNav status={'Sender'} />
 
                 {/* Map Section */}
-                <Container className='bg-white py-6 pb-2 relative rounded-b-lg'>
+                <Container className='bg-white py-6 pb-2 relative rounded-b-lg' onClick={() => navigate('/deliveryservice/deliverydetails/senderdetails/senderlocation')}>
                     <img src={assets.map_placeholder} alt="" className='w-[398px] h-[160px]' onClick={() => navigate('/deliveryservice/deliverydetails/senderdetails/senderlocation')} />
                     <img src={assets.pointer_placeholder} alt="" className='absolute top-12 left-32' />
                     <div className='mt-5'>
@@ -36,13 +36,13 @@ const SenderDetails = () => {
                     </div>
                 </Container>
 
-                <Container className={'py-5 w-full fixed bottom-0 left-0'}>
+                <Container className={'py-5 w-full fixed bottom-0 left-0'} onClick={() => navigate('/deliveryservice/deliverydetails')}>
                     <button className='p-4 rounded-full w-full bg-[#0AB247] text-white font-medium text-lg'>
                         Confirm
                     </button>
                 </Container>
             </div>
-            {notePopup && <div className={` h-[94vh] w-full bg-white fixed bottom-0 left-0 rounded-xl px-3 z-30`} onClick={() => setNotePopup(false)}>
+            {notePopup && <div className={` h-[94vh] w-full bg-white fixed bottom-0 left-0 rounded-xl px-3 z-30`}>
                 <div className='flex items-center justify-between px-3 pt-6 pb-4'>
                     <button className='text-lg text-[#1E1E1E]' onClick={() => {
                         setNotePopup(false)

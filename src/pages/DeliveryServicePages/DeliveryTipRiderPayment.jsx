@@ -9,6 +9,7 @@ import { FeresContext } from '../../context/FeresContext'
 
 const DeliveryTipRiderPayment = () => {
     const [visible, setVisible] = useState(false)
+    const [review, setReview] = useState(false)
     return (
         <>
             <Container>
@@ -35,7 +36,7 @@ const DeliveryTipRiderPayment = () => {
                         </div>
                         <input type="radio" id='cash' name="payment" value={"cash"} />
                     </label>
-                    <label htmlFor='ebirr' className='border border-[#EAEAEA] rounded-[16px] px-4 py-4 flex items-center justify-between mt-4' onClick={() => setReviewPay(true)}>
+                    <label htmlFor='ebirr' className='border border-[#EAEAEA] rounded-[16px] px-4 py-4 flex items-center justify-between mt-4' onClick={() => setReview(true)}>
                         <div className='flex items-center gap-2'>
                             <img src={assets.E_birr} alt="" />
                             <p className='text-[#2F2F3F] text-lg'>E-birr</p>
@@ -60,7 +61,7 @@ const DeliveryTipRiderPayment = () => {
                 {visible && <SuccessPopup image={assets.success_img} title={"Congratulations!"} desc={"You have successfully tipped the rider for ETB 10.00"} />}
             </Container>
 
-            <ReviewPayPopup />
+            {review && <ReviewPayPopup onCancelClick={() => setReview(false)} onNotNowClick={() => setReview(false)} />}
         </>
     )
 }

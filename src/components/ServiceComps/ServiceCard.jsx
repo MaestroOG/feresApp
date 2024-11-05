@@ -1,13 +1,10 @@
 import React, { useState } from 'react'
 import { assets } from '../../assets/assets';
-import { useNavigate } from 'react-router-dom'
 
-const ServiceCard = () => {
+const ServiceCard = ({ to }) => {
 
     const cardImgSrc = [assets.service_card_img, assets.service_card_img_3]
     const [index, setIndex] = useState(0);
-
-    const navigate = useNavigate();
 
     const [current, setCurrent] = useState(0)
 
@@ -33,7 +30,7 @@ const ServiceCard = () => {
             {/* Left */}
             <div className='bg-[#0AB247] w-[45%] clipped flex flex-col justify-center absolute left-[2%] px-3 pr-5 py-[18px] rounded-tl-3xl rounded-bl-3xl z-10'>
                 <p className='text-[#FFE5A4] font-medium text-base'>Get the best food restaurant and fast delivery with Feres</p>
-                <button className='bg-white text-[#0AB247] rounded-[30px] p-[10px] py-[7px] w-[77px] mt-3' onClick={() => navigate('/allrestaurants')}>View all</button>
+                <button className='bg-white text-[#0AB247] rounded-[30px] p-[10px] py-[7px] w-[77px] mt-3' onClick={to}>View all</button>
             </div>
 
             {/* Right */}

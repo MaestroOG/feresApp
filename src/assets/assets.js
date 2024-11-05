@@ -287,9 +287,47 @@ import camera_01 from './camera_01.svg'
 import image_02 from './image_02.svg'
 import delete_red from './delete_red.png'
 import copy_sm from './copy_sm.png'
+import waypoint from './waypoint.png'
 import message_white from './message_white.png'
+import group_order_img from './group_order_img.png'
+import clock_blue from './clock_blue.png'
+import edit_blue from './edit_blue.png'
+import qr_code_green from './qr_code_green.png'
+import feres_share_icon from './feres_share_icon.png'
+import qr_feres from './qr_feres.png'
+import rice_bowl_green from './rice_bowl_green.png'
+import add_circle_blue from './add_circle_blue.png'
+import user_group from './user_group.png'
+import user_blue from './user_blue.png'
+import time_up_img from './time_up_img.png'
+import del_by_host from './del_by_host.png'
+import arrow_down_green from './arrow_down_green.png'
+import fb_icon from './fb_icon.png'
+import feres_icon from './feres_icon.png'
+import google_icon from './google_icon.png'
+import help_circle_green from './help_circle_green.png'
+import message_translate_green from './message_translate_green.png'
 
 export const assets = {
+    arrow_down_green,
+    fb_icon,
+    feres_icon,
+    google_icon,
+    help_circle_green,
+    message_translate_green,
+    del_by_host,
+    time_up_img,
+    user_blue,
+    add_circle_blue,
+    user_group,
+    rice_bowl_green,
+    qr_feres,
+    feres_share_icon,
+    qr_code_green,
+    clock_blue,
+    edit_blue,
+    group_order_img,
+    waypoint,
     message_white,
     copy_sm,
     delete_red,

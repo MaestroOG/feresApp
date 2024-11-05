@@ -23,7 +23,7 @@ const SenderLocation = () => {
                     </div>
                     <img src={assets.search} alt="" onClick={() => navigate('/deliveryservice/deliverydetails/senderdetails/senderlocation/search')} />
                 </div>
-                <button className='p-4 rounded-full w-full bg-[#0AB247] text-white text-xl font-medium mt-5'>Confirm location</button>
+                <button className='p-4 rounded-full w-full bg-[#0AB247] text-white text-xl font-medium mt-5' onClick={() => navigate('/deliveryservice/deliverydetails/senderdetails')}>Confirm location</button>
             </Container>
         </div>
     )

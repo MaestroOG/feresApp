@@ -73,7 +73,7 @@ const EcommerceMartCategories = () => {
             </Container>
 
             <div className='fixed bottom-0 left-0 w-full p-4 bg-white'>
-                <button onClick={() => navigate('/ecommerce/categories/results')} className={`${activeId.length > 0 ? 'bg-[#0AB247] text-white' : 'bg-[#F8F8F8] text-[#767578]'} p-4 w-full rounded-full text-lg font-medium`}>Apply</button>
+                <button onClick={() => navigate('/ecommerce/mart/martproduct')} className={`${activeId.length > 0 ? 'bg-[#0AB247] text-white' : 'bg-[#F8F8F8] text-[#767578]'} p-4 w-full rounded-full text-lg font-medium`}>Apply</button>
             </div>
         </div>
     )

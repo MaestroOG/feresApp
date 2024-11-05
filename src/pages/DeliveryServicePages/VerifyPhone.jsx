@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Container from '../../components/Container'
 import { assets } from '../../assets/assets'
+import { useNavigate } from 'react-router-dom';
 
 const VerifyPhone = () => {
     const [values, setValues] = useState(["", "", "", ""]);
     const [showSuccess, setShowSuccess] = useState(false);
     const inputRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
+    const navigate = useNavigate()
 
     const [time, setTime] = useState(59)
 
@@ -14,7 +16,6 @@ const VerifyPhone = () => {
         newValues[index] = e.target.value;
         setValues(newValues);
 
-        // Move focus to the next input if it has a value
         if (
             e.target.value.length === e.target.maxLength &&
             index < inputRefs.length - 1
@@ -22,7 +23,7 @@ const VerifyPhone = () => {
             inputRefs[index + 1].current.focus();
         }
 
-        // Check if all inputs have values
+
         if (newValues.every((val) => val !== "")) {
             setShowSuccess(true);
         }
@@ -30,7 +31,6 @@ const VerifyPhone = () => {
 
     const handleKeyDown = (e, index) => {
         if (e.key === "Backspace" && e.target.value === "") {
-            // Move to the previous input if available
             if (index > 0) {
                 inputRefs[index - 1].current.focus();
             }
@@ -43,14 +43,13 @@ const VerifyPhone = () => {
                 setTime((prevCount) => prevCount - 1);
             }, 1000);
 
-            // Clear the interval when the component unmounts or count reaches 0
             return () => clearInterval(timer);
         }
     }, [time]);
     return (
         <>
             <Container className={'py-5 flex items-center gap-[15vw]'}>
-                <img src={assets.arrow_left} alt="" className='invert' />
+                <img src={assets.arrow_left} alt="" className='invert' onClick={() => navigate(-1)} />
                 <h1 className='text-[#2F2F3F] text-xl font-bold'>Verify your mobile number</h1>
             </Container>
 
@@ -75,11 +74,7 @@ const VerifyPhone = () => {
                     {time > 0 ? <p className='text-[#2F2F3F] mt-3'>You can resend code in <span className='text-[#0AB247] font-medium'>{time}</span> s</p> : <span className='text-[#0AB247] font-medium mt-3'>Resend</span>}
                 </div>
             </Container>
-            {showSuccess && (
-                <div className='text-center mt-20'>
-                    Success! All inputs are filled.
-                </div>
-            )}
+            {showSuccess && navigate('/deliveryservice/deliverydetails/senderdetails')}
         </>
     )
 }

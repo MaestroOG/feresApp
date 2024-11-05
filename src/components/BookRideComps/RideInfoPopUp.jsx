@@ -7,6 +7,7 @@ const RideInfoPopUp = () => {
     const { setRideInfoPop } = useContext(FeresContext)
     const [progress, setProgress] = useState(0);
     const navigate = useNavigate();
+
     return (
         <div className='fixed bottom-0 left-0 max-h-[90vh] w-full bg-white px-3 rounded-tr-[13px] rounded-tl-[13px] overflow-y-auto pb-48 transition-all'>
             <div className='sticky top-0 bg-white w-full z-20 py-2'>
@@ -41,7 +42,9 @@ const RideInfoPopUp = () => {
                     <p className='text-base text-[#979797]'>The rider is on their way to KFC Eastlight</p>
                 </div>
                 <hr className='rotate-90 w-10 absolute top-[318px] -left-2 mb-5' />
-                <div className='flex items-center gap-2 mt-16' onClick={() => setProgress(4)}>
+                <div className='flex items-center gap-2 mt-16' onClick={() => {
+                    navigate('/raterider')
+                }}>
                     <img src={progress === 4 ? assets.order_progress : assets.order_progress_2} alt="" />
                     <p className='text-base text-[#979797]'>The rider is on their way to you</p>
                 </div>

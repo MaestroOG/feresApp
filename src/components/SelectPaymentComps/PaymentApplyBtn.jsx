@@ -8,7 +8,7 @@ const PaymentApplyBtn = () => {
 
     const handleApplyClick = () => {
         setPaymentMethod(selectedOption)
-        navigate('/order')
+        navigate(-1)
     }
     return (
         <div className='fixed bottom-0 left-0 bg-white px-2 py-5 w-full'>

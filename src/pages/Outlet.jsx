@@ -77,6 +77,19 @@ import ReviewDeliveryOrder from './DeliveryServicePages/ReviewDeliveryOrder'
 import RiderInfo from './RiderInfo'
 import DeliveryTipRider from './DeliveryServicePages/DeliveryTipRider'
 import DeliveryTipRiderPayment from './DeliveryServicePages/DeliveryTipRiderPayment'
+import RecipientDetails from './DeliveryServicePages/RecipientDetails'
+import RecipientLocation from './DeliveryServicePages/RecipientLocation'
+import RecipientLocationSearch from './DeliveryServicePages/RecipientLocationSearch'
+import RecipientUpdatePhone from './DeliveryServicePages/RecipientUpdatePhone'
+import RecipientSelectPhoneCountry from './DeliveryServicePages/RecipientSelectPhoneCountry'
+import RecipientVerifyPhone from './DeliveryServicePages/RecipientVerifyPhone'
+import DeliverySelectPayment from './DeliveryServicePages/DeliverySelectPayment'
+import DeliveryDiscounts from './DeliveryServicePages/DeliveryDiscounts'
+import RideMap from './DeliveryServicePages/RideMap'
+import GroupOrderReview from '../components/GroupOrderComps/GroupOrderReview'
+import GroupOrderCart from '../components/GroupOrderComps/GroupOrderCart'
+import DeliveryRateRider from './DeliveryServicePages/DeliveryRateRider'
+import Login from './Login'
 
 const Outlet = () => {
     return (
@@ -165,9 +178,29 @@ const Outlet = () => {
                 <Route path='/deliveryservice/reviewdeliveryorder' element={<ReviewDeliveryOrder />} />
                 <Route path='/deliveryservice/deliverytiprider' element={<DeliveryTipRider />} />
                 <Route path='/deliveryservice/deliverytiprider/payment' element={<DeliveryTipRiderPayment />} />
+                <Route path='/deliveryservice/deliverydetails/deliverydiscounts' element={<DeliveryDiscounts />} />
+                <Route path='/deliveryservice/deliverydetails/selectpayment' element={<DeliverySelectPayment />} />
+                <Route path='/deliveryservice/ridemap' element={<RideMap />} />
+                <Route path='/deliveryservice/raterider' element={<DeliveryRateRider />} />
 
+                {/* Recipient Routes */}
+                <Route path='/deliveryservice/deliverydetails/recepientdetails' element={<RecipientDetails />} />
+                <Route path='/deliveryservice/deliverydetails/recipientdetails/recipientlocation' element={<RecipientLocation />} />
+                <Route path='/deliveryservice/deliverydetails/recipientdetails/recipientlocation/search' element={<RecipientLocationSearch />} />
+                <Route path='/deliveryservice/deliverydetails/recipientdetails/updatephone' element={<RecipientUpdatePhone />} />
+                <Route path='/deliveryservice/deliverydetails/recipientdetails/updatephone/selectphonecountry' element={<RecipientSelectPhoneCountry />} />
+                <Route path='/deliveryservice/deliverydetails/recipientdetails/updatephone/verifyphone' element={<RecipientVerifyPhone />} />
 
                 <Route path='/riderinfo' element={<RiderInfo />} />
+
+
+                {/* Group Order Routes */}
+                <Route path='/grouporder/review' element={<GroupOrderReview />} />
+                <Route path='/grouporder/cart' element={<GroupOrderCart />} />
+
+
+                {/* Auth Routes */}
+                <Route path='/login' element={<Login />} />
             </Routes>
         </>
     )

@@ -30,6 +30,8 @@ import { usePostRequest } from '../servies/usePostRequest';
 import { usePost } from '../servies/usePost';
 import { useDispatch } from 'react-redux';
 import { setCartDetails } from '../redux/slices/cartDetail';
+import ReviewPayPopup from './DeliveryServicePages/ReviewPayPopup'
+
 
 const Order = () => {
     const navigate = useNavigate();
@@ -41,12 +43,15 @@ const Order = () => {
     const [servicePop, setServicePop] = useState(false);
     const { smPop, setSmPop } = useContext(FeresContext);
     const cartData = useSelector((state) => state.cart.items);
+
     const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
     const { loading, error, response, postRequest } = usePostRequest();
     const { post } = usePost()
     const [dataFetched, setDataFetched] = useState(false); // Track if data is fetched
     const [quantityUpdate, setQuantityUpdate] = useState()
     const [cartDetail, setCartDetail] = useState()
+
+    const [review, setReview] = useState(false)
 
 
     useEffect(() => {
@@ -106,8 +111,8 @@ const Order = () => {
                     ))}
                 </div>
             ))}
+            <AddItemBtn isHr={true} />
 
-            <AddItemBtn />
             <SpecialReq />
             <AddNoteBtn />
             <hr className='my-3' />
@@ -128,9 +133,18 @@ const Order = () => {
             {delPop && <DeliveryFeePopup />}
             {servicePop && <ServiceFeePopup />}
             <DelOrderPopUp />
+
             <SelectDeliveryPopup service={cartDetail?.service} />
-            {orderNote && <ExtraNotePopUp placeholder={"Write anything else we need to know"} />}
-            <OrderConfirmBtn orderData={response} />
+       
+
+            <SelectDeliveryPopup />
+
+            {orderNote ? <ExtraNotePopUp placeholder={"Write anything else we need to know"} /> : null}
+
+            <OrderConfirmBtn setReview={setReview} orderData={response} />
+            {/* <SwipeToConfirm /> */}
+
+            {review && <ReviewPayPopup isDelivery={false} onCancelClick={() => setReview(false)} onPayClick={() => navigate('/bookride')} onNotNowClick={() => setReview(false)} />}
         </div>
     );
 };

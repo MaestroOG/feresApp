@@ -6,15 +6,16 @@ import { assets } from '../assets/assets'
 import ExploreCard from '../components/ServiceComps/ExploreCard'
 import Container from '../components/Container'
 import PopularStoreCard from '../components/EcommerceComps/MainPageComps/PopularStoreCard'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Ecommerce = () => {
+    const navigate = useNavigate()
     const [activeButtonIndex, setActiveButtonIndex] = useState(0);
     const buttons = ["Popular stores", "Grocery stores", "Specialty stores"];
     return (
         <div>
             <Navbar />
-            <SearchBar className="sticky top-0 left-0 bg-white" />
+            <SearchBar onClick={() => navigate('/ecommercesearch')} className="sticky top-0 left-0 bg-white" />
             <div className='text-[#2F2F3F] text-lg font-medium px-4'>
                 Shop now
             </div>

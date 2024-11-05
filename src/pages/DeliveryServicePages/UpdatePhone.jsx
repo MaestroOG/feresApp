@@ -28,7 +28,7 @@ const UpdatePhone = () => {
                 </div>
             </Container>
 
-            <Container className={'py-5 w-full fixed left-0 bottom-0 bg-white'}>
+            <Container className={'py-5 w-full fixed left-0 bottom-0 bg-white'} onClick={() => navigate('/deliveryservice/deliverydetails/senderdetails/updatephone/verifyphone')}>
                 <button className='w-full p-4 rounded-full bg-[#0AB247] text-white text-lg font-medium'>Confirm</button>
             </Container>
         </>

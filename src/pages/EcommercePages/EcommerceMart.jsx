@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { assets } from '../../assets/assets'
 import Container from '../../components/Container';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import MartCategoryCard from './MartCategoryCard';
 import MartItemCard from './MartItemCard';
 import MartTrendingCard from './MartTrendingCard';
@@ -10,6 +10,7 @@ import EcommerceAddBasket from './EcommerceAddBasket';
 const EcommerceMart = () => {
 
     const [scrolled, setScrolled] = useState(false)
+    const navigate = useNavigate();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -215,7 +216,7 @@ const EcommerceMart = () => {
 
             {/* Add To Basket */}
 
-            <EcommerceAddBasket />
+            <EcommerceAddBasket to={'/cart/3'} />
         </div>
     )
 }
