@@ -10,7 +10,6 @@ const DeliverySelectPayment = () => {
 
     const navigate = useNavigate()
     const { handlePaymentChange, deliveryPayment } = useContext(FeresContext)
-    const [reviewPay, setReviewPay] = useState(false)
 
     useEffect(() => {
         console.log(deliveryPayment)
@@ -43,7 +42,7 @@ const DeliverySelectPayment = () => {
                         </div>
                         <input type="radio" id='cash' name="payment" onChange={handlePaymentChange} value={"cash"} checked={deliveryPayment === "cash"} />
                     </label>
-                    <label onClick={() => setReviewPay(true)} htmlFor='ebirr' className='border border-[#EAEAEA] rounded-[16px] px-4 py-4 flex items-center justify-between mt-4'>
+                    <label htmlFor='ebirr' className='border border-[#EAEAEA] rounded-[16px] px-4 py-4 flex items-center justify-between mt-4'>
                         <div className='flex items-center gap-2'>
                             <img src={assets.E_birr} alt="" />
                             <p className='text-[#2F2F3F] text-lg'>E-birr</p>
@@ -63,8 +62,6 @@ const DeliverySelectPayment = () => {
                     <button className='p-4 w-full text-white text-lg font-medium rounded-full bg-[#0AB247]'>Apply</button>
                 </Container>
             </div>
-
-            {reviewPay && <ReviewPayPopup onPayClick={() => setReviewPay(false)} onCancelClick={() => setReviewPay(false)} onNotNowClick={() => setReviewPay(false)} />}
         </>
     )
 }

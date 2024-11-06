@@ -8,6 +8,7 @@ import { assets } from '../assets/assets'
 
 const RateFood = () => {
     const [successPop, setSuccessPop] = useState(false)
+
     return (
         <div className='px-4'>
             <RateFoodNav />
@@ -15,7 +16,7 @@ const RateFood = () => {
             <RateFoodCard />
             <RateFoodFb />
             <RateFoodSubmitBtn onClick={() => setSuccessPop(true)} />
-            {successPop ? <SuccessPopup image={assets.success_img} title={"Thanks for your review"} desc={"Your review has been submitted. We’ll check your review and email you with a status update."} /> : null}
+            {successPop ? <SuccessPopup extraFunc={true} image={assets.success_img} title={"Thanks for your review"} desc={"Your review has been submitted. We’ll check your review and email you with a status update."} /> : null}
         </div>
     )
 }

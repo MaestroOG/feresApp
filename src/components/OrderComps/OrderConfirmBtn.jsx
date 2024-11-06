@@ -1,17 +1,26 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import { assets } from '../../assets/assets'
 import { useNavigate } from 'react-router-dom';
+import { FeresContext } from '../../context/FeresContext';
+
 import { usePostRequest } from '../../servies/usePostRequest';
 
 
-const OrderConfirmBtn = ({ orderData }) => {
+const OrderConfirmBtn = ({ orderData, setReview }) => {
+
+
     const navigate = useNavigate()
     const { loading, error, response, postRequest } = usePostRequest();
     const [value, setValue] = useState(0); // Initial slider value
     const rangeRef = useRef(null);
     const thumbRef = useRef(null);
 
+
     console.log(orderData, 'here is a data for place oreder ');
+
+    const { paymentMethod } = useContext(FeresContext)
+
+
     // Update thumb tracker position
     const updateThumbPosition = () => {
         const range = rangeRef.current;
@@ -38,6 +47,7 @@ const OrderConfirmBtn = ({ orderData }) => {
 
 
         if (newValue === "100") {
+
             postRequest('/api/user/pay_order_payment',
                 {
                     cart_unique_token: orderData?.cart?.cart_unique_token,
@@ -58,6 +68,12 @@ const OrderConfirmBtn = ({ orderData }) => {
                     schedule_order_start_at: ""
                 })
             navigate('/bookride');
+            if (paymentMethod === 'ebirr') {
+                setReview(true)
+            }
+            else {
+                navigate('/bookride');
+            }
         }
     }
 
@@ -88,4 +104,3 @@ const OrderConfirmBtn = ({ orderData }) => {
 }
 
 export default OrderConfirmBtn
-

@@ -86,6 +86,10 @@ import RecipientVerifyPhone from './DeliveryServicePages/RecipientVerifyPhone'
 import DeliverySelectPayment from './DeliveryServicePages/DeliverySelectPayment'
 import DeliveryDiscounts from './DeliveryServicePages/DeliveryDiscounts'
 import RideMap from './DeliveryServicePages/RideMap'
+import GroupOrderReview from '../components/GroupOrderComps/GroupOrderReview'
+import GroupOrderCart from '../components/GroupOrderComps/GroupOrderCart'
+import DeliveryRateRider from './DeliveryServicePages/DeliveryRateRider'
+import Login from './Login'
 
 const Outlet = () => {
     return (
@@ -177,6 +181,7 @@ const Outlet = () => {
                 <Route path='/deliveryservice/deliverydetails/deliverydiscounts' element={<DeliveryDiscounts />} />
                 <Route path='/deliveryservice/deliverydetails/selectpayment' element={<DeliverySelectPayment />} />
                 <Route path='/deliveryservice/ridemap' element={<RideMap />} />
+                <Route path='/deliveryservice/raterider' element={<DeliveryRateRider />} />
 
                 {/* Recipient Routes */}
                 <Route path='/deliveryservice/deliverydetails/recepientdetails' element={<RecipientDetails />} />
@@ -187,6 +192,15 @@ const Outlet = () => {
                 <Route path='/deliveryservice/deliverydetails/recipientdetails/updatephone/verifyphone' element={<RecipientVerifyPhone />} />
 
                 <Route path='/riderinfo' element={<RiderInfo />} />
+
+
+                {/* Group Order Routes */}
+                <Route path='/grouporder/review' element={<GroupOrderReview />} />
+                <Route path='/grouporder/cart' element={<GroupOrderCart />} />
+
+
+                {/* Auth Routes */}
+                <Route path='/login' element={<Login />} />
             </Routes>
         </>
     )

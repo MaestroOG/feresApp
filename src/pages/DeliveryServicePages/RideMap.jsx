@@ -10,7 +10,7 @@ const RideMap = () => {
             <div className='flex items-center justify-center p-[14.5px] w-max rounded-full absolute bg-white top-6 left-4' onClick={() => navigate(-1)}>
                 <img src={assets.arrow_left} alt="" className='invert' />
             </div>
-            <img src={assets.map_full} alt="" onClick={() => navigate('/raterider')} />
+            <img src={assets.map_full} alt="" onClick={() => navigate('/deliveryservice/raterider')} />
             <img src={assets.waypoint} alt="" className='absolute left-14 top-[20%]' />
             <div className='w-full bg-[#F8F8F8] min-h-[328px] rounded-t-2xl fixed bottom-0 left-0'>
                 <div className='rounded-2xl bg-white min-h-[170px] w-full'>
