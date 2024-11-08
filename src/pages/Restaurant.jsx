@@ -145,7 +145,7 @@ const Restaurant = () => {
 
     const fetchCart = () => {
         const cartDetailsResponse = post('/api/user/get_cart', { cart_unique_token: loginUser.cart_unique_token })
-        // dispatch(setCartItemData(cartDetailsResponse.cart))
+        dispatch(setCartItemData(cartDetailsResponse.cart))
     }
 
     const fetchMenuItems = async () => {

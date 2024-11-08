@@ -4,8 +4,10 @@ import Container from '../../components/Container'
 import { Link } from 'react-router-dom'
 import TotalBill from '../../components/OrderComps/TotalBill'
 
-const ReviewPayPopup = ({ onCancelClick, onNotNowClick, onPayClick, isDelivery = true }) => {
+const ReviewPayPopup = ({ onCancelClick, onNotNowClick, onPayClick, isDelivery = true, order_payment, selectedResturant }) => {
     const [number, setNumber] = useState("")
+    console.log(selectedResturant);
+
     return (
         <div className='bg-[#06060626] h-screen fixed top-0 left-0 w-full z-50'>
             <div className='fixed bottom-0 left-0 w-full bg-white rounded-t-xl overflow-y-auto pb-28 min-h-[584px]'>
@@ -64,24 +66,24 @@ const ReviewPayPopup = ({ onCancelClick, onNotNowClick, onPayClick, isDelivery =
                             <div className='w-full'>
                                 <div className='mb-6 flex items-center justify-between'>
                                     <div className='flex items-center gap-2'>
-                                        <img src={assets.kfc_logo} alt="" />
-                                        <h2>KFC Eastlight</h2>
+                                        <img src={assets.placeholder} alt="" />
+                                        <h2 className='italic'>(Name)</h2>
                                     </div>
                                     <div>
                                         <p className='text-[#767578] text-sm mb-2'>Amount</p>
-                                        <h3 className='text-[#2F2F3F] font-medium'>ETB 40</h3>
+                                        <h3 className='text-[#2F2F3F] font-medium'>{`ETB${order_payment && order_payment[0]?.total_order_price}`}</h3>
                                     </div>
                                 </div>
                                 <div className='flex items-center justify-between'>
                                     <h3 className='text-[#767578]'>Subtotal</h3>
-                                    <p className='text-[#2F2F3F] font-medium text-base'>ETB280</p>
+                                    <p className='text-[#2F2F3F] font-medium text-base'>{`ETB${order_payment && order_payment[0]?.total_order_price}`}</p>
                                 </div>
                                 <div className='flex items-center justify-between mt-2'>
                                     <div className='flex items-center gap-2'>
                                         <h3 className='text-[#767578]'>Delivery Fee</h3>
                                         <img src={assets.information_circle} alt="" />
                                     </div>
-                                    <p className='text-[#2F2F3F] font-medium text-base'>ETB20</p>
+                                    <p className='text-[#2F2F3F] font-medium text-base'>{`ETB${order_payment && order_payment[0]?.total_store_income}`}</p>
                                 </div>
 
                                 <div className='flex items-center justify-between mt-2'>
@@ -89,16 +91,18 @@ const ReviewPayPopup = ({ onCancelClick, onNotNowClick, onPayClick, isDelivery =
                                         <h3 className='text-[#767578]'>Service Fee</h3>
                                         <img src={assets.information_circle} alt="" />
                                     </div>
-                                    <p className='text-[#2F2F3F] font-medium text-base'>ETB10</p>
+                                    <p className='text-[#2F2F3F] font-medium text-base'>{`ETB${order_payment && order_payment[0]?.total_service_price}`}</p>
                                 </div>
 
-                                <div className='flex items-center justify-between mt-2'>
-                                    <div className='flex items-center gap-2'>
-                                        <h3 className='text-[#767578]'>Rider Tip</h3>
-                                        <img src={assets.information_circle} alt="" />
+                                {selectedResturant?.discount &&
+                                    <div className='flex items-center justify-between mt-2'>
+                                        <div className='flex items-center gap-2'>
+                                            <h3 className='text-[#767578]'>Discount</h3>
+                                            <img src={assets.information_circle} alt="" />
+                                        </div>
+                                        <p className='text-[#2F2F3F] font-medium text-base'>{`-ETB${selectedResturant?.discount}`}</p>
                                     </div>
-                                    <p className='text-[#2F2F3F] font-medium text-base'>ETB 50</p>
-                                </div>
+                                }
                             </div>
                         </>}
                     </Container>

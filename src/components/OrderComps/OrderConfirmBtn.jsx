@@ -67,8 +67,7 @@ const OrderConfirmBtn = ({ orderData, setReview }) => {
                     normal_address: "",
                     schedule_order_start_at: ""
                 })
-            navigate('/bookride');
-            if (paymentMethod === 'ebirr') {
+            if (paymentMethod.startsWith('6')) {
                 setReview(true)
             }
             else {
