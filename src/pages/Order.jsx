@@ -1,4 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import OrderNav from '../components/OrderComps/OrderNav';
 import DelOrPickBtn from '../components/OrderComps/DelOrPickBtn';
 import SelectRide from '../components/OrderComps/SelectRide';
@@ -10,7 +12,6 @@ import DelOrderPopUp from '../components/OrderComps/DelOrderPopUp';
 import OrderConfirmBtn from '../components/OrderComps/OrderConfirmBtn';
 import SelectDeliveryPopup from '../components/OrderComps/SelectDeliveryPopup';
 import ExtraNotePopUp from '../components/FoodComps/ExtraNotePopUp';
-import { FeresContext } from '../context/FeresContext';
 import ExtraOrder from '../components/OrderComps/ExtraOrder';
 import OrderSchedule from '../components/OrderComps/OrderSchedule';
 import SaveMoneyPopUp from '../components/OrderComps/SaveMoneyPopUp';
@@ -19,18 +20,19 @@ import TipRider from '../components/OrderComps/TipRider';
 import TIpRiderPopUp from '../components/OrderComps/TIpRiderPopUp';
 import PaymentMethods from '../components/OrderComps/PaymentMethods';
 import OtherTip from '../components/OrderComps/OtherTip';
-import { assets } from '../assets/assets';
 import TotalBill from '../components/OrderComps/TotalBill';
 import RiderNote from '../components/OrderComps/RiderNote';
 import DeliveryFeePopup from '../components/OrderComps/DeliveryFeePopup';
 import ServiceFeePopup from '../components/OrderComps/ServiceFeePopup';
-import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import ReviewPayPopup from './DeliveryServicePages/ReviewPayPopup';
+import { assets } from '../assets/assets';
+import { FeresContext } from '../context/FeresContext';
 import { usePostRequest } from '../servies/usePostRequest';
 import { usePost } from '../servies/usePost';
-import { useDispatch } from 'react-redux';
-import { setCartDetails } from '../redux/slices/cartDetail';
-import ReviewPayPopup from './DeliveryServicePages/ReviewPayPopup'
+import { setCartDetails, setCartItemData } from '../redux/slices/cartDetail';
+
+
+
 
 
 const Order = () => {
@@ -43,30 +45,34 @@ const Order = () => {
     const [servicePop, setServicePop] = useState(false);
     const { smPop, setSmPop } = useContext(FeresContext);
     const cartData = useSelector((state) => state.cart.items);
-
+    const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
     const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
     const { loading, error, response, postRequest } = usePostRequest();
     const { post } = usePost()
     const [dataFetched, setDataFetched] = useState(false); // Track if data is fetched
     const [quantityUpdate, setQuantityUpdate] = useState()
     const [cartDetail, setCartDetail] = useState()
+    const userDetail = useSelector((state) => state.userAuth.user)
 
     const [review, setReview] = useState(false)
 
-
     useEffect(() => {
         const fetchCart = async () => {
-            const cartItemData = await post('/api/user/get_cart', { cart_unique_token: "i5H3Gacl5CPbcOSY4Wip" });
-            setCartItemsData(cartItemData.cart)
+
+            const cartItemData = await post('/api/user/get_cart', { cart_unique_token: userDetail.cart_unique_token });
+            dispatch(setCartItemData(cartItemData.cart))
+            setCartItemsData(cartItemData.cart, "dsfdfsdfdfd")
             const cartDetail = await post('/api/user/get_order_cart_invoice', {
                 is_user_pick_up_order: false,
-                server_token: "tGcbRdCTBt3a31WLX48HxC795z83dmQH",
+                server_token: "0Iqb69j2rP7x4yY7ZGeRst5pfnyp8vfZ",
+                // server_token: userDetail?.token,
                 order_type: 7,
                 total_distance: 2.096696376800537,
                 total_time: 5.0,
                 cart_id: cartItemData?.cart?._id,
-                cart_unique_token: "i5H3Gacl5CPbcOSY4Wip",
+                cart_unique_token: userDetail.cart_unique_token,
                 user_id: "621fc0e0c2545594abfd644e",
+                // user_id: userDetail.user_id,
                 vehicle_id: "",
                 tip_payment_id: "",
                 tipPaymeny_other_amount: "0",
@@ -79,12 +85,13 @@ const Order = () => {
         }
 
         fetchCart()
+
     }, [quantityUpdate]);
 
 
     const quaUpdate = useCallback((data) => {
         setQuantityUpdate(data)
-        // postRequest('/api/user/get_cart', { cart_unique_token: "i5H3Gacl5CPbcOSY4Wip" });
+
     }, [])
 
 
@@ -95,7 +102,7 @@ const Order = () => {
             {!deliveryPickup && <SelectRide />}
 
             {/* Nested mapping to show each store and their items */}
-            {cartItemsData?.stores?.map((store) => (
+            {cartItemData?.stores?.map((store) => (
                 <div key={store._id}>
                     {store?.items?.map((item) => (
                         <OrderedFoodCard
@@ -111,8 +118,11 @@ const Order = () => {
                     ))}
                 </div>
             ))}
-            <AddItemBtn isHr={true} />
 
+
+
+            {/* <OrderedFoodCard title={item.name} price={item.price} desc={item.details} quantity={item.quantity} /> */}
+            <AddItemBtn isHr={true} />
             <SpecialReq />
             <AddNoteBtn />
             <hr className='my-3' />
@@ -125,7 +135,7 @@ const Order = () => {
             {tipBtn === 'other' && <OtherTip />}
             <PaymentMethods img={assets.wallet_01} text={"Payment Methods"} isCard={true} onClick={() => navigate('/selectpayment')} />
             <PaymentMethods img={assets.discount} text={"Get Discounts"} isDiscount={true} onClick={() => navigate('/getdiscount')} />
-            <TotalBill onDelClick={() => setDelPop(true)} onServiceClick={() => setServicePop(true)} selectedResturant={selectedResturant} cartData={cartData} />
+            <TotalBill onDelClick={() => setDelPop(true)} onServiceClick={() => setServicePop(true)} selectedResturant={selectedResturant} order_payment={cartDetail?.order_payment} />
 
             {riderNote && <RiderNote />}
             {tipRidePop && <TIpRiderPopUp />}
@@ -135,9 +145,9 @@ const Order = () => {
             <DelOrderPopUp />
 
             <SelectDeliveryPopup service={cartDetail?.service} />
-       
 
-            <SelectDeliveryPopup />
+
+            {/* <SelectDeliveryPopup /> */}
 
             {orderNote ? <ExtraNotePopUp placeholder={"Write anything else we need to know"} /> : null}
 

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef, useEffect } from 'react'
+import React, { useContext, useState, useRef, useEffect, useCallback } from 'react'
 import { assets } from '../assets/assets';
 import { useNavigate, useParams } from 'react-router-dom'
 import { FeresContext } from '../context/FeresContext';
@@ -20,9 +20,8 @@ import 'react-time-picker/dist/TimePicker.css';
 import CustomTimePicker from '../components/CustomTimePicker';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedResturant } from '../redux/slices/selectedResturantSlice';
-
+import { usePost } from '../servies/usePost';
 import { usePostRequest } from '../servies/usePostRequest';
-
 import GroupOrder1 from '../components/GroupOrderComps/GroupOrder1';
 import OrderDeadline from '../components/GroupOrderComps/OrderDeadline';
 import InviteSharePopup from '../components/GroupOrderComps/InviteSharePopup';
@@ -30,6 +29,8 @@ import JoinQrPopup from '../components/GroupOrderComps/JoinQrPopup';
 import Container from '../components/Container';
 import TimeUpPopup from '../components/GroupOrderComps/TimeUpPopup';
 import DelByHostPopup from '../components/GroupOrderComps/DelByHostPopup';
+import { setCartItemData } from '../redux/slices/cartDetail';
+
 
 
 
@@ -46,6 +47,7 @@ const Restaurant = () => {
     const { deliverPopup, setDeliverPopup } = useContext(FeresContext)
     const [categories, setCategories] = useState([])
     const { loading, error, response, postRequest } = usePostRequest();
+    const { post } = usePost()
     const { foodPopup, setSharePop, sharePop, addToCart } = useContext(FeresContext)
     const { foodSearch, setFoodSearch } = useContext(FeresContext)
     const [deliverPop, setDeliverPop] = useState(false)
@@ -62,10 +64,14 @@ const Restaurant = () => {
     const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
     const showModel = useSelector((state) => state.modelToggle.showModel);
     const selectedFood = useSelector((state) => state.selectedFood.selectedFood);
+    const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
     const [showQr, setShowQr] = useState(false)
     const [firstGroup, setFirstGroup] = useState(false)
     const [ordDeadline, setOrdDeadline] = useState(false)
     const [inviteShare, setInviteShare] = useState(false)
+    const [isItemAdded, setIsItemAdded] = useState()
+    const loginUser = useSelector((state) => state.userAuth.user)
+
 
     const [deadline, setDeadline] = useState('any')
 
@@ -138,7 +144,8 @@ const Restaurant = () => {
     }
 
     const fetchCart = () => {
-        postRequest('/api/user/get_cart', { cart_unique_token: "i5H3Gacl5CPbcOSY4Wip" })
+        const cartDetailsResponse = post('/api/user/get_cart', { cart_unique_token: loginUser.cart_unique_token })
+        // dispatch(setCartItemData(cartDetailsResponse.cart))
     }
 
     const fetchMenuItems = async () => {
@@ -211,8 +218,11 @@ const Restaurant = () => {
 
     useEffect(() => {
         fetchCart()
-    }, [])
+    }, [loginUser])
 
+    // const addItemInCart = useCallback((data) => {
+    //     setIsItemAdded(data)
+    // }, [])
 
     return (
         <>
@@ -336,7 +346,7 @@ const Restaurant = () => {
 
                         {sharePop ? <SharePopUp /> : null}
 
-                        <AddBi items={items} cartResponse={response} loading={loading} total_item_count={response?.cart?.total_item_count} total_cart_price={response?.cart?.total_cart_price} />
+                        <AddBi items={items} cartResponse={cartItemData} loading={loading} total_item_count={cartItemData?.items_quantity} total_cart_price={cartItemData?.total_cart_price} />
 
                         {/* {foodPopup ? <FoodPopUp /> : null} */}
 

@@ -2,13 +2,13 @@ import React, { useState, useEffect, useRef, useContext } from 'react'
 import { assets } from '../../assets/assets'
 import { useNavigate } from 'react-router-dom';
 import { FeresContext } from '../../context/FeresContext';
-
+import { useSelector } from 'react-redux';
 import { usePostRequest } from '../../servies/usePostRequest';
 
 
+
 const OrderConfirmBtn = ({ orderData, setReview }) => {
-
-
+    const userDetail = useSelector((state) => state.userAuth.user)
     const navigate = useNavigate()
     const { loading, error, response, postRequest } = usePostRequest();
     const [value, setValue] = useState(0); // Initial slider value
@@ -17,9 +17,7 @@ const OrderConfirmBtn = ({ orderData, setReview }) => {
 
 
     console.log(orderData, 'here is a data for place oreder ');
-
     const { paymentMethod } = useContext(FeresContext)
-
 
     // Update thumb tracker position
     const updateThumbPosition = () => {
@@ -52,10 +50,10 @@ const OrderConfirmBtn = ({ orderData, setReview }) => {
                 {
                     cart_unique_token: orderData?.cart?.cart_unique_token,
                     cart_id: orderData?.cart?._id,
-                    phone: "+49 1789372836",
+                    phone: "+251 978225474",
                     country_code: "Kenya",
-                    server_token: "HODx2SfZOxpAicYxEpWQb1MzFLOwddeh",
-                    user_id: "665ff60f83157cfd6e1b0b48",
+                    server_token: "0Iqb69j2rP7x4yY7ZGeRst5pfnyp8vfZ",
+                    user_id: "621fc0e0c2545594abfd644e",
                     is_payment_mode_waafi: false,
                     is_payment_mode_cash: true,
                     is_brafo_payment_mode: false,
