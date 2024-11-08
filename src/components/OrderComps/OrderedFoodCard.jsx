@@ -3,15 +3,17 @@ import { assets } from '../../assets/assets'
 import { useDispatch } from 'react-redux'
 import { updateQuantity, removeItem } from '../../redux/slices/cartSlice'
 import { usePostRequest } from '../../servies/usePostRequest'
+import { useSelector } from 'react-redux'
 
 const OrderedFoodCard = ({ title, desc, price, quantity, img, item, quaUpdate }) => {
+    const userDetail = useSelector((state) => state.userAuth.user)
     const { error, loading, postRequest, response } = usePostRequest()
     const dispatch = useDispatch()
 
     const handleIncrease = () => {
         // console.log(item, 'myitemhere');
         postRequest('/api/user/new_update_item_quantity', {
-            cart_unique_token: "i5H3Gacl5CPbcOSY4Wip",
+            cart_unique_token: userDetail.cart_unique_token,
             item: {
                 _id: item?._id,
                 image_url: item?.image_url,
@@ -31,7 +33,7 @@ const OrderedFoodCard = ({ title, desc, price, quantity, img, item, quaUpdate })
                 total_quantity: item?.total_quantity,
                 unique_id: item?.unique_id
             },
-            server_token: "tGcbRdCTBt3a31WLX48HxC795z83dmQH"
+            server_token: userDetail.token
         })
 
 
@@ -39,7 +41,7 @@ const OrderedFoodCard = ({ title, desc, price, quantity, img, item, quaUpdate })
 
     const handleDecrease = () => {
         postRequest('/api/user/new_update_item_quantity', {
-            cart_unique_token: "i5H3Gacl5CPbcOSY4Wip",
+            cart_unique_token: userDetail.cart_unique_token,
             item: {
                 _id: item?._id,
                 image_url: item?.image_url,
@@ -59,7 +61,7 @@ const OrderedFoodCard = ({ title, desc, price, quantity, img, item, quaUpdate })
                 total_quantity: item?.total_quantity,
                 unique_id: item?.unique_id
             },
-            server_token: "tGcbRdCTBt3a31WLX48HxC795z83dmQH"
+            server_token: userDetail.token
         })
     }
 
@@ -74,7 +76,7 @@ const OrderedFoodCard = ({ title, desc, price, quantity, img, item, quaUpdate })
     return (
         <>
             <div className='mt-6 flex items-center gap-3 rounded-2xl px-6'>
-                <img src={img && img[0]} alt="" className='w-28 mb-auto py-[6px] rounded-2xl' />
+                <img src={img && img} alt="" className='w-28 mb-auto py-[6px] rounded-2xl' />
                 <div className='pr-1 w-[100%]'>
                     <h2 className='text-[#2F2F3F] font-medium text-base'>{title}</h2>
                     <p className='text-[#2F2F3F66] text-xs'>{desc}</p>

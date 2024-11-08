@@ -9,7 +9,7 @@ import DeleteCardPopup from '../components/SelectPaymentComps/DeleteCardPopup'
 import { useSelector } from 'react-redux'
 
 const SelectPayment = () => {
-    const cartDetails = useSelector((state) => state.cartDetails.cartDetails)
+    const cartDetails = useSelector((state) => state?.cartDetails?.cartDetails)
 
     console.log(cartDetails, 'cart details ');
     const [deleteCard, setDeleteCard] = useState(false)
