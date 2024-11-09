@@ -86,8 +86,8 @@ const Services = () => {
     }, [])
 
     return (
-        <div className='pb-24 overflow-hidden'>
-            <Navbar />
+        <div className='pt-20 pb-24 overflow-hidden'>
+            {/* <Navbar /> */}
             <SearchBar onClick={() => navigate('/search')} className="sticky top-0 left-0 bg-white" />
             <ServiceCard to={() => navigate('/allrestaurants')} />
             <Explore />

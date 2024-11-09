@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import DesktopWarning from './components/DesktopWarn';
 import Outlet from './pages/Outlet';
+import { useLocation } from 'react-router-dom';
+import Navbar from './components/Navbar';
 
 const useIsMobile = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -21,11 +23,12 @@ const useIsMobile = () => {
 };
 
 const App = () => {
-
+  const location = useLocation();
   const isMobile = useIsMobile();
 
   return (
     <>
+      {location.pathname === '/' && <Navbar />}
       {
         isMobile ? <Outlet /> : <DesktopWarning />
       }

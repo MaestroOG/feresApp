@@ -1,31 +1,29 @@
 import React from 'react'
 import { assets } from '../../assets/assets'
 
-const CustomerReviewCard = ({ customerPfp }) => {
+const CustomerReviewCard = ({ review }) => {
     return (
         <div className='mt-9'>
             {/* Card Top */}
             <div className='flex items-center justify-between mb-6'>
                 <div className='flex gap-3'>
-                    <img src={customerPfp} alt="" />
+                    {review && <img src={review.image_url} alt="" />}
                     <div>
-                        <h4 className='text-base text-[#2F2F3F] font-medium'>Ronald Richards</h4>
-                        <p className='text-[#767578] text-sm'>22 February 2024</p>
+                        <h4 className='text-base text-[#2F2F3F] font-medium'>{review?.username} {review?.user_last_name}</h4>
+                        <p className='text-[#767578] text-sm'>{review?.created_at.slice(0, 10)}</p>
                     </div>
                 </div>
                 <div className='flex items-center gap-2'>
-                    <img src={assets.star} alt="" />
-                    <img src={assets.star} alt="" />
-                    <img src={assets.star} alt="" />
-                    <img src={assets.star} alt="" />
-                    <img src={assets.star} alt="" />
+                    {Array(review?.user_rating_to_store.toString()).fill().map((_, index) => (
+                        <img src={assets.star} alt="" key={index} />
+                    ))}
                 </div>
             </div>
 
             {/* Card Text */}
-            <div>
+            {review?.user_review_to_store && <div>
                 <p className='text-base text-[#2F2F3F]'>Lorem ipsum dolor sit amet consectetur. Amet placerat nulla ornare a vulputate aliquam. Eget eget in augue vulputate nec nunc.</p>
-            </div>
+            </div>}
 
             {/* Card Bottom */}
 

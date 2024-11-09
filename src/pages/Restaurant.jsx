@@ -262,7 +262,7 @@ const Restaurant = () => {
                                 <img src={assets.logo_placeholder} alt="" />
                                 {isLoading ? <div>Loading...</div> : restInfo && <h2 className={`transition-all text-xl font-bold text-[#2F2F3F] ${scrolled ? 'fixed left-20 top-9 z-50' : ''}`}>{restInfo.store_detail.name.slice(0, 11)}..</h2>}
                             </div>
-                            <div className='flex items-center gap-1' onClick={() => navigate('/review')}>
+                            <div className='flex items-center gap-1' onClick={() => navigate(`/review/${id}`)}>
                                 <img src={assets.star} alt="" />
                                 <p className='text-base font-normal whitespace-nowrap'>{restInfo && restInfo.store_detail.user_rate} ({restInfo && restInfo.store_detail.user_rate_count} reviews)</p>
                             </div>
