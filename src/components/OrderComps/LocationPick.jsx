@@ -1,88 +1,77 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import { assets } from '../../assets/assets';
 import { FeresContext } from '../../context/FeresContext';
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { Loader } from "@googlemaps/js-api-loader";
 
 const LocationPick = () => {
     const { setRiderNote } = useContext(FeresContext);
-    const [selectedLocation, setSelectedLocation] = useState({ lat: 40.712776, lng: -74.005974 });
-    const [currentLocation, setCurrentLocation] = useState(null);
     const [address, setAddress] = useState(''); // Store the address in state
-    const [isApiLoaded, setIsApiLoaded] = useState(false); // Track API load status
-    const [mapKey, setMapKey] = useState(0); // Key to force re-render map when necessary
+    const mapRef = useRef(null); // Reference to the map container
 
-    // Function to handle marker position change
-    const handleLocationChange = (event) => {
-        const newLocation = { lat: event.latLng.lat(), lng: event.latLng.lng() };
-        setSelectedLocation(newLocation);
-        if (isApiLoaded) {
-            getAddress(newLocation.lat, newLocation.lng); // Get the address when the marker is moved
-        }
-    };
-
-    // Get the user's current location when the component mounts
     useEffect(() => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    const { latitude, longitude } = position.coords;
-                    setSelectedLocation({ lat: latitude, lng: longitude });
-                    setCurrentLocation({ lat: latitude, lng: longitude });
-                    if (isApiLoaded) {
-                        getAddress(latitude, longitude); // Get the address from the coordinates
+        // Load the Google Maps API
+        const loader = new Loader({
+            apiKey: import.meta.env.VITE_MAP_API_KEY, // Replace with your API key
+            version: "weekly",
+            libraries: ["places"] // Load the places library for Geocoding
+        });
+
+        loader.load().then(() => {
+            // Check for user's location
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const { latitude, longitude } = position.coords;
+
+                        // Initialize map centered at the user's location
+                        const map = new google.maps.Map(mapRef.current, {
+                            center: { lat: latitude, lng: longitude },
+                            zoom: 15,
+                        });
+
+                        // Add a green marker for the user's current location
+                        new google.maps.Marker({
+                            position: { lat: latitude, lng: longitude },
+                            map,
+                            icon: {
+                                path: google.maps.SymbolPath.CIRCLE,
+                                scale: 10,
+                                fillColor: "green",
+                                fillOpacity: 1,
+                                strokeWeight: 2,
+                                strokeColor: "#FFFFFF",
+                            },
+                        });
+
+                        // Convert coordinates to a human-readable address
+                        const geocoder = new google.maps.Geocoder();
+                        geocoder.geocode({ location: { lat: latitude, lng: longitude } }, (results, status) => {
+                            if (status === "OK" && results[0]) {
+                                setAddress(results[0].formatted_address); // Set the address in the input
+                            } else {
+                                console.error("Geocode was not successful for the following reason: " + status);
+                            }
+                        });
+                    },
+                    () => {
+                        alert("Unable to retrieve your location");
                     }
-                },
-                (error) => {
-                    console.error("Error getting location:", error);
-                }
-            );
-        }
-        setMapKey((prevKey) => prevKey + 1); // Force re-render of map when component mounts
-    }, [isApiLoaded]); // Re-run when the API is loaded
-
-    // Function to get the address using reverse geocoding
-    const getAddress = (lat, lng) => {
-        const geocoder = new window.google.maps.Geocoder();
-        const location = { lat: lat, lng: lng };
-
-        geocoder.geocode({ location: location }, (results, status) => {
-            if (status === "OK") {
-                if (results[0]) {
-                    setAddress(results[0].formatted_address); // Set the formatted address
-                } else {
-                    console.error("No results found");
-                }
+                );
             } else {
-                console.error("Geocoder failed due to: " + status);
+                alert("Geolocation is not supported by this browser.");
             }
         });
-    };
+    }, []);
 
     return (
         <div className='px-4 rounded-[13px]'>
             <div className='relative'>
-                {/* Load Google Maps */}
-                <LoadScript
-                    googleMapsApiKey={import.meta.env.VITE_MAP_API_KEY}
-                    onLoad={() => setIsApiLoaded(true)}
-                >
-                    {isApiLoaded && (
-                        <GoogleMap
-                            key={mapKey}
-                            mapContainerStyle={{ width: '100%', height: '200px' }}
-                            center={selectedLocation}
-                            zoom={15}
-                        >
-                            {selectedLocation && (
-                                <Marker
-                                    position={selectedLocation}
-                                    draggable={true}
-                                    onDragEnd={handleLocationChange}
-                                />
-                            )}
-                        </GoogleMap>
-                    )}
-                </LoadScript>
+                {/* Map Container */}
+                <div
+                    ref={mapRef}
+                    style={{ width: '100%', height: '200px' }}
+                    className='rounded-[13px] border border-gray-200'
+                />
             </div>
             <div className='w-full mt-4 flex flex-col gap-3 pb-5'>
                 <input

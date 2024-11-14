@@ -30,7 +30,7 @@ const OrderQuantityBtn = ({ itemFoodPopup }) => {
                 server_token: "co47wswKut7emZp2qOUWdEWVDbZvVTDl",
                 device_type: "android",
                 destination: {
-                    address: "2Q29+PV, አዲስ አበባ",
+                    address: "",
                     location: {
                         lat: 9.001826571711009,
                         lng: 38.76956474035978
