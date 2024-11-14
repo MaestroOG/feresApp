@@ -104,7 +104,7 @@ const Outlet = () => {
                 <Route path='/restaurant/:id' element={<Restaurant />} />
                 <Route path='/restaurant/viewmenu' element={<ViewAllMenu />} />
                 <Route path='/restaurant/:id/categories' element={<FoodCategories />} />
-                <Route path='/review' element={<Reviews />} />
+                <Route path='/review/:id' element={<Reviews />} />
                 <Route path='/restaurantsupport' element={<RestaurantSupport />} />
                 <Route path='/restaurantsupport/selectmenu' element={<SelectMenu />} />
                 <Route path='/restaurantsupport/ingredientinfo' element={<IngredientInfo />} />

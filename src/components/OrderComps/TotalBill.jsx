@@ -3,7 +3,8 @@ import { assets } from '../../assets/assets'
 import { FeresContext } from '../../context/FeresContext'
 
 const TotalBill = ({ onDelClick, onServiceClick, selectedResturant, order_payment }) => {
-    const { tipBtn, setTipBtn, discount, customTip, deliveryPickup } = useContext(FeresContext)
+    const { tipBtn, setTipBtn, discount, customTip, deliveryPickup, smValue } = useContext(FeresContext)
+
 
 
     return (
@@ -17,7 +18,7 @@ const TotalBill = ({ onDelClick, onServiceClick, selectedResturant, order_paymen
                     <h3 className='text-[#767578]'>Delivery Fee</h3>
                     <img src={assets.information_circle} alt="" onClick={onDelClick} />
                 </div>
-                <p className='text-[#2F2F3F] font-medium text-base'>{`ETB${order_payment && order_payment[0]?.total_store_income}`}</p>
+                <p className='text-[#2F2F3F] font-medium text-base'>{`ETB ${smValue?.split(' ')[0]}`}</p>
             </div>}
 
             <div className='flex items-center justify-between mt-2'>

@@ -55,7 +55,7 @@ const Navbar = () => {
     }, [userDetail, dispatch, post])
 
     return (
-        <div className='w-full flex items-center justify-between pt-6 px-2 sticky top-0 bg-white z-50 '>
+        <div className='w-full flex items-center justify-between pt-6 px-2 sticky top-0 bg-white z-[70] '>
             {/* Top Bar */}
             <button>
                 <img onClick={() => navigate(-1)} src={assets.arrow_left_02} className="border border-[#EEEEEE] p-2 rounded-lg" />

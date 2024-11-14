@@ -154,7 +154,7 @@ const Order = () => {
             <OrderConfirmBtn setReview={setReview} orderData={response} />
             {/* <SwipeToConfirm /> */}
 
-            {review && <ReviewPayPopup isDelivery={false} onCancelClick={() => setReview(false)} onPayClick={() => navigate('/bookride')} onNotNowClick={() => setReview(false)} />}
+            {review && <ReviewPayPopup selectedResturant={selectedResturant} order_payment={cartDetail?.order_payment} isDelivery={false} onCancelClick={() => setReview(false)} onPayClick={() => navigate('/bookride')} onNotNowClick={() => setReview(false)} />}
         </div>
     );
 };

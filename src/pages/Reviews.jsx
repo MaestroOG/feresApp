@@ -1,6 +1,6 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { assets } from '../assets/assets'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import Address from '../components/ReviewComps/Address';
 import Overview from '../components/ReviewComps/Overview';
 import RestReview from '../components/ReviewComps/RestReview';
@@ -13,10 +13,50 @@ import { FeresContext } from '../context/FeresContext';
 
 const Reviews = () => {
 
+
+    const [reviewData, setReviewData] = useState(null)
+    const [error, setError] = useState(false)
+    const [loading, setLoading] = useState(true)
+
+    const { id } = useParams();
     const [reviewSuccess, setReviewSuccess] = useState(false)
     const { customerReview, setCustomerReview } = useContext(FeresContext)
     const navigate = useNavigate();
 
+    const fetchReviews = async () => {
+        const options = {
+            store_id: id
+        }
+
+        try {
+            const response = await fetch(import.meta.env.VITE_API_URI + '/api/get_store_review', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': '*/*',
+                },
+                body: JSON.stringify(options)
+            })
+
+            const result = await response.json();
+
+            if (result.success === false) {
+                setError(true)
+                setLoading(false)
+            } else {
+                setReviewData(result)
+                setLoading(false)
+            }
+        } catch (error) {
+            setError(true)
+            console.error(error.message)
+        }
+    }
+
+
+    useEffect(() => {
+        fetchReviews()
+    })
     return (
         <div className='px-4 pt-6'>
             {/* Top Bar */}
@@ -25,7 +65,7 @@ const Reviews = () => {
                 <h2 className='font-bold text-2xl text-center'>Rating & reviews</h2>
             </div>
 
-            <RestReview />
+            <RestReview id={id} />
 
             <Overview />
 
@@ -33,7 +73,12 @@ const Reviews = () => {
 
             <CustomerReview />
 
-            <CustomerReviewCard customerPfp={assets.customer_pfp} />
+            {loading && <div>Loading...</div>}
+            {error && <div>User reviews not available</div>}
+
+            {reviewData && reviewData?.review_list.map((review) => (
+                <CustomerReviewCard review={review} key={review?._id} />
+            ))}
 
             <CustomerReviewTextArea />
             {reviewSuccess ? <SuccessPopup image={assets.success_img} title={"Thanks for your review"} desc={"Your review has been submitted. We’ll check your review and email you with a status update."} /> : null}
