@@ -25,12 +25,12 @@ const AddBi = ({ items, cartResponse, total_item_count, total_cart_price, loadin
             </button> : <button onClick={() => {
                 addToCart(items)
                 navigate(`/cart/${id}`)
-            }} className='flex items-center justify-around bg-[#0AB247] text-white w-full rounded-full p-4 px-5'>
+            }} className='flex items-center justify-between bg-[#0AB247] text-white w-full rounded-full p-4 px-5'>
                 <div className='flex items-center text-center gap-2 relative'>
                     <div className='py-[0px] px-[8px] bg-[red] ml-[5px] flex items-center justify-center rounded-full absolute right-[93%] bottom-[6px] z-10'>{total_item_count}</div> <img src={assets.shopping_basket} alt="" className='invert' />
                     View Basket
                 </div>
-                <div className='text-white text-lg font-medium'>{`ETB ${total_cart_price}`}</div>
+                <div className='text-white text-lg font-medium'>{`ETB ${total_cart_price && total_cart_price}`}</div>
             </button>}
         </div>
     )
