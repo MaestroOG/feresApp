@@ -48,7 +48,7 @@ const Restaurant = () => {
     const [categories, setCategories] = useState([])
     const { loading, error, response, postRequest } = usePostRequest();
     const { post } = usePost()
-    const { foodPopup, setSharePop, sharePop, addToCart } = useContext(FeresContext)
+    const { foodPopup, setSharePop, sharePop, addToCart, setFoodPopup } = useContext(FeresContext)
     const { foodSearch, setFoodSearch } = useContext(FeresContext)
     const [deliverPop, setDeliverPop] = useState(false)
     const [pickupPop, setPickupPop] = useState(false)
@@ -227,7 +227,7 @@ const Restaurant = () => {
     return (
         <>
             <div className='pb-16'>
-                {!showModel ? <div>
+                <div>
                     {/* Feature */}
                     <div className={`relative`}>
                         {isLoading ? <div>Loading...</div> : (
@@ -380,9 +380,9 @@ const Restaurant = () => {
                                 onClose={handleTimeClose} />
                         )}
                     </div>
-                </div> : <div><Food itemFoodPopup={selectedFood} /></div>}
+                </div>
             </div>
-
+            {foodPopup && <FoodPopUp itemFoodPopup={selectedFood} />}
             {firstGroup && <GroupOrder1 setIsOpen={setFirstGroup} onEdit={() => {
                 setFirstGroup(false)
                 setOrdDeadline(true)
