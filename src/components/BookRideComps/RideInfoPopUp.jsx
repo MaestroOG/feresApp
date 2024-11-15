@@ -24,7 +24,12 @@ const RideInfoPopUp = () => {
 
             });
             const data = response
-            setProgress(response?.order_status)
+            if (response?.delivery_status != 0) {
+                setProgress(response?.delivery_status)
+            } else {
+                setProgress(response?.order_status)
+            }
+
             console.log('API response:', data);
         } catch (error) {
             console.error('Error calling API:', error);
@@ -52,14 +57,20 @@ const RideInfoPopUp = () => {
             {/* Order Progress */}
             <div className='relative'>
                 <div className='flex items-center gap-2 mt-6' >
-                    <img src={progress === 3 ? assets.order_progress : assets.order_progress_2} alt="" />
+                    <img src={progress === 1 ? assets.order_progress : assets.order_progress_2} alt="" />
                     <p className='text-base text-[#2F2F3F]'>Waiting for KFC Eastlight to confirm your order</p>
                 </div>
                 <hr className='rotate-90 w-10 absolute top-14 -left-2 mb-5' />
                 <div className='flex items-center gap-2 mt-16' >
-                    <img src={progress === 5 ? assets.order_progress : assets.order_progress_2} alt="" />
+                    <img src={progress > 1 && progress < 7 ? assets.order_progress : assets.order_progress_2} alt="" />
                     <p className='text-base text-[#979797]'>Preparing your order</p>
                 </div>
+                <hr className='rotate-90 w-10 absolute top-36 -left-2 mb-5' />
+                <div className='flex items-center gap-2 mt-16' >
+                    <img src={progress >= 7 ? assets.order_progress : assets.order_progress_2} alt="" />
+                    <p className='text-base text-[#979797]'>Your order is ready</p>
+                </div>
+
                 <hr className='rotate-90 w-10 absolute top-36 -left-2 mb-5' />
                 <div className='flex items-center gap-2 mt-16' >
                     <img src={progress === 9 ? assets.order_progress : assets.order_progress_2} alt="" />

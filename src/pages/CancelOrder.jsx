@@ -8,10 +8,13 @@ import SuccessPopup from '../components/SuccessPopup'
 import { assets } from '../assets/assets'
 import { usePost } from '../servies/usePost'
 import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+
 
 
 const CancelOrder = () => {
     const userDetail = useSelector((state) => state.userAuth.user)
+    const navigate = useNavigate()
     const { cancelReason } = useContext(FeresContext)
     const { post, error } = usePost()
     const [successPop, setSuccessPop] = useState(false)
@@ -40,6 +43,8 @@ const CancelOrder = () => {
             <CancelOrderSubmitBtn onClick={() => {
                 cancelOrder()
                 setSuccessPop(true)
+                navigate('/')
+
             }} />
         </div>
     )

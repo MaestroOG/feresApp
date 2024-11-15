@@ -11,7 +11,7 @@ import { FeresContext } from '../../context/FeresContext'
 
 
 
-const ReviewPayPopup = ({ onCancelClick, onNotNowClick, onPayClick, isDelivery = true }) => {
+const ReviewPayPopup = ({ onCancelClick, onNotNowClick, selectedResturant, onPayClick, isDelivery = true }) => {
     const { post, loading, error } = usePost()
     const dispatch = useDispatch()
     const cartDetail = useSelector((state) => state.cartDetails.cartDetails)
@@ -23,7 +23,7 @@ const ReviewPayPopup = ({ onCancelClick, onNotNowClick, onPayClick, isDelivery =
     const [paymentName, setPaymentName] = useState('')
     const [otp, setOtp] = useState('')
 
-
+    console.log(selectedResturant, 'here is a resturant ........................');
 
     const handlePayPayment = async () => {
         const payOrder = await post('/api/user/pay_order_payment_waafi', {
@@ -130,8 +130,8 @@ const ReviewPayPopup = ({ onCancelClick, onNotNowClick, onPayClick, isDelivery =
                             <div className='w-full'>
                                 <div className='mb-6 flex items-center justify-between'>
                                     <div className='flex items-center gap-2'>
-                                        <img src={assets.kfc_logo} alt="" />
-                                        <h2>KFC Eastlight</h2>
+                                        <img src={selectedResturant?.image_url} alt="" width={'40px'} />
+                                        <h2>{selectedResturant?.name}</h2>
                                     </div>
                                     <div>
                                         <p className='text-[#767578] text-sm mb-2'>Amount</p>
