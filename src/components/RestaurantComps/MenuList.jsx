@@ -19,13 +19,13 @@ const MenuList = ({ products, addItemInCart }) => {
     const handleAddItem = async (item) => {
         const requestBody = {
             cart_unique_token: loginUser.cart_unique_token,
-            // user_id: loginUser.user_id,
-            user_id: "621fc0e0c2545594abfd644e",
-            // server_token: loginUser.token,
-            server_token: "0Iqb69j2rP7x4yY7ZGeRst5pfnyp8vfZ",
+            user_id: loginUser.user_id,
+            // user_id: "621fc0e0c2545594abfd644e",
+            server_token: loginUser.token,
+            // server_token: "0Iqb69j2rP7x4yY7ZGeRst5pfnyp8vfZ",
             device_type: loginUser.device_type,
             destination: {
-                address: loginUser.address,
+                address: "",
                 location: {
                     lat: 9.001826571711009,
                     lng: 38.76956474035978
@@ -50,6 +50,10 @@ const MenuList = ({ products, addItemInCart }) => {
                 store_id: item.store_id,
             }
         }
+
+
+        console.log(requestBody, "here is a data of unexpected cart ");
+
         const data = await post('/api/user/new_add_item_in_cart', requestBody)
         const userDetailsResponse = await post('/api/user/get_cart', {
             cart_unique_token: loginUser.cart_unique_token,

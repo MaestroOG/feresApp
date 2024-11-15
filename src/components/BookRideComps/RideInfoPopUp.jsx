@@ -1,12 +1,41 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState, useRef } from 'react'
 import { assets } from '../../assets/assets'
 import { useNavigate } from 'react-router-dom'
 import { FeresContext } from '../../context/FeresContext'
+import { usePost } from '../../servies/usePost'
+import { useSelector } from 'react-redux'
 
 const RideInfoPopUp = () => {
+    const { post, error } = usePost()
+    const userDetail = useSelector((state) => state.userAuth.user)
     const { setRideInfoPop } = useContext(FeresContext)
-    const [progress, setProgress] = useState(0);
+    const [progress, setProgress] = useState(1);
+    const intervalRef = useRef(null);
     const navigate = useNavigate();
+
+
+    const callApi = async () => {
+        try {
+            const response = await post('/api/user/get_order_status', {
+
+                server_token: userDetail.token,
+                user_id: userDetail.user_id,
+                order_id: userDetail.order_id
+
+            });
+            const data = response
+            setProgress(response?.order_status)
+            console.log('API response:', data);
+        } catch (error) {
+            console.error('Error calling API:', error);
+        }
+    };
+
+    useEffect(() => {
+        intervalRef.current = setInterval(callApi, 10000);
+
+        return () => clearInterval(intervalRef.current); // Cleanup on unmount
+    }, [])
 
     return (
         <div className='fixed bottom-0 left-0 max-h-[90vh] w-full bg-white px-3 rounded-tr-[13px] rounded-tl-[13px] overflow-y-auto pb-48 transition-all'>
@@ -22,30 +51,30 @@ const RideInfoPopUp = () => {
             <p className='mt-5 text-[#2F2F3F] text-xl font-medium'>Order progress</p>
             {/* Order Progress */}
             <div className='relative'>
-                <div className='flex items-center gap-2 mt-6' onClick={() => setProgress(0)}>
-                    <img src={progress === 0 ? assets.order_progress : assets.order_progress_2} alt="" />
+                <div className='flex items-center gap-2 mt-6' >
+                    <img src={progress === 3 ? assets.order_progress : assets.order_progress_2} alt="" />
                     <p className='text-base text-[#2F2F3F]'>Waiting for KFC Eastlight to confirm your order</p>
                 </div>
                 <hr className='rotate-90 w-10 absolute top-14 -left-2 mb-5' />
-                <div className='flex items-center gap-2 mt-16' onClick={() => setProgress(1)}>
-                    <img src={progress === 1 ? assets.order_progress : assets.order_progress_2} alt="" />
+                <div className='flex items-center gap-2 mt-16' >
+                    <img src={progress === 5 ? assets.order_progress : assets.order_progress_2} alt="" />
                     <p className='text-base text-[#979797]'>Preparing your order</p>
                 </div>
                 <hr className='rotate-90 w-10 absolute top-36 -left-2 mb-5' />
-                <div className='flex items-center gap-2 mt-16' onClick={() => setProgress(2)}>
-                    <img src={progress === 2 ? assets.order_progress : assets.order_progress_2} alt="" />
+                <div className='flex items-center gap-2 mt-16' >
+                    <img src={progress === 9 ? assets.order_progress : assets.order_progress_2} alt="" />
                     <p className='text-base text-[#979797]'>Looking for a rider</p>
                 </div>
                 <hr className='rotate-90 w-10 absolute top-[230px] -left-2 mb-5' />
-                <div className='flex items-center gap-2 mt-16' onClick={() => setProgress(3)}>
-                    <img src={progress === 3 ? assets.order_progress : assets.order_progress_2} alt="" />
+                <div className='flex items-center gap-2 mt-16' >
+                    <img src={progress === 13 ? assets.order_progress : assets.order_progress_2} alt="" />
                     <p className='text-base text-[#979797]'>The rider is on their way to KFC Eastlight</p>
                 </div>
                 <hr className='rotate-90 w-10 absolute top-[318px] -left-2 mb-5' />
                 <div className='flex items-center gap-2 mt-16' onClick={() => {
                     navigate('/raterider')
                 }}>
-                    <img src={progress === 4 ? assets.order_progress : assets.order_progress_2} alt="" />
+                    <img src={progress === 19 ? assets.order_progress : assets.order_progress_2} alt="" />
                     <p className='text-base text-[#979797]'>The rider is on their way to you</p>
                 </div>
             </div>

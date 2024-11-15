@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   showModel: false,
+  paymentMethod: "cash",
 };
 
 const modelToggleSlice = createSlice({
@@ -11,9 +12,12 @@ const modelToggleSlice = createSlice({
     setShowModel: (state, action) => {
       state.showModel = action.payload;
     },
+    setPaymentMethod: (state, action) => {
+      state.paymentMethod = action.payload;
+    },
   },
 });
 
-export const { setShowModel } = modelToggleSlice.actions;
+export const { setShowModel, setPaymentMethod } = modelToggleSlice.actions;
 
 export default modelToggleSlice.reducer;
