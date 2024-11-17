@@ -23,6 +23,7 @@ const OrderConfirmBtn = ({ orderData, setReview }) => {
     const rangeRef = useRef(null);
     const thumbRef = useRef(null);
 
+    console.log(paymentMethod);
     // const { paymentMethod } = useContext(FeresContext)
 
     // Update thumb tracker position
@@ -73,7 +74,7 @@ const OrderConfirmBtn = ({ orderData, setReview }) => {
                         payment_id: 0,
                         order_payment_id: cartDetail?.order_payment[0]._id,
                         // country_id: "6220aa1857e734afb72baf38",
-                        country_id: cartDetail?.order_payment[0]?.country_id && cartDetail?.order_payment[0]?.country_id,
+                        country_id: cartDetail?.order_payment[0].country_id,
                         order_Kitchen_detail: "",
                         last_address: "",
                         normal_address: "",
