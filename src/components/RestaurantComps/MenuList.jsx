@@ -89,12 +89,12 @@ const MenuList = ({ products, addItemInCart }) => {
                             <div className='flex flex-col gap-1 flex-[3]'>
                                 <div className='flex items-center gap-2'>
                                     <h2 className='text-[#2F2F3F] text-sm font-medium'>{item?.name}</h2>
-                                    <button className='border border-[#0AB247] bg-white p-2 w-[70px] rounded-full text-[#0AB247] text-sm font-medium' onClick={(e) => {
+                                    {findCartItemQuantity(item) > 0 && <button className='border border-[#0AB247] bg-white p-2 w-[70px] rounded-full text-[#0AB247] text-sm font-medium' onClick={(e) => {
                                         e.stopPropagation()
 
                                     }}>
-                                        {findCartItemQuantity(item) || "Add"}
-                                    </button>
+                                        {findCartItemQuantity(item)}
+                                    </button>}
                                 </div>
                                 <p className='text-[#AEAEAE] font-normal text-sm w-[90%]'>{item?.details}</p>
                                 <div className='flex items-center gap-2'>

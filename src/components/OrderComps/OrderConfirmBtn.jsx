@@ -23,7 +23,6 @@ const OrderConfirmBtn = ({ orderData, setReview }) => {
     const rangeRef = useRef(null);
     const thumbRef = useRef(null);
 
-    console.log(paymentMethod);
     // const { paymentMethod } = useContext(FeresContext)
 
     // Update thumb tracker position
