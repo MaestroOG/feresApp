@@ -4,10 +4,13 @@ import { useNavigate } from 'react-router-dom'
 import { FeresContext } from '../../context/FeresContext'
 import { usePost } from '../../servies/usePost'
 import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { setProviderInfo } from '../../redux/slices/cartDetail'
 
 const RideInfoPopUp = () => {
     const { post, error } = usePost()
     const userDetail = useSelector((state) => state.userAuth.user)
+    const dispatch = useDispatch()
     const { setRideInfoPop } = useContext(FeresContext)
     const [progress, setProgress] = useState(1);
     const intervalRef = useRef(null);
@@ -25,7 +28,24 @@ const RideInfoPopUp = () => {
             });
             const data = response
             if (response?.delivery_status != 0) {
-                setProgress(response?.delivery_status)
+                if (response?.delivery_status == 111) {
+                    console.log('order rejected go ack');
+                } else {
+                    setProgress(response?.delivery_status)
+                }
+            } else if (response?.delivery_status == 25) {
+                dispatch(setProviderInfo({
+                    provider_id: response?.provider_id,
+                    provider_first_name: response?.provider_first_name,
+                    provider_last_name: response?.provider_last_name,
+                    provider_image: response?.provider_image,
+                    provider_country_phone_code: response?.provider_country_phone_code,
+                    provider_phone: response?.provider_phone,
+                    user_rate: response?.user_rate,
+                }))
+                setTimeout(() => {
+                    navigate('/raterider');
+                }, 5000);
             } else {
                 setProgress(response?.order_status)
             }
@@ -57,36 +77,36 @@ const RideInfoPopUp = () => {
             {/* Order Progress */}
             <div className='relative'>
                 <div className='flex items-center gap-2 mt-6' >
-                    <img src={progress === 1 ? assets.order_progress : assets.order_progress_2} alt="" />
-                    <p className='text-base text-[#2F2F3F]'>Waiting for KFC Eastlight to confirm your order</p>
+                    {progress > 1 ? <img src='/tick-icon.svg' alt="" /> : <img src={progress === 1 ? assets.order_progress : assets.order_progress_2} alt="" />}
+                    {progress > 1 ? <p className='text-base text-[#2F2F3F]'>KFC Eastlight has been confirmed your order</p> : <p className='text-base text-[#2F2F3F]'>Waiting for KFC Eastlight to confirm your order</p>}
                 </div>
                 <hr className='rotate-90 w-10 absolute top-14 -left-2 mb-5' />
                 <div className='flex items-center gap-2 mt-16' >
-                    <img src={progress > 1 && progress < 7 ? assets.order_progress : assets.order_progress_2} alt="" />
-                    <p className='text-base text-[#979797]'>Preparing your order</p>
+                    {progress > 5 ? <img src='/tick-icon.svg' alt="" /> : <img src={progress > 1 && progress <= 5 ? assets.order_progress : assets.order_progress_2} alt="" />}
+                    {progress > 5 ? <p className='text-base text-[#2F2F3F]'>Your order is ready for pickup</p> : <p className='text-base text-[#979797]'>Preparing your order</p>}
                 </div>
-                <hr className='rotate-90 w-10 absolute top-36 -left-2 mb-5' />
+                {/* <hr className='rotate-90 w-10 absolute top-36 -left-2 mb-5' />
                 <div className='flex items-center gap-2 mt-16' >
-                    <img src={progress >= 7 ? assets.order_progress : assets.order_progress_2} alt="" />
+                    {progress > 9 ? <img src='/tick-icon.svg' alt="" /> : <img src={progress >= 7 && progress < 9 ? assets.order_progress : assets.order_progress_2} alt="" />}
                     <p className='text-base text-[#979797]'>Your order is ready</p>
-                </div>
+                </div> */}
 
                 <hr className='rotate-90 w-10 absolute top-36 -left-2 mb-5' />
                 <div className='flex items-center gap-2 mt-16' >
-                    <img src={progress === 9 ? assets.order_progress : assets.order_progress_2} alt="" />
-                    <p className='text-base text-[#979797]'>Looking for a rider</p>
+                    {progress > 7 ? <img src='/tick-icon.svg' alt="" /> : <img src={progress >= 7 && progress <= 9 ? assets.order_progress : assets.order_progress_2} alt="" />}
+                    {progress > 7 ? <p className='text-base text-[#2F2F3F]'>Rider has been assgined to your order</p> : <p className='text-base text-[#979797]'>Looking for a rider</p>}
                 </div>
                 <hr className='rotate-90 w-10 absolute top-[230px] -left-2 mb-5' />
                 <div className='flex items-center gap-2 mt-16' >
-                    <img src={progress === 13 ? assets.order_progress : assets.order_progress_2} alt="" />
-                    <p className='text-base text-[#979797]'>The rider is on their way to KFC Eastlight</p>
+                    {progress > 13 ? <img src='/tick-icon.svg' alt="" /> : <img src={progress >= 9 && progress <= 15 ? assets.order_progress : assets.order_progress_2} alt="" />}
+                    {progress > 13 ? <p className='text-base text-[#2F2F3F]'>Rider has picked up your order</p> : <p className='text-base text-[#979797]'>The rider is on their way to KFC Eastlight</p>}
                 </div>
                 <hr className='rotate-90 w-10 absolute top-[318px] -left-2 mb-5' />
                 <div className='flex items-center gap-2 mt-16' onClick={() => {
                     navigate('/raterider')
                 }}>
-                    <img src={progress === 19 ? assets.order_progress : assets.order_progress_2} alt="" />
-                    <p className='text-base text-[#979797]'>The rider is on their way to you</p>
+                    {progress == 25 ? <img src='/tick-icon.svg' alt="" /> : <img src={progress >= 19 && progress <= 25 ? assets.order_progress : assets.order_progress_2} alt="" />}
+                    {progress == 25 ? <p className='text-base text-[#2F2F3F]'>your order is delivered</p> : <p className='text-base text-[#979797]'>The rider is on their way to you</p>}
                 </div>
             </div>
             {/* Order Info */}
@@ -135,7 +155,7 @@ const RideInfoPopUp = () => {
             {/* Buttons */}
             <div className='fixed bottom-0 left-0 w-full px-2 py-4 bg-white'>
                 <button className='text-[#2F2F3F] text-lg font-medium bg-[#F8F8F8] p-[16px] rounded-[30px] w-full mb-3' onClick={() => navigate('/feressupport')}>Get help</button>
-                <button className='text-white text-lg font-medium bg-[#E92D53] p-[16px] rounded-[30px] w-full' onClick={() => navigate('/cancelorder')}>Cancel order</button>
+                {progress == 25 ? <button className='text-white text-lg font-medium bg-[green] p-[16px] rounded-[30px] w-full' onClick={() => navigate('/raterider')}>Rate your rider</button> : <button className='text-white text-lg font-medium bg-[#E92D53] p-[16px] rounded-[30px] w-full' onClick={() => navigate('/cancelorder')}>Cancel order</button>}
             </div>
         </div>
     )
