@@ -53,6 +53,7 @@ const Order = () => {
     const [quantityUpdate, setQuantityUpdate] = useState()
     const [cartDetail, setCartDetail] = useState()
     const userDetail = useSelector((state) => state.userAuth.user)
+    const [isLoading, setLoading] = useState(true)
 
     const [review, setReview] = useState(false)
 
@@ -86,6 +87,7 @@ const Order = () => {
 
         fetchCart()
 
+        setLoading(false)
     }, [quantityUpdate]);
 
 
@@ -101,8 +103,9 @@ const Order = () => {
             <DelOrPickBtn />
             {!deliveryPickup && <SelectRide />}
 
+            {isLoading && <div>Loading...</div>}
             {/* Nested mapping to show each store and their items */}
-            {cartItemData?.stores?.map((store) => (
+            {cartItemData && cartItemData?.stores?.map((store) => (
                 <div key={store._id}>
                     {store?.items?.map((item) => (
                         <OrderedFoodCard
