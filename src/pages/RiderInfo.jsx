@@ -1,12 +1,14 @@
 import React from 'react'
 import Container from '../components/Container'
 import { assets } from '../assets/assets'
+import { useNavigate } from 'react-router-dom'
 
 const RiderInfo = () => {
+    const navigate = useNavigate()
     return (
         <div>
             <Container className={'py-5 flex items-center gap-[22vw] bg-white'}>
-                <img src={assets.arrow_left} alt="" className='invert' />
+                <img src={assets.arrow_left} alt="" className='invert' onClick={() => navigate(-1)} />
                 <h1 className='text-[#2F2F3F] text-[23px] font-bold'>Rider Information</h1>
             </Container>
 
