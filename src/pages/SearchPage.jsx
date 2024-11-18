@@ -26,7 +26,7 @@ const SearchPage = () => {
         <div>
             <div className='w-full flex items-center px-2 bg-white'>
                 {/* <img src={assets.arrow_left} alt="" className='invert' /> */}
-                <SearchBar onKeyDown={handleKeyDown} />
+                <SearchBar isFixed={false} onKeyDown={handleKeyDown} />
             </div>
 
             <div className='mt-9 px-4'>
