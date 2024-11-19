@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { setProviderInfo } from '../../redux/slices/cartDetail'
 import { Loader } from '@googlemaps/js-api-loader'
+import CountDownTimer from './CountDownTimer'
 
 
 const RideInfoPopUp = () => {
@@ -19,6 +20,7 @@ const RideInfoPopUp = () => {
     const intervalRef = useRef(null);
     const navigate = useNavigate();
     const mapRef = useRef(null)
+    const [timerData, setTimerData] = useState(null)
 
 
     const callApi = async () => {
@@ -63,6 +65,8 @@ const RideInfoPopUp = () => {
             } else {
                 setProgress(response?.order_status)
             }
+
+            setTimerData(data.kitchen_time)
 
         } catch (error) {
             console.error('Error calling API:', error);
@@ -127,13 +131,18 @@ const RideInfoPopUp = () => {
     }, [])
 
     return (
-        <div className='fixed bottom-0 left-0 max-h-[90vh] w-full bg-white px-3 rounded-tr-[13px] rounded-tl-[13px] overflow-y-auto pb-48 transition-all'>
+        <div className='fixed bottom-0 left-0 max-h-[90vh] w-full bg-white px-3 rounded-tr-[13px] rounded-tl-[13px] overflow-y-auto pb-48 transition-all z-[104]'>
             <div className='sticky top-0 bg-white w-full z-20 py-2'>
                 <div className='mb-4 pt-2'>
                     <img src={assets.popup_down_arrow} alt="" className='mx-auto' onClick={() => setRideInfoPop(false)} />
                 </div>
                 <div className='flex items-center justify-between'>
-                    <h1 className='text-[#2F2F3F] text-4xl font-medium'>15:25</h1>
+                    {timerData !== null ? (
+                        <CountDownTimer initialTimeInSeconds={timerData} />
+                    ) : (
+                        <p>Loading timer...</p>
+                    )}
+                    {/* <h1 className='text-[#2F2F3F] text-4xl font-medium'>15:25</h1> */}
                     <p className='text-lg text-[#979797]'>Estimated time of delivery</p>
                 </div>
             </div>
