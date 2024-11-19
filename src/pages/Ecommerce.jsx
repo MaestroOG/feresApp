@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../components/Navbar'
 import SearchBar from '../components/SearchBar'
 import ServiceCard from '../components/ServiceComps/ServiceCard'
@@ -7,15 +7,34 @@ import ExploreCard from '../components/ServiceComps/ExploreCard'
 import Container from '../components/Container'
 import PopularStoreCard from '../components/EcommerceComps/MainPageComps/PopularStoreCard'
 import { Link, useNavigate } from 'react-router-dom'
+import { usePost } from '../servies/usePost'
 
 const Ecommerce = () => {
+    const { loading, error, post } = usePost();
+    const [stores, setStores] = useState(null);
     const navigate = useNavigate()
     const [activeButtonIndex, setActiveButtonIndex] = useState(0);
     const buttons = ["Popular stores", "Grocery stores", "Specialty stores"];
+
+    const fetchStores = async () => {
+        const endpoint = "/api/e-commerce/get_ecommerce_stores_list"
+        try {
+            const data = await post(endpoint, {});
+            setStores(data);
+            console.log(stores);
+
+        } catch (err) {
+            console.error("Error fetching stores:", err);
+        }
+    }
+
+    useEffect(() => {
+        fetchStores()
+    }, [])
     return (
-        <div>
+        <div className='overflow-x-hidden'>
             <Navbar />
-            <SearchBar onClick={() => navigate('/ecommercesearch')} className="sticky top-0 left-0 bg-white" />
+            <SearchBar onClick={() => navigate('/ecommercesearch')} className="bg-white" isFixed={false} />
             <div className='text-[#2F2F3F] text-lg font-medium px-4'>
                 Shop now
             </div>
@@ -80,9 +99,11 @@ const Ecommerce = () => {
                     <button className={`inactive rounded-full p-3 whitespace-nowrap text-lg`}>{buttons[1]}</button>
                     <button className={`inactive rounded-full p-3 whitespace-nowrap text-lg`}>{buttons[2]}</button>
                 </div>
-                <PopularStoreCard />
-                <PopularStoreCard />
-                <PopularStoreCard />
+                {loading && <div>Loading...</div>}
+                {error && <div>Error Fetching Stores...</div>}
+                {stores && stores.stores.map((store, index) => (
+                    <PopularStoreCard store={store} key={index} />
+                ))}
             </Container>
         </div>
     )
