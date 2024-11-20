@@ -8,6 +8,7 @@ import { usePost } from '../servies/usePost'
 
 const RateRider = () => {
     const providerInfo = useSelector((state) => state.cartDetails.providerInfo)
+    const userData = useSelector((state) => state.userAuth.user)
     const { post, error } = usePost()
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(0);
@@ -15,11 +16,11 @@ const RateRider = () => {
 
     const driverRating = () => {
         const response = post('/api/user/rating_to_provider', {
-            order_id: "64893e6b8ba72957067e5ef1",
-            user_id: "627a49f33734ead95be89950",
-            provider_id: "6220e9902a4f11b34835b2f0",
-            server_token: "taVcQbF0r7pl0OnaN7PH0Ul2jCZ5MVe2",
-            user_rating_to_provider: 3,
+            order_id: userData?.order_id,
+            user_id: userData?.user_id,
+            provider_id: providerInfo.provider_id,
+            server_token: userData?.token,
+            user_rating_to_provider: rating,
             user_review_to_provider: ratingText
         })
 

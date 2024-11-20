@@ -64,7 +64,7 @@ const Navbar = () => {
             <div className='flex flex-col items-center justify-center'>
                 <h3 className='text-sm font-medium'>Delivery to</h3>
                 <div className='flex gap-2 items-center'>
-                    <h3 className='text-[#0AB247] text-sm font-medium'>
+                    <h3 className='text-[#0AB247] text-sm font-medium' onClick={() => { navigate('/selectlocation/locationsearch') }}>
                         {userDetail?.address || "Elgin St. Celina, Delaware 10299"}
                     </h3>
                     <img src={assets.down_arrow} />

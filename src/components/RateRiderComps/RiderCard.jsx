@@ -1,9 +1,11 @@
 import React from 'react'
 import { assets } from '../../assets/assets'
+import { useNavigate } from 'react-router-dom'
 
 const RiderCard = ({ providerInfo }) => {
+    const navigate = useNavigate()
     return (
-        <div className='border border-[#EEEEEE] rounded-[16px] flex items-center justify-between p-5 mt-5'>
+        <div className='border border-[#EEEEEE] rounded-[16px] flex items-center justify-between p-5 mt-5' onClick={() => navigate('/riderinfo')}>
             <div className='flex items-center gap-2'>
                 <img src={providerInfo?.provider_image} alt="" width={'50px'} height={'50px'} style={{ borderRadius: '50px' }} />
                 <div>

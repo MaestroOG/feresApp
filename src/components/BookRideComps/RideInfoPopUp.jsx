@@ -6,15 +6,21 @@ import { usePost } from '../../servies/usePost'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { setProviderInfo } from '../../redux/slices/cartDetail'
+import { Loader } from '@googlemaps/js-api-loader'
+import CountDownTimer from './CountDownTimer'
+
 
 const RideInfoPopUp = () => {
     const { post, error } = usePost()
     const userDetail = useSelector((state) => state.userAuth.user)
     const dispatch = useDispatch()
     const { setRideInfoPop } = useContext(FeresContext)
+    const [currentAddress, setCurrentAddress] = useState("Loading current location...")
     const [progress, setProgress] = useState(1);
     const intervalRef = useRef(null);
     const navigate = useNavigate();
+    const mapRef = useRef(null)
+    const [timerData, setTimerData] = useState(null)
 
 
     const callApi = async () => {
@@ -32,8 +38,18 @@ const RideInfoPopUp = () => {
                     console.log('order rejected go ack');
                 } else {
                     setProgress(response?.delivery_status)
+                    dispatch(setProviderInfo({
+                        provider_id: response?.provider_id,
+                        provider_first_name: response?.provider_first_name,
+                        provider_last_name: response?.provider_last_name,
+                        provider_image: response?.provider_image,
+                        provider_country_phone_code: response?.provider_country_phone_code,
+                        provider_phone: response?.provider_phone,
+                        user_rate: response?.user_rate,
+                    }))
                 }
             } else if (response?.delivery_status == 25) {
+                console.log('dfsdsda', response?.delivery_status);
                 dispatch(setProviderInfo({
                     provider_id: response?.provider_id,
                     provider_first_name: response?.provider_first_name,
@@ -50,11 +66,63 @@ const RideInfoPopUp = () => {
                 setProgress(response?.order_status)
             }
 
-            console.log('API response:', data);
+            setTimerData(data.kitchen_time)
+
         } catch (error) {
             console.error('Error calling API:', error);
         }
+
     };
+
+    const initializeMap = (latitude, longitude) => {
+        const loader = new Loader({
+            apiKey: import.meta.env.VITE_MAP_API_KEY,
+            version: 'weekly',
+            libraries: ['places'],
+        })
+
+        loader.load().then(() => {
+            const map = new google.maps.Map(mapRef.current, {
+                center: { lat: latitude, lng: longitude },
+                zoom: 15,
+            })
+
+            new google.maps.Marker({
+                position: { lat: latitude, lng: longitude },
+                map,
+                icon: {
+                    url: assets.location_green, // Custom location icon
+                    scaledSize: new google.maps.Size(40, 40),
+                },
+            })
+
+            const geocoder = new google.maps.Geocoder()
+            geocoder.geocode({ location: { lat: latitude, lng: longitude } }, (results, status) => {
+                if (status === 'OK' && results[0]) {
+                    setCurrentAddress(results[0].formatted_address)
+                } else {
+                    setCurrentAddress('Unable to retrieve address')
+                }
+            })
+        })
+    }
+
+    useEffect(() => {
+        // Get user's current location
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const { latitude, longitude } = position.coords
+                    initializeMap(latitude, longitude)
+                },
+                () => {
+                    setCurrentAddress('Unable to retrieve location')
+                }
+            )
+        } else {
+            setCurrentAddress('Geolocation not supported by your browser')
+        }
+    }, [])
 
     useEffect(() => {
         intervalRef.current = setInterval(callApi, 10000);
@@ -63,13 +131,18 @@ const RideInfoPopUp = () => {
     }, [])
 
     return (
-        <div className='fixed bottom-0 left-0 max-h-[90vh] w-full bg-white px-3 rounded-tr-[13px] rounded-tl-[13px] overflow-y-auto pb-48 transition-all'>
+        <div className='fixed bottom-0 left-0 max-h-[90vh] w-full bg-white px-3 rounded-tr-[13px] rounded-tl-[13px] overflow-y-auto pb-48 transition-all z-[104]'>
             <div className='sticky top-0 bg-white w-full z-20 py-2'>
                 <div className='mb-4 pt-2'>
                     <img src={assets.popup_down_arrow} alt="" className='mx-auto' onClick={() => setRideInfoPop(false)} />
                 </div>
                 <div className='flex items-center justify-between'>
-                    <h1 className='text-[#2F2F3F] text-4xl font-medium'>15:25</h1>
+                    {timerData !== null ? (
+                        <CountDownTimer initialTimeInSeconds={timerData} />
+                    ) : (
+                        <p>Loading timer...</p>
+                    )}
+                    {/* <h1 className='text-[#2F2F3F] text-4xl font-medium'>15:25</h1> */}
                     <p className='text-lg text-[#979797]'>Estimated time of delivery</p>
                 </div>
             </div>
@@ -138,18 +211,21 @@ const RideInfoPopUp = () => {
             </div>
 
             {/* Address */}
-            <div className='w-full'>
-                <img src={assets.address_sticker} alt="" className='mx-auto mt-8' />
-                <div className='mt-4'>
-                    <h3 className='text-[#2F2F3F] text-xl font-medium'>Delivery address</h3>
+            <div
+                ref={mapRef}
+                style={{ width: '100%', height: '200px', borderRadius: '13px' }}
+                className='border border-gray-300 mt-8'
+            ></div>
+
+            <div className='mt-4'>
+                <h3 className='text-[#2F2F3F] text-xl font-medium'>Delivery address</h3>
+            </div>
+            <div className='flex items-center justify-between mt-3'>
+                <div className='flex items-center gap-2'>
+                    <img src={assets.location_green} alt="" />
+                    <p className='text-[#0AB247] text-base'>{currentAddress}</p>
                 </div>
-                <div className='flex items-center justify-between mt-3'>
-                    <div className='flex items-center gap-2'>
-                        <img src={assets.location_green} alt="" />
-                        <p className='text-[#0AB247] text-base'>Terminal 1 berlin Brandenburg Airport</p>
-                    </div>
-                    <img src={assets.edit_02} alt="" />
-                </div>
+                <img src={assets.edit_02} alt="" />
             </div>
 
             {/* Buttons */}
