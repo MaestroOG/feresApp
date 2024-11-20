@@ -2,30 +2,30 @@ import React from 'react'
 import { assets } from '../../../assets/assets'
 import { Link } from 'react-router-dom'
 
-const PopularStoreCard = ({ isDiscount = false }) => {
+const PopularStoreCard = ({ isDiscount = false, store }) => {
     return (
         <>
             <Link to={'/ecommerce/mart'} className='my-4 flex items-center gap-5'>
-                <img src={assets.apple_store} alt="" />
+                <img src={store?.image_url} alt="" width={"85px"} height={"85px"} className='rounded-lg' />
                 <div className='flex flex-col gap-1'>
                     <div className='flex items-center gap-4'>
-                        <h3 className='text-[#2F2F3F] font-medium'>Apple store</h3>
+                        <h3 className='text-[#2F2F3F] font-medium'>{store?.name}</h3>
                         <div className='flex items-center gap-1'>
                             <img src={assets.star} alt="" />
-                            <p className='text-[#2F2F3F] text-sm'>4.5</p>
+                            <p className='text-[#2F2F3F] text-sm'>{store?.user_rate}</p>
                         </div>
                     </div>
                     <div>
-                        <p className='text-sm text-[#979797]'>Convenience store, supermarket</p>
+                        <p className='text-sm text-[#979797]'>{store?.Description}</p>
                     </div>
                     <div className='flex items-center gap-4'>
                         <div className='flex items-center gap-1'>
                             <img src={assets.clock_01} alt="" />
-                            <p className='text-[#2F2F3F] text-sm'>20 mins</p>
+                            <p className='text-[#2F2F3F] text-sm'>{store?.delivery_time} mins</p>
                         </div>
                         <div className='flex items-center gap-1'>
                             <img src={assets.scooter_02} alt="" />
-                            <p className='text-[#2F2F3F] text-sm'>ETB 120</p>
+                            <p className='text-[#2F2F3F] text-sm'>ETB {store?.discount}</p>
                         </div>
                     </div>
                     {isDiscount && <div className='text-[#0AB247] text-[9px] font-medium bg-[#0AB2471A] p-1 rounded w-[88px]'>
