@@ -1,9 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { assets } from '../../assets/assets'
 import { useNavigate } from 'react-router-dom'
+import { usePost } from '../../servies/usePost'
+import { useSelector } from 'react-redux'
+
 
 const RiderCard = ({ providerInfo }) => {
+    const userDetail = useSelector((state) => state.userAuth.user)
     const navigate = useNavigate()
+    const {post} = usePost()
+console.log("userDetailuserDetailuserDetailuserDetail",userDetail);
+
+useEffect(()=>{
+ const fetchProvider =async ()=>{
+   const porviderDetail =await post('/api/get_order_detail',{order_id: userDetail?.order_id, type:7, user: userDetail?.user_id, server_token: userDetail?.token })
+//    console.log(porviderDetail,"userDetail?.userDetail?.userDetail?.userDetail?.")
+}
+if(providerInfo){
+    fetchProvider()
+}
+},[providerInfo])
+
     return (
         <div className='border border-[#EEEEEE] rounded-[16px] flex items-center justify-between p-5 mt-5' onClick={() => navigate('/riderinfo')}>
             <div className='flex items-center gap-2'>

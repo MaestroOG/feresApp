@@ -231,7 +231,7 @@ const Restaurant = () => {
                     {/* Feature */}
                     <div className={`relative`}>
                         {isLoading ? <div>Loading...</div> : (
-                            <img src={restInfo && restInfo.store_detail.cover_image_url ? restInfo.store_detail.cover_image_url : assets.cover_placeholder} alt="" />
+                            <img src={restInfo && restInfo?.store_detail?.cover_image_url ? restInfo?.store_detail?.cover_image_url : assets?.cover_placeholder} alt="" />
                         )}
                     </div>
                     <div className={`flex items-center justify-between px-4 py-6 fixed top-0 w-full transition-all z-40 ${scrolled ? 'bg-white' : 'bg-transparent'}`}>
@@ -325,7 +325,7 @@ const Restaurant = () => {
                             </div>
                         </div>
 
-                        <MealsCategoriesAndItems categoryItems={selectedResturant?.store?.products} />
+                        <MealsCategoriesAndItems categoryItems={selectedResturant?.store?.products} store_id={selectedResturant?.store?._id} />
 
                         {/* Delivered By Feres Popup*/}
 

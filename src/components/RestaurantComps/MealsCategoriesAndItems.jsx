@@ -1,16 +1,19 @@
 import React, { useContext, useState, useEffect, useRef } from 'react'
 import { assets } from '../../assets/assets'
-import { trendingItems } from './trendingItems';
 import MenuList from './MenuList';
 import { menuListItems } from './menuListItems';
 import { FeresContext } from '../../context/FeresContext';
 import TableList from './TableList';
+import { usePost } from '../../servies/usePost';
 
-const MealsCategoriesAndItems = ({ categoryItems }) => {
+const MealsCategoriesAndItems = ({ categoryItems ,store_id}) => {
     const { tableList, setTableList } = useContext(FeresContext)
     const [scrollActive, setScrollActive] = useState(false);
     const [activeButtonIndex, setActiveButtonIndex] = useState(0);
     const headingRefs = useRef([]);
+    const { post } = usePost()
+    const [trendingItems, setTrendingItems] = useState([])
+
 
     useEffect(() => {
         const observerOptions = {
@@ -37,6 +40,23 @@ const MealsCategoriesAndItems = ({ categoryItems }) => {
             });
         };
     }, []);
+
+
+   useEffect(()=>{
+           const getTrendingItems =async ()=>{
+            const data =await post('/api/food/get_trending_items',{
+                store_id: store_id
+            })
+
+            setTrendingItems(data.trending_items );
+            
+            }
+
+    if(store_id){    
+        getTrendingItems()
+    }
+
+   },[store_id])
 
     const handleButtonClick = (index) => {
         headingRefs.current[index]?.scrollIntoView({
@@ -84,19 +104,19 @@ const MealsCategoriesAndItems = ({ categoryItems }) => {
                 <div className='flex'>
                     {/* Example for one card, repeat or dynamically render */}
                     {trendingItems.map(item => (
-                        <div key={item.id} className='min-w-[170px]'>
+                        <div key={item?.product_id} className='min-w-[170px]'>
                             <div className='relative w-max'>
-                                <img src={item.img} alt="" />
+                                <img src={item?.image_url[0]} alt="" className='w-[157px] h-[149px] object-cover'/>
                                 <div className='bg-[#0AB247] rounded-lg p-2 text-xs text-white absolute top-2 left-2'>-35%</div>
                                 <div className='rounded-full bg-white p-2 absolute bottom-2 right-2'>
                                     <img src={assets.add_green} alt="" />
                                 </div>
                             </div>
                             <div className='my-1'>
-                                <h4 className='text-[#2F2F3F] text-sm w-40 mb-1'>{item.name}</h4>
+                                <h4 className='text-[#2F2F3F] text-sm w-40 mb-1'>{item?.name}</h4>
                                 <div className='flex items-center gap-2'>
                                     <p className='text-[#AEAEAE] text-sm'>ETB 170</p>
-                                    <p className='text-[#0AB247] text-sm font-bold'>ETB 140</p>
+                                    <p className='text-[#0AB247] text-sm font-bold'>{`ETB ${item?.price}`}</p>
                                 </div>
                             </div>
                         </div>

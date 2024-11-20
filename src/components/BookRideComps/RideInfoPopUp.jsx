@@ -22,6 +22,7 @@ const RideInfoPopUp = () => {
     const mapRef = useRef(null)
     const [timerData, setTimerData] = useState(null)
 
+    const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
 
     const callApi = async () => {
         try {
@@ -151,7 +152,7 @@ const RideInfoPopUp = () => {
             <div className='relative'>
                 <div className='flex items-center gap-2 mt-6' >
                     {progress > 1 ? <img src='/tick-icon.svg' alt="" /> : <img src={progress === 1 ? assets.order_progress : assets.order_progress_2} alt="" />}
-                    {progress > 1 ? <p className='text-base text-[#2F2F3F]'>KFC Eastlight has been confirmed your order</p> : <p className='text-base text-[#2F2F3F]'>Waiting for KFC Eastlight to confirm your order</p>}
+                    {progress > 1 ? <p className='text-base text-[#2F2F3F]'>{selectedResturant?.store?.name} has been confirmed your order</p> : <p className='text-base text-[#2F2F3F]'>Waiting for {selectedResturant?.store?.name} to confirm your order</p>}
                 </div>
                 <hr className='rotate-90 w-10 absolute top-14 -left-2 mb-5' />
                 <div className='flex items-center gap-2 mt-16' >
@@ -172,7 +173,7 @@ const RideInfoPopUp = () => {
                 <hr className='rotate-90 w-10 absolute top-[230px] -left-2 mb-5' />
                 <div className='flex items-center gap-2 mt-16' >
                     {progress > 13 ? <img src='/tick-icon.svg' alt="" /> : <img src={progress >= 9 && progress <= 15 ? assets.order_progress : assets.order_progress_2} alt="" />}
-                    {progress > 13 ? <p className='text-base text-[#2F2F3F]'>Rider has picked up your order</p> : <p className='text-base text-[#979797]'>The rider is on their way to KFC Eastlight</p>}
+                    {progress > 13 ? <p className='text-base text-[#2F2F3F]'>Rider has picked up your order</p> : <p className='text-base text-[#979797]'>The rider is on their way to {selectedResturant?.store?.name}</p>}
                 </div>
                 <hr className='rotate-90 w-10 absolute top-[318px] -left-2 mb-5' />
                 <div className='flex items-center gap-2 mt-16' onClick={() => {
