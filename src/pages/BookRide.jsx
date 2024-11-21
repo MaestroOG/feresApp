@@ -77,10 +77,14 @@ const BookRide = () => {
     }, []);
 
     const providerInfo = useSelector((state) => state.cartDetails.providerInfo)
+    const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
+
+console.log(selectedResturant.store.name,"selectedResturantselectedResturantselectedResturantselectedResturant");
+
 
     return (
         <div className='relative h-[100vh] overflow-hidden transition-all'>
-            <BookRideNav />
+            <BookRideNav storeName={selectedResturant.store.name}/>
             <p className='text-[#2F2F3F] text-lg text-center py-3 pb-8'>Waiting for restaurant to confirm your order...</p>
 
             {/* Map Container */}
