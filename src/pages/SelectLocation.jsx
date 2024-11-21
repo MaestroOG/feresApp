@@ -10,7 +10,6 @@ const SelectLocation = () => {
     const mapRef = useRef(null);
     const [map, setMap] = useState(null);
 
-
     useEffect(() => {
         const loader = new Loader({
             apiKey: import.meta.env.VITE_MAP_API_KEY, // Replace with your API key
@@ -100,7 +99,7 @@ const SelectLocation = () => {
                     </div>
                     <img src={assets.search} alt="" onClick={() => navigate('/selectlocation/locationsearch')} />
                 </div>
-                <button className='p-4 rounded-full w-full bg-[#0AB247] text-white text-xl font-medium mt-5' onClick={() => navigate('/deliveryservice/deliverydetails/senderdetails')}>Confirm location</button>
+                <button className='p-4 rounded-full w-full bg-[#0AB247] text-white text-xl font-medium mt-5' onClick={() => navigate('/')}>Confirm location</button>
             </Container>
         </div>
     )
