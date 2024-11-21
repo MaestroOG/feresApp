@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { assets } from '../../assets/assets'
 import { FeresContext } from '../../context/FeresContext'
 import { useDispatch } from 'react-redux'
@@ -9,9 +9,18 @@ const SelectDeliveryPopup = ({ service }) => {
     const dispatch = useDispatch()
     const selectedService = useSelector((state) => state.selectedService.selectedService)
     const { selectDel, setSelectDel } = useContext(FeresContext)
+
+    useEffect(() => {
+        if (service) {
+            const firstMotorbike = service.find(item => item.vehicle_name === 'Motor Bike');
+            if (firstMotorbike) {
+                dispatch(setSelectedService(firstMotorbike));
+            }
+        }
+    }, [service, dispatch]);
     const handleDelRadioChange = (item) => {
-        dispatch(setSelectedService(item))
-    }
+        dispatch(setSelectedService(item));
+    };
     return (
         <div className={`${!selectDel ? 'hidden' : ''} fixed bottom-0 w-full z-30 pt-4 pb-2 bg-white rounded-tl-3xl rounded-tr-3xl shadow-md shadow-[#96969640]`}>
             <div className='w-full mb-3'>

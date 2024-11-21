@@ -70,9 +70,13 @@ const FoodPopUp = ({ img, text, itemFoodPopup }) => {
         <div className={`${foodPopup || !foodSelected ? '' : 'hidden'} sticky bottom-0 left-0 right-0 z-[1005] bg-white`}>
             <div className='relative'>
                 <img src={itemFoodPopup?.image_url} alt="" className='z-50 rounded-tr-3xl rounded-tl-3xl' />
-                <img ref={closeRef} src={assets.cancel_icon} alt="" className='absolute right-[3%] top-[7%] bg-white rounded-full' onClick={() =>
+                <img ref={closeRef} src={assets.cancel_icon} alt="" className='bg-white rounded-full absolute right-[3%] top-[7%]' onClick={() =>
                     setFoodPopup(false)
                 } />
+                <button className='bg-[#FFFFFF33] p-[10px] rounded-[10px] flex items-center justify-center absolute right-[16%] top-[7%]'>
+                    <img src={assets.heart_icon} alt="" />
+                </button>
+
             </div>
             <div className='bg-white px-4 py-4 rounded-tr-[16px] rounded-tl-[16px]'>
                 <h2 className='text-[#2F2F3F] text-xl font-bold mb-2'>{itemFoodPopup?.name}</h2>

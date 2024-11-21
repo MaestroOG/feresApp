@@ -76,7 +76,7 @@ const OrderedFoodCard = ({ title, desc, price, quantity, img, item, quaUpdate })
     return (
         <>
             <div className='mt-6 flex items-center gap-3 rounded-2xl px-6'>
-                <img src={img && img} alt="" className='w-28 mb-auto py-[6px] rounded-2xl' />
+                <img src={img && img} alt="" className='w-[111px] h-[98px] mb-auto py-[6px] rounded-[13px] object-cover' />
                 <div className='pr-1 w-[100%]'>
                     <h2 className='text-[#2F2F3F] font-medium text-base'>{title}</h2>
                     <p className='text-[#2F2F3F66] text-xs'>{desc}</p>

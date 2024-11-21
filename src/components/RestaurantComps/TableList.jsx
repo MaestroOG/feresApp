@@ -77,11 +77,12 @@ const TableList = ({ products }) => {
                         <img
                             src={item?.image_url[0]}
                             alt=""
-                            className="rounded-2xl"
-                            width={'120px'}
+                            className="rounded-[13px] w-[155px] h-[144px] object-cover"
+                            width={'155px'}
+                            height={'144px'}
                         />
 
-                        <div className="rounded-full bg-white p-2 absolute bottom-2 right-2">
+                        <div className={`rounded-full bg-white ${itemQuantity > 0 ? 'py-[9px] px-[16.5px]' : 'p-[9px]'} absolute bottom-2 right-2`}>
                             {itemQuantity > 0 ? (
                                 <span className="text-[#0AB247] font-bold">{itemQuantity}</span>
                             ) : (
@@ -99,7 +100,7 @@ const TableList = ({ products }) => {
                     <div className="my-1">
                         <h4 className="text-[#2F2F3F] text-sm mb-1 w-[165px]">{item?.name}</h4>
                         <p className="text-[#AEAEAE] font-normal text-sm w-[165px] mb-1">
-                            {item?.details}
+                            {item?.details.slice(0, 40)}..
                         </p>
                         <div className="flex items-center gap-2">
                             <p className="text-[#0AB247] text-sm font-bold">ETB {item?.price}</p>

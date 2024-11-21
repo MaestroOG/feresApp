@@ -102,8 +102,9 @@ const MenuList = ({ products, addItemInCart }) => {
                                     <p className='text-[#0AB247] text-sm font-bold'>{`ETB ${item?.price}`}</p>
                                 </div>
                             </div>
-                            <div className='relative flex items-end pb-3 justify-center flex-[1] h-[117px] rounded-lg' style={{ backgroundImage: `url(${item?.image_url[0]})`, backgroundPosition: 'center', backgroundSize: 'cover' }}>
-
+                            <div className='relative flex items-end pb-3 justify-center w-[132px] h-[123px]'>
+                                <img src={item?.image_url[0]} className='w-[132px] h-[123px] rounded-2xl object-cover' alt=""
+                                    style={{ width: '132px', height: '123px' }} />
                             </div>
                         </div>
                     </div>

@@ -6,7 +6,7 @@ import { FeresContext } from '../../context/FeresContext';
 import TableList from './TableList';
 import { usePost } from '../../servies/usePost';
 
-const MealsCategoriesAndItems = ({ categoryItems ,store_id}) => {
+const MealsCategoriesAndItems = ({ categoryItems, store_id }) => {
     const { tableList, setTableList } = useContext(FeresContext)
     const [scrollActive, setScrollActive] = useState(false);
     const [activeButtonIndex, setActiveButtonIndex] = useState(0);
@@ -42,21 +42,21 @@ const MealsCategoriesAndItems = ({ categoryItems ,store_id}) => {
     }, []);
 
 
-   useEffect(()=>{
-           const getTrendingItems =async ()=>{
-            const data =await post('/api/food/get_trending_items',{
+    useEffect(() => {
+        const getTrendingItems = async () => {
+            const data = await post('/api/food/get_trending_items', {
                 store_id: store_id
             })
 
-            setTrendingItems(data.trending_items );
-            
-            }
+            setTrendingItems(data.trending_items);
 
-    if(store_id){    
-        getTrendingItems()
-    }
+        }
 
-   },[store_id])
+        if (store_id) {
+            getTrendingItems()
+        }
+
+    }, [store_id])
 
     const handleButtonClick = (index) => {
         headingRefs.current[index]?.scrollIntoView({
@@ -106,7 +106,7 @@ const MealsCategoriesAndItems = ({ categoryItems ,store_id}) => {
                     {trendingItems.map(item => (
                         <div key={item?.product_id} className='min-w-[170px]'>
                             <div className='relative w-max'>
-                                <img src={item?.image_url[0]} alt="" className='w-[157px] h-[149px] object-cover'/>
+                                <img src={item?.image_url[0]} alt="" className='w-[155px] h-[144px] rounded-[13px] object-cover' />
                                 <div className='bg-[#0AB247] rounded-lg p-2 text-xs text-white absolute top-2 left-2'>-35%</div>
                                 <div className='rounded-full bg-white p-2 absolute bottom-2 right-2'>
                                     <img src={assets.add_green} alt="" />

@@ -251,7 +251,7 @@ const Restaurant = () => {
                         </div>
                     </div>
 
-                    <Container className={'absolute top-[23%] w-full'}>
+                    {/* <Container className={'absolute top-[23%] w-full'}>
                         <div className='bg-[#E8E8E8] rounded-2xl p-3 flex items-center justify-between'>
                             <div className='flex items-center gap-1'>
                                 <img src={assets.rice_bowl_green} alt="" />
@@ -262,7 +262,7 @@ const Restaurant = () => {
                                 <p className='text-[#0D343F] text-sm font-medium'>Invite</p>
                             </div>
                         </div>
-                    </Container>
+                    </Container> */}
 
                     {/* Restaurant Title */}
 
