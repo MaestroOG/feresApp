@@ -13,6 +13,7 @@ const BookRide = () => {
     const mapRef = useRef(null);
     const [map, setMap] = useState(null);
     const [providerOverview, setProviderOverview] = useState(false)
+    const [timerData, setTimerData] = useState(null)
 
     useEffect(() => {
         const loader = new Loader({
@@ -79,12 +80,12 @@ const BookRide = () => {
     const providerInfo = useSelector((state) => state.cartDetails.providerInfo)
     const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
 
-console.log(selectedResturant.store.name,"selectedResturantselectedResturantselectedResturantselectedResturant");
+    console.log(selectedResturant.store.name, "selectedResturantselectedResturantselectedResturantselectedResturant");
 
 
     return (
         <div className='relative h-[100vh] overflow-hidden transition-all'>
-            <BookRideNav storeName={selectedResturant.store.name}/>
+            <BookRideNav storeName={selectedResturant.store.name} />
             <p className='text-[#2F2F3F] text-lg text-center py-3 pb-8'>Waiting for restaurant to confirm your order...</p>
 
             {/* Map Container */}
@@ -108,7 +109,12 @@ console.log(selectedResturant.store.name,"selectedResturantselectedResturantsele
                     <img src={assets.popup_down_arrow} alt="" className='mx-auto' />
                 </div>
                 <div className='flex items-center justify-between'>
-                    <h1 className='text-[#2F2F3F] text-4xl font-medium'>15:25</h1>
+                    {timerData !== null ? (
+                        <CountDownTimer initialTimeInSeconds={timerData} />
+                    ) : (
+                        <p>Loading timer...</p>
+                    )}
+                    {/* <h1 className='text-[#2F2F3F] text-4xl font-medium'>15:25</h1> */}
                     <p className='text-lg text-[#979797]'>Estimated time of delivery</p>
                 </div>
                 <p className='mt-5 text-[#2F2F3F] text-xl font-medium'>Order progress</p>
