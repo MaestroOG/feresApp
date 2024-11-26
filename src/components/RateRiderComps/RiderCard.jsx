@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { assets } from '../../assets/assets'
 import { useNavigate } from 'react-router-dom'
 import { usePost } from '../../servies/usePost'
@@ -7,36 +7,63 @@ import { useSelector } from 'react-redux'
 
 const RiderCard = ({ providerInfo }) => {
     const userDetail = useSelector((state) => state.userAuth.user)
+    const [provider, setProvider] = useState(null)
+    const [loading, setLoading] = useState(true)
     const navigate = useNavigate()
-    const {post} = usePost()
-console.log("userDetailuserDetailuserDetailuserDetail",userDetail);
+    const { post, error } = usePost()
+    console.log("userDetailuserDetailuserDetailuserDetail", userDetail);
 
-useEffect(()=>{
- const fetchProvider =async ()=>{
-   const porviderDetail =await post('/api/get_order_detail',{order_id: userDetail?.order_id, type:7, user: userDetail?.user_id, server_token: userDetail?.token })
-//    console.log(porviderDetail,"userDetail?.userDetail?.userDetail?.userDetail?.")
-}
-if(providerInfo){
-    fetchProvider()
-}
-},[providerInfo])
+    const fetchProvider = async () => {
+        try {
+            const porviderDetail = await post('/api/get_order_detail',
+                {
+                    // TODO: Make it dynamic
+                    order_id: "674425e0fc8b8d9b8f48a6f3",
+                    id: "674194cbba82cd9b9b72d4ea",
+                    server_token: "f3K4nQjknO7o7dHMeznDy0MJ6CDPodAI",
+                    type: 7
+                    // order_id: userDetail?.order_id,
+                    // type: 7,
+                    // user: userDetail?.user_id,
+                    // server_token: userDetail?.token
+                }
+            )
+            //    console.log(porviderDetail,"userDetail?.userDetail?.userDetail?.userDetail?.")
+            setProvider(porviderDetail)
+            setLoading(false)
+            console.log(provider);
+
+
+        } catch (error) {
+            setError(true)
+            console.error(error.message)
+        }
+    }
+
+    useEffect(() => {
+        fetchProvider()
+    }, [])
 
     return (
         <div className='border border-[#EEEEEE] rounded-[16px] flex items-center justify-between p-5 mt-5' onClick={() => navigate('/riderinfo')}>
-            <div className='flex items-center gap-2'>
-                <img src={providerInfo?.provider_image} alt="" width={'50px'} height={'50px'} style={{ borderRadius: '50px' }} />
+            {loading && <div>Loading....</div>}
+            {error && <div>Error fetching details</div>}
+            {provider && <>
+                <div className='flex items-center gap-2'>
+                    <img src={provider?.provider_detail.image_url} alt="" width={'50px'} height={'30px'} style={{ borderRadius: '50px' }} />
+                    <div>
+                        <h4 className='text-[#2F2F3F] font-medium text-base mb-1'>{`${provider?.provider_detail.first_name} ${provider?.provider_detail.last_name}`}</h4>
+                        {/* <p className='text-[#767578] text-sm'>Yamaha MX King</p> */}
+                    </div>
+                </div>
                 <div>
-                    <h4 className='text-[#2F2F3F] font-medium text-base mb-1'>{`${providerInfo?.provider_first_name} ${providerInfo?.provider_last_name}`}</h4>
-                    <p className='text-[#767578] text-sm'>Yamaha MX King</p>
+                    <div className='flex items-center gap-2 justify-end mb-1'>
+                        <img src={assets.star} alt="" />
+                        <p>{provider?.provider_detail.user_rate}</p>
+                    </div>
+                    {/* <p className='text-[#2F2F3F] text-sm font-medium'>HSW 4736 XK</p> */}
                 </div>
-            </div>
-            <div>
-                <div className='flex items-center gap-2 justify-end mb-1'>
-                    <img src={assets.star} alt="" />
-                    <p>{providerInfo?.user_rate}</p>
-                </div>
-                <p className='text-[#2F2F3F] text-sm font-medium'>HSW 4736 XK</p>
-            </div>
+            </>}
         </div>
     )
 }

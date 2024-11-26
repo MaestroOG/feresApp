@@ -55,6 +55,9 @@ const Order = () => {
     const userDetail = useSelector((state) => state.userAuth.user)
     const [isLoading, setLoading] = useState(true)
 
+    console.log(userDetail);
+
+
     const [review, setReview] = useState(false)
 
     useEffect(() => {
@@ -63,6 +66,7 @@ const Order = () => {
             const cartItemData = await post('/api/user/get_cart', { cart_unique_token: userDetail.cart_unique_token });
             dispatch(setCartItemData(cartItemData.cart))
             setCartItemsData(cartItemData.cart, "dsfdfsdfdfd")
+
             const cartDetail = await post('/api/user/get_order_cart_invoice', {
                 is_user_pick_up_order: false,
                 // server_token: "0Iqb69j2rP7x4yY7ZGeRst5pfnyp8vfZ",
@@ -71,9 +75,11 @@ const Order = () => {
                 total_distance: 2.096696376800537,
                 total_time: 5.0,
                 cart_id: cartItemData?.cart?._id,
+                // cart_id: "67404d2b48f5037e9a037be0",
                 cart_unique_token: userDetail.cart_unique_token,
-                // user_id: "621fc0e0c2545594abfd644e",
+                // user_id: "674194c6b50f6aecb5b65526",
                 user_id: userDetail.user_id,
+                // user_id: "674194cbba82cd9b9b72d4ea",
                 vehicle_id: "",
                 tip_payment_id: "",
                 tipPaymeny_other_amount: "0",
@@ -129,7 +135,7 @@ const Order = () => {
             <SpecialReq />
             <AddNoteBtn />
             <hr className='my-3' />
-            <ExtraOrder />
+            {/* <ExtraOrder /> */}
             <OrderSchedule onThirtyClick={() => setSmPop(true)} />
 
             {!deliveryPickup && <LocationPick />}

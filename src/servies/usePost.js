@@ -12,6 +12,9 @@ export const usePost = () => {
 
     try {
       const res = await api.post(endpoint, body);
+      if (res.data.success && res.data.success === false) {
+        setError(true)
+      }
       return res.data; // Return the response data directly
     } catch (err) {
       setError(err.message);
