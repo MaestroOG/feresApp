@@ -6,13 +6,16 @@ import { FeresContext } from '../../context/FeresContext';
 import { useDispatch, useSelector } from 'react-redux';
 
 
-const FeaturedRests = ({ type }) => {
+const FeaturedRests = ({ type, stores }) => {
     const searchData = useSelector((state) => state.search.searchData);
 
+    const [filteredStores, setFilteredStores] = useState(null)
     const [searchResult, setSearchResult] = useState(null)
     const [isLoading, setIsLoading] = useState(null)
     const { searchTerm } = useContext(FeresContext)
     const navigate = useNavigate();
+
+
 
 
     const fetchSearchResult = async () => {
@@ -51,6 +54,7 @@ const FeaturedRests = ({ type }) => {
     }
 
     useEffect(() => {
+        console.log(stores)
         console.log(searchData)
         if (searchData.length > 0) {
             fetchSearchResult();
@@ -64,6 +68,12 @@ const FeaturedRests = ({ type }) => {
                     <FeaturedRestsCard key={index} title={store.name} desc={store.Description} userRate={store.user_rate} userRateQuantity={store.user_rate_count} img={store.image_url} delivery={store.delivery_time} onClick={() => navigate(`/restaurant/${store._id}`)} />
                 ))
             )) : null}
+
+            {!searchResult && stores && stores.stores.map(store => (
+                store.stores.map(st => (
+                    <FeaturedRestsCard key={st?._id} title={st?.name} desc={st?.Description} userRate={st?.user_rate} userRateQuantity={st?.user_rate_count} img={st?.image_url} delivery={st?.delivery_time} onClick={() => navigate(`/restaurant/${st?._id}`)} />
+                ))
+            ))}
 
             {/* <FeaturedRestsCard img={assets.featured_rest_img} title={"KFC Eastlight"} desc={"Burger, Fast Food, American..."} userRate={"4.50"} userRateQuantity={"50+"} price={"150.00"} delivery={"40"} onClick={() => navigate('/restaurant')} /> */}
 

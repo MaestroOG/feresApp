@@ -1,23 +1,46 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { assets } from '../../assets/assets'
 import { FeresContext } from '../../context/FeresContext'
+import { usePost } from '../../servies/usePost';
+import { useDispatch, useSelector } from 'react-redux';
+import { addCuisine, removeCuisine } from '../../redux/slices/filterSlice';
 
-const FilterPopUp = () => {
+const FilterPopUp = ({ onClick }) => {
+
+    const dispatch = useDispatch();
 
     const { setFilterPop } = useContext(FeresContext);
     const [rating, setRating] = useState('4')
     const [delTime, setDelTime] = useState('15')
     const [distance, setDistance] = useState('1')
 
+    const [cuisines, setCuisines] = useState(null)
+
+    const { post, loading, error } = usePost();
+
+    const getCusines = async () => {
+        try {
+            const data = await post('/get_all_cuisines', {})
+            setCuisines(data)
+            console.log(cuisines)
+        } catch (error) {
+            console.error(error.message)
+        }
+    }
 
     const handlePreventDefault = (e) => {
         e.preventDefault();
     }
 
+
+    useEffect(() => {
+        getCusines();
+    }, [])
+
     return (
         <div className='h-[90vh] w-full bg-[#F8F8F8] fixed bottom-0 left-0 rounded-2xl overflow-y-scroll pb-20 z-50'>
             {/* Top Bar */}
-            <form>
+            <form onSubmit={onClick}>
                 <div className='flex items-center justify-between px-2 py-2 bg-white sticky top-0'>
                     <img src={assets.cancel_icon} alt="" onClick={() => setFilterPop(false)} />
                     <h2 className='text-[#2F2F3F] font-bold text-xl'>Filters</h2>
@@ -129,19 +152,25 @@ const FilterPopUp = () => {
 
                 <div className='px-4 py-2 pb-11 mt-3 bg-white rounded-3xl'>
                     <h2 className='text-lg font-bold text-[#2F2F3F]'>Sort By</h2>
-                    <div className='mt-6 flex items-center justify-between'>
-                        <p className='font-normal text-base text-[#646464]'>Desserts</p>
-                        <input type="radio" name="cuisines" id="" />
-                    </div>
-                    <div className='mt-6 flex items-center justify-between'>
-                        <p className='font-normal text-base text-[#646464]'>Beverages</p>
-                        <input type="radio" name="cuisines" id="" />
-                    </div>
+                    {loading && <div>Loading...</div>}
+                    {error && <div>Error Fetching Cusines</div>}
+                    {cuisines && cuisines?.cuisines_list.map(cuisine => (
+                        <div className='mt-6 flex items-center justify-between' key={cuisine?._id}>
+                            <p className='font-normal text-base text-[#646464]'>{cuisine?.name}</p>
+                            <input type="checkbox" name="cuisines" id="" onChange={(event) => {
+                                if (event.target.checked) {
+                                    dispatch(addCuisine(cuisine?._id)); // Add cuisine when checked
+                                } else {
+                                    dispatch(removeCuisine(cuisine?._id)); // Remove cuisine when unchecked
+                                }
+                            }} />
+                        </div>
+                    ))}
                 </div>
 
                 {/* Apply Button */}
                 <div className='bg-white px-2 py-4 fixed bottom-0 w-full'>
-                    <button className='bg-[#0AB247] text-white flex items-center gap-2 w-full justify-center rounded-3xl p-4'>
+                    <button type='submit' className='bg-[#0AB247] text-white flex items-center gap-2 w-full justify-center rounded-3xl p-4' >
                         Apply
                     </button>
                 </div>

@@ -106,7 +106,8 @@ const Login = () => {
                 const userData = {
                     ...response.data,
                     userDetail: userDetailsResponse?.data?.user,
-                    cart_unique_token: cartUniqueToken
+                    cart_unique_token: cartUniqueToken,
+                    user_id: "674194cbba82cd9b9b72d4ea"
                 }
 
                 dispatch(loginUser(userData))

@@ -18,14 +18,14 @@ const RiderCard = ({ providerInfo }) => {
             const porviderDetail = await post('/api/get_order_detail',
                 {
                     // TODO: Make it dynamic
-                    order_id: "674425e0fc8b8d9b8f48a6f3",
-                    id: "674194cbba82cd9b9b72d4ea",
-                    server_token: "f3K4nQjknO7o7dHMeznDy0MJ6CDPodAI",
-                    type: 7
+                    order_id: "6746c3ad0e3e69d36d540ed7",
+                    // id: "674194cbba82cd9b9b72d4ea",
+                    // server_token: "Qcy3jLI3DLqRl4esMs98p0YjxVXx8TRU",
+                    type: 7,
                     // order_id: userDetail?.order_id,
                     // type: 7,
-                    // user: userDetail?.user_id,
-                    // server_token: userDetail?.token
+                    id: userDetail?.user_id,
+                    server_token: userDetail?.token
                 }
             )
             //    console.log(porviderDetail,"userDetail?.userDetail?.userDetail?.userDetail?.")
@@ -42,13 +42,18 @@ const RiderCard = ({ providerInfo }) => {
 
     useEffect(() => {
         fetchProvider()
+
+        const intervalId = setInterval(fetchProvider, 5000);
+
+        return () => clearInterval(intervalId);
     }, [])
 
     return (
         <div className='border border-[#EEEEEE] rounded-[16px] flex items-center justify-between p-5 mt-5' onClick={() => navigate('/riderinfo')}>
             {loading && <div>Loading....</div>}
             {error && <div>Error fetching details</div>}
-            {provider && <>
+            {provider && provider?.provider_detail.length === 0 && <div>Waiting for acceptance</div>}
+            {provider && provider?.provider_detail.length > 0 && <>
                 <div className='flex items-center gap-2'>
                     <img src={provider?.provider_detail.image_url} alt="" width={'50px'} height={'30px'} style={{ borderRadius: '50px' }} />
                     <div>

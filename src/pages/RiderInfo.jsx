@@ -19,14 +19,14 @@ const RiderInfo = () => {
             const porviderDetail = await post('/api/get_order_detail',
                 {
                     // TODO: Make it dynamic
-                    // order_id: "674425e0fc8b8d9b8f48a6f3",
-                    // id: "674194c6b50f6aecb5b65526",
-                    // server_token: "ewY5XQOjg6HDUfvylySVGdYIOGOSUZlu",
-                    // type: 7
-                    order_id: userDetail?.order_id,
-                    type: 7,
-                    user: userDetail?.user_id,
-                    server_token: userDetail?.token
+                    order_id: "674425e0fc8b8d9b8f48a6f3",
+                    id: "674194cbba82cd9b9b72d4ea",
+                    server_token: "Qcy3jLI3DLqRl4esMs98p0YjxVXx8TRU",
+                    type: 7
+                    // order_id: userDetail?.order_id,
+                    // type: 7,
+                    // user: userDetail?.user_id,
+                    // server_token: userDetail?.token
                 }
             )
             //    console.log(porviderDetail,"userDetail?.userDetail?.userDetail?.userDetail?.")

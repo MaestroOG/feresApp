@@ -6,10 +6,19 @@ import RecentSearch from '../components/SearchComps/RecentSearch'
 import { useNavigate } from 'react-router-dom'
 import { FeresContext } from '../context/FeresContext'
 import FilterPopUp from '../components/SearchComps/FilterPopUp'
+import { usePost } from '../servies/usePost'
+import { useSelector } from 'react-redux'
 
 const SearchPage = () => {
-    const { filterPop, searchTerm, setSearchTerm, searchValue } = useContext(FeresContext)
+    const { setFilterPop, filterPop, searchTerm, setSearchTerm, searchValue } = useContext(FeresContext)
     const [recentSearch, setRecentSearch] = useState([])
+    const [filteredStores, setFilteredStores] = useState(null)
+    const options = useSelector(state => state.filter.options)
+    console.log(options);
+
+
+    const { post, loading, error } = usePost()
+
     const navigate = useNavigate();
     const handleKeyDown = (event) => {
         if (event.key === "Enter") {
@@ -22,6 +31,32 @@ const SearchPage = () => {
             ])
         }
     }
+
+    const filterStores = async () => {
+        setFilterPop(false)
+        try {
+            const data = await post('/api/food/get_stores_nearest_city', {
+                "city_id": "6220e8c72a4f11b34835b2ef",
+                "city": "Kirkos",
+                "country": "Ethiopia",
+                "type": "1",
+                "latitude": 9.002475317959558,
+                "longitude": 38.76962408249495,
+                ...options
+            })
+
+            setFilteredStores(data)
+            console.log(filteredStores);
+
+        } catch (error) {
+            console.error(error.message)
+        }
+    }
+
+    useEffect(() => {
+        filterStores();
+    }, [options])
+
     return (
         <div>
             <div className='w-full flex items-center px-2 bg-white'>
@@ -47,10 +82,10 @@ const SearchPage = () => {
             </div>
 
             <div>
-                <FeaturedRests type={"restaurants"} />
+                <FeaturedRests stores={filteredStores} type={"restaurants"} />
             </div>
             <div>
-                {filterPop ? <FilterPopUp /> : null}
+                {filterPop ? <FilterPopUp onClick={filterStores} /> : null}
             </div>
         </div>
     )
