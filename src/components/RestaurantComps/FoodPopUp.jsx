@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { assets } from '../../assets/assets'
 import { FeresContext } from '../../context/FeresContext'
 import { usePostRequest } from '../../servies/usePostRequest'
@@ -12,7 +12,9 @@ import { usePost } from '../../servies/usePost'
 import { setShowModel } from '../../redux/slices/modelToggleSlice'
 
 const FoodPopUp = ({ img, text, itemFoodPopup }) => {
+
     const loginUser = useSelector((state) => state.userAuth.user);
+    const [details, setDetails] = useState(null)
     const { post } = usePost()
     const closeRef = useRef()
     const handleMinusClick = () => {
@@ -23,6 +25,22 @@ const FoodPopUp = ({ img, text, itemFoodPopup }) => {
 
     const handlePlusClick = () => {
         setOrderCount(orderCount + 1)
+    }
+
+    const getDetail = async () => {
+        try {
+            const data = await post('/api/food/get_item_detial', {
+                item_id: itemFoodPopup._id,
+                user_id: loginUser.user_id,
+            })
+
+            setDetails(data)
+            console.log(details);
+
+
+        } catch (error) {
+            console.error(error.message)
+        }
     }
 
     const handleAddItem = async () => {
@@ -72,6 +90,10 @@ const FoodPopUp = ({ img, text, itemFoodPopup }) => {
 
     console.log(itemFoodPopup, "placing order");
 
+    useEffect(() => {
+        getDetail()
+    }, [])
+
     const { loading, error, response, postRequest } = usePostRequest();
     const dispatch = useDispatch()
     const [orderCount, setOrderCount] = useState(1)
@@ -96,7 +118,7 @@ const FoodPopUp = ({ img, text, itemFoodPopup }) => {
                     <p className='text-[#0AB247] font-bold text-base'>{itemFoodPopup?.price}</p>
                 </div>
                 <p className='text-[#C4C4C4] mt-6 mb-5 text-base'>Add a note</p>
-                <FoodOptions options={itemFoodPopup?.specifications} />
+                <FoodOptions options={details?.item.specifications} />
                 <div className='flex items-center w-full justify-between'>
                     <button className='border border-[#EEEEEE] py-[12px] px-[16px] rounded-3xl flex items-center justify-between w-[45%]'>
                         <img src={assets.minus_sign} alt="" onClick={handleMinusClick} />
