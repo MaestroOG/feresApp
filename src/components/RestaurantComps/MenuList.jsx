@@ -77,7 +77,7 @@ const MenuList = ({ products, addItemInCart }) => {
         <>
             <div className='bg-[#FFD335] p-2 rounded-lg text-[#2F2F3F] text-xs font-medium w-max mt-6 mb-1'>Trending</div>
             {products?.map((item) => (
-                <div key={item._id} onClick={() => {
+               item?.image_url[0] && <div key={item._id} onClick={() => {
                     setFoodPopup(true)
                     handleAddItem(item)
                 }}>

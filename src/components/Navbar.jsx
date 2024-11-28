@@ -11,7 +11,7 @@ const Navbar = () => {
     const dispatch = useDispatch()
     const userDetail = useSelector((state) => state.userAuth.user)
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
-
+    const last_location = localStorage.getItem("currentAddress") 
     const navigate = useNavigate()
     const initialized = useRef(false) // Ref to track if API call was made
 
@@ -64,8 +64,8 @@ const Navbar = () => {
             <div className='flex flex-col items-center justify-center'>
                 <h3 className='text-sm font-medium'>Delivery to</h3>
                 <div className='flex gap-2 items-center'>
-                    <h3 className='text-[#0AB247] text-sm font-medium' onClick={() => { navigate('/selectlocation/locationsearch') }}>
-                        {userDetail?.address || "Elgin St. Celina, Delaware 10299"}
+                    <h3 className='text-[#0AB247] text-sm font-medium' onClick={() => { navigate('/selectlocation') }}>
+                        {last_location?.split(" ")?.slice(0, 4)?.join(" ") || "select location"}
                     </h3>
                     <img src={assets.down_arrow} />
                 </div>
