@@ -126,9 +126,9 @@ const BookRide = () => {
                 <div className='bg-white w-full py-2 mb-1'>
                     <img src={assets.popup_bar} alt="" className='mx-auto' />
                     <img src={assets.cancel_circle} alt="" className='float-right pr-4' onClick={() => setProviderOverview(false)} />
-                    <div className='mt-5 pl-4'>
+                    {/* <div className='mt-5 pl-4'>
                         <h1 className='text-[#2F2F3F] font-medium text-xl'>Rider is heading to {selectedResturant?.store.name}...</h1>
-                    </div>
+                    </div> */}
                     <hr className='my-5 w-[90%] mx-auto' />
                     <RiderCard />
                 </div>

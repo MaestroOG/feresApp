@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setShowModel } from '../../redux/slices/modelToggleSlice';
 import { setSelectedFood } from '../../redux/slices/selectedFoodSlice';
 import { usePost } from '../../servies/usePost';
 import { setCartItemData } from '../../redux/slices/cartDetail';
 import { assets } from '../../assets/assets';
+import { FeresContext } from '../../context/FeresContext';
 
 const TableList = ({ products }) => {
     const dispatch = useDispatch();
@@ -13,6 +14,8 @@ const TableList = ({ products }) => {
     // Redux Selectors
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData);
     const loginUser = useSelector((state) => state.userAuth.user);
+
+    const { setFoodPopup } = useContext(FeresContext)
 
     const handleAddItem = async (item) => {
         const requestBody = {
@@ -66,7 +69,7 @@ const TableList = ({ products }) => {
 
         return (
             <div className="flex overflow-auto" key={item?._id}>
-                <div className="min-w-[170px]">
+                <div className="min-w-[170px]" onClick={() => setFoodPopup(true)}>
                     <div
                         className="relative w-max"
                         onClick={() => {

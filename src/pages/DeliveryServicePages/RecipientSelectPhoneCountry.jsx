@@ -29,12 +29,12 @@ const RecipientSelectPhoneCountry = () => {
     return (
         <>
             <div className='sticky top-0 z-30 bg-white pb-1'>
-                <Container className={'py-5 flex items-center gap-[23vw]'}>
+                <Container className={'py-5 flex items-center gap-[23vw] lg:gap-[36vw]'}>
                     <img src={assets.arrow_left} alt="" className='invert' onClick={() => navigate(-1)} />
                     <h1 className='text-[#2F2F3F] text-xl font-bold'>Select your country</h1>
                 </Container>
-                <Container className={'w-[398px] h-[62px] rounded-xl py- 2 px-5 outline-none bg-[#F8F8F8] mx-auto my-5 transition-all focus-within:bg-white focus-within:border focus-within:border-[#0AB247] flex items-center justify-between'}>
-                    <div className='flex items-center gap-3'>
+                <Container className={'w-[398px] lg:w-full h-[62px] rounded-xl py-2 px-5 outline-none bg-[#F8F8F8] mx-auto my-5 transition-all focus-within:bg-white focus-within:border focus-within:border-[#0AB247] flex items-center justify-between'}>
+                    <div className='flex items-center gap-3 lg:w-full px-4'>
                         <img src={assets.search} alt="" />
                         <input type="text" value={country} onChange={(e) => setCountry(e.target.value)} placeholder='Search for a country' className='bg-transparent w-full h-full outline-none placeholder:text-[#767578]' />
                     </div>

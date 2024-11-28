@@ -176,7 +176,7 @@ const Login = () => {
                     <div className='bg-[#EBF9EE] rounded-full flex items-center justify-center p-2 w-max'>
                         <img src={assets.help_circle_green} alt="" />
                     </div>
-                    <div className='bg-[#EBF9EE] flex items-center justify-center py-2 px-3 gap-2'>
+                    <div className='bg-[#EBF9EE] flex items-center justify-center py-2 px-3 gap-2 rounded-2xl'>
                         <img src={assets.message_translate_green} alt="" />
                         <p className='text-sm text-[#0AB247] font-medium'>English</p>
                         <img src={assets.arrow_down_green} alt="" />
@@ -190,12 +190,12 @@ const Login = () => {
                         <div className='mt-12'>
                             <h2 className='text-[#2F2F3F] text-[26px] font-bold text-center'>Enter your mobile number</h2>
                             <div className='flex items-center gap-3 mt-6'>
-                                <Link to={'/deliveryservice/deliverydetails/recipientdetails/updatephone/selectphonecountry'} className='w-[129px] h-[58px] p-2 rounded-xl bg-[#F8F8F8] flex items-center justify-between'>
+                                <Link to={'/deliveryservice/deliverydetails/recipientdetails/updatephone/selectphonecountry'} className='w-[129px] lg:w-[180px] h-[58px] p-2 rounded-xl bg-[#F8F8F8] flex items-center justify-between'>
                                     <img src={assets.country_flag} alt="" />
                                     <p className='font-medium text-[#2F2F3F]'>+44</p>
                                     <img src={assets.arrow_down} alt="" />
                                 </Link>
-                                <div className='w-[259px] h-[58px] rounded-xl py-2 px-5 bg-[#F8F8F8] focus-within:bg-white focus-within:border focus-within:border-[#0AB247] flex items-center justify-between transition-all'>
+                                <div className='w-[259px] lg:w-full h-[58px] rounded-xl py-2 px-5 bg-[#F8F8F8] focus-within:bg-white focus-within:border focus-within:border-[#0AB247] flex items-center justify-between transition-all'>
                                     <input type="number" value={number} onChange={(e) => setNumber(e.target.value)} className='w-full bg-transparent outline-none h-full' />
                                     {number.length > 0 && <img src={assets.close} alt="" onClick={() => setNumber("")} />}
                                 </div>
@@ -240,7 +240,7 @@ const Login = () => {
                     </div>
                 </div>
 
-                <footer className='text-sm text-[#767578] text-center w-[90%] mx-auto'>
+                <footer className='text-sm text-[#767578] text-center w-[90%] mx-auto lg:w-[57%]'>
                     If you are creating a new account, <span className='underline'>Terms & Conditions</span> and <span className='underline'>Privacy Policy</span> will apply. You can also set up your communication preferences
                 </footer>
             </Container>

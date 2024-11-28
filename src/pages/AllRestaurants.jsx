@@ -6,10 +6,11 @@ import RecommendedRests from '../components/AllRestaurantComps/RecommendedRests'
 import AllRestCard from '../components/AllRestaurantComps/AllRestCard'
 import { FeresContext } from '../context/FeresContext'
 import WaitPopUp from '../components/AllRestaurantComps/WaitPopUp'
+import FilterPopUp from '../components/SearchComps/FilterPopUp'
 
 const AllRestaurants = () => {
 
-    const { visible } = useContext(FeresContext)
+    const { visible, filterPop } = useContext(FeresContext)
 
     return (
         <>
@@ -20,7 +21,8 @@ const AllRestaurants = () => {
                 <RecommendedRests />
                 <AllRestCard />
             </div>
-            {visible ? <WaitPopUp /> : null}
+            {visible && <WaitPopUp />}
+            {filterPop && <FilterPopUp />}
         </>
     )
 }

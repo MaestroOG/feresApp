@@ -170,7 +170,10 @@ const FilterPopUp = ({ onClick }) => {
 
                 {/* Apply Button */}
                 <div className='bg-white px-2 py-4 fixed bottom-0 w-full'>
-                    <button type='submit' className='bg-[#0AB247] text-white flex items-center gap-2 w-full justify-center rounded-3xl p-4' >
+                    <button onClick={(e) => {
+                        setFilterPop(false)
+                        handlePreventDefault(e)
+                    }} type='submit' className='bg-[#0AB247] text-white flex items-center gap-2 w-full justify-center rounded-3xl p-4' >
                         Apply
                     </button>
                 </div>

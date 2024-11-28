@@ -2,12 +2,18 @@ import React, { useContext, useRef, useState } from 'react'
 import { assets } from '../../assets/assets'
 import { FeresContext } from '../../context/FeresContext'
 import { usePostRequest } from '../../servies/usePostRequest'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { addItem } from '../../redux/slices/cartSlice'
+import { setCartItemData } from '../../redux/slices/cartDetail'
 import { FoodOptionCb } from '../FoodComps/FoodOptionCb'
 import ExtraNotePopUp from '../FoodComps/ExtraNotePopUp'
 import FoodOptions from '../FoodComps/FoodOptions'
+import { usePost } from '../../servies/usePost'
+import { setShowModel } from '../../redux/slices/modelToggleSlice'
 
 const FoodPopUp = ({ img, text, itemFoodPopup }) => {
+    const loginUser = useSelector((state) => state.userAuth.user);
+    const { post } = usePost()
     const closeRef = useRef()
     const handleMinusClick = () => {
         if (orderCount > 1) {
@@ -19,14 +25,14 @@ const FoodPopUp = ({ img, text, itemFoodPopup }) => {
         setOrderCount(orderCount + 1)
     }
 
-    const handleAddItem = () => {
+    const handleAddItem = async () => {
         closeRef.current.click()
         if (itemFoodPopup) {
             const requestBody = {
-                cart_unique_token: "i5H3Gacl5CPbcOSY4Wip",
-                user_id: "665ff60f83157cfd6e1b0b48",
-                server_token: "co47wswKut7emZp2qOUWdEWVDbZvVTDl",
-                device_type: "android",
+                cart_unique_token: loginUser.cart_unique_token,
+                user_id: loginUser.user_id,
+                server_token: loginUser.token,
+                device_type: loginUser.device_type,
                 destination: {
                     address: "2Q29+PV, አዲስ አበባ",
                     location: {
@@ -38,7 +44,7 @@ const FoodPopUp = ({ img, text, itemFoodPopup }) => {
                     _id: itemFoodPopup._id,
                     name: itemFoodPopup.name,
                     price: itemFoodPopup.price,
-                    quantity: orderCount,
+                    quantity: 1,
                     specification: itemFoodPopup.specifications || [],
                     unique_id: itemFoodPopup.unique_id,
                     product_id: itemFoodPopup.product_id,
@@ -49,13 +55,17 @@ const FoodPopUp = ({ img, text, itemFoodPopup }) => {
                     total_quantity: itemFoodPopup.total_quantity,
                     sales_commission: 0,
                     shipment_commission: 0,
-                    total_item_price: itemFoodPopup.price * orderCount,
+                    total_item_price: itemFoodPopup.price,
                     store_id: itemFoodPopup.store_id,
-                }
+                },
             };
             postRequest('/api/user/new_add_item_in_cart', requestBody)
             // Dispatch both item and its quantity
             dispatch(addItem({ ...itemFoodPopup, quantity: orderCount }))
+            const userDetailsResponse = await post('/api/user/get_cart', {
+                cart_unique_token: loginUser.cart_unique_token,
+            })
+            dispatch(setCartItemData(userDetailsResponse.cart));
         }
         dispatch(setShowModel(false))
     }
@@ -86,6 +96,7 @@ const FoodPopUp = ({ img, text, itemFoodPopup }) => {
                     <p className='text-[#0AB247] font-bold text-base'>{itemFoodPopup?.price}</p>
                 </div>
                 <p className='text-[#C4C4C4] mt-6 mb-5 text-base'>Add a note</p>
+                <FoodOptions options={itemFoodPopup?.specifications} />
                 <div className='flex items-center w-full justify-between'>
                     <button className='border border-[#EEEEEE] py-[12px] px-[16px] rounded-3xl flex items-center justify-between w-[45%]'>
                         <img src={assets.minus_sign} alt="" onClick={handleMinusClick} />
@@ -99,7 +110,6 @@ const FoodPopUp = ({ img, text, itemFoodPopup }) => {
                     }}>{`Add EBT ${orderCount == 1 ? itemFoodPopup?.price : (itemFoodPopup?.price * orderCount).toFixed(2)}`}</button>
                 </div>
             </div>
-            {/* <FoodOptions /> */}
         </div>
     )
 }

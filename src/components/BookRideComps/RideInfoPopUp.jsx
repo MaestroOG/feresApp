@@ -22,7 +22,11 @@ const RideInfoPopUp = () => {
     const mapRef = useRef(null)
     const [timerData, setTimerData] = useState(null)
 
+    const cartDetails = useSelector((state) => state.cartDetails.cartItemData)
+
+
     const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
+
 
     const callApi = async () => {
         try {
@@ -185,15 +189,22 @@ const RideInfoPopUp = () => {
             </div>
             {/* Order Info */}
             <div className='mt-10 mb-4'>
-                <p className='text-[#2F2F3F] text-xl font-medium'>Order #792SH</p>
-                <div className='flex items-center justify-between mt-4'>
-                    <p className='text-[#2F2F3F] text-base'>1 X 7 Piece Chicken</p>
-                    <p className='text-[#2F2F3F] text-base'>ETB 1,450</p>
+                <p className='text-[#2F2F3F] text-xl font-medium'>Order #{cartDetails?.unique_id}</p>
+                <div className='items-center justify-between mt-4'>
+                    {cartDetails?.stores?.map(items => (
+                        items.items.map(item => (
+                            <div className='flex items-center justify-between mb-3'>
+                                <p className='text-[#2F2F3F] text-base'>{item?.name}</p>
+                                <p className='text-[#2F2F3F] text-base'>ETB {item?.price * item?.quantity}</p>
+                            </div>
+                        ))
+                    ))}
+
                 </div>
                 <hr className='mt-4' />
                 <div className='flex items-center justify-between mt-4'>
                     <h2 className='text-[#2F2F3F] text-xl font-medium'>Total</h2>
-                    <h2 className='text-[#2F2F3F] text-xl font-medium'>ETB280</h2>
+                    <h2 className='text-[#2F2F3F] text-xl font-medium'>ETB{cartDetails?.total_cart_price}</h2>
                 </div>
             </div>
 
@@ -202,11 +213,11 @@ const RideInfoPopUp = () => {
                 <h3 className='text-[#2F2F3F] text-base font-medium'>Payment methods</h3>
                 <div className='flex items-center justify-between mt-5'>
                     <div className='flex items-center gap-2'>
-                        <img src={assets.ebirr_sticker} alt="" />
-                        <p className='font-medium text-sm text-[#2F2F3F]'>E-birr</p>
+                        <img src={cartDetails?.emurabaha_allowed ? assets.ebirr_sticker : assets.cash_sticker} alt="" />
+                        <p className='font-medium text-sm text-[#2F2F3F]'>{cartDetails?.emurabaha_allowed ? 'E-birr' : 'Cash'}</p>
                     </div>
                     <div>
-                        <h3 className='text-base font-medium text-[#2F2F3F]'>ETB280</h3>
+                        <h3 className='text-base font-medium text-[#2F2F3F]'>ETB{cartDetails?.total_cart_price}</h3>
                     </div>
                 </div>
             </div>
@@ -226,7 +237,7 @@ const RideInfoPopUp = () => {
                     <img src={assets.location_green} alt="" />
                     <p className='text-[#0AB247] text-base'>{currentAddress}</p>
                 </div>
-                <img src={assets.edit_02} alt="" />
+                {/* <img src={assets.edit_02} alt="" /> */}
             </div>
 
             {/* Buttons */}
