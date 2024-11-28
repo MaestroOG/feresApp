@@ -29,19 +29,18 @@ const FoodPopUp = ({ img, text, itemFoodPopup }) => {
 
     const getDetail = async () => {
         try {
-            const data = await post('/api/food/get_item_detial', {
+            const data = await post('/get_item_modifier_by_item_id', {
                 item_id: itemFoodPopup._id,
-                user_id: loginUser.user_id,
             })
 
             setDetails(data)
-            console.log(details);
-
-
         } catch (error) {
             console.error(error.message)
         }
     }
+
+    console.log(details);
+
 
     const handleAddItem = async () => {
         closeRef.current.click()
@@ -118,7 +117,7 @@ const FoodPopUp = ({ img, text, itemFoodPopup }) => {
                     <p className='text-[#0AB247] font-bold text-base'>{itemFoodPopup?.price}</p>
                 </div>
                 <p className='text-[#C4C4C4] mt-6 mb-5 text-base'>Add a note</p>
-                <FoodOptions options={details?.item.specifications} />
+                <FoodOptions options={details} />
                 <div className='flex items-center w-full justify-between'>
                     <button className='border border-[#EEEEEE] py-[12px] px-[16px] rounded-3xl flex items-center justify-between w-[45%]'>
                         <img src={assets.minus_sign} alt="" onClick={handleMinusClick} />

@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { assets } from '../../assets/assets'
 import { FoodOptionCb } from './FoodOptionCb'
 
 const FoodOptions = ({ options }) => {
+    const [checkedItems, setCheckedItems] = useState({});
     return (
         <div className={`bg-white mb-4 rounded-3xl`}>
             {/* <div className='flex items-center gap-2 px-4 py-2 mt-2 rounded-2xl'>
@@ -14,8 +15,30 @@ const FoodOptions = ({ options }) => {
                 <img src={assets.alert_02} alt="" />
                 <p className='text-[#FAB11D]'>Choose 2</p>
             </div> */}
-            {options && options?.length > 0 && options?.map(option => (
-                <FoodOptionCb text={option} />
+            {options && options?.data.map(da => (
+                da?.sub_modifiers.map(mod => (
+                    <FoodOptionCb key={mod?._id} text={mod?.name.trim()} price={mod?.price} onChange={(event) => {
+                        const { name, checked } = event.target;
+
+                        // Count the currently checked items
+                        const checkedCount = Object.values(checkedItems).filter(Boolean).length;
+
+                        // If trying to check a box and the limit is reached, do nothing
+                        if (checked && checkedCount >= da.max_modifiers) {
+                            alert(`You can only select up to ${da.max_modifiers} options.`);
+                            return;
+                        }
+
+                        // Update the state
+                        setCheckedItems({
+                            ...checkedItems,
+                            [name]: checked,
+                        });
+                    }}
+                        name={mod?._id}
+                        checked={!!checkedItems[mod?._id]}
+                    />
+                ))
             ))}
         </div>
     )
