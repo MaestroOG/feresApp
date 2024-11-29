@@ -39,8 +39,8 @@ const SelectLocation = () => {
               map: mapInstance,
               draggable: true, // Enable dragging
               icon: {
-                url: assets.bike_icon, // Replace with your icon
-                scaledSize: new google.maps.Size(50, 50),
+                url: assets.map_pointer, // Replace with your icon
+                scaledSize: new google.maps.Size(51, 72, "px", "px"),
               },
             });
 

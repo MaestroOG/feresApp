@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { assets } from '../../assets/assets'
 import { useDispatch, useSelector } from 'react-redux'
 import { setShowModel } from '../../redux/slices/modelToggleSlice'
@@ -59,7 +59,6 @@ const MenuList = ({ products, addItemInCart }) => {
             cart_unique_token: loginUser.cart_unique_token,
         })
         dispatch(setCartItemData(userDetailsResponse.cart))
-
     }
 
     // Helper function to check if an item is in the cart
@@ -71,13 +70,11 @@ const MenuList = ({ products, addItemInCart }) => {
         )
         return cartItem ? cartItem.quantity : null
     }
-
-
     return (
         <>
             <div className='bg-[#FFD335] p-2 rounded-lg text-[#2F2F3F] text-xs font-medium w-max mt-6 mb-1'>Trending</div>
             {products?.map((item) => (
-               item?.image_url[0] && <div key={item._id} onClick={() => {
+                item?.image_url[0] && <div key={item._id} onClick={() => {
                     setFoodPopup(true)
                     handleAddItem(item)
                 }}>

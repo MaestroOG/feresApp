@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Navbar from '../components/Navbar'
 import SearchBar from '../components/SearchBar'
 import WaitWarn from '../components/AllRestaurantComps/WaitWarn'
@@ -7,10 +7,15 @@ import AllRestCard from '../components/AllRestaurantComps/AllRestCard'
 import { FeresContext } from '../context/FeresContext'
 import WaitPopUp from '../components/AllRestaurantComps/WaitPopUp'
 import FilterPopUp from '../components/SearchComps/FilterPopUp'
+import FilterResCard from '../components/AllRestaurantComps/FilterResCard'
 
 const AllRestaurants = () => {
 
-    const { visible, filterPop } = useContext(FeresContext)
+    const { visible, filterPop, restFilter, setRestFilter } = useContext(FeresContext)
+
+    useEffect(() => {
+        setRestFilter(null)
+    }, [])
 
     return (
         <>
@@ -18,8 +23,12 @@ const AllRestaurants = () => {
                 <Navbar />
                 <SearchBar />
                 <WaitWarn />
-                <RecommendedRests />
-                <AllRestCard />
+                {restFilter ? <FilterResCard /> :
+                    <>
+                        <RecommendedRests />
+                        <AllRestCard />
+                    </>
+                }
             </div>
             {visible && <WaitPopUp />}
             {filterPop && <FilterPopUp />}
