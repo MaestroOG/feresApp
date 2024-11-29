@@ -108,6 +108,7 @@ const FoodPopUp = ({ img, text, itemFoodPopup }) => {
         getDetail()
     }, [])
 
+    const { checkedItems } = useContext(FeresContext)
     const { loading, error, response, postRequest } = usePostRequest();
     const dispatch = useDispatch()
     const [orderCount, setOrderCount] = useState(1)
