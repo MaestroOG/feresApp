@@ -10,6 +10,7 @@ import selectedFoodReducer from "./slices/selectedFoodSlice";
 import selectedServiceReducer from "./slices/deliveryServiceSlice";
 import cartDetailsReducer from "./slices/cartDetail";
 import filterReducer from './slices/filterSlice'
+import faqReducer from "./slices/faqSlice"
 
 const store = configureStore({
   reducer: {
@@ -22,7 +23,8 @@ const store = configureStore({
     selectedFood: selectedFoodReducer,
     selectedService: selectedServiceReducer,
     cartDetails: cartDetailsReducer,
-    filter: filterReducer
+    filter: filterReducer,
+    faq:faqReducer
   },
 });
 

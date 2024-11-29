@@ -2,9 +2,26 @@ import React from 'react'
 import { assets } from '../../assets/assets'
 import { supportBtns } from './supportBtns'
 import { useNavigate } from 'react-router-dom'
+import { usePost } from '../../servies/usePost'
+import { useDispatch } from 'react-redux'
+import { setFaqData } from '../../redux/slices/faqSlice'
 
-const HelpSupportMain = () => {
+const HelpSupportMain = ({faqs}) => {
+   const dispatch = useDispatch()
     const navigate = useNavigate()
+    const {post} = usePost()
+const handleSubFaqs =async (item)=>{
+    const response =await post("/api/get_sub_faqs_by_question_id", { faq_id: item._id})
+    if(response.subQuestions.length > 0){
+        navigate(`/support/selectorder/orderissues/${item._id}`)
+    }else{
+        dispatch(setFaqData(item))
+        navigate(`/support/selectorder/orderissues/orderdetails`) 
+    }
+    
+}
+
+
     return (
         <div className='px-4 mt-6'>
             <h3 className='text-[#2F2F3F] text-base font-medium'>Support cases</h3>
@@ -29,9 +46,8 @@ const HelpSupportMain = () => {
             {/* How can we help you? */}
             <div>
                 <h3 className='text-[#2F2F3F] font-medium mb-6'>How can we help you?</h3>
-                {supportBtns.map(btn => (
-                    <div className='flex items-center justify-between my-8'>
-                        <p className='text-[#2F2F3F] text-base'>{btn.text}</p>
+                {faqs?.map((btn) => (<div className='flex items-center justify-between my-8' key={btn._id} onClick={() => handleSubFaqs(btn)}>
+                        <p className='text-[#2F2F3F] text-base'>{btn?.question}</p> 
                         <img src={assets.arrow_right} alt="" />
                     </div>
                 ))}

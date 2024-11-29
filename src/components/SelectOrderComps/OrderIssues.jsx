@@ -1,9 +1,37 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import OrderIssuesNav from './OrderIssuesNav'
 import { assets } from '../../assets/assets'
-import { Link } from 'react-router-dom'
+import { Link,useParams,useNavigate } from 'react-router-dom'
+import { usePost } from '../../servies/usePost'
+import { useDispatch } from 'react-redux'
+import { setFaqData } from '../../redux/slices/faqSlice'
+
+
 
 const OrderIssues = () => {
+    const navigate = useNavigate()
+    const { id } = useParams();
+    const dispatch = useDispatch()
+    const {post} = usePost()
+    const [ subFaqs , setSubFaqs ] = useState([])
+
+    useEffect(()=>{
+        const fetchData = async ()=>{
+            const response = await post('/api/get_sub_faqs_by_question_id', {faq_id : id })
+            setSubFaqs(response.subQuestions);   
+        }
+        if(id){
+            fetchData()
+        }
+    },[id])
+
+    const handleMoveToDetail = (item)=>{
+
+        dispatch(setFaqData(item))
+        navigate('/support/selectorder/orderissues/orderdetails')
+    
+    }
+
     return (
         <div>
             <OrderIssuesNav />
@@ -15,31 +43,11 @@ const OrderIssues = () => {
 
                 {/* Options */}
                 <div>
-                    <Link to={'/support/selectorder/orderissues/orderdetails'} className='flex items-center justify-between py-4'>
-                        <p className='text-[#2F2F3F]'>I was charged twice for the same trip</p>
+                {subFaqs?.map((item)=> <><div className='flex items-center justify-between py-4' onClick={()=>handleMoveToDetail(item)}>
+                        <p className='text-[#2F2F3F]'>{item?.question}</p>
                         <img src={assets.arrow_right} alt="" />
-                    </Link>
-                    <hr className='my-2' />
-                    <Link to={'/support/selectorder/orderissues/orderdetails'} className='flex items-center justify-between py-4'>
-                        <p className='text-[#2F2F3F]'>Issue with a cancellation fee</p>
-                        <img src={assets.arrow_right} alt="" />
-                    </Link>
-                    <hr className='my-2' />
-                    <Link to={'/support/selectorder/orderissues/orderdetails'} className='flex items-center justify-between py-4'>
-                        <p className='text-[#2F2F3F]'>My driver was rude</p>
-                        <img src={assets.arrow_right} alt="" />
-                    </Link>
-                    <hr className='my-2' />
-                    <Link to={'/support/selectorder/orderissues/orderdetails'} className='flex items-center justify-between py-4'>
-                        <p className='text-[#2F2F3F]'>Trip did not happen</p>
-                        <img src={assets.arrow_right} alt="" />
-                    </Link>
-                    <hr className='my-2' />
-                    <Link to={'/support/selectorder/orderissues/orderdetails'} className='flex items-center justify-between py-4'>
-                        <p className='text-[#2F2F3F]'>Other</p>
-                        <img src={assets.arrow_right} alt="" />
-                    </Link>
-                    <hr className='my-2' />
+                    </div>
+                    <hr className='my-2' /></> )}
                 </div>
             </div>
         </div>
