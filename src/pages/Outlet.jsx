@@ -90,6 +90,7 @@ import GroupOrderReview from '../components/GroupOrderComps/GroupOrderReview'
 import GroupOrderCart from '../components/GroupOrderComps/GroupOrderCart'
 import DeliveryRateRider from './DeliveryServicePages/DeliveryRateRider'
 import Login from './Login'
+import OrderIssuesData from '../pages/orderIssuesData'
 
 const Outlet = () => {
     return (
@@ -141,6 +142,7 @@ const Outlet = () => {
                 <Route path='/support' element={<Support />} />
                 <Route path='/support/selectorder' element={<SelectOrder />} />
                 <Route path='/support/selectorder/orderissues/:id' element={<OrderIssues />} />
+                <Route path='/support/selectorder/orderissues' element={<OrderIssuesData />} />
                 <Route path='/support/selectorder/orderissues/orderdetails' element={<IssueDetails />} />
                 <Route path='/support/selectorder/orderissues/orderdetails/sendmessage' element={<IssueDetailMessage />} />
                 <Route path='/supportmessage' element={<SupportMessage />} />
