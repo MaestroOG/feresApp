@@ -5,8 +5,8 @@ const SelectOrderCards = ({ img, name, desc, successStat, isDetail }) => {
     return (
         <Link to={`/support/selectorder/orderissues`} className='flex items-center justify-between px-4 mb-4'>
             <div className='flex items-center gap-3'>
-                <div className='bg-[#F8F8F8] rounded-full p-4'>
-                    <img src={img} alt="" className='w-6' />
+                <div className='bg-[#F8F8F8]'>
+                    <img src={img} alt="" className='w-14' />
                 </div>
                 <div>
                     <h3 className='text-[#2F2F3F] text-base font-medium'>{name}</h3>
