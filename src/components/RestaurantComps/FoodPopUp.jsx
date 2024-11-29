@@ -120,7 +120,7 @@ const FoodPopUp = ({ img, text, itemFoodPopup }) => {
                     setFoodPopup(false)
                 } />
                 <button onClick={() => toggleFavorite()} className='bg-[#FFFFFF33] p-[10px] rounded-[10px] flex items-center justify-center absolute right-[16%] top-[7%]'>
-                    <img src={fvrt && fvrt?.message.startsWith("Item added") ? '/tick-icon.svg' : assets.heart_icon} alt="" />
+                    <img src={fvrt && fvrt?.message.startsWith("Item added") ? '/tick-icon.svg' : fvrt?.message.startsWith("Item removed") ? assets.heart_icon : null} alt="" />
                 </button>
 
             </div>
