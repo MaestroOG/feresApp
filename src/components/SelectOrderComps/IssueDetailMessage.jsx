@@ -2,8 +2,10 @@ import React, { useRef, useState } from 'react'
 import OrderIssuesNav from './OrderIssuesNav'
 import { assets } from '../../assets/assets'
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const IssueDetailMessage = () => {
+    const faqData = useSelector((state)=> state.faq.faqData)
     const [selectedFile, setSelectedFile] = useState(null);
     const fileInputRef = useRef(null);
 
@@ -25,6 +27,8 @@ const IssueDetailMessage = () => {
             console.log("No file selected.");
         }
     };
+
+    
     return (
         <div>
             <OrderIssuesNav />

@@ -140,7 +140,7 @@ const Outlet = () => {
                 <Route path='/detailnotification' element={<DetailNotif />} />
                 <Route path='/support' element={<Support />} />
                 <Route path='/support/selectorder' element={<SelectOrder />} />
-                <Route path='/support/selectorder/orderissues' element={<OrderIssues />} />
+                <Route path='/support/selectorder/orderissues/:id' element={<OrderIssues />} />
                 <Route path='/support/selectorder/orderissues/orderdetails' element={<IssueDetails />} />
                 <Route path='/support/selectorder/orderissues/orderdetails/sendmessage' element={<IssueDetailMessage />} />
                 <Route path='/supportmessage' element={<SupportMessage />} />

@@ -1,7 +1,16 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { assets } from '../../assets/assets'
 
+
+
+
 const ProfileTop = () => {
+    const [userData,] = useState(JSON.parse(localStorage.getItem('userData')))
+
+
+
+
+
     return (
         <div>
             <div className='bg-white rounded-br-2xl rounded-bl-2xl pb-4'>
@@ -11,8 +20,8 @@ const ProfileTop = () => {
                     <img src={assets.edit_profile} alt="" className='absolute bottom-1 right-36 lg:right-[44vw]' />
                 </div>
                 <div className='text-center mt-5'>
-                    <h2 className='text-[#2B2A2F] font-bold text-2xl mb-1'>Abraham John</h2>
-                    <h3 className='text-[#2B2A2F] text-lg'>abrahamjo333@gmail.com</h3>
+                    <h2 className='text-[#2B2A2F] font-bold text-2xl mb-1'>{`${userData?.first_name} ${userData?.last_name}`}</h2>
+                    <h3 className='text-[#2B2A2F] text-lg'>{userData.email}</h3>
                 </div>
             </div>
         </div>
