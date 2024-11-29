@@ -143,7 +143,7 @@ const Order = () => {
 
             {tipBtn === 'other' && <OtherTip />}
             <PaymentMethods img={assets.wallet_01} text={"Payment Methods"} isCard={true} onClick={() => navigate('/selectpayment')} />
-            <PaymentMethods img={assets.discount} text={"Get Discounts"} isDiscount={true} onClick={() => navigate('/getdiscount')} />
+            <PaymentMethods img={assets.discount} text={"Get Discounts"} onClick={() => navigate('/getdiscount')} />
             <TotalBill onDelClick={() => setDelPop(true)} onServiceClick={() => setServicePop(true)} selectedResturant={selectedResturant} order_payment={cartDetail?.order_payment} />
 
             {riderNote && <RiderNote />}

@@ -1,13 +1,15 @@
 import React, { useContext, useEffect } from 'react'
 import { assets } from '../../assets/assets'
 import { FeresContext } from '../../context/FeresContext'
+import { useSelector } from 'react-redux'
 
 const PaymentMethods = ({ img, text, isCard, isDiscount, onClick }) => {
-    const { paymentMethod, discount } = useContext(FeresContext)
+    // const { paymentMethod, discount } = useContext(FeresContext)
+    const paymentMethod = useSelector((state) => state.modelToggle.paymentMethod)
 
     useEffect(() => {
         console.log(paymentMethod);
-        console.log(discount);
+        // console.log(discount);
 
     }, [])
     return (

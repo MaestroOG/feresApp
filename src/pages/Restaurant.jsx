@@ -71,6 +71,9 @@ const Restaurant = () => {
     const [inviteShare, setInviteShare] = useState(false)
     const [isItemAdded, setIsItemAdded] = useState()
     const loginUser = useSelector((state) => state.userAuth.user)
+    const cartDetails = useSelector((state) => state.cartDetails.cartDetails);
+    const selectedRestaurant = useSelector((state) => state.selectedResturant.selectedResturant)
+
 
 
     const [deadline, setDeadline] = useState('any')
@@ -143,9 +146,12 @@ const Restaurant = () => {
         }
     }
 
-    const fetchCart = () => {
-        const cartDetailsResponse = post('/api/user/get_cart', { cart_unique_token: loginUser.cart_unique_token })
+    const fetchCart = async () => {
+        const cartDetailsResponse = await post('/api/user/get_cart', { cart_unique_token: loginUser.cart_unique_token })
+
         dispatch(setCartItemData(cartDetailsResponse.cart))
+        localStorage.setItem("cartData", JSON.stringify(cartDetailsResponse))
+
     }
 
     const fetchMenuItems = async () => {
@@ -224,9 +230,12 @@ const Restaurant = () => {
     //     setIsItemAdded(data)
     // }, [])
 
+
     return (
+
         <>
-            <div className='pb-16'>
+
+            <><div className='pb-16'>
                 <div>
                     {/* Feature */}
                     <div className={`relative`}>
@@ -381,7 +390,8 @@ const Restaurant = () => {
                         )}
                     </div>
                 </div>
-            </div>
+            </div></>
+
             {foodPopup && <FoodPopUp itemFoodPopup={selectedFood} />}
             {firstGroup && <GroupOrder1 setIsOpen={setFirstGroup} onEdit={() => {
                 setFirstGroup(false)
@@ -409,6 +419,7 @@ const Restaurant = () => {
             {/* <TimeUpPopup /> */}
             {/* <DelByHostPopup /> */}
         </>
+
     )
 }
 

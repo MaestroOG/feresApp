@@ -15,10 +15,17 @@ const TotalBill = ({ onDelClick, onServiceClick, selectedResturant, order_paymen
             </div>
             {!deliveryPickup && <div className='flex items-center justify-between mt-2'>
                 <div className='flex items-center gap-2'>
+                    <h3 className='text-[#767578]'>Delivery Time</h3>
+                    <img src={assets.information_circle} alt="" onClick={onDelClick} />
+                </div>
+                <p className='text-[#2F2F3F] font-medium text-base'>{`${smValue?.split(' ')[0]} Mins`}</p>
+            </div>}
+            {!deliveryPickup && <div className='flex items-center justify-between mt-2'>
+                <div className='flex items-center gap-2'>
                     <h3 className='text-[#767578]'>Delivery Fee</h3>
                     <img src={assets.information_circle} alt="" onClick={onDelClick} />
                 </div>
-                <p className='text-[#2F2F3F] font-medium text-base'>{`ETB ${smValue?.split(' ')[0]}`}</p>
+                <p className='text-[#2F2F3F] font-medium text-base'>{`ETB ${30}`}</p>
             </div>}
 
             <div className='flex items-center justify-between mt-2'>
@@ -29,14 +36,21 @@ const TotalBill = ({ onDelClick, onServiceClick, selectedResturant, order_paymen
                 <p className='text-[#2F2F3F] font-medium text-base'>{`ETB${order_payment && order_payment[0]?.total_service_price}`}</p>
             </div>
             {
-                tipBtn === '50' || tipBtn === '80' || tipBtn === 'other' ? <div className='flex items-center justify-between mt-2'>
+                tipBtn === 'other' ? null : tipBtn && tipBtn !== 'no' && <div className='flex items-center justify-between mt-2'>
                     <div className='flex items-center gap-2'>
                         <h3 className='text-[#767578]'>Rider Tip</h3>
                         <img src={assets.information_circle} alt="" />
                     </div>
-                    <p className='text-[#0AB247] font-medium text-base'>ETB{tipBtn === '50' || tipBtn === '80' ? tipBtn : customTip}</p>
-                </div> : null
+                    <p className='text-[#0AB247] font-medium text-base'>ETB{tipBtn}</p>
+                </div>
             }
+            {tipBtn === 'other' && <div className='flex items-center justify-between mt-2'>
+                <div className='flex items-center gap-2'>
+                    <h3 className='text-[#767578]'>Rider Tip</h3>
+                    <img src={assets.information_circle} alt="" />
+                </div>
+                <p className='text-[#0AB247] font-medium text-base'>ETB{customTip}</p>
+            </div>}
             {selectedResturant?.discount &&
                 <div className='flex items-center justify-between mt-2'>
                     <div className='flex items-center gap-2'>

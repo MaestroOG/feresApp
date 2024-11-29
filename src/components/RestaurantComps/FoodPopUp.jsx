@@ -13,6 +13,7 @@ import { setShowModel } from '../../redux/slices/modelToggleSlice'
 
 const FoodPopUp = ({ img, text, itemFoodPopup }) => {
 
+    const [fvrt, setFvrt] = useState(null)
     const loginUser = useSelector((state) => state.userAuth.user);
     const [details, setDetails] = useState(null)
     const { post } = usePost()
@@ -36,6 +37,20 @@ const FoodPopUp = ({ img, text, itemFoodPopup }) => {
             setDetails(data)
         } catch (error) {
             console.error(error.message)
+        }
+    }
+
+    const toggleFavorite = async () => {
+        try {
+            const data = await post('/api/user/toggle_favourite_items', {
+                "user_id": loginUser?.user_id,
+                "item_id": itemFoodPopup?._id,
+                "store_id": itemFoodPopup?.store_id
+            })
+            setFvrt(data)
+        } catch (error) {
+            console.log(error.message);
+
         }
     }
 
@@ -93,6 +108,7 @@ const FoodPopUp = ({ img, text, itemFoodPopup }) => {
         getDetail()
     }, [])
 
+    const { checkedItems } = useContext(FeresContext)
     const { loading, error, response, postRequest } = usePostRequest();
     const dispatch = useDispatch()
     const [orderCount, setOrderCount] = useState(1)
@@ -104,8 +120,8 @@ const FoodPopUp = ({ img, text, itemFoodPopup }) => {
                 <img ref={closeRef} src={assets.cancel_icon} alt="" className='bg-white rounded-full absolute right-[3%] top-[7%]' onClick={() =>
                     setFoodPopup(false)
                 } />
-                <button className='bg-[#FFFFFF33] p-[10px] rounded-[10px] flex items-center justify-center absolute right-[16%] top-[7%]'>
-                    <img src={assets.heart_icon} alt="" />
+                <button onClick={() => toggleFavorite()} className='bg-[#FFFFFF33] p-[10px] rounded-[10px] flex items-center justify-center absolute right-[16%] top-[7%]'>
+                    <img src={fvrt && fvrt?.message.startsWith("Item added") ? '/tick-icon.svg' : fvrt?.message.startsWith("Item removed") ? assets.heart_icon : null} alt="" />
                 </button>
 
             </div>
