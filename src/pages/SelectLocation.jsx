@@ -88,7 +88,7 @@ const SelectLocation = () => {
 
   return (
     <div className="relative">
-      <div className="p-3 rounded-full bg-white w-max absolute top-5 left-3">
+      <div className="p-3 rounded-full bg-white w-max absolute top-5 left-3 z-[10001]">
         <img
           src={assets.arrow_left}
           alt=""
