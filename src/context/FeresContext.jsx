@@ -33,7 +33,7 @@ const FeresContextProvider = (props) => {
     const [searchTerm, setSearchTerm] = useState("")
     const [cartItems, setCartItems] = useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [])
     const [searchValue, setSearchValue] = useState("");
-    const [orderCat, setOrderCat] = useState('Active')
+    const [orderCat, setOrderCat] = useState('Completed')
     const [callOrChat, setCallOrChat] = useState("chat");
     const [callTypePop, setCallTypePop] = useState(false)
     const [deleteGroupOrder, setDeleteGroupOrder] = useState(false)

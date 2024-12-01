@@ -1,34 +1,58 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Menu from '../components/ServiceComps/Menu'
 import OrderPageNav from '../components/OrderPageComps/OrderPageNav';
 import OrderCategoryBtn from '../components/OrderPageComps/OrderCategoryBtn';
 import NoOrderWarn from '../components/OrderPageComps/NoOrderWarn';
 import { FeresContext } from '../context/FeresContext';
 import OrderCards from '../components/OrderPageComps/OrderCards';
+import { usePost } from '../servies/usePost';
 
 const OrderPage = () => {
     const { orderCat } = useContext(FeresContext)
+    const [history, setHistory] = useState(null)
+    const { post, loading, error } = usePost();
+
+    const getOrderHistory = async () => {
+        try {
+            const data = await post('/api/user/order_history', {
+                "start_date": "",
+                "end_date": "",
+                "user_id": "621fc0e0c2545594abfd644e",
+                "server_token": "hJQMifttyk8U6BStRGR4Jnc8HXa3Wv8P",
+                "type": 1
+            })
+
+            setHistory(data)
+            console.log(history)
+        } catch (error) {
+            console.error(error.message)
+        }
+    }
+
+    useEffect(() => {
+        getOrderHistory()
+    }, [])
     return (
-        <div className='h-screen overflow-hidden'>
+        <div className='h-screen pb-24'>
             <OrderPageNav />
             <div className='px-2 mt-5'>
                 <OrderCategoryBtn />
             </div>
             {/* <NoOrderWarn orderCat={orderCat} /> */}
-            <div className='mt-12'>
-                {orderCat === 'Active' ? <>
-                    <OrderCards paidStatus={"Paid"} btnText={"Track Rider"} />
-                    <OrderCards paidStatus={"Not yet"} btnText={"Track Rider"} />
-                </> : orderCat === 'Upcoming' ? <>
-                    <OrderCards paidStatus={"Paid"} btnText={"Edit Order"} />
-                    <OrderCards paidStatus={"Not yet"} btnText={"Edit Order"} />
-                </> : orderCat === 'Completed' ? <>
-                    <OrderCards paidStatus={"Completed"} btnText={"Reorder"} />
-                    <OrderCards paidStatus={"Completed"} btnText={"Reorder"} />
-                </> : orderCat === 'Cancelled' ? <>
-                    <OrderCards paidStatus={"Cancelled"} btnText={"Reorder"} />
-                </> : <NoOrderWarn orderCat={orderCat} />}
-                {/* <NoOrderWarn orderCat={orderCat} /> */}
+            <div className='mt-12' style={{
+                paddingBottom: '40px'
+            }}>
+                {
+                    loading && <div>Loading...</div>
+                }
+                {
+                    error && <div>An Error Occured</div>
+                }
+                {
+                    history && history?.success && history?.order_list.map((order, index) => (
+                        <OrderCards order={order} key={index} />
+                    ))
+                }
             </div>
             <Menu />
         </div>
