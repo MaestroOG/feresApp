@@ -6,19 +6,21 @@ import NoOrderWarn from '../components/OrderPageComps/NoOrderWarn';
 import { FeresContext } from '../context/FeresContext';
 import OrderCards from '../components/OrderPageComps/OrderCards';
 import { usePost } from '../servies/usePost';
+import { useSelector } from 'react-redux';
 
 const OrderPage = () => {
     const { orderCat } = useContext(FeresContext)
     const [history, setHistory] = useState(null)
     const { post, loading, error } = usePost();
+    const user = useSelector(state => state.userAuth.user)
 
     const getOrderHistory = async () => {
         try {
             const data = await post('/api/user/order_history', {
                 "start_date": "",
                 "end_date": "",
-                "user_id": "621fc0e0c2545594abfd644e",
-                "server_token": "hJQMifttyk8U6BStRGR4Jnc8HXa3Wv8P",
+                "user_id": "674194cbba82cd9b9b72d4ea",
+                "server_token": user?.token,
                 "type": 1
             })
 
