@@ -152,7 +152,7 @@ const Outlet = () => {
                 <Route path='/ecommercesearch' element={<EcommerceSearch />} />
                 <Route path='/ecommerce/categories' element={<EcommerceCategories />} />
                 <Route path='/ecommerce/categories/results' element={<EcommerceCategoriesResult />} />
-                <Route path='/ecommerce/mart' element={<EcommerceMart />} />
+                <Route path='/ecommerce/mart/:id' element={<EcommerceMart />} />
                 <Route path='/ecommerce/mart/categories' element={<EcommerceMartCategories />} />
                 <Route path='/ecommerce/mart/martproduct' element={<MartProduct />} />
                 <Route path='/ecommerce/mart/martproduct/item' element={<MartItemDetail />} />

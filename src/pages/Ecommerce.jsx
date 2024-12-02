@@ -16,6 +16,8 @@ const Ecommerce = () => {
     const [activeButtonIndex, setActiveButtonIndex] = useState(0);
     const buttons = ["Popular stores", "Grocery stores", "Specialty stores"];
 
+
+    const [categories, setCategories] = useState(null)
     const fetchStores = async () => {
         const endpoint = "/api/e-commerce/get_ecommerce_stores_list"
         try {
@@ -28,13 +30,25 @@ const Ecommerce = () => {
         }
     }
 
+    const fetchCategories = async () => {
+        const endpoint = "/api/e-commerce/get_main_category_list"
+        try {
+            const data = await post(endpoint, {})
+            setCategories(data)
+            console.log(categories)
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+
     useEffect(() => {
+        fetchCategories()
         fetchStores()
     }, [])
     return (
         <div className='overflow-x-hidden'>
             <Navbar />
-            <SearchBar onClick={() => navigate('/ecommercesearch')} className="bg-white" isFixed={false} />
+            <SearchBar placeholder='Search items' onClick={() => navigate('/ecommercesearch')} className="bg-white" isFixed={false} />
             <div className='text-[#2F2F3F] text-lg font-medium px-4'>
                 Shop now
             </div>
@@ -49,11 +63,11 @@ const Ecommerce = () => {
 
                 <div className='flex flex-row gap-5 overflow-y-scroll explore-card'>
                     {/* Card */}
-                    <ExploreCard name={"Groceries"} img={assets.shopping_bag_01} />
-                    <ExploreCard name={"Bakers"} img={assets.bakery_01} />
-                    <ExploreCard name={"Mini market"} img={assets.store_01} />
-                    <ExploreCard name={"Car"} img={assets.car} />
-                    <ExploreCard name={"Food"} img={assets.food_img} />
+                    {error && <div>An Error Occurred</div>}
+                    {loading && <div>Loading...</div>}
+                    {categories && categories?.success && categories?.categories.map(category => (
+                        <ExploreCard key={category?._id} name={category?.category_name} img={category?.featured_image} />
+                    ))}
                 </div>
             </div>
 
@@ -93,15 +107,15 @@ const Ecommerce = () => {
 
             {/* Shop By Store Type */}
             <Container className={'my-7'}>
-                <h3 className='text-[#2F2F3F] text-lg font-medium my-3'>Shop by store type</h3>
-                <div className='flex items-center gap-4 overflow-auto no-scrollbar sticky top-24 bg-white z-50 pb-3'>
+                <h3 className='text-[#2F2F3F] text-lg font-medium my-3'>More Stores</h3>
+                {/* <div className='flex items-center gap-4 overflow-auto no-scrollbar sticky top-24 bg-white z-50 pb-3'>
                     <button className={`active rounded-full p-3 whitespace-nowrap text-lg`}>{buttons[0]}</button>
                     <button className={`inactive rounded-full p-3 whitespace-nowrap text-lg`}>{buttons[1]}</button>
                     <button className={`inactive rounded-full p-3 whitespace-nowrap text-lg`}>{buttons[2]}</button>
-                </div>
+                </div> */}
                 {loading && <div>Loading...</div>}
                 {error && <div>Error Fetching Stores...</div>}
-                {stores && stores.stores.map((store, index) => (
+                {stores && stores?.stores?.slice(0, 5).map((store, index) => (
                     <PopularStoreCard store={store} key={index} />
                 ))}
             </Container>

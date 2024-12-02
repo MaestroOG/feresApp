@@ -4,18 +4,32 @@ import { useNavigate } from 'react-router-dom'
 import { assets } from '../../assets/assets';
 import { FeresContext } from '../../context/FeresContext';
 import { useDispatch, useSelector } from 'react-redux';
+import { usePost } from '../../servies/usePost';
 
 
 const FeaturedRests = ({ type, stores }) => {
     const searchData = useSelector((state) => state.search.searchData);
 
+    const [searchMarts, setSearchMarts] = useState(null)
     const [filteredStores, setFilteredStores] = useState(null)
     const [searchResult, setSearchResult] = useState(null)
     const [isLoading, setIsLoading] = useState(null)
     const { searchTerm } = useContext(FeresContext)
     const navigate = useNavigate();
 
+    const { post, loading, error } = usePost();
 
+    const fetchMarts = async () => {
+        const endpoint = '/api/e-commerce/search_items_by_name'
+        try {
+            const data = await post(endpoint, {
+                name: searchData
+            })
+            setSearchMarts(data)
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
 
 
     const fetchSearchResult = async () => {
@@ -57,7 +71,12 @@ const FeaturedRests = ({ type, stores }) => {
         console.log(stores)
         console.log(searchData)
         if (searchData.length > 0) {
-            fetchSearchResult();
+            if (type === 'mart') {
+                fetchMarts();
+            }
+            if (type === 'restaurants') {
+                fetchSearchResult()
+            }
         }
     }, [searchData])
     return (
@@ -75,6 +94,11 @@ const FeaturedRests = ({ type, stores }) => {
                 ))
             ))}
 
+            {loading && <div>Loading...</div>}
+            {error && <div>An Error Occurred</div>}
+            {searchMarts && searchMarts?.success && searchMarts?.foundItems?.map(items => (
+                <FeaturedRestsCard onClick={() => navigate(`/ecommerce/mart/${items?.store_id}`)} key={items?._id} title={items?.name} desc={items?.store_name} img={items?.image_url[0]} />
+            ))}
             {/* <FeaturedRestsCard img={assets.featured_rest_img} title={"KFC Eastlight"} desc={"Burger, Fast Food, American..."} userRate={"4.50"} userRateQuantity={"50+"} price={"150.00"} delivery={"40"} onClick={() => navigate('/restaurant')} /> */}
 
         </div>

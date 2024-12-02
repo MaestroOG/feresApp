@@ -11,7 +11,7 @@ const EcommerceSearch = () => {
         <div>
             <div className='w-full flex items-center px-2 bg-white'>
                 {/* <img src={assets.arrow_left} alt="" className='invert' /> */}
-                <SearchBar />
+                <SearchBar placeholder='Search items' />
             </div>
 
             <div className='mt-9 px-4'>

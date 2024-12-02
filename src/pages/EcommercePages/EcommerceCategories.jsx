@@ -1,64 +1,34 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CategoryTop from '../../components/FoodCategoriesComps/CategoryTop'
 import Container from '../../components/Container'
 import { assets } from '../../assets/assets'
 import { useNavigate } from 'react-router-dom'
+import { usePost } from '../../servies/usePost'
 
 const EcommerceCategories = () => {
-    const [activeId, setActiveId] = useState([]);
+    const [activeId, setActiveId] = useState("");
     const navigate = useNavigate();
-    const categories = [
-        {
-            id: 1,
-            name: "Groceries",
-            img: assets.shopping_bag_01
-        },
-        {
-            id: 2,
-            name: "Bakers",
-            img: assets.bakery_01
-        },
-        {
-            id: 3,
-            name: "Mini market",
-            img: assets.store_01
-        },
-        {
-            id: 4,
-            name: "Electronics",
-            img: assets.shopping_bag_01
-        },
-        {
-            id: 5,
-            name: "Gift shops",
-            img: assets.shopping_bag_01
-        },
-        {
-            id: 6,
-            name: "Households",
-            img: assets.shopping_bag_01
-        },
-        {
-            id: 7,
-            name: "Fashion",
-            img: assets.shopping_bag_01
-        },
-        {
-            id: 8,
-            name: "Cosmetics",
-            img: assets.shopping_bag_01
-        },
+    const [categories, setCategories] = useState(null)
 
-    ]
-
+    const { post, loading, error } = usePost()
     const handleClick = (id) => {
-        setActiveId(prevIds =>
-            prevIds.includes(id)
-                ? prevIds.filter(activeId => activeId !== id)
-                : [...prevIds, id]
-        );
+        setActiveId(id);
     };
-    console.log(activeId)
+
+    const fetchAllCats = async () => {
+        const endpoint = "/api/e-commerce/get_main_category_list"
+        try {
+            const data = await post(endpoint, {})
+            setCategories(data)
+            console.log(categories)
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+
+    useEffect(() => {
+        fetchAllCats()
+    }, [])
     return (
         <div>
             <CategoryTop />
@@ -69,12 +39,14 @@ const EcommerceCategories = () => {
                 <p className='text-[#E6352B] font-medium'>Choose one out those categories and apply</p>
             </div>}
             <Container className='grid grid-cols-3 gap-y-5 gap-x-3'>
-                {categories?.map(category => (
-                    <div key={category.id} onClick={() => handleClick(category.id)}>
-                        <div className={`w-28 h-24 px-4 py-8 rounded-2xl flex items-center justify-center ${activeId.includes(category.id) ? 'border border-[#0AB247] bg-[#EBF9EE]' : 'bg-[#F8F8F8]'}`}>
-                            <img src={category.img} alt="" />
+                {loading && <div>Loading...</div>}
+                {error && <div>An Error Occurred</div>}
+                {categories && categories?.success && categories?.categories.map(category => (
+                    <div key={category?._id} onClick={() => handleClick(category?._id)}>
+                        <div className={`w-28 h-24 px-4 py-8 rounded-2xl flex items-center justify-center ${activeId === category?._id ? 'border border-[#0AB247] bg-[#EBF9EE]' : 'bg-[#F8F8F8]'}`}>
+                            <img src={category?.featured_image} className="object-cover rounded-lg" width={"60px"} height={"60px"} />
                         </div>
-                        <h1 className='text-[#2F2F3F] text-center mt-1'>{category.name}</h1>
+                        <h1 className='text-[#2F2F3F] text-center mt-1'>{category?.category_name}</h1>
                     </div>
                 ))}
 
