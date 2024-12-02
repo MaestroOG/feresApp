@@ -54,7 +54,7 @@ const SelectOrder = () => {
             <div>
                 <h1 className='text-[#2F2F3F] text-lg font-medium px-3 my-7'>{`${new Date().getDate()}-${new Date().getUTCMonth()}-${new Date().getFullYear()}`}</h1>
 
-              {history.map((item)=>  <SelectOrderCards img={item?.store_detail?.image_url} name={item?.store_detail?.name} desc={formatDate(item?.created_at)} successStat={true} key={item._id}/> )}
+              {history?.map((item)=>  <SelectOrderCards img={item?.store_detail?.image_url} name={item?.store_detail?.name} desc={formatDate(item?.created_at)} successStat={true} key={item._id}/> )}
             </div>
         </div>
     )

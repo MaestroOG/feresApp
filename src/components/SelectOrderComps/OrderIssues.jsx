@@ -26,7 +26,8 @@ const OrderIssues = () => {
     },[id])
 
     const handleMoveToDetail = (item)=>{
-
+        console.log(item,"faq response ");
+        
         dispatch(setFaqData(item))
         navigate('/support/selectorder/orderissues/orderdetails')
     
