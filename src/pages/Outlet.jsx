@@ -121,7 +121,7 @@ const Outlet = () => {
                 <Route path='/selectpayment/addcard' element={<AddCard />} />
                 <Route path='/selectpayment/addcard/addnewcard' element={<AddNewCardForm />} />
                 <Route path='/getdiscount' element={<GetDiscount />} />
-                <Route path='/feressupport' element={<FeresSupport />} />
+                <Route path='/feressupport/:roomId' element={<FeresSupport />} />
                 <Route path='/bookride' element={<BookRide />} />
                 <Route path='/raterider' element={<RateRider />} />
                 <Route path='/ratefood' element={<RateFood />} />
