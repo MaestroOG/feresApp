@@ -2,10 +2,12 @@ import React, { useRef, useState } from 'react';
 import OrderIssuesNav from './OrderIssuesNav';
 import { assets } from '../../assets/assets';
 import { Link, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
+import { setUserChat } from '../../redux/slices/chatSlice';
 
 const IssueDetailMessage = () => {
+    const dispatch = useDispatch()
     const faqData = useSelector((state) => state.faq.faqData);
     const userDetail = useSelector((state) => state.userAuth.user);
     const [selectedFile, setSelectedFile] = useState(null);
@@ -31,10 +33,11 @@ const IssueDetailMessage = () => {
                 faq_id: faqData?.faq_id, // Use appropriate key for FAQ ID
             });
             let roomId;
-            console.log('response', response.data);
-            if (response.data.chat) {
-                roomId = response.data.chat._id
-            } else {
+            console.log('response',response.data);
+            if ( response.data.chat ){
+                    roomId = response.data.chat._id
+                    dispatch(setUserChat(response.data.chat.message))
+            }else{
                 roomId = response.data.room_id
             }
             navigate(`/feressupport/${roomId}`); // Navigate to chat room
