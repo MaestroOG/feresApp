@@ -9,6 +9,7 @@ import EcommerceAddBasket from './EcommerceAddBasket';
 import { usePost } from '../../servies/usePost';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedResturant } from '../../redux/slices/selectedResturantSlice';
+import { setCartItemData } from '../../redux/slices/cartDetail';
 
 const EcommerceMart = () => {
 
@@ -17,6 +18,7 @@ const EcommerceMart = () => {
     const [scrolled, setScrolled] = useState(false)
     const navigate = useNavigate();
     const loginUser = useSelector((state) => state.userAuth.user)
+    const cartItemData = useSelector((state) => state.cartDetails.cartItemData);
 
 
     const [cartInfo, setCartInfo] = useState(null)
@@ -52,9 +54,19 @@ const EcommerceMart = () => {
                 cart_unique_token: loginUser.cart_unique_token
             })
             setCartInfo(data)
+            dispatch(setCartItemData(data.cart))
         } catch (error) {
             console.log(error.message)
         }
+    }
+
+    const findCartItemQuantity = (item) => {
+        // Find matching item by _id or image_url
+        const cartItem = cartItemData?.stores[0]?.items?.find(
+            (cartItem) =>
+                cartItem._id === item._id
+        )
+        return cartItem ? cartItem.quantity : null
     }
 
     useEffect(() => {
@@ -168,8 +180,33 @@ const EcommerceMart = () => {
 
 
                         <Container className={'flex items-center gap-4 overflow-auto no-scrollbar'}>
+                            {/* <MartItemCard id={item?._id} cart={cartInfo?.cart} onClick={() => navigate(`/ecommerce/mart/martproduct/item/${item?._id}`)} key={item?._id} img={item?.image_url[0] && item?.image_url[0]} name={item?.name} price={item?.price} /> */}
                             {product?.no_items.map(item => (
-                                <MartItemCard id={item?._id} cart={cartInfo?.cart} onClick={() => navigate(`/ecommerce/mart/martproduct/item/${item?._id}`)} key={item?._id} img={item?.image_url[0] && item?.image_url[0]} name={item?.name} price={item?.price} />
+                                <>
+                                    <div key={item?._id} onClick={() => navigate(`/ecommerce/mart/martproduct/item/${item?._id}`)}>
+                                        <div className='bg-[#F1F1F1] rounded-2xl w-[135px] h-[149px] relative flex items-center justify-center'>
+                                            <img src={item?.image_url[0] && item?.image_url[0]} alt="" />
+                                            <div className='bg-white p-3 rounded-full w-max absolute bottom-3 right-1'>
+                                                {findCartItemQuantity(item) > 0 ? (
+                                                    <span className="text-[#0AB247] font-bold">{findCartItemQuantity(item)}</span>
+                                                ) : (
+                                                    <img
+                                                        src={assets.add_green}
+                                                        alt=""
+                                                        onClick={(e) => {
+                                                            e.stopPropagation(); // Prevent parent div click
+                                                            handleAddItem(item);
+                                                        }}
+                                                    />
+                                                )}
+                                            </div>
+                                        </div>
+                                        <div className='my-2'>
+                                            <p className='text-sm font-medium text-[#2F2F3F] w-[135px]'>{item?.name}</p>
+                                            <p className='text-[#0AB247] font-bold text-sm'>EBT {item?.price}</p>
+                                        </div>
+                                    </div>
+                                </>
                             ))}
                         </Container>
                     </>
