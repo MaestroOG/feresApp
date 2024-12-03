@@ -7,12 +7,19 @@ import MartItemCard from './MartItemCard';
 import MartTrendingCard from './MartTrendingCard';
 import EcommerceAddBasket from './EcommerceAddBasket';
 import { usePost } from '../../servies/usePost';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSelectedResturant } from '../../redux/slices/selectedResturantSlice';
 
 const EcommerceMart = () => {
 
+    const dispatch = useDispatch()
     const { id } = useParams()
     const [scrolled, setScrolled] = useState(false)
     const navigate = useNavigate();
+    const loginUser = useSelector((state) => state.userAuth.user)
+
+
+    const [cartInfo, setCartInfo] = useState(null)
 
     const [products, setProducts] = useState(null)
     const [storeInfo, setStoreInfo] = useState(null)
@@ -28,6 +35,7 @@ const EcommerceMart = () => {
                 const storeEndpoint = '/api/food/get_items_by_store_id';
                 const storeData = await post(storeEndpoint, { store_id: productsData.products[0].store_id });
                 setStoreInfo(storeData);
+                dispatch(setSelectedResturant(storeData))
                 console.log(storeData);
             } else {
                 console.log('No products available');
@@ -37,29 +45,17 @@ const EcommerceMart = () => {
         }
     };
 
-    // const fetchProducts = async () => {
-    //     const endpoint = '/api/e-commerce/get_products_in_category'
-    //     try {
-    //         const data = await post(endpoint, {
-    //             category_id: id
-    //         })
-    //         setProducts(data)
-    //     } catch (error) {
-    //         console.log(error.message)
-    //     }
-    // }
-    // const fetchStoreInfo = async () => {
-    //     const endpoint = '/api/food/get_items_by_store_id'
-    //     try {
-    //         const data = await post(endpoint, {
-    //             store_id: products?.products[0].store_id,
-    //         })
-    //         setStoreInfo(data)
-    //         console.log(storeInfo)
-    //     } catch (error) {
-    //         console.log(error.message)
-    //     }
-    // }
+    const getCart = async () => {
+        const endpoint = '/api/user/get_cart';
+        try {
+            const data = await post(endpoint, {
+                cart_unique_token: loginUser.cart_unique_token
+            })
+            setCartInfo(data)
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
 
     useEffect(() => {
         const handleScroll = () => {
@@ -80,13 +76,9 @@ const EcommerceMart = () => {
     }, []);
 
 
-    // const orderFetch = async () => {
-    //     await fetchProducts();
-    //     await fetchStoreInfo();
-    // }
-
     useEffect(() => {
         fetchProductsAndStoreInfo()
+        getCart()
     }, [])
     return (
         <div className='pb-28'>
@@ -126,7 +118,7 @@ const EcommerceMart = () => {
                         </div>
                         <div className='flex items-center gap-1' onClick={() => navigate('/review')}>
                             <img src={assets.star} alt="" />
-                            <Link to={'/review'} className='text-base font-normal whitespace-nowrap'>{storeInfo?.store?.user_rate} ({storeInfo?.store?.user_rate_count} reviews)</Link>
+                            <Link to={`/review/${storeInfo?.store?._id}`} className='text-base font-normal whitespace-nowrap'>{storeInfo?.store?.user_rate} ({storeInfo?.store?.user_rate_count} reviews)</Link>
                         </div>
                     </div>
 
@@ -177,7 +169,7 @@ const EcommerceMart = () => {
 
                         <Container className={'flex items-center gap-4 overflow-auto no-scrollbar'}>
                             {product?.no_items.map(item => (
-                                <MartItemCard key={item?._id} img={item?.image_url[0] && item?.image_url[0]} name={item?.name} price={item?.price} />
+                                <MartItemCard id={item?._id} cart={cartInfo?.cart} onClick={() => navigate(`/ecommerce/mart/martproduct/item/${item?._id}`)} key={item?._id} img={item?.image_url[0] && item?.image_url[0]} name={item?.name} price={item?.price} />
                             ))}
                         </Container>
                     </>
@@ -212,7 +204,7 @@ const EcommerceMart = () => {
 
             {/* Add To Basket */}
 
-            <EcommerceAddBasket to={'/cart/3'} />
+            <EcommerceAddBasket to={`/ecommerce/cart/${id}`} />
         </div>
     )
 }

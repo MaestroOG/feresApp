@@ -1,13 +1,92 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Container from '../../components/Container'
 import { assets } from '../../assets/assets'
+import { usePost } from '../../servies/usePost'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const MartItemDetail = () => {
+    const { id } = useParams()
+    const { post, loading, error } = usePost()
+    const [itemDetail, setItemDetail] = useState(null)
+    const [quantity, setQuantity] = useState(1)
+    const navigate = useNavigate()
+
+    const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
+    const loginUser = useSelector((state) => state.userAuth.user)
+
+
+    const fetchItemDetail = async () => {
+        const endpoint = '/api/e-commerce/get_item_detial'
+        try {
+            const data = await post(endpoint, {
+                item_id: id
+            })
+            setItemDetail(data)
+            console.log(itemDetail)
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+
+    const removeNextFourAfterAmpersand = (inputString) => {
+        return inputString.replace(/&.{4}/g, ''); // Match '&' followed by any 4 characters and replace it with an empty string
+    };
+
+    const addItemInCart = async () => {
+        const endpoint = '/api/user/new_add_item_in_cart'
+        try {
+            const data = await post(endpoint, {
+                cart_unique_token: loginUser.cart_unique_token,
+                user_id: loginUser.user_id,
+                // user_id: "621fc0e0c2545594abfd644e",
+                server_token: loginUser.token,
+                // server_token: "0Iqb69j2rP7x4yY7ZGeRst5pfnyp8vfZ",
+                device_type: loginUser.device_type,
+                destination: {
+                    address: "",
+                    location: {
+                        lat: 9.001826571711009,
+                        lng: 38.76956474035978
+                    }
+                },
+                item: {
+                    _id: itemDetail?.item?._id,
+                    name: itemDetail?.item?.name,
+                    price: itemDetail?.item?.price,
+                    quantity: quantity,
+                    specification: itemDetail?.item?.specifications || [],
+                    unique_id: itemDetail?.item?.unique_id,
+                    product_id: itemDetail?.item?.product_id,
+                    image_url: itemDetail?.item.image_url ? itemDetail?.item.image_url[0] : "",
+                    is_promotion_available: itemDetail?.item?.is_promotion || 0,
+                    order_item_description: itemDetail?.item.details || "",
+                    promotion: itemDetail?.item.promotion || 0,
+                    total_quantity: itemDetail?.item.total_quantity,
+                    sales_commission: itemDetail?.product?.sales_commission || 0,
+                    shipment_commission: 0,
+                    total_item_price: itemDetail?.item.price * quantity,
+                    store_id: itemDetail?.item.store_id,
+                }
+            })
+
+            if (data.success) {
+                navigate(-1)
+            }
+
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+
+    useEffect(() => {
+        fetchItemDetail()
+    }, [])
     return (
         <div>
             {/* Top Bar */}
             <Container className={'py-5 flex items-center justify-between'}>
-                <img src={assets.arrow_left} alt="" className='invert' />
+                <img src={assets.arrow_left} alt="" className='invert' onClick={() => navigate(-1)} />
                 <h1 className='text-[#2F2F3F] text-[23px] font-bold'>Product details</h1>
                 <button className='border border-[#EEEEEE] rounded-xl p-2'>
                     <img src={assets.favourite} alt="" />
@@ -15,40 +94,42 @@ const MartItemDetail = () => {
             </Container>
 
             {/* Details */}
-            <Container>
+            {loading && <div>Loading...</div>}
+            {error && <div>An Error Ocurred</div>}
+            {itemDetail && itemDetail?.success && <Container>
                 <div className='bg-[#F1F1F1] rounded-2xl'>
-                    <img src={assets.funtuna_egg_featured} alt="" />
+                    <img src={itemDetail?.item?.image_url[0] && itemDetail?.item?.image_url[0]} className="object-cover rounded-2xl" width={"398px"} height={"297px"} />
                 </div>
 
 
                 {/* Detail Text */}
                 <div className='flex items-center justify-between mt-5'>
-                    <h1 className='text-[#2F2F3F] text-2xl font-medium'>Funtuna Eggs x30</h1>
-                    <div className='flex items-center gap-2'>
+                    <h1 className='text-[#2F2F3F] text-2xl font-medium'>{itemDetail?.item?.name}</h1>
+                    {/* <div className='flex items-center gap-2'>
                         <img src={assets.star} alt="" />
                         <p className='text-lg font-medium text-[#2F2F3F]'>4.5 <span className='text-[#CCCCCC]'>(3)</span></p>
-                    </div>
+                    </div> */}
                 </div>
 
                 {/* Price */}
                 <div className='flex items-center gap-2 my-3'>
-                    <p className='text-[#0AB247] text-lg font-bold'>EBT 140.00</p>
+                    <p className='text-[#0AB247] text-lg font-bold'>EBT {itemDetail?.item?.price}.00</p>
                     <p className='text-sm text-[#767578]'>(Incl. VAT)</p>
                 </div>
 
                 {/* Description */}
-                <div className='text-[#767578]'>Lorem ipsum dolor sit amet consectetur. amet amet volutpat aliquam adipiscing id dignissim. Id non lectus cras imperdiet faucibus semper enim.</div>
+                <div className='text-[#767578]'>{removeNextFourAfterAmpersand(itemDetail?.item?.details.replace(/<[^>]+>/g, ''))}</div>
 
                 {/* Item */}
                 <div className='my-3 text-[#0AB247] font-medium'>
-                    Egg x30
+                    {itemDetail?.item?.name} x{itemDetail?.item?.total_quantity}
                 </div>
 
                 {/* Delivery Info */}
-                <div className='flex items-center gap-2 my-5'>
+                {/* <div className='flex items-center gap-2 my-5'>
                     <img src={assets.delivery_truck_green} alt="" />
                     <p className='text-[#2F2F3F]'>Ready for delivery by 05 April order in 19hrs 58mins</p>
-                </div>
+                </div> */}
 
                 {/* Extra Note (Optional) */}
                 <div>
@@ -57,21 +138,23 @@ const MartItemDetail = () => {
                         <textarea name="" id="" className='w-full border-none outline-none h-full overflow-auto bg-transparent placeholder:text-[#767578]' placeholder='Leave a note for the store'></textarea>
                     </div>
                 </div>
-            </Container>
+            </Container>}
 
 
             {/* Bottom Buttons */}
             <Container className={'py-4 fixed w-full bottom-0 left-0 bg-white flex items-center justify-between gap-3 rounded-[13px]'}>
                 <div className='w-[158px] h-[58px] flex items-center justify-between border border-[#EEEEEE] px-3 rounded-2xl'>
-                    <img src={assets.minus_sign} alt="" />
+                    <img src={assets.minus_sign} alt="" onClick={() => {
+                        if (quantity > 1) setQuantity(prev => prev - 1)
+                    }} />
                     <img src={assets.separator} alt="" className='h-[57px]' />
-                    <p className='font-medium text-[#2F2F3F]'>1</p>
+                    <p className='font-medium text-[#2F2F3F]'>{quantity}</p>
                     <img src={assets.separator} alt="" className='h-[57px]' />
-                    <img src={assets.plus_sign} alt="" />
+                    <img src={assets.plus_sign} alt="" onClick={() => setQuantity(prev => prev + 1)} />
                 </div>
 
                 <div className='w-1/2'>
-                    <button className='text-white font-medium text-lg flex items-center justify-center gap-2 bg-[#0AB247] w-full p-4 rounded-lg'>
+                    <button onClick={addItemInCart} className='text-white font-medium text-lg flex items-center justify-center gap-2 bg-[#0AB247] w-full p-4 rounded-lg'>
                         <img src={assets.shopping_basket} alt="" className='invert' />
                         <p>Add To Basket</p>
                     </button>
