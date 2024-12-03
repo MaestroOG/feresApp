@@ -10,6 +10,8 @@ const FeresChats = () => {
     const [newMessage, setNewMessage] = useState('');
     const [reciveMsg, setReciveMsg] = useState([])
 
+
+
     useEffect(() => {
         if (roomId) {
             console.log('Attempting to connect to socket...');
@@ -48,7 +50,6 @@ const FeresChats = () => {
 
         if (newMessage.trim()) {
             const message = { text: newMessage, sender: 'user' };
-            console.log(message,"new message");
             const payload = {
                 room_id: roomId, // Use the roomId from the route params
                 message: [{ text: newMessage, sender: 'user' }], // Wrap the message in an array
@@ -73,26 +74,24 @@ const FeresChats = () => {
         }
     };
 
-    // useEffect(() => {
-    //     socket.on("receiveMessage", (chatMessage) => {
-    //         console.log(chatMessage,"dcdsf");
-            
-    //         setReciveMsg([...reciveMsg, chatMessage]);
-    //     });
-    //   }, [messages]);
+    socket.on('message', (msg)=>{
 
-    //   console.log(reciveMsg,'here is revice msgs ');
+        setMessages([...messages, msg[0]])
+    })
+
+
+     
+console.log(messages, "reciver msgs");
+
       
 
     return (
         <div className='bg-[#F8F8F8] w-screen h-[90vh] flex flex-col justify-between py-5'>
-            {/* Chat Messages */}
             <div className='flex-1 overflow-auto px-4'>
-            {/* <FeresChatRec text={'hello'}/> */}
+
             {messages.map((msg, index) => (
-            <FeresChatTabs text={msg.text} key={index}/>
-        ))}
-               
+               msg.sender == "user" ? <FeresChatTabs text={msg.text} key={index}/> : <FeresChatRec text={msg?.text} key={index}/>
+        ))}           
             </div>
 
             {/* Message Input */}
