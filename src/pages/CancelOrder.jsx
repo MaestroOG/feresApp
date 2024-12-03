@@ -20,7 +20,7 @@ const CancelOrder = () => {
     const [successPop, setSuccessPop] = useState(false)
 
     const cancelOrder = async () => {
-        const reponse = await post('/api/user/user_reject_order', {
+        await post('/api/user/user_reject_order', {
             user_id: userDetail.user_id,
             order_id: userDetail.order_id,
             server_token: userDetail?.token,
@@ -28,8 +28,6 @@ const CancelOrder = () => {
             emurabaha_cancel_request: false,
             cancel_reason: "cancelReason dont want to cahncel"
         })
-
-
     }
 
     return (

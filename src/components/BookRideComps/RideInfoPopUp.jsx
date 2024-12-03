@@ -21,6 +21,7 @@ const RideInfoPopUp = () => {
     const navigate = useNavigate();
     const mapRef = useRef(null)
     const [timerData, setTimerData] = useState(null)
+    const [uniquOrderId, setUniqueOrderId] = useState(null)
 
     const cartDetails = useSelector((state) => state.cartDetails.cartItemData)
 
@@ -71,6 +72,7 @@ const RideInfoPopUp = () => {
                 setProgress(response?.order_status)
             }
 
+            setUniqueOrderId(data.unique_id)
             setTimerData(data.kitchen_time)
 
         } catch (error) {
@@ -189,13 +191,18 @@ const RideInfoPopUp = () => {
             </div>
             {/* Order Info */}
             <div className='mt-10 mb-4'>
-                <p className='text-[#2F2F3F] text-xl font-medium'>Order #{cartDetails?.unique_id}</p>
-                <div className='items-center justify-between mt-4'>
+                <p className='text-[#2F2F3F] text-xl font-medium'>Order #{uniquOrderId && uniquOrderId}</p>
+                <div className='mt-4'>
                     {cartDetails?.stores?.map(items => (
                         items.items.map(item => (
-                            <div className='flex items-center justify-between mb-3'>
-                                <p className='text-[#2F2F3F] text-base'>{item?.name}</p>
-                                <p className='text-[#2F2F3F] text-base'>ETB {item?.price * item?.quantity}</p>
+                            <div className='flex items-center justify-between gap-2'>
+                                <div className='flex items-center gap-2'>
+                                    <p className='text-[#2F2F3F] text-base'>{item?.quantity} X</p>
+                                    <p className='text-[#2F2F3F] text-base'>{item?.name}</p>
+                                </div>
+                                <div className='flex items-center justify-between mb-3'>
+                                    <p className='text-[#2F2F3F] text-base'>ETB {item?.price * item?.quantity}</p>
+                                </div>
                             </div>
                         ))
                     ))}

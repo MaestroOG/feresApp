@@ -91,6 +91,7 @@ import GroupOrderCart from '../components/GroupOrderComps/GroupOrderCart'
 import DeliveryRateRider from './DeliveryServicePages/DeliveryRateRider'
 import Login from './Login'
 import OrderIssuesData from '../pages/orderIssuesData'
+import EcommerceCart from './EcommercePages/EcommerceCart'
 
 const Outlet = () => {
     return (
@@ -152,11 +153,12 @@ const Outlet = () => {
                 <Route path='/ecommercesearch' element={<EcommerceSearch />} />
                 <Route path='/ecommerce/categories' element={<EcommerceCategories />} />
                 <Route path='/ecommerce/categories/results' element={<EcommerceCategoriesResult />} />
-                <Route path='/ecommerce/mart' element={<EcommerceMart />} />
+                <Route path='/ecommerce/mart/:id' element={<EcommerceMart />} />
                 <Route path='/ecommerce/mart/categories' element={<EcommerceMartCategories />} />
                 <Route path='/ecommerce/mart/martproduct' element={<MartProduct />} />
-                <Route path='/ecommerce/mart/martproduct/item' element={<MartItemDetail />} />
+                <Route path='/ecommerce/mart/martproduct/item/:id' element={<MartItemDetail />} />
                 <Route path='/ecommerce/mart/martallproducts' element={<MartAllProducts />} />
+                <Route path='/ecommerce/cart/:id' element={<EcommerceCart />} />
 
                 {/* Ecommerce Electronic Store Routes */}
                 <Route path='/ecommerce/electronic' element={<EcommerceElectronics />} />

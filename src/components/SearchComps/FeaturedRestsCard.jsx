@@ -12,17 +12,17 @@ const FeaturedRestsCard = ({ onClick, img, title, desc, userRate, userRateQuanti
             <div>
                 <h3 className='text-[14px] font-medium'>{title}</h3>
                 <p className='text-[10px] text-[#979797]'>{desc}</p>
-                <div className='flex items-center gap-1 mt-1'>
+                {userRate && <div className='flex items-center gap-1 mt-1'>
                     <img src={assets.star} alt="" />
                     <div>
                         <p className='text-[10px]'>{userRate} <span className='text-[#979797]'>({userRateQuantity})</span></p>
                     </div>
-                </div>
+                </div>}
                 <div className='flex items-center gap-3'>
-                    <div className='flex items-center mt-[6px] gap-1 text-[#2F2F3FCC]'>
+                    {delivery && <div className='flex items-center mt-[6px] gap-1 text-[#2F2F3FCC]'>
                         <img src={assets.clock_img} alt="" />
                         <p className='text-[11px]'>Within {delivery} mins</p>
-                    </div>
+                    </div>}
                     {price && <div className='flex items-center mt-[6px] gap-1 text-[#2F2F3FCC]'>
                         <img src={assets.scooter_img} alt="" />
                         <p className='text-[11px]'>EBT {price}</p>

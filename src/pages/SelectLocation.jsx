@@ -39,8 +39,8 @@ const SelectLocation = () => {
               map: mapInstance,
               draggable: true, // Enable dragging
               icon: {
-                url: assets.bike_icon, // Replace with your icon
-                scaledSize: new google.maps.Size(50, 50),
+                url: assets.map_pointer, // Replace with your icon
+                scaledSize: new google.maps.Size(51, 72, "px", "px"),
               },
             });
 
@@ -88,7 +88,7 @@ const SelectLocation = () => {
 
   return (
     <div className="relative">
-      <div className="p-3 rounded-full bg-white w-max absolute top-5 left-3">
+      <div className="p-3 rounded-full bg-white w-max absolute top-5 left-3 z-[10001]">
         <img
           src={assets.arrow_left}
           alt=""

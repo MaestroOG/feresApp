@@ -4,7 +4,6 @@ import TipRiderBtn from './TipRiderBtn'
 import { FeresContext } from '../../context/FeresContext'
 
 const TipRider = ({ tips_list }) => {
-    const tipBtnTexts = ["ETB 50", "ETB 80", "Others"]
     const { tipBtn, setTipBtn, setTipRidePop } = useContext(FeresContext)
     return (
         <div className='px-4 mt-5 pb-5'>

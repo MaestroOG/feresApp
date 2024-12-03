@@ -4,6 +4,7 @@ import FeresChatTabs from './FeresChatTabs';
 import FeresChatRec from './FeresChatRec';
 import socket from '../../utilities/socket';
 import { useSelector } from 'react-redux';
+import { assets } from '../../assets/assets';
 
 const FeresChats = () => {
     const { roomId } = useParams(); // Get roomId from route
@@ -60,11 +61,11 @@ const previousChats = useSelector((state)=> state.chat.userChat)
             };
             // Send the message to the server
 
-           
+
 
 
             socket.emit('sendMessage', payload, (ack) => {
-                
+
                 if (ack) {
                     console.log('Message sent successfully:', ack);
                 } else {
@@ -107,13 +108,14 @@ const previousChats = useSelector((state)=> state.chat.userChat)
         <div className='bg-[#F8F8F8] w-screen h-[90vh] flex flex-col justify-between py-5'>
             <div className='flex-1 overflow-auto px-4'>
 
+
             {messages.map((msg, index) => (
                msg.sender == "user" ? <div key={index}><FeresChatTabs text={msg.text} /></div> : <FeresChatRec text={msg?.text} key={index}/>
-        ))}           
+        ))}   
             </div>
 
             {/* Message Input */}
-            <div className='w-full bg-white p-4 flex items-center gap-3'>
+            {/* <div className='w-full bg-white p-4 flex items-center gap-3'>
                 <input
                     type="text"
                     placeholder="Type a message..."
@@ -126,6 +128,25 @@ const previousChats = useSelector((state)=> state.chat.userChat)
                     className="bg-[#0AB247] text-white rounded-full px-4 py-2 text-lg"
                 >
                     Send
+                </button>
+            </div> */}
+
+            <div className='flex items-center justify-center gap-[10px] fixed bottom-[2%] left-[0%] w-full bg-white' style={{
+                paddingTop: '20px'
+            }}>
+                <div className='flex items-center lg:justify-between gap-2 bg-[#F8F8F8] rounded-[13px] px-4 py-[20px] w-[318px] lg:w-full lg:px-8'>
+                    <div className='flex items-center gap-2'>
+                        <img src={assets.neutral_emoji} alt="" />
+                        <input type="text" value={newMessage}
+                            onChange={(e) => setNewMessage(e.target.value)} placeholder='Type a message ...' className='border-none outline-none bg-[#F8F8F8]' />
+                    </div>
+                    <div className='flex items-center gap-1'>
+                        <img src={assets.attachment_02} alt="" />
+                        <img src={assets.camera_02} alt="" />
+                    </div>
+                </div>
+                <button className='bg-[#0AB247] rounded-full p-3' onClick={handleSendMessage}>
+                    <img src={assets.sent_icon} alt="" />
                 </button>
             </div>
         </div>

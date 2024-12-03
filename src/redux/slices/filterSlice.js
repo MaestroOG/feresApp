@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     options: {
         rating: false,
-        newMerchants: true,
+        newMerchants: false,
         delivery_time: false,
         cuisines: []
     },

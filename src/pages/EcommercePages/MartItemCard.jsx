@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { assets } from '../../assets/assets'
 
-const MartItemCard = ({ img, name, price }) => {
+const MartItemCard = ({ img, name, price, onClick, cart, id }) => {
     return (
-        <div>
+        <div onClick={onClick}>
             <div className='bg-[#F1F1F1] rounded-2xl w-[135px] h-[149px] relative flex items-center justify-center'>
                 <img src={img} alt="" />
                 <div className='bg-white p-3 rounded-full w-max absolute bottom-3 right-1'>

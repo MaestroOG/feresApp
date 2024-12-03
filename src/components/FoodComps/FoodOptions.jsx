@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { assets } from '../../assets/assets'
 import { FoodOptionCb } from './FoodOptionCb'
+import { FeresContext } from '../../context/FeresContext'
 
 const FoodOptions = ({ options }) => {
-    const [checkedItems, setCheckedItems] = useState({});
+    const { checkedItems, setCheckedItems } = useContext(FeresContext)
     return (
         <div className={`bg-white mb-4 rounded-3xl`}>
             {/* <div className='flex items-center gap-2 px-4 py-2 mt-2 rounded-2xl'>
@@ -32,7 +33,7 @@ const FoodOptions = ({ options }) => {
                         // Update the state
                         setCheckedItems({
                             ...checkedItems,
-                            [name]: checked,
+                            [name]: checked
                         });
                     }}
                         name={mod?._id}

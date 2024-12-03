@@ -33,7 +33,7 @@ const FeresContextProvider = (props) => {
     const [searchTerm, setSearchTerm] = useState("")
     const [cartItems, setCartItems] = useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [])
     const [searchValue, setSearchValue] = useState("");
-    const [orderCat, setOrderCat] = useState('Active')
+    const [orderCat, setOrderCat] = useState('Completed')
     const [callOrChat, setCallOrChat] = useState("chat");
     const [callTypePop, setCallTypePop] = useState(false)
     const [deleteGroupOrder, setDeleteGroupOrder] = useState(false)
@@ -50,6 +50,8 @@ const FeresContextProvider = (props) => {
     const [delItemPhoto, setDelItemPhoto] = useState(null)
     const [deliveryPayment, setDeliveryPayment] = useState("")
 
+    const [checkedItems, setCheckedItems] = useState({});
+    const [restFilter, setRestFilter] = useState(null)
 
     const handlePaymentChange = (e) => {
         setDeliveryPayment(e.target.value)
@@ -108,6 +110,8 @@ const FeresContextProvider = (props) => {
     }
 
     const value = {
+        checkedItems, setCheckedItems,
+        restFilter, setRestFilter,
         deliveryPayment,
         setDeliveryPayment,
         handlePaymentChange,

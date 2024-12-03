@@ -58,7 +58,7 @@ const IssueDetailMessage = () => {
                     <textarea
                         placeholder='Describe your issue'
                         className='w-full h-full overflow-auto text-[#767578] text-lg bg-transparent border-none outline-none'
-                        onChange={(e)=>setInputMsg(e.target.value)}
+                        onChange={(e) => setInputMsg(e.target.value)}
                     ></textarea>
                     <input
                         type="file"
@@ -108,9 +108,8 @@ const IssueDetailMessage = () => {
             <button
                 onClick={handleSendMessage}
                 disabled={loading}
-                className={`fixed bottom-0 left-0 w-full px-3 py-5 ${
-                    loading ? 'bg-gray-400' : 'bg-[#0AB247]'
-                } text-white text-lg font-medium rounded-full`}
+                className={`fixed bottom-3 left-2 w-[97%] mx-auto px-3 py-5 ${loading ? 'bg-gray-400' : 'bg-[#0AB247]'
+                    } text-white text-lg font-medium rounded-full`}
             >
                 {loading ? 'Loading...' : 'Send message'}
             </button>
