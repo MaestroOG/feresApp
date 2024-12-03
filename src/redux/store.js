@@ -11,6 +11,7 @@ import selectedServiceReducer from "./slices/deliveryServiceSlice";
 import cartDetailsReducer from "./slices/cartDetail";
 import filterReducer from './slices/filterSlice'
 import faqReducer from "./slices/faqSlice"
+import chatReducer from "./slices/chatSlice"
 
 const store = configureStore({
   reducer: {
@@ -24,7 +25,8 @@ const store = configureStore({
     selectedService: selectedServiceReducer,
     cartDetails: cartDetailsReducer,
     filter: filterReducer,
-    faq:faqReducer
+    faq:faqReducer,
+    chat:chatReducer
   },
 });
 
