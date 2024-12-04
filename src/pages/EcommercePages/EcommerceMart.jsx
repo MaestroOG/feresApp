@@ -3,8 +3,6 @@ import { assets } from '../../assets/assets'
 import Container from '../../components/Container';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import MartCategoryCard from './MartCategoryCard';
-import MartItemCard from './MartItemCard';
-import MartTrendingCard from './MartTrendingCard';
 import EcommerceAddBasket from './EcommerceAddBasket';
 import { usePost } from '../../servies/usePost';
 import { useDispatch, useSelector } from 'react-redux';
@@ -190,14 +188,7 @@ const EcommerceMart = () => {
                                                 {findCartItemQuantity(item) > 0 ? (
                                                     <span className="text-[#0AB247] font-bold">{findCartItemQuantity(item)}</span>
                                                 ) : (
-                                                    <img
-                                                        src={assets.add_green}
-                                                        alt=""
-                                                        onClick={(e) => {
-                                                            e.stopPropagation(); // Prevent parent div click
-                                                            handleAddItem(item);
-                                                        }}
-                                                    />
+                                                    null
                                                 )}
                                             </div>
                                         </div>
@@ -247,3 +238,12 @@ const EcommerceMart = () => {
 }
 
 export default EcommerceMart
+
+//     < img
+// src = { assets.add_green }
+// alt = ""
+// onClick = {(e) => {
+//     e.stopPropagation(); // Prevent parent div click
+//     handleAddItem(item);
+// }}
+//                                                     />
