@@ -8,6 +8,8 @@ import { useDispatch } from 'react-redux'
 import { setProviderInfo } from '../../redux/slices/cartDetail'
 import { Loader } from '@googlemaps/js-api-loader'
 import CountDownTimer from './CountDownTimer'
+import { setUserChat } from '../../redux/slices/chatSlice'
+import axios from 'axios'
 
 
 const RideInfoPopUp = () => {
@@ -17,6 +19,7 @@ const RideInfoPopUp = () => {
     const { setRideInfoPop } = useContext(FeresContext)
     const [currentAddress, setCurrentAddress] = useState("Loading current location...")
     const [progress, setProgress] = useState(1);
+    const [loading, setLoading] = useState(false)
     const intervalRef = useRef(null);
     const navigate = useNavigate();
     const mapRef = useRef(null)
@@ -137,6 +140,33 @@ const RideInfoPopUp = () => {
         return () => clearInterval(intervalRef.current); // Cleanup on unmount
     }, [])
 
+
+    const handleOrderChat =async ()=>{
+        setLoading(true)
+        try {
+            const response = await axios.post('https://farasanya.feres.co/get_user_chat_with_admin', {
+                user_id: userDetail?.user_id,
+                chat_type: "user_admin",
+                order_id : userDetail?.order_id // Use appropriate key for FAQ ID
+            });
+            let roomId;
+            console.log('response',response.data);
+            if ( response.data.chat ){
+                    roomId = response.data.chat._id
+                    dispatch(setUserChat(response.data.chat.message))
+            }else{
+                roomId = response.data.room_id
+            }
+            navigate(`/feressupport/${roomId}`); 
+        } catch (error) {
+            console.error('Error fetching chat room:', error);
+        } finally {
+            setLoading(false);
+        }
+
+        // () => navigate('/feressupport')
+    }
+
     return (
         <div className='fixed bottom-0 left-0 max-h-[90vh] w-full bg-white px-3 rounded-tr-[13px] rounded-tl-[13px] overflow-y-auto pb-48 transition-all z-[104]'>
             <div className='sticky top-0 bg-white w-full z-20 py-2'>
@@ -249,7 +279,7 @@ const RideInfoPopUp = () => {
 
             {/* Buttons */}
             <div className='fixed bottom-0 left-0 w-full px-2 py-4 bg-white'>
-                <button className='text-[#2F2F3F] text-lg font-medium bg-[#F8F8F8] p-[16px] rounded-[30px] w-full mb-3' onClick={() => navigate('/feressupport')}>Get help</button>
+                <button className='text-[#2F2F3F] text-lg font-medium bg-[#F8F8F8] p-[16px] rounded-[30px] w-full mb-3' onClick={handleOrderChat}>Get help</button>
                 {progress == 25 ? <button className='text-white text-lg font-medium bg-[green] p-[16px] rounded-[30px] w-full' onClick={() => navigate('/raterider')}>Rate your rider</button> : <button className='text-white text-lg font-medium bg-[#E92D53] p-[16px] rounded-[30px] w-full' onClick={() => navigate('/cancelorder')}>Cancel order</button>}
             </div>
         </div>
