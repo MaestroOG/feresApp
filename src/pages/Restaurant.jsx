@@ -65,6 +65,8 @@ const Restaurant = () => {
     const showModel = useSelector((state) => state.modelToggle.showModel);
     const selectedFood = useSelector((state) => state.selectedFood.selectedFood);
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
+    const cartCount = useSelector((state) => state.cartDetails.cartCount)
+
     const [showQr, setShowQr] = useState(false)
     const [firstGroup, setFirstGroup] = useState(false)
     const [ordDeadline, setOrdDeadline] = useState(false)
@@ -229,6 +231,7 @@ const Restaurant = () => {
     // const addItemInCart = useCallback((data) => {
     //     setIsItemAdded(data)
     // }, [])
+console.log(cartCount,'sdsdf');
 
 
     return (
@@ -355,7 +358,7 @@ const Restaurant = () => {
 
                         {sharePop ? <SharePopUp /> : null}
 
-                        <AddBi items={items} cartResponse={cartItemData} loading={loading} total_item_count={cartItemData?.items_quantity} total_cart_price={cartItemData?.total_cart_price} />
+                        <AddBi items={items} cartResponse={cartItemData} loading={loading} total_item_count={cartCount} total_cart_price={cartItemData?.total_cart_price} />
 
                         {/* {foodPopup ? <FoodPopUp /> : null} */}
 

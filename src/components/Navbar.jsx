@@ -1,19 +1,24 @@
 import React, { useEffect, useRef } from 'react'
 import { assets } from '../assets/assets'
-import { useNavigate } from 'react-router-dom'
+import { json, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { usePost } from '../servies/usePost'
 import { loginUser } from '../redux/slices/userAuthSlice'
-import { setCartItemData } from '../redux/slices/cartDetail'
+import { setCartItemData , setCartCount } from '../redux/slices/cartDetail'
 
 const Navbar = () => {
-    const { error, post } = usePost()
+    const { post } = usePost()
     const dispatch = useDispatch()
     const userDetail = useSelector((state) => state.userAuth.user)
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
+    const cartCount = useSelector((state) => state.cartDetails.cartCount)
     const last_location = localStorage.getItem("currentAddress") 
     const navigate = useNavigate()
     const initialized = useRef(false) // Ref to track if API call was made
+    const store_id = cartItemData?.stores[0]?._id
+
+    console.log(cartCount,'cart count ');
+    
 
     useEffect(() => {
         const fetchUserDetail = async () => {
@@ -42,6 +47,12 @@ const Navbar = () => {
                         cart_unique_token: cartUniqueToken,
                     })
                     dispatch(setCartItemData(userDetailsResponse.cart))
+                    const itemCount = userDetailsResponse?.cart?.stores[0]?.items.filter((item)=>{
+                            return item.quantity > 0
+                    })
+                    dispatch(setCartCount(itemCount?.length))
+                    localStorage.setItem("cartCount", JSON.stringify(cartCount))
+                    
                 }
             } catch (error) {
                 console.error("Error fetching user details:", error)
@@ -72,8 +83,8 @@ const Navbar = () => {
             </div>
 
             <button className='relative'>
-                <img src={assets.shopping_basket} className="border border-[#EEEEEE] p-2 rounded-lg" onClick={() => navigate('/cart')} />
-                <p className='absolute text-[10px] text-white bg-[#E92D53] font-bold px-1 rounded-full top-[18%] left-[54%]'>{cartItemData?.items_quantity}</p>
+                <img src={assets.shopping_basket} className="border border-[#EEEEEE] p-2 rounded-lg" onClick={() => navigate(`/cart/${store_id}`)} />
+                <p className='absolute text-[10px] text-white bg-[#E92D53] font-bold px-1 rounded-full top-[18%] left-[54%]'>{cartCount}</p>
             </button>
         </div>
     )
