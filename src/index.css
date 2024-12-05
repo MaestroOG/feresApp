@@ -91,3 +91,9 @@ input[type='range']::-webkit-slider-thumb {
 .no-scrollbar::-webkit-scrollbar {
     display: none;
 }
+
+.active-scroll-spy {
+    background-color: #0AB247;
+    /* Your active background color */
+    color: white;
+}

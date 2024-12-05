@@ -104,13 +104,12 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id }) => {
             </div>
 
             {/* Category Buttons */}
-            <div className='px-3 pt-[5px] flex items-center gap-4 overflow-auto no-scrollbar sticky top-24 z-20 bg-white pb-3 category-buttons-container'>
+            <div className='px-3 flex items-center gap-4 overflow-auto no-scrollbar sticky top-24 z-20 bg-white pb-3 category-buttons-container'>
                 {categoryItems?.map((button, index) => (
                     <button
                         key={index}
-                        className={`${
-                            activeButtonIndex === index ? 'active' : 'inactive'
-                        } rounded-full p-3 whitespace-nowrap text-lg`}
+                        className={`${activeButtonIndex === index ? 'active' : 'inactive'
+                            } rounded-full p-3 whitespace-nowrap text-lg`}
                         onClick={() => handleButtonClick(index)}
                     >
                         {button?.name}
@@ -159,35 +158,35 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id }) => {
             <div className='px-4 mt-6'>
                 {!tableList
                     ? categoryItems?.map((cateItems, index) => (
-                          <div className='mt-3' key={index}>
-                              <h3
-                                  ref={(el) => (headingRefs.current[index] = el)}
-                                  className='heading-class text-xl font-bold text-[#2F2F3F]'
-                              >
-                                  {cateItems?.name}
-                              </h3>
-                              <MenuList
-                                  key={'item.id'}
-                                  img={'item.img'}
-                                  name={'item.name'}
-                                  desc={'item.desc'}
-                                  products={cateItems?.items}
-                              />
-                          </div>
-                      ))
+                        <div className='mt-3' key={index}>
+                            <h3
+                                ref={(el) => (headingRefs.current[index] = el)}
+                                className='heading-class text-xl font-bold text-[#2F2F3F]'
+                            >
+                                {cateItems?.name}
+                            </h3>
+                            <MenuList
+                                key={'item.id'}
+                                img={'item.img'}
+                                name={'item.name'}
+                                desc={'item.desc'}
+                                products={cateItems?.items}
+                            />
+                        </div>
+                    ))
                     : categoryItems.map((cateItems, index) => (
-                          <div key={index} className='my-5'>
-                              <h3
-                                  ref={(el) => (headingRefs.current[index] = el)}
-                                  className='heading-class text-xl font-bold text-[#2F2F3F]'
-                              >
-                                  {cateItems?.name}
-                              </h3>
-                              <div className='flex items-center gap-2 overflow-auto no-scrollbar flex-shrink-0 my-7'>
-                                  <TableList products={cateItems?.items} />
-                              </div>
-                          </div>
-                      ))}
+                        <div key={index} className='my-5'>
+                            <h3
+                                ref={(el) => (headingRefs.current[index] = el)}
+                                className='heading-class text-xl font-bold text-[#2F2F3F]'
+                            >
+                                {cateItems?.name}
+                            </h3>
+                            <div className='flex items-center gap-2 overflow-auto no-scrollbar flex-shrink-0 my-7'>
+                                <TableList products={cateItems?.items} />
+                            </div>
+                        </div>
+                    ))}
             </div>
         </div>
     );

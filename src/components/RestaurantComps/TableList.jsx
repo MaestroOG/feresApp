@@ -68,7 +68,7 @@ const TableList = ({ products }) => {
         const itemQuantity = findCartItemQuantity(item);
 
         return (
-            <div className="flex overflow-auto" key={item?._id}>
+            <div className="flex" key={item?._id}>
                 <div className="min-w-[170px]" onClick={() => setFoodPopup(true)}>
                     <div
                         className="relative w-max"

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addItem } from '../../redux/slices/cartSlice'
 import { v4 as uuidv4 } from 'uuid'  // Import uuid for unique token generation
 import { loginUser } from '../../redux/slices/userAuthSlice'
-import { setCartItemData, setCartDetails , setCartCount } from '../../redux/slices/cartDetail'
+import { setCartItemData, setCartDetails, setCartCount } from '../../redux/slices/cartDetail'
 
 
 const DelOrderPopUp = () => {
@@ -16,20 +16,20 @@ const DelOrderPopUp = () => {
     const navigate = useNavigate();
 
     console.log(userDetail, "here is a details ");
-    
-   const handleDelete =() => {
-   const cartUniqueToken = uuidv4()
-    const newUserDetail = { ...userDetail, token: cartUniqueToken}
-    dispatch(loginUser(newUserDetail))
-    localStorage.setItem("cart_unique_token", cartUniqueToken)
-    localStorage.setItem("userData", JSON.stringify(newUserDetail))
-    dispatch(addItem([]))
-    dispatch(setCartItemData(null))
-    dispatch(setCartDetails(null))
-    dispatch(setCartCount(null))
-    navigate('/allrestaurants')
-    setDelOrderVisible(false)
-}
+
+    const handleDelete = () => {
+        const cartUniqueToken = uuidv4()
+        const newUserDetail = { ...userDetail, token: cartUniqueToken }
+        dispatch(loginUser(newUserDetail))
+        localStorage.setItem("cart_unique_token", cartUniqueToken)
+        localStorage.setItem("userData", JSON.stringify(newUserDetail))
+        dispatch(addItem([]))
+        dispatch(setCartItemData(null))
+        dispatch(setCartDetails(null))
+        dispatch(setCartCount(null))
+        navigate('/')
+        setDelOrderVisible(false)
+    }
 
 
     return (

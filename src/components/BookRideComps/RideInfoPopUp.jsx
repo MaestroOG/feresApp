@@ -32,13 +32,16 @@ const RideInfoPopUp = () => {
     const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
 
 
+    console.log(userDetail);
+
+
     const callApi = async () => {
         try {
             const response = await post('/api/user/get_order_status', {
 
-                server_token: userDetail.token,
-                user_id: userDetail.user_id,
-                order_id: userDetail.order_id
+                server_token: userDetail?.token,
+                user_id: userDetail?.user_id,
+                order_id: userDetail?.order_id
 
             });
             const data = response
@@ -141,23 +144,23 @@ const RideInfoPopUp = () => {
     }, [])
 
 
-    const handleOrderChat =async ()=>{
+    const handleOrderChat = async () => {
         setLoading(true)
         try {
             const response = await axios.post('https://farasanya.feres.co/get_user_chat_with_admin', {
                 user_id: userDetail?.user_id,
                 chat_type: "user_admin",
-                order_id : userDetail?.order_id // Use appropriate key for FAQ ID
+                order_id: userDetail?.order_id // Use appropriate key for FAQ ID
             });
             let roomId;
-            console.log('response',response.data);
-            if ( response.data.chat ){
-                    roomId = response.data.chat._id
-                    dispatch(setUserChat(response.data.chat.message))
-            }else{
+            console.log('response', response.data);
+            if (response.data.chat) {
+                roomId = response.data.chat._id
+                dispatch(setUserChat(response.data.chat.message))
+            } else {
                 roomId = response.data.room_id
             }
-            navigate(`/feressupport/${roomId}`); 
+            navigate(`/feressupport/${roomId}`);
         } catch (error) {
             console.error('Error fetching chat room:', error);
         } finally {
