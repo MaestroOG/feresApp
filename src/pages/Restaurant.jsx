@@ -231,7 +231,6 @@ const Restaurant = () => {
     // const addItemInCart = useCallback((data) => {
     //     setIsItemAdded(data)
     // }, [])
-console.log(cartCount,'sdsdf');
 
 
     return (

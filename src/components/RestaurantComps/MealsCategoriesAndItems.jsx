@@ -104,7 +104,7 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id }) => {
             </div>
 
             {/* Category Buttons */}
-            <div className='px-3 flex items-center gap-4 overflow-auto no-scrollbar sticky top-24 z-20 bg-white pb-3 category-buttons-container'>
+            <div className='px-3 pt-[5px] flex items-center gap-4 overflow-auto no-scrollbar sticky top-24 z-20 bg-white pb-3 category-buttons-container'>
                 {categoryItems?.map((button, index) => (
                     <button
                         key={index}
