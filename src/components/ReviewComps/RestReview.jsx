@@ -47,7 +47,7 @@ const RestReview = ({ id }) => {
     })
     return (
         <div className='px-1 mt-11'>
-            <h2 className='text-[#2F2F3F] font-bold text-2xl'>KFC Eastlight</h2>
+            {/* <h2 className='text-[#2F2F3F] font-bold text-2xl'>KFC Eastlight</h2> */}
 
             {/* Left */}
             <div className='flex items-center'>

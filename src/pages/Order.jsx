@@ -112,9 +112,9 @@ const Order = () => {
             {isLoading && <div>Loading...</div>}
             {/* Nested mapping to show each store and their items */}
             {cartItemData && cartItemData?.stores?.map((store) => (
-                <div key={store._id}>
+              <div key={store._id}>
                     {store?.items?.map((item) => (
-                        <OrderedFoodCard
+                       item.quantity > 0 && <OrderedFoodCard
                             key={item.unique_id}
                             title={item.name}
                             price={item.total_item_price}

@@ -11,7 +11,7 @@ const FeaturedRestsCard = ({ onClick, img, title, desc, userRate, userRateQuanti
             {/* Card Right */}
             <div>
                 <h3 className='text-[14px] font-medium'>{title}</h3>
-                <p className='text-[10px] text-[#979797]'>{desc}</p>
+                {desc && <p className='text-[10px] text-[#979797]'>{desc}</p>}
                 {userRate && <div className='flex items-center gap-1 mt-1'>
                     <img src={assets.star} alt="" />
                     <div>

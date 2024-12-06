@@ -74,7 +74,7 @@ const MenuList = ({ products, addItemInCart }) => {
         <>
             <div className='bg-[#FFD335] p-2 rounded-lg text-[#2F2F3F] text-xs font-medium w-max mt-6 mb-1'>Trending</div>
             {products?.map((item) => (
-                item?.image_url[0] && <div key={item._id} onClick={() => {
+                <div key={item._id} onClick={() => {
                     setFoodPopup(true)
                     handleAddItem(item)
                 }}>
@@ -100,8 +100,8 @@ const MenuList = ({ products, addItemInCart }) => {
                                 </div>
                             </div>
                             <div className='relative flex items-end pb-3 justify-center w-[132px] h-[123px]'>
-                                <img src={item?.image_url[0]} className='w-[132px] h-[123px] rounded-2xl object-cover' alt=""
-                                    style={{ width: '132px', height: '123px' }} />
+                                {item?.image_url[0] && <img src={item?.image_url[0]} className='w-[132px] h-[123px] rounded-2xl object-cover' alt=""
+                                    style={{ width: '132px', height: '123px' }} />}
                             </div>
                         </div>
                     </div>

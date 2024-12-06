@@ -9,7 +9,7 @@ const Explore = () => {
         <div className='mt-8 w-full'>
             <h3 className='text-[18px] font-medium px-4'>Explore Feres</h3>
 
-            <div className='flex flex-row gap-5 overflow-y-scroll explore-card'>
+            <div className='flex flex-row gap-3 overflow-y-scroll explore-card'>
                 {/* Card */}
                 <ExploreCard name={"Delivery"} img={assets.car} onClick={() => navigate('/deliveryservice')} />
                 <ExploreCard name={"Food"} img={assets.food_img} onClick={() => navigate('/allrestaurants')} />

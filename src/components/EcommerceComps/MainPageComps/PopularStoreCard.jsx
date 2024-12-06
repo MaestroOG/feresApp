@@ -2,10 +2,10 @@ import React from 'react'
 import { assets } from '../../../assets/assets'
 import { Link } from 'react-router-dom'
 
-const PopularStoreCard = ({ isDiscount = false, store }) => {
+const PopularStoreCard = ({ isDiscount = false, store, onClick }) => {
     return (
         <>
-            <Link to={`/ecommerce/mart/${store?.category_id}`} className='my-4 flex items-center gap-5'>
+            <Link to={`/ecommerce/mart/${store?.category_id}`} className='my-4 flex items-center gap-5' onClick={onClick}>
                 <img src={store?.image_url} alt="" width={"85px"} height={"85px"} className='rounded-lg' />
                 <div className='flex flex-col gap-1'>
                     <div className='flex items-center gap-4'>

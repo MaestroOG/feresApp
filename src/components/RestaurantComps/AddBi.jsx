@@ -11,8 +11,8 @@ const AddBi = ({ items, cartResponse, total_item_count, total_cart_price, loadin
     const cartItems = useSelector((state) => state.cart.items)
 
     return (
-
-        <div className='bg-white px-2 py-4 fixed bottom-0 w-full z-[999]'>
+<>
+       {total_cart_price &&  total_cart_price > 0 &&  <div className='bg-white px-2 py-4 fixed bottom-0 w-full z-[999]'>
             {total_item_count < 1 ? <button onClick={() => {
 
                 addToCart(items)
@@ -32,7 +32,8 @@ const AddBi = ({ items, cartResponse, total_item_count, total_cart_price, loadin
                 </div>}
                 <div className='text-white text-lg font-medium justify-self-end'>{`ETB ${total_cart_price == undefined ? '0' : total_cart_price}`}</div>
             </button>}
-        </div>
+        </div>}
+        </>
     )
 }
 

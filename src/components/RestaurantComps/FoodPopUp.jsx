@@ -15,6 +15,7 @@ const FoodPopUp = ({ img, text, itemFoodPopup }) => {
 
     const [fvrt, setFvrt] = useState(null)
     const loginUser = useSelector((state) => state.userAuth.user);
+    const [note, setNote] = useState('')
     const [details, setDetails] = useState(null)
     const { post } = usePost()
     const closeRef = useRef()
@@ -54,7 +55,7 @@ const FoodPopUp = ({ img, text, itemFoodPopup }) => {
         }
     }
 
-    console.log(details);
+
 
 
     const handleAddItem = async () => {
@@ -108,11 +109,39 @@ const FoodPopUp = ({ img, text, itemFoodPopup }) => {
         getDetail()
     }, [])
 
-    const { checkedItems } = useContext(FeresContext)
+    // const { checkedItems } = useContext(FeresContext)
     const { loading, error, response, postRequest } = usePostRequest();
     const dispatch = useDispatch()
     const [orderCount, setOrderCount] = useState(1)
-    const { foodPopup, setFoodPopup, foodSelected, setFoodSelected } = useContext(FeresContext)
+    const [totalSpecPrice, setTotalSpecPrice] = useState(0)
+    const { foodPopup, setFoodPopup, foodSelected, setFoodSelected, checkedItems } = useContext(FeresContext)
+    const [updatedModifiers, setUpdatedModifiers] = useState([])
+    const [modifiersSum, setModifiersSum] = useState(0)
+
+    useEffect(() => {
+        const modifiers = details?.data[0]?.sub_modifiers || [];
+
+        let totalSum = 0;
+        let matchedModifiers = [];
+
+        const updatedModifiers = modifiers.map((modifier) => {
+            // Update `default` based on the value in `checkedItems`
+            if (checkedItems[modifier._id]) {
+                modifier.default = true;
+                totalSum += modifier.price; // Add price only if default is true
+                matchedModifiers.push(modifier);
+            } else {
+                modifier.default = false; // Ensure default is false if not checked
+            }
+            return modifier;
+        });
+        setUpdatedModifiers(updatedModifiers)
+        setModifiersSum(totalSum)
+        console.log("Total Sum:", totalSum);
+
+    }, [checkedItems, details]);
+
+
     return (
         <div className={`${foodPopup || !foodSelected ? '' : 'hidden'} sticky bottom-0 left-0 right-0 z-[1005] bg-white`}>
             <div className='relative'>
@@ -121,7 +150,7 @@ const FoodPopUp = ({ img, text, itemFoodPopup }) => {
                     setFoodPopup(false)
                 } />
                 <button onClick={() => toggleFavorite()} className='bg-[#FFFFFF33] p-[10px] rounded-[10px] flex items-center justify-center absolute right-[16%] top-[7%]'>
-                    <img src={fvrt && fvrt?.message.startsWith("Item added") ? '/tick-icon.svg' : fvrt?.message.startsWith("Item removed") ? assets.heart_icon : null} alt="" />
+                    <img src={fvrt && fvrt?.message.startsWith("Item added") ? assets.favourite_active : fvrt?.message.startsWith("Item removed") ? assets.heart_icon : assets.heart_icon} alt="" />
                 </button>
 
             </div>
@@ -132,7 +161,8 @@ const FoodPopUp = ({ img, text, itemFoodPopup }) => {
                     <p className='text-[#9E9E9E] line-through text-base'>ETB 170</p>
                     <p className='text-[#0AB247] font-bold text-base'>{itemFoodPopup?.price}</p>
                 </div>
-                <p className='text-[#C4C4C4] mt-6 mb-5 text-base'>Add a note</p>
+                <textarea className='mt-6 mb-5 text-base w-[100%]' maxLength={100} style={{ maxHeight: '100px' }} placeholder='Add a note' value={note} onChange={(e) => setNote(e.target.value)} />
+
                 <FoodOptions options={details} />
                 <div className='flex items-center w-full justify-between'>
                     <button className='border border-[#EEEEEE] py-[12px] px-[16px] rounded-3xl flex items-center justify-between w-[45%]'>
@@ -144,7 +174,7 @@ const FoodPopUp = ({ img, text, itemFoodPopup }) => {
                         handleAddItem()
                         setFoodSelected(text)
 
-                    }}>{`Add EBT ${orderCount == 1 ? itemFoodPopup?.price : (itemFoodPopup?.price * orderCount).toFixed(2)}`}</button>
+                    }}>{`Add EBT ${orderCount == 1 ? itemFoodPopup?.price : ((modifiersSum + itemFoodPopup?.price) * orderCount).toFixed(2)}`}</button>
                 </div>
             </div>
         </div>

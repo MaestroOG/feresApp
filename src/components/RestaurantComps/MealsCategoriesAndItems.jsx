@@ -1,24 +1,24 @@
-import React, { useContext, useState, useEffect, useRef } from 'react'
-import { assets } from '../../assets/assets'
+import React, { useContext, useState, useEffect, useRef } from 'react';
+import { assets } from '../../assets/assets';
 import MenuList from './MenuList';
-import { menuListItems } from './menuListItems';
 import { FeresContext } from '../../context/FeresContext';
 import TableList from './TableList';
 import { usePost } from '../../servies/usePost';
 
 const MealsCategoriesAndItems = ({ categoryItems, store_id }) => {
-    const { tableList, setTableList } = useContext(FeresContext)
+    const { tableList, setTableList } = useContext(FeresContext);
     const [scrollActive, setScrollActive] = useState(false);
     const [activeButtonIndex, setActiveButtonIndex] = useState(0);
     const headingRefs = useRef([]);
-    const { post } = usePost()
-    const [trendingItems, setTrendingItems] = useState([])
+    const { post } = usePost();
+    const [trendingItems, setTrendingItems] = useState([]);
 
-
+    // Handle IntersectionObserver to sync scrolling
     useEffect(() => {
         const observerOptions = {
             root: null,
-            threshold: 1, // Adjust visibility threshold to test
+            rootMargin: '-50% 0px -50% 0px', // Detect when heading is near the center
+            threshold: 0,
         };
 
         const observer = new IntersectionObserver((entries) => {
@@ -26,6 +26,12 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id }) => {
                 const index = headingRefs.current.indexOf(entry.target);
                 if (entry.isIntersecting) {
                     setActiveButtonIndex(index);
+
+                    // Scroll the button bar to make the active button visible
+                    document.querySelector('.category-buttons-container')?.scrollTo({
+                        left: document.querySelectorAll('.category-buttons-container button')[index].offsetLeft - 20,
+                        behavior: 'smooth',
+                    });
                 }
             });
         }, observerOptions);
@@ -41,49 +47,71 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id }) => {
         };
     }, []);
 
-
+    // Fetch trending items
     useEffect(() => {
         const getTrendingItems = async () => {
-            const data = await post('/api/food/get_trending_items', {
-                store_id: store_id
-            })
-
+            const data = await post('/api/food/get_trending_items', { store_id });
             setTrendingItems(data.trending_items);
-
-        }
+        };
 
         if (store_id) {
-            getTrendingItems()
+            getTrendingItems();
         }
+    }, [store_id]);
 
-    }, [store_id])
-
+    // Handle button click
     const handleButtonClick = (index) => {
         headingRefs.current[index]?.scrollIntoView({
-            behavior: 'smooth', // Smooth scrolling effect
-            block: 'center',    // Center the heading in the viewport
+            behavior: 'smooth',
+            block: 'start', // Align the top of the heading to the top of the viewport
         });
-        setActiveButtonIndex(index); // Set the clicked button as active
+        setActiveButtonIndex(index);
+
+        // Scroll the button bar to make the active button visible
+        document.querySelector('.category-buttons-container')?.scrollTo({
+            left: document.querySelectorAll('.category-buttons-container button')[index].offsetLeft - 20,
+            behavior: 'smooth',
+        });
     };
+
     return (
         <div className='relative'>
             {/* Table Or List Row */}
             <div className='px-4 pt-9 pb-4 flex items-center justify-between'>
                 <h2 className='text-[#2F2F3F] text-xl font-medium'>Meals Categories</h2>
                 <div className='border border-[#EEEEEE] flex items-center rounded-2xl'>
-                    <div className={`${tableList ? 'bg-[#EBF9EE]' : ''} p-3 rounded-tl-2xl rounded-bl-2xl transition-all`} onClick={() => setTableList(true)}>
-                        <img src={tableList ? assets.dashboard_square_green : assets.dashboard_square_black} alt="" className='w-full transition-all' />
+                    <div
+                        className={`${tableList ? 'bg-[#EBF9EE]' : ''} p-3 rounded-tl-2xl rounded-bl-2xl transition-all`}
+                        onClick={() => setTableList(true)}
+                    >
+                        <img
+                            src={tableList ? assets.dashboard_square_green : assets.dashboard_square_black}
+                            alt=""
+                            className='w-full transition-all'
+                        />
                     </div>
-                    <div className={`${!tableList ? 'bg-[#EBF9EE]' : ''} p-3 rounded-tr-2xl rounded-br-2xl transition-all`} onClick={() => setTableList(false)}>
-                        <img src={!tableList ? assets.list : assets.list_black} alt="" className='w-full transition-all' />
+                    <div
+                        className={`${!tableList ? 'bg-[#EBF9EE]' : ''} p-3 rounded-tr-2xl rounded-br-2xl transition-all`}
+                        onClick={() => setTableList(false)}
+                    >
+                        <img
+                            src={!tableList ? assets.list : assets.list_black}
+                            alt=""
+                            className='w-full transition-all'
+                        />
                     </div>
                 </div>
             </div>
 
             {/* Category Buttons */}
-            <div className='px-3 flex items-center gap-4 overflow-auto no-scrollbar sticky top-24 z-20 bg-white pb-3'>
+            <div className='px-3 flex items-center gap-4 overflow-auto no-scrollbar sticky top-24 z-20 bg-white pb-3 category-buttons-container'>
                 {categoryItems?.map((button, index) => (
-                    <button key={index} className={`${activeButtonIndex === index ? 'active' : 'inactive'} rounded-full p-3 whitespace-nowrap text-lg`} onClick={() => handleButtonClick(index)}>
+                    <button
+                        key={index}
+                        className={`${activeButtonIndex === index ? 'active' : 'inactive'
+                            } rounded-full p-3 whitespace-nowrap text-lg`}
+                        onClick={() => handleButtonClick(index)}
+                    >
                         {button?.name}
                     </button>
                 ))}
@@ -99,14 +127,16 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id }) => {
             </div>
 
             {/* Trending Items Slider Row */}
-
             <div className='px-4 my-7 flex items-center overflow-auto no-scrollbar flex-shrink-0 z-10'>
                 <div className='flex'>
-                    {/* Example for one card, repeat or dynamically render */}
-                    {trendingItems.map(item => (
+                    {trendingItems.map((item) => (
                         <div key={item?.product_id} className='min-w-[170px]'>
                             <div className='relative w-max'>
-                                <img src={item?.image_url[0]} alt="" className='w-[155px] h-[144px] rounded-[13px] object-cover' />
+                                <img
+                                    src={item?.image_url[0]}
+                                    alt=""
+                                    className='w-[155px] h-[144px] rounded-[13px] object-cover'
+                                />
                                 <div className='bg-[#0AB247] rounded-lg p-2 text-xs text-white absolute top-2 left-2'>-35%</div>
                                 <div className='rounded-full bg-white p-2 absolute bottom-2 right-2'>
                                     <img src={assets.add_green} alt="" />
@@ -125,32 +155,41 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id }) => {
             </div>
 
             {/* Items Menu Table Or List */}
-
             <div className='px-4 mt-6'>
-                {!tableList ? categoryItems?.map((cateItems, index) => (
-                    <div className='mt-3' key={index}>
-                        <h3 key={index}
-                            ref={(el) => (headingRefs.current[index] = el)} className='heading-class text-xl font-bold text-[#2F2F3F]'>{cateItems?.name}</h3>
-                        <MenuList key={"item.id"} img={"item.img"} name={"item.name"} desc={"item.desc"} products={cateItems?.items} />
-                    </div>
-                )) : <div className='my-5'>
-                    {categoryItems.map((cateItems, index) => (
-                        <>
-                            <h3 key={index} ref={(el) => headingRefs.current[index] = el} className='heading-class text-xl font-bold text-[#2F2F3F]'>{cateItems?.name}</h3>
+                {!tableList
+                    ? categoryItems?.map((cateItems, index) => (
+                        <div className='mt-3' key={index}>
+                            <h3
+                                ref={(el) => (headingRefs.current[index] = el)}
+                                className='heading-class text-xl font-bold text-[#2F2F3F]'
+                            >
+                                {cateItems?.name}
+                            </h3>
+                            <MenuList
+                                key={'item.id'}
+                                img={'item.img'}
+                                name={'item.name'}
+                                desc={'item.desc'}
+                                products={cateItems?.items}
+                            />
+                        </div>
+                    ))
+                    : categoryItems.map((cateItems, index) => (
+                        <div key={index} className='my-5'>
+                            <h3
+                                ref={(el) => (headingRefs.current[index] = el)}
+                                className='heading-class text-xl font-bold text-[#2F2F3F]'
+                            >
+                                {cateItems?.name}
+                            </h3>
                             <div className='flex items-center gap-2 overflow-auto no-scrollbar flex-shrink-0 my-7'>
-                                <div className='mt-3'>
-                                    <div className='flex items-center gap-2 overflow-auto no-scrollbar flex-shrink-0'>
-                                        <TableList products={cateItems?.items} />
-                                    </div>
-                                </div>
+                                <TableList products={cateItems?.items} />
                             </div>
-                        </>
+                        </div>
                     ))}
-                </div>}
             </div>
-
         </div>
-    )
-}
+    );
+};
 
-export default MealsCategoriesAndItems
+export default MealsCategoriesAndItems;

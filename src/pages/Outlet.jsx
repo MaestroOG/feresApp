@@ -152,10 +152,10 @@ const Outlet = () => {
                 <Route path='/ecommerce' element={<Ecommerce />} />
                 <Route path='/ecommercesearch' element={<EcommerceSearch />} />
                 <Route path='/ecommerce/categories' element={<EcommerceCategories />} />
-                <Route path='/ecommerce/categories/results' element={<EcommerceCategoriesResult />} />
+                <Route path='/ecommerce/categories/results/:name' element={<EcommerceCategoriesResult />} />
                 <Route path='/ecommerce/mart/:id' element={<EcommerceMart />} />
-                <Route path='/ecommerce/mart/categories' element={<EcommerceMartCategories />} />
-                <Route path='/ecommerce/mart/martproduct' element={<MartProduct />} />
+                <Route path='/ecommerce/mart/categories/:id' element={<EcommerceMartCategories />} />
+                <Route path='/ecommerce/mart/martproduct/:id' element={<MartProduct />} />
                 <Route path='/ecommerce/mart/martproduct/item/:id' element={<MartItemDetail />} />
                 <Route path='/ecommerce/mart/martallproducts' element={<MartAllProducts />} />
                 <Route path='/ecommerce/cart/:id' element={<EcommerceCart />} />
