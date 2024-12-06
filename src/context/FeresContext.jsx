@@ -49,6 +49,7 @@ const FeresContextProvider = (props) => {
     const [picturePop, setPicturePop] = useState(false)
     const [delItemPhoto, setDelItemPhoto] = useState(null)
     const [deliveryPayment, setDeliveryPayment] = useState("")
+    const [ecat, setEcat] = useState("")
 
     const [checkedItems, setCheckedItems] = useState({});
     const [restFilter, setRestFilter] = useState(null)
@@ -110,6 +111,7 @@ const FeresContextProvider = (props) => {
     }
 
     const value = {
+        ecat, setEcat,
         checkedItems, setCheckedItems,
         restFilter, setRestFilter,
         deliveryPayment,

@@ -128,7 +128,7 @@ const EcommerceMart = () => {
                             <img src={storeInfo && storeInfo?.store?.image_url && storeInfo?.store?.image_url} alt="" className='object-cover' width={"23px"} height={"16px"} />
                             <h2 className={`transition-all text-xl font-bold text-[#2F2F3F] whitespace-nowrap ${scrolled ? 'fixed left-20 top-9 z-50' : ''}`}>{storeInfo?.store?.name.slice(0, 19)}</h2>
                         </div>
-                        <div className='flex items-center gap-1' onClick={() => navigate('/review')}>
+                        <div className='flex items-center gap-1' onClick={() => navigate(`/review/${storeInfo?.store?._id}`)}>
                             <img src={assets.star} alt="" />
                             <Link to={`/review/${storeInfo?.store?._id}`} className='text-base font-normal whitespace-nowrap'>{storeInfo?.store?.user_rate} ({storeInfo?.store?.user_rate_count} reviews)</Link>
                         </div>
@@ -160,7 +160,7 @@ const EcommerceMart = () => {
                 <>
                     <div className='flex items-center justify-between px-4 my-7'>
                         <h3 className='text-[18px] font-medium'>Categories</h3>
-                        <Link to={'/ecommerce/mart/categories'} className='text-[#999999] font-medium'>View all</Link>
+                        <Link to={`/ecommerce/mart/categories/${id}`} className='text-[#999999] font-medium'>View all</Link>
                     </div>
                     <div className='flex items-center gap-4 overflow-auto no-scrollbar'>
                         {products && products?.products.map(product => (
@@ -202,7 +202,7 @@ const EcommerceMart = () => {
                                             </div>
                                         </div>
                                         <div className='my-2'>
-                                            <p className='text-sm font-medium text-[#2F2F3F] w-[135px]'>{item?.name}</p>
+                                            <p className='text-sm font-medium text-[#2F2F3F] w-[135px] whitespace-nowrap'>{item?.name}</p>
                                             <p className='text-[#0AB247] font-bold text-sm'>EBT {item?.price}</p>
                                         </div>
                                     </div>

@@ -1,15 +1,34 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { assets } from '../../assets/assets'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import SearchBar from '../../components/SearchBar'
 import PopularStoreCard from '../../components/EcommerceComps/MainPageComps/PopularStoreCard'
 import Container from '../../components/Container'
 import { FeresContext } from '../../context/FeresContext'
 import FilterPopUp from '../../components/SearchComps/FilterPopUp'
+import { usePost } from '../../servies/usePost'
 
 const EcommerceCategoriesResult = () => {
+    const { name } = useParams()
+    const [list, setList] = useState(null)
+
     const navigate = useNavigate()
+    const { post, loading, error } = usePost();
     const { filterPop, setFilterPop } = useContext(FeresContext)
+
+    const fetchCategories = async () => {
+        const endpoint = '/api/e-commerce/get_category_list'
+        try {
+            const data = await post(endpoint, {})
+            setList(data)
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+
+    useEffect(() => {
+        fetchCategories()
+    }, [])
     return (
         <div>
             <div className='w-full flex items-center justify-between pt-6 px-2 sticky top-0 bg-white z-50 '>
@@ -38,11 +57,27 @@ const EcommerceCategoriesResult = () => {
             {filterPop ? <FilterPopUp /> : null}
 
             <Container className={'my-7'}>
-                <h3 className='text-[#2F2F3F] text-lg font-medium my-3'>Bakers store</h3>
 
-                <PopularStoreCard isDiscount={true} />
-                <PopularStoreCard isDiscount={true} />
-                <PopularStoreCard />
+                {loading && <div>Loading...</div>}
+                {error && <div>An Error Occurred</div>}
+
+                {list && list?.success && <>
+                    <h3 className='text-[#2F2F3F] text-lg font-medium my-3 pt-16'>{name} Stores</h3>
+                    {list?.categories.map(category => (
+                        <div key={category?._id} className='border border-[#F4F4F4] py-3 mt-5 flex rounded-xl' onClick={() => navigate(`/ecommerce/mart/${category?._id}`)}>
+                            {/* Card Left */}
+                            <div className='px-2'>
+                                <img src={category?.featured_image} alt="" className='w-[85px] h-[84px] object-cover rounded-xl' />
+                            </div>
+                            {/* Card Right */}
+                            <div>
+                                <h3 className='text-[14px] font-medium'>{category?.category_name}</h3>
+                            </div>
+                        </div>
+                    ))}
+                </>
+                }
+
             </Container>
 
         </div>

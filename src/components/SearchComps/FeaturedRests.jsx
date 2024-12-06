@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import FeaturedRestsCard from './FeaturedRestsCard'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { assets } from '../../assets/assets';
 import { FeresContext } from '../../context/FeresContext';
 import { useDispatch, useSelector } from 'react-redux';
@@ -68,6 +68,7 @@ const FeaturedRests = ({ type, stores }) => {
     }
 
     useEffect(() => {
+
         console.log(stores)
         console.log(searchData)
         if (searchData.length > 0) {
@@ -100,6 +101,8 @@ const FeaturedRests = ({ type, stores }) => {
                 <FeaturedRestsCard onClick={() => navigate(`/ecommerce/mart/${items?.store_id}`)} key={items?._id} title={items?.name} desc={items?.store_name} img={items?.image_url[0]} />
             ))}
             {/* <FeaturedRestsCard img={assets.featured_rest_img} title={"KFC Eastlight"} desc={"Burger, Fast Food, American..."} userRate={"4.50"} userRateQuantity={"50+"} price={"150.00"} delivery={"40"} onClick={() => navigate('/restaurant')} /> */}
+
+
 
         </div>
     )

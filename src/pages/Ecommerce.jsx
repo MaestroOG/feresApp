@@ -66,7 +66,7 @@ const Ecommerce = () => {
                     {error && <div>An Error Occurred</div>}
                     {loading && <div>Loading...</div>}
                     {categories && categories?.success && categories?.categories.map(category => (
-                        <ExploreCard key={category?._id} name={category?.category_name} img={category?.featured_image} />
+                        <ExploreCard onClick={() => navigate(`/ecommerce/categories/results/${category?.category_name}`)} key={category?._id} name={category?.category_name} img={category?.featured_image} />
                     ))}
                 </div>
             </div>

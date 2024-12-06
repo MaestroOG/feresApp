@@ -10,6 +10,7 @@ const EcommerceCategories = () => {
     const navigate = useNavigate();
     const [categories, setCategories] = useState(null)
 
+    const [name, setName] = useState('')
     const { post, loading, error } = usePost()
     const handleClick = (id) => {
         setActiveId(id);
@@ -42,7 +43,10 @@ const EcommerceCategories = () => {
                 {loading && <div>Loading...</div>}
                 {error && <div>An Error Occurred</div>}
                 {categories && categories?.success && categories?.categories.map(category => (
-                    <div key={category?._id} onClick={() => handleClick(category?._id)}>
+                    <div key={category?._id} onClick={() => {
+                        handleClick(category?._id)
+                        setName(category?.category_name)
+                    }}>
                         <div className={`w-28 h-24 px-4 py-8 rounded-2xl flex items-center justify-center ${activeId === category?._id ? 'border border-[#0AB247] bg-[#EBF9EE]' : 'bg-[#F8F8F8]'}`}>
                             <img src={category?.featured_image} className="object-cover rounded-lg" width={"60px"} height={"60px"} />
                         </div>
@@ -53,7 +57,7 @@ const EcommerceCategories = () => {
             </Container>
 
             <div className='fixed bottom-0 left-0 w-full p-4 bg-white'>
-                <button onClick={() => navigate('/ecommerce/categories/results')} className={`${activeId.length > 0 ? 'bg-[#0AB247] text-white' : 'bg-[#F8F8F8] text-[#767578]'} p-4 w-full rounded-full text-lg font-medium`}>Apply</button>
+                <button onClick={() => navigate(`/ecommerce/categories/results/${name}`)} className={`${activeId.length > 0 ? 'bg-[#0AB247] text-white' : 'bg-[#F8F8F8] text-[#767578]'} p-4 w-full rounded-full text-lg font-medium`}>Apply</button>
             </div>
         </div>
     )

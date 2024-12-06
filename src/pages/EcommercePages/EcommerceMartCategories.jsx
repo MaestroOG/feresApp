@@ -1,52 +1,39 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Container from '../../components/Container'
 import { assets } from '../../assets/assets'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import { usePost } from '../../servies/usePost'
+import { FeresContext } from '../../context/FeresContext'
 
 const EcommerceMartCategories = () => {
-    const [activeId, setActiveId] = useState([])
+    const [activeId, setActiveId] = useState('')
     const navigate = useNavigate()
+    const [cat, setCat] = useState(null)
+    const { post, loading, error } = usePost()
+    const { id } = useParams()
+    const { setEcat } = useContext(FeresContext)
 
-    const handleClick = (id) => {
-        setActiveId(prevIds =>
-            prevIds.includes(id)
-                ? prevIds.filter(activeId => activeId !== id)
-                : [...prevIds, id]
-        );
+    const handleClick = (name) => {
+        setEcat(name)
+        setActiveId(name);
     };
 
-    const categories = [
-        {
-            id: 1,
-            name: "Fruit & Veg",
-            img: assets.fruit_veg
-        },
-        {
-            id: 2,
-            name: "Bakery",
-            img: assets.bread
-        },
-        {
-            id: 3,
-            name: "Meat",
-            img: assets.meat
-        },
-        {
-            id: 4,
-            name: "Deli",
-            img: assets.deli
-        },
-        {
-            id: 5,
-            name: "Dairy & eggs",
-            img: assets.dairy_eggs
-        },
-        {
-            id: 6,
-            name: "Beverages",
-            img: assets.beverages
-        },
-    ]
+    const fetchCat = async () => {
+        const endpoint = '/api/e-commerce/get_products_in_category'
+        try {
+            const data = await post(endpoint, {
+                category_id: id
+            })
+            setCat(data)
+            console.log(cat)
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+
+    useEffect(() => {
+        fetchCat()
+    }, [])
     return (
         <div>
             {/* Nav Part */}
@@ -61,19 +48,22 @@ const EcommerceMartCategories = () => {
                 <p className='text-[#E6352B] font-medium'>Choose one out those categories and apply</p>
             </div>}
             <Container className='grid grid-cols-3 gap-y-5 gap-x-3'>
-                {categories?.map(category => (
-                    <div key={category.id} onClick={() => handleClick(category.id)}>
-                        <div className={`w-28 h-24 px-4 py-8 rounded-2xl flex items-center justify-center ${activeId.includes(category.id) ? 'border border-[#0AB247] bg-[#EBF9EE]' : 'bg-[#F8F8F8]'}`}>
-                            <img src={category.img} alt="" />
-                        </div>
-                        <h1 className='text-[#2F2F3F] text-center mt-1'>{category.name}</h1>
-                    </div>
-                ))}
 
+                {loading && <div>Loading...</div>}
+                {error && <div>An Error Occurred</div>}
+                {cat && cat?.success && cat?.products.map(product => (
+                    <div key={product?.name} onClick={() => handleClick(product?.name)}>
+                        <div className={`w-28 h-24 px-4 py-8 rounded-2xl flex items-center justify-center ${activeId === product?.name ? 'border border-[#0AB247] bg-[#EBF9EE]' : 'bg-[#F8F8F8]'}`}>
+                            <img src={product?.featured_image} alt="" />
+                        </div>
+                        <h1 className='text-[#2F2F3F] text-center mt-1'>{product?.name}</h1>
+                    </div>
+
+                ))}
             </Container>
 
             <div className='fixed bottom-0 left-0 w-full p-4 bg-white'>
-                <button onClick={() => navigate('/ecommerce/mart/martproduct')} className={`${activeId.length > 0 ? 'bg-[#0AB247] text-white' : 'bg-[#F8F8F8] text-[#767578]'} p-4 w-full rounded-full text-lg font-medium`}>Apply</button>
+                <button onClick={() => navigate(`/ecommerce/mart/martproduct/${id}`)} className={`${activeId.length > 0 ? 'bg-[#0AB247] text-white' : 'bg-[#F8F8F8] text-[#767578]'} p-4 w-full rounded-full text-lg font-medium`}>Apply</button>
             </div>
         </div>
     )
