@@ -124,12 +124,15 @@ const MartItemDetail = () => {
                 <div className='my-3 text-[#0AB247] font-medium'>
                     {itemDetail?.item?.name} x{itemDetail?.item?.total_quantity}
                 </div>
+                <div className='my-3 text-[#0AB247] font-medium'>
+                    {itemDetail?.item?.size_dimension}
+                </div>
 
                 {/* Delivery Info */}
-                {/* <div className='flex items-center gap-2 my-5'>
+                <div className='flex items-center gap-2 my-5'>
                     <img src={assets.delivery_truck_green} alt="" />
-                    <p className='text-[#2F2F3F]'>Ready for delivery by 05 April order in 19hrs 58mins</p>
-                </div> */}
+                    <p className='text-[#2F2F3F]'>Ready for delivery by {new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })} order in {itemDetail?.item?.expected_delivery}hrs</p>
+                </div>
 
                 {/* Extra Note (Optional) */}
                 <div>

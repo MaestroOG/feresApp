@@ -83,7 +83,7 @@ const EcommerceMart = () => {
 
         // Cleanup event listener when the component unmounts
         return () => {
-            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('scroll', handleScroll)
         };
     }, []);
 
@@ -91,6 +91,7 @@ const EcommerceMart = () => {
     useEffect(() => {
         fetchProductsAndStoreInfo()
         getCart()
+        console.log(cartItemData)
     }, [])
     return (
         <div className='pb-28'>
@@ -202,7 +203,7 @@ const EcommerceMart = () => {
                                             </div>
                                         </div>
                                         <div className='my-2'>
-                                            <p className='text-sm font-medium text-[#2F2F3F] w-[135px] whitespace-nowrap'>{item?.name}</p>
+                                            <p className='text-sm font-medium text-[#2F2F3F] w-[135px] whitespace-nowrap'>{item?.name.split(" ").slice(0, 3).join(" ")}</p>
                                             <p className='text-[#0AB247] font-bold text-sm'>EBT {item?.price}</p>
                                         </div>
                                     </div>
@@ -240,8 +241,8 @@ const EcommerceMart = () => {
 
 
             {/* Add To Basket */}
+            {cartItemData && <EcommerceAddBasket cart_price={cartItemData?.total_cart_price} cart_quantity={cartItemData?.total_item_count} to={`/ecommerce/cart/${id}`} />}
 
-            <EcommerceAddBasket to={`/ecommerce/cart/${id}`} />
         </div>
     )
 }
