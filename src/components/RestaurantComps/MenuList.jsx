@@ -78,7 +78,7 @@ const MenuList = ({ products, addItemInCart }) => {
                     setFoodPopup(true)
                     handleAddItem(item)
                 }}>
-                    <div className='my-4'>
+                    <div className={`${item?.details && 'my-4'}`}>
                         <div className='flex items-center justify-between' onClick={() => {
                             dispatch(setShowModel(true))
                             dispatch(setSelectedFood(item))
