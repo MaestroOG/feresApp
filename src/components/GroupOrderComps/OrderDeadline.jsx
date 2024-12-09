@@ -1,8 +1,18 @@
 import React, { useState } from 'react'
 import Container from '../Container'
 import { assets } from '../../assets/assets'
+import { useSelector } from 'react-redux'
+import { usePost } from '../../servies/usePost'
 
 const OrderDeadline = ({ onCancel, onConfirm, time, setTime, handleSetClick, selectedDate }) => {
+    const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
+    const {post}= usePost()
+    // console.log(cartItemData?._id, "selectedDateselectedDateselectedDate");
+        
+    const handleCreateGroupOrder = ()=>{
+        const response = post('', { cart_id : "" , user_id: '', is_deadline : false})
+    }
+
     return (
         <div className='h-screen w-full bg-[#06060626] fixed top-0 z-[100] left-0'>
 

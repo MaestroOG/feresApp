@@ -4,9 +4,15 @@ import MenuList from './MenuList';
 import { FeresContext } from '../../context/FeresContext';
 import TableList from './TableList';
 import { usePost } from '../../servies/usePost';
+import { setCartItemData } from '../../redux/slices/cartDetail';
+import { useSelector , useDispatch} from 'react-redux';
+
 
 const MealsCategoriesAndItems = ({ categoryItems, store_id }) => {
+    const dispatch = useDispatch()
     const { tableList, setTableList } = useContext(FeresContext);
+    const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
+    const loginUser = useSelector((state) => state.userAuth.user)
     const [scrollActive, setScrollActive] = useState(false);
     const [activeButtonIndex, setActiveButtonIndex] = useState(0);
     const headingRefs = useRef([]);
@@ -74,6 +80,58 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id }) => {
         });
     };
 
+    const handleAddItem = async (item) => {
+        const requestBody = {
+            cart_unique_token: loginUser.cart_unique_token,
+            user_id: loginUser.user_id,
+            // user_id: "621fc0e0c2545594abfd644e",
+            server_token: loginUser.token,
+            // server_token: "0Iqb69j2rP7x4yY7ZGeRst5pfnyp8vfZ",
+            device_type: loginUser.device_type,
+            destination: {
+                address: "",
+                location: {
+                    lat: 9.001826571711009,
+                    lng: 38.76956474035978
+                }
+            },
+            item: {
+                _id: item._id,
+                name: item.name,
+                price: item.price,
+                quantity: 1,
+                specification: item.specifications || [],
+                unique_id: item.unique_id,
+                product_id: item.product_id,
+                image_url: item.image_url ? item.image_url[0] : "",
+                is_promotion_available: item.is_promotion_available,
+                order_item_description: item.details || "",
+                promotion: item.promotion || 0,
+                total_quantity: item.total_quantity,
+                sales_commission: 0,
+                shipment_commission: 0,
+                total_item_price: item.price * 1,
+                store_id: item.store_id,
+            }
+        }
+
+
+        console.log(requestBody, "here is a data of unexpected cart ");
+
+        const data = await post('/api/user/new_add_item_in_cart', requestBody)
+        const userDetailsResponse = await post('/api/user/get_cart', {
+            cart_unique_token: loginUser.cart_unique_token,
+        })
+        dispatch(setCartItemData(userDetailsResponse.cart))
+    }
+
+    const findCartItemQuantity = (item) => {
+        const cartItem = cartItemData?.stores[0]?.items?.find(
+            (cartItem) => cartItem._id === item._id
+        );
+        return cartItem ? cartItem.quantity : null;
+    };
+
     return (
         <div className='relative'>
             {/* Table Or List Row */}
@@ -126,10 +184,10 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id }) => {
                 </div>
             </div>
 
-            {/* Trending Items Slider Row */}
-            <div className='px-4 my-7 flex items-center overflow-auto no-scrollbar flex-shrink-0 z-10'>
+             {/* Trending Items Row */}
+             <div className='px-4 my-7 flex items-center overflow-auto no-scrollbar flex-shrink-0 z-10'>
                 <div className='flex'>
-                    {trendingItems.map((item) => (
+                    {trendingItems?.map((item) => (
                         <div key={item?.product_id} className='min-w-[170px]'>
                             <div className='relative w-max'>
                                 <img
@@ -139,7 +197,19 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id }) => {
                                 />
                                 <div className='bg-[#0AB247] rounded-lg p-2 text-xs text-white absolute top-2 left-2'>-35%</div>
                                 <div className='rounded-full bg-white p-2 absolute bottom-2 right-2'>
-                                    <img src={assets.add_green} alt="" />
+                                    {findCartItemQuantity(item) ? (
+                                        <div className='flex items-center justify-center rounded-full h-[20px] w-[20px]'>
+                                            <span className='text-sm font-bold text-[#0AB247]'>
+                                                {findCartItemQuantity(item)}
+                                            </span>
+                                        </div>
+                                    ) : (
+                                        <img
+                                            src={assets.add_green}
+                                            alt="Add"
+                                            onClick={() => handleAddItem(item)}
+                                        />
+                                    )}
                                 </div>
                             </div>
                             <div className='my-1'>
