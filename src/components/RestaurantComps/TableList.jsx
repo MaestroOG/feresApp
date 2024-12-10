@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setShowModel } from '../../redux/slices/modelToggleSlice';
+import { setNewOrderPopup, setShowModel } from '../../redux/slices/modelToggleSlice';
 import { setSelectedFood } from '../../redux/slices/selectedFoodSlice';
 import { usePost } from '../../servies/usePost';
 import { setCartItemData } from '../../redux/slices/cartDetail';
@@ -14,6 +14,7 @@ const TableList = ({ products }) => {
     // Redux Selectors
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData);
     const loginUser = useSelector((state) => state.userAuth.user);
+    const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
 
     const { setFoodPopup } = useContext(FeresContext)
 
@@ -50,12 +51,20 @@ const TableList = ({ products }) => {
             },
         };
 
-        const data = await post('/api/user/new_add_item_in_cart', requestBody);
-        const userDetailsResponse = await post('/api/user/get_cart', {
-            cart_unique_token: loginUser.cart_unique_token,
-        });
-        dispatch(setCartItemData(userDetailsResponse.cart));
-    };
+        if(selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData ){
+            const data = await post('/api/user/new_add_item_in_cart', requestBody)
+            const userDetailsResponse = await post('/api/user/get_cart', {
+                cart_unique_token: loginUser.cart_unique_token,
+            })
+            dispatch(setCartItemData(userDetailsResponse.cart))
+        }else{
+            const data = await post('/api/user/new_add_item_in_cart', requestBody)
+            const userDetailsResponse = await post('/api/user/get_cart', {
+                cart_unique_token: loginUser.cart_unique_token,
+            })
+            dispatch(setCartItemData(userDetailsResponse.cart))
+        }
+        }
 
     const findCartItemQuantity = (item) => {
         const cartItem = cartItemData?.stores[0]?.items?.find(
@@ -69,12 +78,22 @@ const TableList = ({ products }) => {
 
         return (
             <div className="flex" key={item?._id}>
-                <div className="min-w-[170px]" onClick={() => setFoodPopup(true)}>
+                <div className="min-w-[170px]" onClick={() => {
+                  if(selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData){
+                    setFoodPopup(true)
+                } else{
+                    dispatch(setNewOrderPopup(true))
+                  }
+                }}>
                     <div
                         className="relative w-max"
                         onClick={() => {
+                  if(selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData){
                             dispatch(setShowModel(true));
                             dispatch(setSelectedFood(item));
+                        } else{
+                            dispatch(setNewOrderPopup(true))
+                          }
                         }}
                     >
                         <img

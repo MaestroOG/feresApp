@@ -102,8 +102,55 @@ const OrderConfirmBtn = ({ orderData, setReview }) => {
                     };
                     localStorage.setItem("userData", JSON.stringify(updatedUserDetail))
                     dispatch(loginUser(updatedUserDetail))
-                    navigate('/bookride');
+
+
                 }
+
+                const payOrderResponse2 = postRequest('/api/user/pay_order_payment',
+                    {
+                        // cart_unique_token: orderData?.cart?.cart_unique_token,
+                        // cart_id: orderData?.cart?._id,
+                        phone: cartItemData?.user?.phone,
+                        country_code: "+251",
+                        server_token: userDetail?.token,
+                        user_id: cartItemData?.user?._id,
+                        cart_id: cartItemData?._id,
+                        cart_unique_token: cartItemData?.cart_unique_token,
+                        is_payment_mode_waafi: false,
+                        is_payment_mode_cash: true,
+                        is_brafo_payment_mode: false,
+                        payment_id: 0,
+                        order_payment_id: cartDetail?.order_payment[0]?._id,
+                        // country_id: "6220aa1857e734afb72baf38",
+                        country_id: cartDetail?.order_payment[0]?.country_id,
+                        order_Kitchen_detail: "",
+                        last_address: "",
+                        normal_address: "",
+                        schedule_order_start_at: ""
+                    })
+                    if (payOrderResponse2) {
+                        const createOrder = await post('/api/user/create_order', {
+                            server_token: userDetail?.token,
+                            user_id: cartItemData?.user._id,
+                            cart_id: cartItemData?._id,
+                            cart_unique_token: cartItemData?.cart_unique_token,
+                            delivery_user_name: "",
+                            delivery_user_phone: "",
+                            is_user_pick_up_order: "",
+                            order_start_at: 0,
+                            schedule_order_start_at: ""
+                        })
+    
+    
+                        const updatedUserDetail = {
+                            ...userDetail,
+                            order_id: createOrder?.order_id,
+                        };
+                        localStorage.setItem("userData", JSON.stringify(updatedUserDetail))
+                        dispatch(loginUser(updatedUserDetail))
+    
+                        navigate('/bookride');
+                    }
             }
         }
     }

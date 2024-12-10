@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { assets } from '../../assets/assets'
 import { useDispatch, useSelector } from 'react-redux'
-import { setShowModel } from '../../redux/slices/modelToggleSlice'
+import { setNewOrderPopup, setShowModel } from '../../redux/slices/modelToggleSlice'
 import { setSelectedFood } from '../../redux/slices/selectedFoodSlice'
 import { addItem } from '../../redux/slices/cartSlice'
 import { usePost } from '../../servies/usePost'
@@ -10,13 +10,20 @@ import { FeresContext } from '../../context/FeresContext'
 
 const MenuList = ({ products, addItemInCart }) => {
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
+    const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
     const loginUser = useSelector((state) => state.userAuth.user)
     const { post } = usePost()
     const dispatch = useDispatch()
     const [orderCount, setOrderCount] = useState(1)
     const { setFoodPopup } = useContext(FeresContext)
 
+    // console.log('selected resturent', cartItemData.stores._id);
+
+
+    
+
     const handleAddItem = async (item) => {
+        
         const requestBody = {
             cart_unique_token: loginUser.cart_unique_token,
             user_id: loginUser.user_id,
@@ -53,12 +60,19 @@ const MenuList = ({ products, addItemInCart }) => {
 
 
         console.log(requestBody, "here is a data of unexpected cart ");
-
+        if(selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData ){
         const data = await post('/api/user/new_add_item_in_cart', requestBody)
         const userDetailsResponse = await post('/api/user/get_cart', {
             cart_unique_token: loginUser.cart_unique_token,
         })
         dispatch(setCartItemData(userDetailsResponse.cart))
+    }else{
+        const data = await post('/api/user/new_add_item_in_cart', requestBody)
+        const userDetailsResponse = await post('/api/user/get_cart', {
+            cart_unique_token: loginUser.cart_unique_token,
+        })
+        dispatch(setCartItemData(userDetailsResponse.cart))
+    }
     }
 
     // Helper function to check if an item is in the cart
@@ -75,13 +89,21 @@ const MenuList = ({ products, addItemInCart }) => {
             <div className='bg-[#FFD335] p-2 rounded-lg text-[#2F2F3F] text-xs font-medium w-max mt-6 mb-1'>Trending</div>
             {products?.map((item) => (
                 <div key={item._id} onClick={() => {
+                  if(selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData){
                     setFoodPopup(true)
                     handleAddItem(item)
+                  } else{
+                    dispatch(setNewOrderPopup(true))
+                  }
                 }}>
                     <div className={`${item?.details && 'my-4'}`}>
                         <div className='flex items-center justify-between' onClick={() => {
+                  if(selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData){
                             dispatch(setShowModel(true))
                             dispatch(setSelectedFood(item))
+                        } else{
+                            dispatch(setNewOrderPopup(true))
+                          }
                         }}>
                             <div className='flex flex-col gap-1 flex-[3]'>
                                 <div className='flex items-center gap-2'>
@@ -99,9 +121,9 @@ const MenuList = ({ products, addItemInCart }) => {
                                     <p className='text-[#0AB247] text-sm font-bold'>{`ETB ${item?.price}`}</p>
                                 </div>
                             </div>
-                            <div className='relative flex items-end pb-3 justify-center w-[132px] h-[123px]'>
-                                {item?.image_url[0] && <img src={item?.image_url[0]} className='w-[132px] h-[123px] rounded-2xl object-cover' alt=""
-                                    style={{ width: '132px', height: '123px' }} />}
+                            <div className='relative flex items-end pb-3 justify-center top-[13px]'>
+                                {item?.image_url[0] && <img src={item?.image_url[0]} className='w-[132px] h-[123px] rounded-2xl object-cover ' alt=""
+                                    style={{ width: '132px', height: '123px'}} />}
                             </div>
                         </div>
                     </div>

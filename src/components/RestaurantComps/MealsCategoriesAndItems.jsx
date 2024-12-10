@@ -6,10 +6,12 @@ import TableList from './TableList';
 import { usePost } from '../../servies/usePost';
 import { setCartItemData } from '../../redux/slices/cartDetail';
 import { useSelector , useDispatch} from 'react-redux';
+import NewOrderPopUpModel from '../../pages/NewOrderPopUp';
 
 
 const MealsCategoriesAndItems = ({ categoryItems, store_id }) => {
     const dispatch = useDispatch()
+    const newOrderPopup = useSelector((state)=> state.modelToggle.newOrderPopup) 
     const { tableList, setTableList } = useContext(FeresContext);
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
     const loginUser = useSelector((state) => state.userAuth.user)
@@ -132,8 +134,10 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id }) => {
         return cartItem ? cartItem.quantity : null;
     };
 
+    
     return (
         <div className='relative'>
+           {newOrderPopup && <NewOrderPopUpModel />}
             {/* Table Or List Row */}
             <div className='px-4 pt-9 pb-4 flex items-center justify-between'>
                 <h2 className='text-[#2F2F3F] text-xl font-medium'>Meals Categories</h2>
@@ -162,7 +166,7 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id }) => {
             </div>
 
             {/* Category Buttons */}
-            <div className='px-3 flex items-center gap-4 overflow-auto no-scrollbar sticky top-24 z-20 bg-white pb-3 category-buttons-container'>
+            <div className='px-3 flex items-center gap-4 overflow-auto no-scrollbar sticky top-24 z-20 bg-white pb-3 category-buttons-container pt-5'>
                 {categoryItems?.map((button, index) => (
                     <button
                         key={index}

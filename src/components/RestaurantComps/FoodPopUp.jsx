@@ -141,43 +141,135 @@ const FoodPopUp = ({ img, text, itemFoodPopup }) => {
 
     }, [checkedItems, details]);
 
+    const handleShare = () => {
+        const shareData = {
+            title: 'Check this out!',
+            text: 'Here is an interesting link for you:',
+            url: 'https://example.com',
+        };
+    
+        if (navigator.share) {
+            navigator
+                .share(shareData)
+                .then(() => console.log('Successfully shared'))
+                .catch((error) => console.error('Error sharing:', error));
+        } else {
+            navigator.clipboard.writeText(shareData.url)
+                .then(() => alert('Link copied to clipboard!'))
+                .catch((error) => console.error('Error copying link:', error));
+        }
+    };
 
     return (
-        <div className={`${foodPopup || !foodSelected ? '' : 'hidden'} sticky bottom-0 left-0 right-0 z-[1005] bg-white`}>
-            <div className='relative'>
-                <img src={itemFoodPopup?.image_url} alt="" width={"430px"} height={"318.52px"} className='object-cover z-50 rounded-tr-3xl rounded-tl-3xl' />
-                <img ref={closeRef} src={assets.cancel_icon} alt="" className='bg-white rounded-full absolute right-[3%] top-[7%]' onClick={() =>
-                    setFoodPopup(false)
-                } />
-                <button onClick={() => toggleFavorite()} className='bg-[#FFFFFF33] p-[10px] rounded-[10px] flex items-center justify-center absolute right-[16%] top-[7%]'>
-                    <img src={fvrt && fvrt?.message.startsWith("Item added") ? assets.favourite_active : fvrt?.message.startsWith("Item removed") ? assets.heart_icon : assets.heart_icon} alt="" />
-                </button>
+        <div>
+    {/* Background Overlay */}
+    <div
+        className={`${foodPopup || !foodSelected ? '' : 'hidden'} fixed inset-0 bg-black bg-opacity-50 z-[1000]`}
+        onClick={() => setFoodPopup(false)}
+    ></div>
 
+    {/* Popup Component */}
+    <div
+        className={`${foodPopup || !foodSelected ? '' : 'hidden'} fixed bottom-0 left-0 right-0 z-[1005] bg-[grey] h-[85vh] flex flex-col rounded-tl-[16px] rounded-tr-[16px]`}
+    >
+        <div
+            className="relative flex-[3] rounded-tl-[16px] rounded-tr-[16px]"
+            style={{
+                backgroundImage: `url(${itemFoodPopup?.image_url})`,
+                backgroundPosition: 'center',
+                backgroundSize: 'cover',
+            }}
+        >
+            <div className='w-full flex justify-between p-6'>
+                <div>
+            <img
+                ref={closeRef}
+                src={assets.cancel_icon}
+                alt=""
+                className="bg-white rounded-full"
+                onClick={() => setFoodPopup(false)}
+            />
             </div>
-            <div className='bg-white px-4 py-4 rounded-tr-[16px] rounded-tl-[16px]'>
-                <h2 className='text-[#2F2F3F] text-xl font-bold mb-2'>{itemFoodPopup?.name}</h2>
-                <p className='text-[#767578] text-base'>{itemFoodPopup?.details}</p>
-                <div className='flex items-center gap-2 mt-3'>
-                    <p className='text-[#9E9E9E] line-through text-base'>ETB 170</p>
-                    <p className='text-[#0AB247] font-bold text-base'>{itemFoodPopup?.price}</p>
-                </div>
-                <textarea className='mt-6 mb-5 text-base w-[100%]' maxLength={100} style={{ maxHeight: '100px' }} placeholder='Add a note' value={note} onChange={(e) => setNote(e.target.value)} />
-
-                <FoodOptions options={details} />
-                <div className='flex items-center w-full justify-between'>
-                    <button className='border border-[#EEEEEE] py-[12px] px-[16px] rounded-3xl flex items-center justify-between w-[45%]'>
-                        <img src={assets.minus_sign} alt="" onClick={handleMinusClick} />
-                        <p>{orderCount}</p>
-                        <img src={assets.plus_sign} alt="" onClick={handlePlusClick} />
-                    </button>
-                    <button className='bg-[#0AB247] py-[12px] px-[16px] rounded-3xl text-white w-[50%]' onClick={() => {
-                        handleAddItem()
-                        setFoodSelected(text)
-
-                    }}>{`Add EBT ${orderCount == 1 ? itemFoodPopup?.price : ((modifiersSum + itemFoodPopup?.price) * orderCount).toFixed(2)}`}</button>
-                </div>
+            <div className='flex h-fit gap-6'>
+            <button className="bg-[#FFFFFF33] p-[10px] rounded-[10px] flex items-center justify-center" onClick={handleShare}>
+                <img src={'/share-icon.svg'} />
+            </button>
+            <button
+                onClick={() => toggleFavorite()}
+                className="bg-[#FFFFFF33] p-[10px] rounded-[10px] flex items-center justify-center"
+            >
+                <img
+                    src={
+                        fvrt && fvrt?.message.startsWith('Item added')
+                            ? assets.favourite_active
+                            : assets.heart_icon
+                    }
+                    alt=""
+                    width={'30px'}
+                />
+            </button>
+            </div>
             </div>
         </div>
+        <div className="bg-[#eaeaea] flex-[1]">
+            <div className='px-4 py-4 rounded-bl-[16px] rounded-br-[16px] bg-[white]'>
+            <h2 className="text-[#2F2F3F] text-xl font-bold mb-2">
+                {itemFoodPopup?.name}
+            </h2>
+            <p className="text-[#767578] text-base">{itemFoodPopup?.details}</p>
+            <div className="flex items-center gap-2 mt-3">
+                <p className="text-[#9E9E9E] line-through text-base">ETB 170</p>
+                <p className="text-[#0AB247] font-bold text-base">
+                    {itemFoodPopup?.price}
+                </p>
+            </div></div>
+
+            <div className='rounded-tl-[16px] rounded-tr-[16px] p-4 bg-white mt-[15px]'>
+            <textarea
+                className="mt-6 mb-5 text-base w-[100%] focus:outline-none"
+                maxLength={100}
+                style={{ maxHeight: '100px' }}
+                placeholder="Add a note"
+                value={note}
+                onChange={(e) => setNote(e.target.value)}
+            />
+            <FoodOptions options={details} />
+            <div className="flex items-center w-full justify-between" >
+                <button className="border border-[#EEEEEE] py-[12px] px-[16px] rounded-3xl flex items-center justify-between w-[45%]">
+                    <img
+                        src={assets.minus_sign}
+                        alt=""
+                        onClick={handleMinusClick}
+                    />
+                    <p>{orderCount}</p>
+                    <img
+                        src={assets.plus_sign}
+                        alt=""
+                        onClick={handlePlusClick}
+                    />
+                </button>
+                <button
+                    className="bg-[#0AB247] py-[12px] px-[16px] rounded-3xl text-white w-[50%]"
+                    onClick={() => {
+                        handleAddItem();
+                        setFoodSelected(text);
+                    }}
+                >
+                    {`Add EBT ${
+                        orderCount === 1
+                            ? itemFoodPopup?.price
+                            : (
+                                  (modifiersSum + itemFoodPopup?.price) *
+                                  orderCount
+                              ).toFixed(2)
+                    }`}
+                </button>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
     )
 }
 

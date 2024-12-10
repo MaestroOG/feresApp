@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { assets } from '../../assets/assets'
 
-export const NewOrderPopUp = () => {
+
+const NewOrderPopUpModel = () => {
     const [visible, setVisible] = useState(true)
     return (
         <div className={`rounded-2xl w-full fixed bottom-0 z-20 bg-white pt-4 ${visible ? '' : 'hidden'}`}>
@@ -20,4 +21,4 @@ export const NewOrderPopUp = () => {
     )
 }
 
-export default NewOrderPopUp
+export default NewOrderPopUpModel

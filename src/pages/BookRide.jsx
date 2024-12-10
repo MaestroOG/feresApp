@@ -122,7 +122,7 @@ const BookRide = () => {
             }
             {rideInfoPop && <RideInfoPopUp />}
 
-            {providerOverview && <div className='bg-[#EFEFEF] rounded-t-[13px] min-h-[302px] fixed bottom-0 left-0 w-full z-[101]'>
+            {providerOverview && <div className='bg-[#EFEFEF] rounded-t-[13px] min-h-[232px] fixed bottom-0 left-0 w-full z-[101]'>
                 <div className='bg-white w-full py-2 mb-1'>
                     <img src={assets.popup_bar} alt="" className='mx-auto' />
                     <img src={assets.cancel_circle} alt="" className='float-right pr-4' onClick={() => setProviderOverview(false)} />

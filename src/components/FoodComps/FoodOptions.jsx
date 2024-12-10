@@ -6,7 +6,7 @@ import { FeresContext } from '../../context/FeresContext'
 const FoodOptions = ({ options }) => {
     const { checkedItems, setCheckedItems } = useContext(FeresContext)
     return (
-        <div className={`bg-white mb-4 rounded-3xl`}>
+        <div className={`bg-white mb-4 rounded-3xl`} style={{borderTop:'1px #ececec solid'}}>
             {/* <div className='flex items-center gap-2 px-4 py-2 mt-2 rounded-2xl'>
                 <h3 className='text-[#2F2F3F] font-bold text-lg'>Lorem ipsum dolor</h3>
                 <p className='text-white font-medium text-xs bg-[#E92D53] w-[69px] text-center rounded-md px-[10px] py-[5px]'>Required</p>
