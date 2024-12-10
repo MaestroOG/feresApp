@@ -237,7 +237,7 @@ const Restaurant = () => {
 
         <>
 
-            <><div className='pb-16'>
+            <><div className={`pb-16 ${foodPopup && 'blur-sm'}`}>
                 <div>
                     {/* Feature */}
                     <div className={`relative`}>
