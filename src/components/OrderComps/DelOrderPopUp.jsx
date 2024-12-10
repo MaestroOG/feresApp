@@ -19,7 +19,7 @@ const DelOrderPopUp = () => {
 
     const handleDelete = () => {
         const cartUniqueToken = uuidv4()
-        const newUserDetail = { ...userDetail, token: cartUniqueToken }
+        const newUserDetail = { ...userDetail, cart_unique_token : cartUniqueToken }
         dispatch(loginUser(newUserDetail))
         localStorage.setItem("cart_unique_token", cartUniqueToken)
         localStorage.setItem("userData", JSON.stringify(newUserDetail))

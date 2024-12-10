@@ -7,7 +7,7 @@ import { loginUser } from '../redux/slices/userAuthSlice';
 
 
 
-const NewOrderPopUpModel = () => {
+const NewOrderPopUpModel = ({handleOK}) => {
     const [visible, setVisible] = useState(true);
     const userDetail = useSelector((state) => state.userAuth.user)
     const dispatch = useDispatch()
@@ -16,6 +16,7 @@ const NewOrderPopUpModel = () => {
         const newObj = {...userDetail , cart_unique_token: cartUniqueToken }
         dispatch(loginUser(newObj))
         localStorage.setItem("userData", JSON.stringify(newObj))
+        handleOK && handleOK(cartUniqueToken)
         dispatch(setNewOrderPopup(false))
     }
 
@@ -31,7 +32,7 @@ const NewOrderPopUpModel = () => {
             ></div>
 
             {/* Popup Content */}
-            <div className="rounded-tr-2xl rounded-tl-2xl w-full max-w-md mx-auto fixed bottom-0 z-60 bg-white pt-4">
+            <div className="rounded-tr-2xl rounded-tl-2xl w-full mx-auto fixed bottom-0 z-60 bg-white pt-4">
                 <div className="bg-[#ECFFF3] w-11/12 mx-auto rounded-lg">
                     <img src={assets.newOrder_img} alt="" />
                 </div>

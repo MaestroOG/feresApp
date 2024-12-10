@@ -3,18 +3,23 @@ import Container from '../../components/Container'
 import { assets } from '../../assets/assets'
 import { usePost } from '../../servies/usePost'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import NewOrderPopUpModel from '../NewOrderPopUp'
+import { setNewOrderPopup } from '../../redux/slices/modelToggleSlice'
+import { setCartItemData } from '../../redux/slices/cartDetail'
 
 const MartItemDetail = () => {
+
     const { id } = useParams()
     const { post, loading, error } = usePost()
     const [itemDetail, setItemDetail] = useState(null)
     const [quantity, setQuantity] = useState(1)
     const navigate = useNavigate()
-
+    const newOrderPopup = useSelector((state)=> state.modelToggle.newOrderPopup) 
+    const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
     const loginUser = useSelector((state) => state.userAuth.user)
-
+    const dispatch = useDispatch()
 
     const fetchItemDetail = async () => {
         const endpoint = '/api/e-commerce/get_item_detial'
@@ -34,6 +39,9 @@ const MartItemDetail = () => {
     };
 
     const addItemInCart = async () => {
+        if(selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData ){
+
+       
         const endpoint = '/api/user/new_add_item_in_cart'
         try {
             const data = await post(endpoint, {
@@ -77,6 +85,56 @@ const MartItemDetail = () => {
         } catch (error) {
             console.log(error.message)
         }
+
+    }else{
+        dispatch(setNewOrderPopup(true))
+
+    }
+
+    }
+
+    const handleNewItem =async (cartUniqueToken)=>{
+          const endpoint = '/api/user/new_add_item_in_cart'
+          
+            const data = await post(endpoint, {
+                
+                cart_unique_token: cartUniqueToken,
+                user_id: loginUser.user_id,
+                // user_id: "621fc0e0c2545594abfd644e",
+                server_token: loginUser.token,
+                // server_token: "0Iqb69j2rP7x4yY7ZGeRst5pfnyp8vfZ",
+                device_type: loginUser.device_type,
+                destination: {
+                    address: "",
+                    location: {
+                        lat: 9.001826571711009,
+                        lng: 38.76956474035978
+                    }
+                },
+                item: {
+                    _id: itemDetail?.item?._id,
+                    name: itemDetail?.item?.name,
+                    price: itemDetail?.item?.price,
+                    quantity: quantity,
+                    specification: itemDetail?.item?.specifications || [],
+                    unique_id: itemDetail?.item?.unique_id,
+                    product_id: itemDetail?.item?.product_id,
+                    image_url: itemDetail?.item.image_url ? itemDetail?.item.image_url[0] : "",
+                    is_promotion_available: itemDetail?.item?.is_promotion || 0,
+                    order_item_description: itemDetail?.item.details || "",
+                    promotion: itemDetail?.item.promotion || 0,
+                    total_quantity: itemDetail?.item.total_quantity,
+                    sales_commission: itemDetail?.product?.sales_commission || 0,
+                    shipment_commission: 0,
+                    total_item_price: itemDetail?.item.price * quantity,
+                    store_id: itemDetail?.item.store_id,
+                }
+            })
+            const userDetailsResponse = await post('/api/user/get_cart', {
+                cart_unique_token: loginUser.cart_unique_token,
+            })
+            dispatch(setCartItemData(userDetailsResponse.cart))
+
     }
 
     useEffect(() => {
@@ -84,6 +142,7 @@ const MartItemDetail = () => {
     }, [])
     return (
         <div>
+           {newOrderPopup && <NewOrderPopUpModel handleOK={handleNewItem}/>}
             {/* Top Bar */}
             <Container className={'py-5 flex items-center justify-between'}>
                 <img src={assets.arrow_left} alt="" className='invert' onClick={() => navigate(-1)} />
