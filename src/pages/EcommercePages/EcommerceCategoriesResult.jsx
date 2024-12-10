@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { assets } from '../../assets/assets'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import SearchBar from '../../components/SearchBar'
 import PopularStoreCard from '../../components/EcommerceComps/MainPageComps/PopularStoreCard'
 import Container from '../../components/Container'
@@ -17,10 +17,14 @@ const EcommerceCategoriesResult = () => {
     const { filterPop, setFilterPop } = useContext(FeresContext)
 
     const fetchCategories = async () => {
-        const endpoint = '/api/e-commerce/get_category_list'
+        const endpoint = '/api/e-commerce/get_ecommerce_stores_list'
         try {
             const data = await post(endpoint, {})
-            setList(data)
+            if (data) {
+                const newData = data.stores.filter(store => store.category_name === name)
+                setList(newData)
+                console.log(list)
+            }
         } catch (error) {
             console.log(error.message)
         }
@@ -56,27 +60,50 @@ const EcommerceCategoriesResult = () => {
 
             {filterPop ? <FilterPopUp /> : null}
 
-            <Container className={'my-7'}>
+            <Container className={'my-10'}>
 
                 {loading && <div>Loading...</div>}
                 {error && <div>An Error Occurred</div>}
 
-                {list && list?.success && <>
+                {list && <>
                     <h3 className='text-[#2F2F3F] text-lg font-medium my-3 pt-16'>{name} Stores</h3>
-                    {list?.categories.map(category => (
-                        <div key={category?._id} className='border border-[#F4F4F4] py-3 mt-5 flex rounded-xl' onClick={() => navigate(`/ecommerce/mart/${category?._id}`)}>
-                            {/* Card Left */}
-                            <div className='px-2'>
-                                <img src={category?.featured_image} alt="" className='w-[85px] h-[84px] object-cover rounded-xl' />
-                            </div>
-                            {/* Card Right */}
-                            <div>
-                                <h3 className='text-[14px] font-medium'>{category?.category_name}</h3>
-                            </div>
-                        </div>
+                    {list.length === 0 && <h1 className='text-center my-5'>No Stores Found...</h1>}
+                    {list?.map(category => (
+                        <>
+                            <Link to={`/ecommerce/mart/${category?.category_id}`} className='my-4 flex items-center gap-5'>
+                                <img src={category?.image_url} alt="" width={"85px"} height={"85px"} className='rounded-lg' />
+                                <div className='flex flex-col gap-1'>
+                                    <div className='flex items-center gap-4'>
+                                        <h3 className='text-[#2F2F3F] font-medium'>{category?.name}</h3>
+                                        <div className='flex items-center gap-1'>
+                                            <img src={assets.star} alt="" />
+                                            <p className='text-[#2F2F3F] text-sm'>{category?.user_rate}</p>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p className='text-sm text-[#979797]'>{category?.Description}</p>
+                                    </div>
+                                    <div className='flex items-center gap-4'>
+                                        <div className='flex items-center gap-1'>
+                                            <img src={assets.clock_01} alt="" />
+                                            <p className='text-[#2F2F3F] text-sm'>{category?.delivery_time} mins</p>
+                                        </div>
+                                        <div className='flex items-center gap-1'>
+                                            <img src={assets.scooter_02} alt="" />
+                                            <p className='text-[#2F2F3F] text-sm'>ETB {category?.discount}</p>
+                                        </div>
+                                    </div>
+                                    {/* {isDiscount && <div className='text-[#0AB247] text-[9px] font-medium bg-[#0AB2471A] p-1 rounded w-[88px]'>
+                                        Up to ETB 120 OFF
+                                    </div>} */}
+                                </div>
+                            </Link>
+                            <hr className='my-5' />
+                        </>
                     ))}
                 </>
                 }
+                {/* {list && JSON.stringify(list, null, 2)} */}
 
             </Container>
 

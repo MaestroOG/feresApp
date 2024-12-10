@@ -108,11 +108,11 @@ const Ecommerce = () => {
             {/* Shop By Store Type */}
             <Container className={'my-7'}>
                 <h3 className='text-[#2F2F3F] text-lg font-medium my-3'>More Stores</h3>
-                {/* <div className='flex items-center gap-4 overflow-auto no-scrollbar sticky top-24 bg-white z-50 pb-3'>
+                <div className='flex items-center gap-4 overflow-auto no-scrollbar sticky top-24 bg-white z-50 pb-3'>
                     <button className={`active rounded-full p-3 whitespace-nowrap text-lg`}>{buttons[0]}</button>
                     <button className={`inactive rounded-full p-3 whitespace-nowrap text-lg`}>{buttons[1]}</button>
                     <button className={`inactive rounded-full p-3 whitespace-nowrap text-lg`}>{buttons[2]}</button>
-                </div> */}
+                </div>
                 {loading && <div>Loading...</div>}
                 {error && <div>Error Fetching Stores...</div>}
                 {stores && stores?.stores?.slice(0, 5).map((store, index) => (
