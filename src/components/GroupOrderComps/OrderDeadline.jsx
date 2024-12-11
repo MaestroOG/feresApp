@@ -32,7 +32,7 @@ const OrderDeadline = ({ onCancel, onConfirm, time, setTime, handleSetClick, sel
         const cartTokenUrl = response.url
            const cartToken = cartTokenUrl.split('?')
 // onConfirm()
-        handleShare(`http://localhost:5173/restaurant/${selectedResturant?.store?._id}?${cartToken[1]}`)
+        handleShare(`https://feres-app.vercel.app/restaurant/${selectedResturant?.store?._id}?${cartToken[1]}`)
     }
     }
 
