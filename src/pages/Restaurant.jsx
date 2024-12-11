@@ -66,7 +66,7 @@ const Restaurant = () => {
     const selectedFood = useSelector((state) => state.selectedFood.selectedFood);
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
     const cartCount = useSelector((state) => state.cartDetails.cartCount)
-
+    const [cartUniqueToken, setCartUniqueToken] = useState(null);
     const [showQr, setShowQr] = useState(false)
     const [firstGroup, setFirstGroup] = useState(false)
     const [ordDeadline, setOrdDeadline] = useState(false)
@@ -148,8 +148,8 @@ const Restaurant = () => {
         }
     }
 
-    const fetchCart = async () => {
-        const cartDetailsResponse = await post('/api/user/get_cart', { cart_unique_token: loginUser.cart_unique_token })
+    const fetchCart = async (cart_unique_token) => {
+        const cartDetailsResponse = await post('/api/user/get_cart', { cart_unique_token: cart_unique_token })
 
         dispatch(setCartItemData(cartDetailsResponse.cart))
         localStorage.setItem("cartData", JSON.stringify(cartDetailsResponse))
@@ -225,7 +225,22 @@ const Restaurant = () => {
     }, [])
 
     useEffect(() => {
-        fetchCart()
+        const currentUrl = window.location.href;
+
+        // Extract the cart_unique_token from the URL
+        const url = new URL(currentUrl);
+        const params = new URLSearchParams(url.search);
+        const token = params.get('cart_unique_token');
+    
+        if (token) {
+            console.log(token,"tokentoken");
+            fetchCart(token)
+          setCartUniqueToken(token);
+        }else{
+            fetchCart(loginUser.cart_unique_token)
+            console.log('not a group order !')
+        }
+       
     }, [loginUser])
 
     // const addItemInCart = useCallback((data) => {
