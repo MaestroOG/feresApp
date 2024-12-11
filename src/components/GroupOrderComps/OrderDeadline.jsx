@@ -28,9 +28,12 @@ const OrderDeadline = ({ onCancel, onConfirm, time, setTime, handleSetClick, sel
     };  
     const handleCreateGroupOrder =async ()=>{
         const response =await post('/api/user/create_group_order', { cart_id : cartItemData?._id , user_id: userDetail.user_id , is_deadline : false, group_order_expire_at:"2024-09-11T01:50:08.641+00:00"})
-
+        if(response.success){
+        const cartTokenUrl = response.url
+           const cartToken = cartTokenUrl.split('?')
 // onConfirm()
-        handleShare(`http://localhost:5173/restaurant/${selectedResturant?.store?._id}`)
+        handleShare(`http://localhost:5173/restaurant/${selectedResturant?.store?._id}?${cartToken[1]}`)
+    }
     }
 
     return (
