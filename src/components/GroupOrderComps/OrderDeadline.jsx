@@ -6,11 +6,31 @@ import { usePost } from '../../servies/usePost'
 
 const OrderDeadline = ({ onCancel, onConfirm, time, setTime, handleSetClick, selectedDate }) => {
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
+    const userDetail = useSelector((state) => state.userAuth.user)
+
     const {post}= usePost()
     // console.log(cartItemData?._id, "selectedDateselectedDateselectedDate");
-        
-    const handleCreateGroupOrder = ()=>{
-        const response = post('', { cart_id : "" , user_id: '', is_deadline : false})
+    const handleShare = async (url) => {
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: 'Check this out!',
+                    text: 'Here is a link I want to share with you.',
+                    url: url, // Replace with the actual link
+                });
+                console.log('Successfully shared!');
+            } catch (error) {
+                console.error('Error sharing:', error);
+            }
+        } else {
+            alert('Sharing not supported on this browser.');
+        }
+    };  
+    const handleCreateGroupOrder =async ()=>{
+        const response =await post('/api/user/create_group_order', { cart_id : cartItemData?._id , user_id: userDetail.user_id , is_deadline : false, group_order_expire_at:"2024-09-11T01:50:08.641+00:00"})
+
+onConfirm()
+        handleShare(response.url)
     }
 
     return (
@@ -42,7 +62,7 @@ const OrderDeadline = ({ onCancel, onConfirm, time, setTime, handleSetClick, sel
                     </div>
                 </div>
 
-                <button className='w-full bg-[#0AB247] rounded-full p-4 text-white text-lg font-medium mb-5' onClick={onConfirm}>Confirm</button>
+                <button className='w-full bg-[#0AB247] rounded-full p-4 text-white text-lg font-medium mb-5' onClick={handleCreateGroupOrder}>Confirm</button>
             </Container>
         </div>
     )
