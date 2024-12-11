@@ -55,6 +55,8 @@ const OrderPage = () => {
                         <OrderCards order={order} key={index} />
                     ))
                 }
+
+                {history && !history?.success && <NoOrderWarn orderCat={"Completed"} />}
             </div>
             <Menu />
         </div>
