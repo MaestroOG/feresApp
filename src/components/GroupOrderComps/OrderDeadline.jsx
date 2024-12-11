@@ -7,16 +7,16 @@ import { usePost } from '../../servies/usePost'
 const OrderDeadline = ({ onCancel, onConfirm, time, setTime, handleSetClick, selectedDate }) => {
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
     const userDetail = useSelector((state) => state.userAuth.user)
+    const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
+    const {post} = usePost()
 
-    const {post}= usePost()
-    // console.log(cartItemData?._id, "selectedDateselectedDateselectedDate");
     const handleShare = async (url) => {
         if (navigator.share) {
             try {
                 await navigator.share({
                     title: 'Check this out!',
                     text: 'Here is a link I want to share with you.',
-                    url: url, // Replace with the actual link
+                    url: url,
                 });
                 console.log('Successfully shared!');
             } catch (error) {
@@ -29,8 +29,8 @@ const OrderDeadline = ({ onCancel, onConfirm, time, setTime, handleSetClick, sel
     const handleCreateGroupOrder =async ()=>{
         const response =await post('/api/user/create_group_order', { cart_id : cartItemData?._id , user_id: userDetail.user_id , is_deadline : false, group_order_expire_at:"2024-09-11T01:50:08.641+00:00"})
 
-onConfirm()
-        handleShare(response.url)
+// onConfirm()
+        handleShare(`http://localhost:5173/restaurant/${selectedResturant?.store?._id}`)
     }
 
     return (
