@@ -8,7 +8,7 @@ const OrderDeadline = ({ onCancel, onConfirm, time, setTime, handleSetClick, sel
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
     const userDetail = useSelector((state) => state.userAuth.user)
     const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
-    const {post} = usePost()
+    const { post } = usePost()
 
     const handleShare = async (url) => {
         if (navigator.share) {
@@ -25,19 +25,19 @@ const OrderDeadline = ({ onCancel, onConfirm, time, setTime, handleSetClick, sel
         } else {
             alert('Sharing not supported on this browser.');
         }
-    };  
-    const handleCreateGroupOrder =async ()=>{
-        const response =await post('/api/user/create_group_order', { cart_id : cartItemData?._id , user_id: userDetail.user_id , is_deadline : false, group_order_expire_at:"2024-09-11T01:50:08.641+00:00"})
-        if(response.success){
-        const cartTokenUrl = response.url
-           const cartToken = cartTokenUrl.split('?')
-// onConfirm()
-        handleShare(`https://feres-app.vercel.app/restaurant/${selectedResturant?.store?._id}?${cartToken[1]}`)
-    }
+    };
+    const handleCreateGroupOrder = async () => {
+        const response = await post('/api/user/create_group_order', { cart_id: cartItemData?._id, user_id: userDetail.user_id, is_deadline: false, group_order_expire_at: "2024-09-11T01:50:08.641+00:00" })
+        if (response.success) {
+            const cartTokenUrl = response.url
+            const cartToken = cartTokenUrl.split('?')
+            // onConfirm()
+            handleShare(`https://feres-app.vercel.app/restaurant/${selectedResturant?.store?._id}?${cartToken[1]}`)
+        }
     }
 
     return (
-        <div className='h-screen w-full bg-[#06060626] fixed top-0 z-[100] left-0'>
+        <div className='h-screen w-full bg-[#06060626] fixed top-0 z-[10000] left-0'>
 
             <Container className={'fixed top-[3%]'}>
                 <div className='bg-[#F8F8F8] border border-[#DDDDDD26] flex items-center gap-2 rounded-2xl p-3'>
