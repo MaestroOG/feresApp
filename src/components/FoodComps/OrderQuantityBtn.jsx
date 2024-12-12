@@ -1,14 +1,20 @@
 import React, { useState } from 'react'
 import { assets } from '../../assets/assets'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setShowModel } from '../../redux/slices/modelToggleSlice'
 import { addItem } from '../../redux/slices/cartSlice'
 import { usePostRequest } from '../../servies/usePostRequest'
+import { usePost } from '../../servies/usePost'
+import { setCartItemData } from '../../redux/slices/cartDetail'
 
 const OrderQuantityBtn = ({ itemFoodPopup }) => {
     const { loading, error, response, postRequest } = usePostRequest();
+    const { post } = usePost()
     const dispatch = useDispatch()
+    const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
+    const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
+    const loginUser = useSelector((state) => state.userAuth.user)
     const [orderCount, setOrderCount] = useState(1)
     const navigate = useNavigate();
 
@@ -22,13 +28,13 @@ const OrderQuantityBtn = ({ itemFoodPopup }) => {
         setOrderCount(orderCount + 1)
     }
 
-    const handleAddItem = () => {
+    const handleAddItem =async () => {
         if (itemFoodPopup) {
             const requestBody = {
-                cart_unique_token: "i5H3Gacl5CPbcOSY4Wip",
-                user_id: "665ff60f83157cfd6e1b0b48",
-                server_token: "co47wswKut7emZp2qOUWdEWVDbZvVTDl",
-                device_type: "android",
+                cart_unique_token:  loginUser.cart_unique_token,
+                user_id:loginUser.user_id,
+                server_token: loginUser.token,
+                device_type: loginUser.device_type,
                 destination: {
                     address: "",
                     location: {
@@ -56,6 +62,11 @@ const OrderQuantityBtn = ({ itemFoodPopup }) => {
                 }
             };
             postRequest('/api/user/new_add_item_in_cart', requestBody)
+            const userDetailsResponse = await post('/api/user/get_cart', {
+                cart_unique_token: loginUser.cart_unique_token,
+            })
+            dispatch(setCartItemData(userDetailsResponse.cart))
+
             // Dispatch both item and its quantity
             dispatch(addItem({ ...itemFoodPopup, quantity: orderCount }))
         }

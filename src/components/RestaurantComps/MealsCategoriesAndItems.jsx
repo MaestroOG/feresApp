@@ -121,6 +121,9 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id, cartUniqueToken }) =
         console.log(requestBody, "here is a data of unexpected cart ");
 
         const data = await post('/api/user/new_add_item_in_cart', requestBody)
+        const userDetailsResponseprev = await post('/api/user/get_cart', {
+            cart_unique_token: loginUser.cart_unique_token,
+        })
         const userDetailsResponse = await post('/api/user/get_cart', {
             cart_unique_token: loginUser.cart_unique_token,
         })

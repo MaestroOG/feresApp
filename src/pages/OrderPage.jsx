@@ -12,6 +12,7 @@ const OrderPage = () => {
     const { orderCat } = useContext(FeresContext)
     const [history, setHistory] = useState(null)
     const { post, loading, error } = usePost();
+    const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
     const user = useSelector(state => state.userAuth.user)
 
     const getOrderHistory = async () => {
@@ -51,8 +52,10 @@ const OrderPage = () => {
                     error && <div>An Error Occured</div>
                 }
                 {
+                       orderCat == "Active" ?  <OrderCards order={cartItemData.stores[0]} key={0} /> : 
                     history && history?.success && history?.order_list.map((order, index) => (
-                        <OrderCards order={order} key={index} />
+                      
+                        orderCat == "Cancelled" ? order.order_status == 101 && <OrderCards order={order} key={index} /> : order.order_status != 101 && <OrderCards order={order} key={index} />
                     ))
                 }
 

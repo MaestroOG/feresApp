@@ -189,7 +189,7 @@ const EcommerceMart = () => {
                                                 {findCartItemQuantity(item) > 0 ? (
                                                     <span className="text-[#0AB247] font-bold">{findCartItemQuantity(item)}</span>
                                                 ) : (
-                                                    null
+                                                    <img src={assets.add_green} alt="" />
                                                 )}
                                             </div>
                                         </div>

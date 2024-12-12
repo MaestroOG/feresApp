@@ -16,10 +16,11 @@ const ReviewPayPopup = ({ onCancelClick, onNotNowClick, selectedResturant, onPay
     const dispatch = useDispatch()
     const cartDetail = useSelector((state) => state.cartDetails.cartDetails)
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
+    const loginUserData = useSelector((state) => state.userAuth.user)
     const { tipBtn, setTipBtn, discount, customTip, deliveryPickup } = useContext(FeresContext)
     const userDetail = useSelector((state) => state.userAuth.user)
     const navigate = useNavigate()
-    const [number, setNumber] = useState("")
+    const [number, setNumber] = useState(loginUserData?.phone || "")
     const [paymentName, setPaymentName] = useState('')
     const [otp, setOtp] = useState('')
 

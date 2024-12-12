@@ -92,7 +92,8 @@ const OrderConfirmBtn = ({ orderData, setReview }) => {
                         delivery_user_phone: "",
                         is_user_pick_up_order: "",
                         order_start_at: 0,
-                        schedule_order_start_at: ""
+                        schedule_order_start_at: "",
+                        is_schedule_order:false
                     })
 
 
@@ -138,7 +139,9 @@ const OrderConfirmBtn = ({ orderData, setReview }) => {
                             delivery_user_phone: "",
                             is_user_pick_up_order: "",
                             order_start_at: 0,
-                            schedule_order_start_at: ""
+                            schedule_order_start_at: "",
+                        is_schedule_order:false
+
                         })
     
     

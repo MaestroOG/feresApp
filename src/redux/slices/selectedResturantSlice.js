@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+const storedResturant = JSON.parse(localStorage.getItem("selectedResturant")) 
 
 const initialState = {
-  selectedResturant: null,
+  selectedResturant: storedResturant || null,
 };
 
 const selectedResturantSlice = createSlice({
@@ -10,6 +11,7 @@ const selectedResturantSlice = createSlice({
   reducers: {
     setSelectedResturant: (state, action) => {
       state.selectedResturant = action.payload;
+      localStorage.setItem("selectedResturant", JSON.stringify(action.payload))
     },
   },
 });
