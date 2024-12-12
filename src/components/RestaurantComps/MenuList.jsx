@@ -92,10 +92,13 @@ const MenuList = ({ products, addItemInCart,cartUniqueToken }) => {
             cart_unique_token: cartUniqueToken
         }
 
-            if(loginUser.cart_unique_token == cartUniqueToken){
+            if(loginUser.cart_unique_token != cartUniqueToken || cartUniqueToken){
               const responseData =  await post('/api/user/new_add_group_item_in_cart',requestDataGroup)
               console.log(responseData,"responseDataresponseDataresponseData");
-              
+              const userDetailsResponse = await post('/api/user/get_cart', {
+                cart_unique_token: cartUniqueToken,
+            })
+            dispatch(setCartItemData(userDetailsResponse.cart))
             }else{
         if (selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData) {
             const data = await post('/api/user/new_add_item_in_cart', requestBody)
