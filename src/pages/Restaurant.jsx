@@ -150,7 +150,6 @@ const Restaurant = () => {
 
     const fetchCart = async (cart_unique_token) => {
         const cartDetailsResponse = await post('/api/user/get_cart', { cart_unique_token: cart_unique_token })
-
         dispatch(setCartItemData(cartDetailsResponse.cart))
         localStorage.setItem("cartData", JSON.stringify(cartDetailsResponse))
 
@@ -233,9 +232,8 @@ const Restaurant = () => {
         const token = params.get('cart_unique_token');
     
         if (token) {
-            console.log(token,"tokentoken");
-            fetchCart(token)
           setCartUniqueToken(token);
+            fetchCart(token)
         }else{
             fetchCart(loginUser.cart_unique_token)
             console.log('not a group order !')
@@ -351,7 +349,7 @@ const Restaurant = () => {
                             </div>
                         </div>
 
-                        <MealsCategoriesAndItems categoryItems={selectedResturant?.store?.products} store_id={selectedResturant?.store?._id} />
+                        <MealsCategoriesAndItems categoryItems={selectedResturant?.store?.products} store_id={selectedResturant?.store?._id} cartUniqueToken={cartUniqueToken} />
 
                         {/* Delivered By Feres Popup*/}
 

@@ -8,7 +8,7 @@ import { usePost } from '../../servies/usePost'
 import { setCartItemData } from '../../redux/slices/cartDetail'
 import { FeresContext } from '../../context/FeresContext'
 
-const MenuList = ({ products, addItemInCart }) => {
+const MenuList = ({ products, addItemInCart,cartUniqueToken }) => {
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
     const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
     const loginUser = useSelector((state) => state.userAuth.user)
@@ -17,7 +17,8 @@ const MenuList = ({ products, addItemInCart }) => {
     const [orderCount, setOrderCount] = useState(1)
     const { setFoodPopup } = useContext(FeresContext)
 
-    // console.log('selected resturent', cartItemData.stores._id);
+
+
 
 
 
@@ -58,8 +59,44 @@ const MenuList = ({ products, addItemInCart }) => {
             }
         }
 
+        const requestDataGroup =  {
+            user_id: cartItemData.user._id,
+            "type_product": "food",
+            group_order: true,
+            group_user: loginUser._user_id,
+            item: {
+                _id: item._id,
+                name: item.name,
+                price: item.price,
+                quantity: orderCount,
+                specification: item.specifications || [],
+                unique_id: item.unique_id,
+                product_id: item.product_id,
+                image_url: item.image_url ? item.image_url[0] : "",
+                is_promotion_available: item.is_promotion_available,
+                order_item_description: item.details || "",
+                promotion: item.promotion || 0,
+                total_quantity: item.total_quantity,
+                sales_commission: 0,
+                shipment_commission: 0,
+                total_item_price: item.price * orderCount,
+                store_id: item.store_id,
+            },
+            destination: {
+                location: {
+                    lat: 0,
+                    lng: 0
+                },
+            address: ""
+            },
+            cart_unique_token: cartUniqueToken
+        }
 
-        console.log(requestBody, "here is a data of unexpected cart ");
+            if(loginUser.cart_unique_token == cartUniqueToken){
+              const responseData =  await post('/api/user/new_add_group_item_in_cart',requestDataGroup)
+              console.log(responseData,"responseDataresponseDataresponseData");
+              
+            }else{
         if (selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData) {
             const data = await post('/api/user/new_add_item_in_cart', requestBody)
             const userDetailsResponse = await post('/api/user/get_cart', {
@@ -73,6 +110,8 @@ const MenuList = ({ products, addItemInCart }) => {
             })
             dispatch(setCartItemData(userDetailsResponse.cart))
         }
+
+    }
     }
 
     // Helper function to check if an item is in the cart

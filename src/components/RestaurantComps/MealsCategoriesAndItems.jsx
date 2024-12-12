@@ -9,7 +9,7 @@ import { useSelector , useDispatch} from 'react-redux';
 import NewOrderPopUpModel from '../../pages/NewOrderPopUp';
 
 
-const MealsCategoriesAndItems = ({ categoryItems, store_id }) => {
+const MealsCategoriesAndItems = ({ categoryItems, store_id, cartUniqueToken }) => {
     const dispatch = useDispatch()
     const newOrderPopup = useSelector((state)=> state.modelToggle.newOrderPopup) 
     const { tableList, setTableList } = useContext(FeresContext);
@@ -245,6 +245,7 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id }) => {
                                 name={'item.name'}
                                 desc={'item.desc'}
                                 products={cateItems?.items}
+                                cartUniqueToken={cartUniqueToken}
                             />
                         </div>
                     ))
