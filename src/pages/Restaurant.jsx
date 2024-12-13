@@ -407,7 +407,7 @@ const Restaurant = () => {
                 </div>
             </div></>
 
-            {foodPopup && <FoodPopUp itemFoodPopup={selectedFood} />}
+            {foodPopup && <FoodPopUp itemFoodPopup={selectedFood} cartUniqueToken={cartUniqueToken}/>}
             {firstGroup && <GroupOrder1 setIsOpen={setFirstGroup} onEdit={() => {
                 setFirstGroup(false)
                 setOrdDeadline(true)

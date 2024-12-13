@@ -6,6 +6,7 @@ import MartProductCard from './MartProductCard'
 import EcommerceAddBasket from './EcommerceAddBasket'
 import { usePost } from '../../servies/usePost'
 import { FeresContext } from '../../context/FeresContext'
+import { useSelector } from 'react-redux'
 
 const MartProduct = () => {
     const [products, setProducts] = useState(null)
@@ -13,6 +14,7 @@ const MartProduct = () => {
     const { loading, error, post } = usePost()
     const { id } = useParams()
     const { ecat } = useContext(FeresContext)
+    const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
 
     const fetchProducts = async () => {
         const endpoint = '/api/e-commerce/get_products_in_category'
@@ -22,9 +24,8 @@ const MartProduct = () => {
             })
 
             if (data) {
-                const newData = data.products.filter(product => product.name === ecat)
+                const newData = data?.products?.filter(product => product?.name === ecat)
                 setProducts(newData)
-                console.log(products);
             }
         } catch (error) {
             console.log(error.message)
@@ -45,13 +46,15 @@ const MartProduct = () => {
                         <h1 className='text-[#2F2F3F] text-[23px] font-bold'>{product?.name}</h1>
                     </Container>
                     <Container className={'grid grid-cols-2 gap-4 mt-5'}>
-                        {product?.no_items.map(item => (
+                        {product?.no_items?.map(item => (
                             <MartProductCard item={item} />
                         ))}
                     </Container>
                 </>
             ))
             }
+            {cartItemData && <EcommerceAddBasket cart_price={cartItemData?.total_cart_price} cart_quantity={cartItemData?.total_item_count} to={`/ecommerce/cart/${id}`} />}
+
         </div>
     )
 }

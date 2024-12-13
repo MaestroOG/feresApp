@@ -23,7 +23,7 @@ const OrderConfirmBtn = ({ orderData, setReview }) => {
     const rangeRef = useRef(null);
     const thumbRef = useRef(null);
 
-    console.log(paymentMethod);
+
     // console.log(cartItemData._id);
     // const { paymentMethod } = useContext(FeresContext)
 
@@ -49,7 +49,7 @@ const OrderConfirmBtn = ({ orderData, setReview }) => {
         const newValue = e.target.value;
         setValue(newValue);
 
-        // console.log(newValue);
+        console.log(paymentMethod,"paymentMethodpaymentMethodpaymentMethod");
 
 
         if (newValue === "100") {
@@ -92,7 +92,8 @@ const OrderConfirmBtn = ({ orderData, setReview }) => {
                         delivery_user_phone: "",
                         is_user_pick_up_order: "",
                         order_start_at: 0,
-                        schedule_order_start_at: ""
+                        schedule_order_start_at: "",
+                        is_schedule_order:false
                     })
 
 
@@ -138,7 +139,9 @@ const OrderConfirmBtn = ({ orderData, setReview }) => {
                             delivery_user_phone: "",
                             is_user_pick_up_order: "",
                             order_start_at: 0,
-                            schedule_order_start_at: ""
+                            schedule_order_start_at: "",
+                        is_schedule_order:false
+
                         })
     
     

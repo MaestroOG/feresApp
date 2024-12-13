@@ -52,8 +52,8 @@ const RiderCard = ({ providerInfo }) => {
         <div className='border border-[#EEEEEE] rounded-[16px] flex items-center justify-between p-5 mt-5' onClick={() => navigate('/riderinfo')}>
             {loading && <div>Loading....</div>}
             {error && <div>Error fetching details</div>}
-            {provider && provider?.provider_detail.length === 0 && <div>Waiting for acceptance</div>}
-            {provider && provider?.provider_detail.length > 0 && <>
+            {provider && provider?.provider_detail?.length === 0 && <div>Waiting for acceptance</div>}
+            {provider && provider?.provider_detail?.length > 0 && <>
                 <div className='flex items-center gap-2'>
                     <img src={provider?.provider_detail.image_url} alt="" width={'50px'} height={'30px'} style={{ borderRadius: '50px' }} />
                     <div>

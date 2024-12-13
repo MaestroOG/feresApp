@@ -11,10 +11,11 @@ import FoodOptions from '../FoodComps/FoodOptions'
 import { usePost } from '../../servies/usePost'
 import { setShowModel } from '../../redux/slices/modelToggleSlice'
 
-const FoodPopUp = ({ img, text, itemFoodPopup }) => {
+const FoodPopUp = ({ img, text, itemFoodPopup ,cartUniqueToken}) => {
 
     const [fvrt, setFvrt] = useState(null)
     const loginUser = useSelector((state) => state.userAuth.user);
+    const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
     const [note, setNote] = useState('')
     const [details, setDetails] = useState(null)
     const { post } = usePost()
@@ -59,6 +60,8 @@ const FoodPopUp = ({ img, text, itemFoodPopup }) => {
 
 
     const handleAddItem = async () => {
+console.log(loginUser.user_id, "here is a group order api 1");
+
         closeRef.current.click()
         if (itemFoodPopup) {
             const requestBody = {
@@ -92,18 +95,65 @@ const FoodPopUp = ({ img, text, itemFoodPopup }) => {
                     store_id: itemFoodPopup.store_id,
                 },
             };
+
+            if(cartUniqueToken && loginUser.cart_unique_token != cartUniqueToken){
+                const requestDataGroup =  {
+                    user_id: cartItemData.user._id,
+                    "type_product": "food",
+                    group_order: true,
+                    group_user: loginUser.user_id,
+                    item: {
+                        _id: itemFoodPopup._id,
+                        name: itemFoodPopup.name,
+                        price: itemFoodPopup.price,
+                        quantity: orderCount,
+                        specification: itemFoodPopup.specifications || [],
+                        unique_id: itemFoodPopup.unique_id,
+                        product_id: itemFoodPopup.product_id,
+                        image_url: itemFoodPopup.image_url ? itemFoodPopup.image_url[0] : "",
+                        is_promotion_available: itemFoodPopup.is_promotion_available,
+                        order_item_description: itemFoodPopup.details || "",
+                        promotion: itemFoodPopup.promotion || 0,
+                        total_quantity: itemFoodPopup.total_quantity,
+                        sales_commission: 0,
+                        shipment_commission: 0,
+                        total_item_price: itemFoodPopup.price * orderCount,
+                        store_id: itemFoodPopup.store_id,
+                    },
+                    destination: {
+                        location: {
+                            lat: 0,
+                            lng: 0
+                        },
+                    address: ""
+                    },
+                    cart_unique_token: cartUniqueToken
+                }
+
+                const responseData =  await post('/api/user/new_add_group_item_in_cart',requestDataGroup)
+            //     const userDetailsResponse = await post('/api/user/get_cart', {
+            //       cart_unique_token: cartUniqueToken,
+            //   })
+            console.log('responseData::::::::',responseData);
+            
+
+            }else{
             postRequest('/api/user/new_add_item_in_cart', requestBody)
             // Dispatch both item and its quantity
             dispatch(addItem({ ...itemFoodPopup, quantity: orderCount }))
+            const userDetailsResponseprev = await post('/api/user/get_cart', {
+                cart_unique_token: loginUser.cart_unique_token,
+            })
             const userDetailsResponse = await post('/api/user/get_cart', {
                 cart_unique_token: loginUser.cart_unique_token,
             })
             dispatch(setCartItemData(userDetailsResponse.cart));
         }
+    }
         dispatch(setShowModel(false))
     }
 
-    console.log(itemFoodPopup, "placing order");
+
 
     useEffect(() => {
         getDetail()
