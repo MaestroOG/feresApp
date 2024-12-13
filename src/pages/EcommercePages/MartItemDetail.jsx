@@ -78,6 +78,12 @@ const MartItemDetail = () => {
                 }
             })
 
+
+                const cartResponse = await post('/api/user/get_cart', {
+                    cart_unique_token: loginUser.cart_unique_token
+                })
+                dispatch(setCartItemData(cartResponse.cart))
+
             if (data.success) {
                 navigate(-1)
             }

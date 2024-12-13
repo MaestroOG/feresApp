@@ -23,7 +23,7 @@ const OrderConfirmBtn = ({ orderData, setReview }) => {
     const rangeRef = useRef(null);
     const thumbRef = useRef(null);
 
-    console.log(paymentMethod);
+
     // console.log(cartItemData._id);
     // const { paymentMethod } = useContext(FeresContext)
 
@@ -49,7 +49,7 @@ const OrderConfirmBtn = ({ orderData, setReview }) => {
         const newValue = e.target.value;
         setValue(newValue);
 
-        // console.log(newValue);
+        console.log(paymentMethod,"paymentMethodpaymentMethodpaymentMethod");
 
 
         if (newValue === "100") {

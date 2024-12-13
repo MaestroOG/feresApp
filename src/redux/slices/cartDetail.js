@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+const storedCartItem = JSON.parse(localStorage.getItem('cartItemData'))
 const initialState = {
   cartDetails: null,
-  cartItemData: null,
+  cartItemData: storedCartItem || null,
   providerInfo: null,
   cartCount: 0
 };
@@ -16,6 +16,7 @@ const cartDetails = createSlice({
     },
     setCartItemData: (state, action) => {
       state.cartItemData = action.payload;
+    localStorage.setItem("cartItemData", JSON.stringify(action.payload))
      const itemCount = action?.payload?.stores[0]?.items.filter((item)=>{
       return item.quantity > 0})
     state.cartCount = itemCount?.length
