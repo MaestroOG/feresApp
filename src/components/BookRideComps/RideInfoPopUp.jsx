@@ -32,7 +32,7 @@ const RideInfoPopUp = () => {
     const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
 
 
-    console.log(userDetail);
+    // console.log(userDetail);
 
 
     const callApi = async () => {
@@ -45,10 +45,23 @@ const RideInfoPopUp = () => {
 
             });
             const data = response
+
+            dispatch(setProviderInfo({
+                provider_id: response?.provider_id,
+                provider_first_name: response?.provider_first_name,
+                provider_last_name: response?.provider_last_name,
+                provider_image: response?.provider_image,
+                provider_country_phone_code: response?.provider_country_phone_code,
+                provider_phone: response?.provider_phone,
+                user_rate: response?.user_rate,
+            }))
+
             if (response?.delivery_status != 0) {
                 if (response?.delivery_status == 111) {
                     console.log('order rejected go ack');
                 } else {
+                    console.log('rider ifo', response?.provider_id);
+                    
                     setProgress(response?.delivery_status)
                     dispatch(setProviderInfo({
                         provider_id: response?.provider_id,

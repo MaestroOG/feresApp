@@ -130,7 +130,7 @@ const BookRide = () => {
                         <h1 className='text-[#2F2F3F] font-medium text-xl'>Rider is heading to {selectedResturant?.store.name}...</h1>
                     </div> */}
                     <hr className='my-5 w-[90%] mx-auto' />
-                    <RiderCard />
+                    <RiderCard providerInfo={providerInfo}/>
                 </div>
                 <Container className={'py-5 w-full fixed left-0 bottom-0 bg-white flex items-center justify-between gap-5'}>
                     <button className='w-1/2 rounded-full bg-[#EBF9EE] p-4 flex items-center gap-4 justify-center'>
