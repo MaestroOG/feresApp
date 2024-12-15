@@ -15,11 +15,12 @@ const MartItemDetail = () => {
     const [itemDetail, setItemDetail] = useState(null)
     const [quantity, setQuantity] = useState(1)
     const navigate = useNavigate()
-    const newOrderPopup = useSelector((state)=> state.modelToggle.newOrderPopup) 
+    const newOrderPopup = useSelector((state) => state.modelToggle.newOrderPopup)
     const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
     const loginUser = useSelector((state) => state.userAuth.user)
     const dispatch = useDispatch()
+    const [favRes, setFavRes] = useState(null)
 
     const fetchItemDetail = async () => {
         const endpoint = '/api/e-commerce/get_item_detial'
@@ -34,49 +35,66 @@ const MartItemDetail = () => {
         }
     }
 
+    const toggleFavorite = async () => {
+        const endpoint = '/api/user/toggle_favourite_items'
+        try {
+            const data = await post(endpoint, {
+                "user_id": loginUser?.user_id,
+                "item_id": itemDetail?.item.store_id,
+                "store_id": itemDetail?.item.store_id
+            })
+
+            if (data) {
+                setFavRes(data)
+            }
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+
     const removeNextFourAfterAmpersand = (inputString) => {
         return inputString.replace(/&.{4}/g, ''); // Match '&' followed by any 4 characters and replace it with an empty string
     };
 
     const addItemInCart = async () => {
-        if(selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData ){
+        if (selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData) {
 
-       
-        const endpoint = '/api/user/new_add_item_in_cart'
-        try {
-            const data = await post(endpoint, {
-                cart_unique_token: loginUser.cart_unique_token,
-                user_id: loginUser.user_id,
-                // user_id: "621fc0e0c2545594abfd644e",
-                server_token: loginUser.token,
-                // server_token: "0Iqb69j2rP7x4yY7ZGeRst5pfnyp8vfZ",
-                device_type: loginUser.device_type,
-                destination: {
-                    address: "",
-                    location: {
-                        lat: 9.001826571711009,
-                        lng: 38.76956474035978
+
+            const endpoint = '/api/user/new_add_item_in_cart'
+            try {
+                const data = await post(endpoint, {
+                    cart_unique_token: loginUser.cart_unique_token,
+                    user_id: loginUser.user_id,
+                    // user_id: "621fc0e0c2545594abfd644e",
+                    server_token: loginUser.token,
+                    // server_token: "0Iqb69j2rP7x4yY7ZGeRst5pfnyp8vfZ",
+                    device_type: loginUser.device_type,
+                    destination: {
+                        address: "",
+                        location: {
+                            lat: 9.001826571711009,
+                            lng: 38.76956474035978
+                        }
+                    },
+                    item: {
+                        _id: itemDetail?.item?._id,
+                        name: itemDetail?.item?.name,
+                        price: itemDetail?.item?.price,
+                        quantity: quantity,
+                        specification: itemDetail?.item?.specifications || [],
+                        unique_id: itemDetail?.item?.unique_id,
+                        product_id: itemDetail?.item?.product_id,
+                        image_url: itemDetail?.item.image_url ? itemDetail?.item.image_url[0] : "",
+                        is_promotion_available: itemDetail?.item?.is_promotion || 0,
+                        order_item_description: itemDetail?.item.details || "",
+                        promotion: itemDetail?.item.promotion || 0,
+                        total_quantity: itemDetail?.item.total_quantity,
+                        sales_commission: itemDetail?.product?.sales_commission || 0,
+                        shipment_commission: 0,
+                        total_item_price: itemDetail?.item.price * quantity,
+                        store_id: itemDetail?.item.store_id,
                     }
-                },
-                item: {
-                    _id: itemDetail?.item?._id,
-                    name: itemDetail?.item?.name,
-                    price: itemDetail?.item?.price,
-                    quantity: quantity,
-                    specification: itemDetail?.item?.specifications || [],
-                    unique_id: itemDetail?.item?.unique_id,
-                    product_id: itemDetail?.item?.product_id,
-                    image_url: itemDetail?.item.image_url ? itemDetail?.item.image_url[0] : "",
-                    is_promotion_available: itemDetail?.item?.is_promotion || 0,
-                    order_item_description: itemDetail?.item.details || "",
-                    promotion: itemDetail?.item.promotion || 0,
-                    total_quantity: itemDetail?.item.total_quantity,
-                    sales_commission: itemDetail?.product?.sales_commission || 0,
-                    shipment_commission: 0,
-                    total_item_price: itemDetail?.item.price * quantity,
-                    store_id: itemDetail?.item.store_id,
-                }
-            })
+                })
 
 
                 const cartResponse = await post('/api/user/get_cart', {
@@ -84,62 +102,62 @@ const MartItemDetail = () => {
                 })
                 dispatch(setCartItemData(cartResponse.cart))
 
-            if (data.success) {
-                navigate(-1)
+                if (data.success) {
+                    navigate(-1)
+                }
+
+            } catch (error) {
+                console.log(error.message)
             }
 
-        } catch (error) {
-            console.log(error.message)
+        } else {
+            dispatch(setNewOrderPopup(true))
+
         }
 
-    }else{
-        dispatch(setNewOrderPopup(true))
-
     }
 
-    }
+    const handleNewItem = async (cartUniqueToken) => {
+        const endpoint = '/api/user/new_add_item_in_cart'
 
-    const handleNewItem =async (cartUniqueToken)=>{
-          const endpoint = '/api/user/new_add_item_in_cart'
-          
-            const data = await post(endpoint, {
-                
-                cart_unique_token: cartUniqueToken,
-                user_id: loginUser.user_id,
-                // user_id: "621fc0e0c2545594abfd644e",
-                server_token: loginUser.token,
-                // server_token: "0Iqb69j2rP7x4yY7ZGeRst5pfnyp8vfZ",
-                device_type: loginUser.device_type,
-                destination: {
-                    address: "",
-                    location: {
-                        lat: 9.001826571711009,
-                        lng: 38.76956474035978
-                    }
-                },
-                item: {
-                    _id: itemDetail?.item?._id,
-                    name: itemDetail?.item?.name,
-                    price: itemDetail?.item?.price,
-                    quantity: quantity,
-                    specification: itemDetail?.item?.specifications || [],
-                    unique_id: itemDetail?.item?.unique_id,
-                    product_id: itemDetail?.item?.product_id,
-                    image_url: itemDetail?.item.image_url ? itemDetail?.item.image_url[0] : "",
-                    is_promotion_available: itemDetail?.item?.is_promotion || 0,
-                    order_item_description: itemDetail?.item.details || "",
-                    promotion: itemDetail?.item.promotion || 0,
-                    total_quantity: itemDetail?.item.total_quantity,
-                    sales_commission: itemDetail?.product?.sales_commission || 0,
-                    shipment_commission: 0,
-                    total_item_price: itemDetail?.item.price * quantity,
-                    store_id: itemDetail?.item.store_id,
+        const data = await post(endpoint, {
+
+            cart_unique_token: cartUniqueToken,
+            user_id: loginUser.user_id,
+            // user_id: "621fc0e0c2545594abfd644e",
+            server_token: loginUser.token,
+            // server_token: "0Iqb69j2rP7x4yY7ZGeRst5pfnyp8vfZ",
+            device_type: loginUser.device_type,
+            destination: {
+                address: "",
+                location: {
+                    lat: 9.001826571711009,
+                    lng: 38.76956474035978
                 }
-            })
-            const userDetailsResponse = await post('/api/user/get_cart', {
-                cart_unique_token: loginUser.cart_unique_token,
-            })
-            dispatch(setCartItemData(userDetailsResponse.cart))
+            },
+            item: {
+                _id: itemDetail?.item?._id,
+                name: itemDetail?.item?.name,
+                price: itemDetail?.item?.price,
+                quantity: quantity,
+                specification: itemDetail?.item?.specifications || [],
+                unique_id: itemDetail?.item?.unique_id,
+                product_id: itemDetail?.item?.product_id,
+                image_url: itemDetail?.item.image_url ? itemDetail?.item.image_url[0] : "",
+                is_promotion_available: itemDetail?.item?.is_promotion || 0,
+                order_item_description: itemDetail?.item.details || "",
+                promotion: itemDetail?.item.promotion || 0,
+                total_quantity: itemDetail?.item.total_quantity,
+                sales_commission: itemDetail?.product?.sales_commission || 0,
+                shipment_commission: 0,
+                total_item_price: itemDetail?.item.price * quantity,
+                store_id: itemDetail?.item.store_id,
+            }
+        })
+        const userDetailsResponse = await post('/api/user/get_cart', {
+            cart_unique_token: loginUser.cart_unique_token,
+        })
+        dispatch(setCartItemData(userDetailsResponse.cart))
 
     }
 
@@ -148,20 +166,20 @@ const MartItemDetail = () => {
     }, [])
     return (
         <div>
-           {newOrderPopup && <NewOrderPopUpModel handleOK={handleNewItem}/>}
+            {newOrderPopup && <NewOrderPopUpModel handleOK={handleNewItem} />}
             {/* Top Bar */}
-            <Container className={'py-5 flex items-center justify-between'}>
+            <Container className={'py-5 flex items-center justify-between sticky top-0 w-full bg-white z-30'}>
                 <img src={assets.arrow_left} alt="" className='invert' onClick={() => navigate(-1)} />
                 <h1 className='text-[#2F2F3F] text-[23px] font-bold'>Product details</h1>
-                <button className='border border-[#EEEEEE] rounded-xl p-2'>
-                    <img src={assets.favourite} alt="" />
+                <button className='border border-[#EEEEEE] rounded-xl p-2' onClick={() => toggleFavorite()}>
+                    <img src={favRes && favRes?.success ? assets.favourite_active : assets.favourite} alt="" />
                 </button>
             </Container>
 
             {/* Details */}
             {loading && <div>Loading...</div>}
             {error && <div>An Error Ocurred</div>}
-            {itemDetail && itemDetail?.success && <Container>
+            {itemDetail && itemDetail?.success && <Container className={'pb-24'}>
                 <div className='bg-[#F1F1F1] rounded-2xl'>
                     <img src={itemDetail?.item?.image_url[0] && itemDetail?.item?.image_url[0]} className="object-cover rounded-2xl" width={"398px"} height={"297px"} />
                 </div>

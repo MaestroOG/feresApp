@@ -7,8 +7,10 @@ import OtherReasonPop from '../components/CancelOrderComps/OtherReasonPop'
 import SuccessPopup from '../components/SuccessPopup'
 import { assets } from '../assets/assets'
 import { usePost } from '../servies/usePost'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { loginUser } from '../redux/slices/userAuthSlice'
+import { v4 as uuidv4 } from "uuid";
 
 
 
@@ -18,6 +20,7 @@ const CancelOrder = () => {
     const { cancelReason } = useContext(FeresContext)
     const { post, error } = usePost()
     const [successPop, setSuccessPop] = useState(false)
+    const dispatch = useDispatch()
 
     const cancelOrder = async () => {
         await post('/api/user/user_reject_order', {
@@ -42,7 +45,10 @@ const CancelOrder = () => {
                 cancelOrder()
                 setSuccessPop(true)
                 navigate('/')
-
+                dispatch(loginUser({
+                    ...userDetail,
+                    cart_unique_token: uuidv4(),
+                }))
             }} />
         </div>
     )

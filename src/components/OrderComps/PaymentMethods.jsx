@@ -36,7 +36,7 @@ const PaymentMethods = ({ img, text, isCard, isDiscount, onClick }) => {
                             <p className='font-medium text-sm text-[#2F2F3F]'>Cash</p>
                         </>}
 
-                        {paymentMethod.startsWith('6') && <>
+                        {paymentMethod === 'ebirr' && <>
                             <img className='w-[32px] h-[24px] rounded-lg' src={assets.ebirr_sticker} alt="" />
                             <p className='font-medium text-sm text-[#2F2F3F]'>E-birr</p>
                         </>}
