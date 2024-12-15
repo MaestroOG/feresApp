@@ -7,6 +7,8 @@ import { assets } from '../assets/assets';
 import RiderCard from '../components/RateRiderComps/RiderCard';
 import { useSelector } from 'react-redux';
 import Container from '../components/Container';
+import CountDownTimer from '../components/BookRideComps/CountDownTimer';
+
 
 const BookRide = () => {
     const { rideInfoPop, setRideInfoPop } = useContext(FeresContext);
@@ -14,6 +16,10 @@ const BookRide = () => {
     const [map, setMap] = useState(null);
     const [providerOverview, setProviderOverview] = useState(false)
     const [timerData, setTimerData] = useState(null)
+    const orderStatus = useSelector(state => state.cartDetails.orderStatus)
+    const cartDetail = useSelector(state => state.cartDetails.cartDetails)
+
+const storeLocation = cartDetail?.store[0]?.location
 
     useEffect(() => {
         const loader = new Loader({
@@ -32,6 +38,7 @@ const BookRide = () => {
             const mapInstance = new google.maps.Map(mapRef.current, {
                 center: { lat: 37.7749, lng: -122.4194 }, // Default center
                 zoom: 14,
+                mapTypeControl: false,
             });
             directionsRenderer.setMap(mapInstance);
             setMap(mapInstance);
@@ -90,8 +97,13 @@ const BookRide = () => {
     return (
         <div className='relative h-[100vh] overflow-hidden transition-all'>
             <BookRideNav storeName={selectedResturant?.store?.name} />
-            <p className='text-[#2F2F3F] text-lg text-center py-3 pb-8'>Waiting for restaurant to confirm your order...</p>
-
+           {orderStatus < 1  && <p className='text-[#2F2F3F] text-lg text-center py-3 pb-8'>Waiting for {selectedResturant?.store?.name} to confirm your order</p> }
+           {orderStatus > 1 && orderStatus < 5 && <p className='text-[#2F2F3F] text-lg text-center py-3 pb-8'>{selectedResturant?.store?.name} has been confirmed your order</p> }
+           {orderStatus > 5 && orderStatus < 7 && <p className='text-[#2F2F3F] text-lg text-center py-3 pb-8'>Your order is ready for pickup</p>}
+           {orderStatus > 7 && orderStatus < 13 && <p className='text-[#2F2F3F] text-lg text-center py-3 pb-8'>Rider has been assgined to your order</p> }
+           {orderStatus > 13 && orderStatus < 25 && <p className='text-[#2F2F3F] text-lg text-center py-3 pb-8'>Rider has on the way to you</p> }
+           {orderStatus == 25 && <p className='text-[#2F2F3F] text-lg text-center py-3 pb-8'>your order is delivered</p>}
+          
             {/* Map Container */}
             <div
                 ref={mapRef}

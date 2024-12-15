@@ -8,7 +8,8 @@ const initialState = {
   cartDetails: null,
   cartItemData: storedCartItem || null,
   providerInfo: null,
-  cartCount: 0
+  cartCount: 0,
+  orderStatus: 1
 };
 
 const cartDetails = createSlice({
@@ -33,11 +34,14 @@ const cartDetails = createSlice({
     },
     setCartCount: (state, action) => {
       state.cartCount = action.payload;
+    },
+    setOrderStatus: (state, action) => {
+      state.orderStatus = action.payload;
     }
   },
 });
 
-export const { setCartDetails, setCartItemData, setProviderInfo, setCartCount } =
+export const { setCartDetails, setCartItemData, setProviderInfo, setCartCount,setOrderStatus } =
   cartDetails.actions;
 
 export default cartDetails.reducer;

@@ -5,7 +5,7 @@ import { FeresContext } from '../../context/FeresContext'
 import { usePost } from '../../servies/usePost'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
-import { setProviderInfo } from '../../redux/slices/cartDetail'
+import { setOrderStatus, setProviderInfo } from '../../redux/slices/cartDetail'
 import { Loader } from '@googlemaps/js-api-loader'
 import CountDownTimer from './CountDownTimer'
 import { setUserChat } from '../../redux/slices/chatSlice'
@@ -60,9 +60,10 @@ const RideInfoPopUp = () => {
                 if (response?.delivery_status == 111) {
                     console.log('order rejected go ack');
                 } else {
-                    console.log('rider ifo', response?.provider_id);
+
                     
                     setProgress(response?.delivery_status)
+                    dispatch(setOrderStatus(response?.delivery_status))
                     dispatch(setProviderInfo({
                         provider_id: response?.provider_id,
                         provider_first_name: response?.provider_first_name,
@@ -74,7 +75,7 @@ const RideInfoPopUp = () => {
                     }))
                 }
             } else if (response?.delivery_status == 25) {
-                console.log('dfsdsda', response?.delivery_status);
+
                 dispatch(setProviderInfo({
                     provider_id: response?.provider_id,
                     provider_first_name: response?.provider_first_name,
@@ -89,6 +90,7 @@ const RideInfoPopUp = () => {
                 }, 5000);
             } else {
                 setProgress(response?.order_status)
+                dispatch(setOrderStatus(response?.delivery_status))
             }
 
             setUniqueOrderId(data.unique_id)
@@ -240,8 +242,8 @@ const RideInfoPopUp = () => {
                 <p className='text-[#2F2F3F] text-xl font-medium'>Order #{uniquOrderId && uniquOrderId}</p>
                 <div className='mt-4'>
                     {cartDetails?.stores?.map(items => (
-                        items.items.map(item => (
-                            <div className='flex items-center justify-between gap-2'>
+                        items?.items?.map((item,index) => (
+                            <div className='flex items-center justify-between gap-2' key={index}>
                                 <div className='flex items-center gap-2'>
                                     <p className='text-[#2F2F3F] text-base'>{item?.quantity} X</p>
                                     <p className='text-[#2F2F3F] text-base'>{item?.name}</p>
