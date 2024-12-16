@@ -5,14 +5,15 @@ import { FeresContext } from '../../context/FeresContext';
 import TableList from './TableList';
 import { usePost } from '../../servies/usePost';
 import { setCartItemData } from '../../redux/slices/cartDetail';
-import { useSelector , useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import NewOrderPopUpModel from '../../pages/NewOrderPopUp';
+import { setSelectedFood } from '../../redux/slices/selectedFoodSlice';
 
 
 const MealsCategoriesAndItems = ({ categoryItems, store_id, cartUniqueToken }) => {
     const dispatch = useDispatch()
-    const newOrderPopup = useSelector((state)=> state.modelToggle.newOrderPopup) 
-    const { tableList, setTableList } = useContext(FeresContext);
+    const newOrderPopup = useSelector((state) => state.modelToggle.newOrderPopup)
+    const { tableList, setTableList, setFoodPopup } = useContext(FeresContext);
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
     const loginUser = useSelector((state) => state.userAuth.user)
     const [scrollActive, setScrollActive] = useState(false);
@@ -137,10 +138,10 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id, cartUniqueToken }) =
         return cartItem ? cartItem.quantity : null;
     };
 
-    
+
     return (
         <div className='relative'>
-           {newOrderPopup && <NewOrderPopUpModel />}
+            {newOrderPopup && <NewOrderPopUpModel />}
             {/* Table Or List Row */}
             <div className='px-4 pt-9 pb-4 flex items-center justify-between'>
                 <h2 className='text-[#2F2F3F] text-xl font-medium'>Meals Categories</h2>
@@ -191,11 +192,14 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id, cartUniqueToken }) =
                 </div>
             </div>
 
-             {/* Trending Items Row */}
-             <div className='px-4 my-7 flex items-center overflow-auto no-scrollbar flex-shrink-0 z-10'>
+            {/* Trending Items Row */}
+            <div className='px-4 my-7 flex items-center overflow-auto no-scrollbar flex-shrink-0 z-10'>
                 <div className='flex'>
                     {trendingItems?.map((item) => (
-                        <div key={item?.product_id} className='min-w-[170px]'>
+                        <div key={item?.product_id} className='min-w-[170px]' onClick={() => {
+                            dispatch(setSelectedFood(item));
+                            setFoodPopup(true)
+                        }}>
                             <div className='relative w-max'>
                                 <img
                                     src={item?.image_url[0]}
