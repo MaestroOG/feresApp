@@ -6,11 +6,14 @@ import { usePost } from '../../servies/usePost';
 import { setCartItemData } from '../../redux/slices/cartDetail';
 import { assets } from '../../assets/assets';
 import { FeresContext } from '../../context/FeresContext';
+import { useNavigate } from 'react-router-dom';
+import { setSupportItem } from '../../redux/slices/selectedResturantSlice';
 
-const TableList = ({ products }) => {
+
+const TableList = ({ products,support }) => {
     const dispatch = useDispatch();
     const { post } = usePost();
-
+    const navigate =useNavigate()
     // Redux Selectors
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData);
     const loginUser = useSelector((state) => state.userAuth.user);
@@ -79,6 +82,7 @@ const TableList = ({ products }) => {
         return (
             <div className="flex" key={item?._id}>
                 <div className="min-w-[170px]" onClick={() => {
+
                   if(selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData){
                     setFoodPopup(true)
                 } else{
@@ -88,12 +92,18 @@ const TableList = ({ products }) => {
                     <div
                         className="relative w-max"
                         onClick={() => {
+                            if(support){ 
+                                dispatch(setSupportItem(item)) 
+                                navigate('/restaurantsupport/ingredientinfo') }else{
                   if(selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData){
                             dispatch(setShowModel(true));
                             dispatch(setSelectedFood(item));
                         } else{
                             dispatch(setNewOrderPopup(true))
                           }
+
+                        }
+
                         }}
                     >
                         <img
@@ -112,8 +122,11 @@ const TableList = ({ products }) => {
                                     src={assets.add_green}
                                     alt=""
                                     onClick={(e) => {
+                            if(support){ 
+                                dispatch(setSupportItem(item)) 
+                                navigate('/restaurantsupport/ingredientinfo') }else{
                                         e.stopPropagation(); // Prevent parent div click
-                                        handleAddItem(item);
+                                        handleAddItem(item);}
                                     }}
                                 />
                             )}

@@ -4,15 +4,23 @@ import MenuCard from '../components/RestaurantComps/MenuCard'
 import { assets } from '../assets/assets'
 import { useNavigate } from 'react-router-dom'
 import MealsCategoriesAndItems from '../components/RestaurantComps/MealsCategoriesAndItems'
+import { useSelector } from 'react-redux'
 
 const SelectMenu = () => {
+    const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
     const [categoryBtn, setCategoryBtn] = useState('all')
     const navigate = useNavigate();
+    const loginUser = useSelector((state) => state.userAuth.user)
 
+
+
+    
     return (
         <div className='w-full'>
             <SupportNav />
-            <MealsCategoriesAndItems />
+            <MealsCategoriesAndItems categoryItems={selectedResturant?.store?.products} store_id={selectedResturant?.store?._id} cartUniqueToken={loginUser?.cart_unique_token} support={true}/>
+
+            {/* <MealsCategoriesAndItems /> */}
         </div>
     )
 }
