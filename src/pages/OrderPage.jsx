@@ -34,6 +34,7 @@ const OrderPage = () => {
 
     useEffect(() => {
         getOrderHistory()
+        console.log(cartItemData);
     }, [])
     return (
         <div className='h-screen pb-24'>
@@ -52,11 +53,11 @@ const OrderPage = () => {
                     error && <div>An Error Occured</div>
                 }
                 {
-                       orderCat == "Active" ?  <OrderCards order={cartItemData.stores[0]} key={0} /> : 
-                    history && history?.success && history?.order_list.map((order, index) => (
-                      
-                        orderCat == "Cancelled" ? order.order_status == 101 && <OrderCards order={order} key={index} /> : order.order_status != 101 && <OrderCards order={order} key={index} />
-                    ))
+                    orderCat == "Active" ? <OrderCards order={cartItemData?.stores[0]} key={0} /> :
+                        history && history?.success && history?.order_list.map((order, index) => (
+
+                            orderCat == "Cancelled" ? order.order_status == 101 && <OrderCards order={order} key={index} /> : order.order_status != 101 && <OrderCards order={order} key={index} />
+                        ))
                 }
 
                 {history && !history?.success && <NoOrderWarn orderCat={"Completed"} />}
