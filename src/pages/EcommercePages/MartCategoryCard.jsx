@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Container from '../../components/Container'
+import { useParams } from 'react-router-dom'
+import { FeresContext } from '../../context/FeresContext'
 
 const MartCategoryCard = ({ category }) => {
     const { id } = useParams()

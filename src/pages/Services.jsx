@@ -7,7 +7,6 @@ import Offers from '../components/ServiceComps/Offers'
 import Menu from '../components/ServiceComps/Menu'
 import { assets } from '../assets/assets'
 import { useNavigate } from 'react-router-dom'
-import GroceryStore from '../components/ServiceComps/GroceryStore'
 
 const Services = () => {
 
@@ -123,11 +122,11 @@ const Services = () => {
             </>
             <>
                 <div className='w-full px-2 mt-8'>
-                    <h2 className='text-[#2F2F3F] text-lg font-medium'>Grocery restaurants</h2>
+                    <h2 className='text-[#2F2F3F] text-lg font-medium'>Grocery stores</h2>
                     <div className='flex items-center gap-3 overflow-auto no-scrollbar'>
                         {isLoading ? <div>Loading...</div> : groceryStore && groceryStore.stores.slice(0, 2).map((store, index) => (
                             <div key={index} className="flex items-center gap-4">
-                                <div className='mt-6 w-max' onClick={() => navigate(`/restaurant/${store._id}`)}>
+                                <div className='mt-6 w-max' onClick={() => navigate(`/ecommerce/mart/${store?.category_id}`)}>
                                     {/* Top */}
                                     <img src={store.image_url} alt="" className='w-[365px] h-[166px] rounded-tr-3xl rounded-tl-3xl object-cover' />
                                     {/* Bottom */}
