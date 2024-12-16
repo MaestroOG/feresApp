@@ -61,7 +61,7 @@ const RideInfoPopUp = () => {
                     console.log('order rejected go ack');
                 } else {
 
-                    
+
                     setProgress(response?.delivery_status)
                     dispatch(setOrderStatus(response?.delivery_status))
                     dispatch(setProviderInfo({
@@ -153,7 +153,8 @@ const RideInfoPopUp = () => {
     }, [])
 
     useEffect(() => {
-        intervalRef.current = setInterval(callApi, 10000);
+        callApi();
+        intervalRef.current = setInterval(callApi, 4000);
 
         return () => clearInterval(intervalRef.current); // Cleanup on unmount
     }, [])
@@ -242,7 +243,7 @@ const RideInfoPopUp = () => {
                 <p className='text-[#2F2F3F] text-xl font-medium'>Order #{uniquOrderId && uniquOrderId}</p>
                 <div className='mt-4'>
                     {cartDetails?.stores?.map(items => (
-                        items?.items?.map((item,index) => (
+                        items?.items?.map((item, index) => (
                             <div className='flex items-center justify-between gap-2' key={index}>
                                 <div className='flex items-center gap-2'>
                                     <p className='text-[#2F2F3F] text-base'>{item?.quantity} X</p>

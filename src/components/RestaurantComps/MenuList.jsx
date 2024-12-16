@@ -8,7 +8,7 @@ import { usePost } from '../../servies/usePost'
 import { setCartItemData } from '../../redux/slices/cartDetail'
 import { FeresContext } from '../../context/FeresContext'
 
-const MenuList = ({ products, addItemInCart,cartUniqueToken }) => {
+const MenuList = ({ products, addItemInCart, cartUniqueToken }) => {
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
     const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
     const loginUser = useSelector((state) => state.userAuth.user)
@@ -16,11 +16,6 @@ const MenuList = ({ products, addItemInCart,cartUniqueToken }) => {
     const dispatch = useDispatch()
     const [orderCount, setOrderCount] = useState(1)
     const { setFoodPopup } = useContext(FeresContext)
-
-
-
-
-
 
 
     const handleAddItem = async (item) => {
@@ -61,7 +56,7 @@ const MenuList = ({ products, addItemInCart,cartUniqueToken }) => {
             }
         }
 
-        const requestDataGroup =  {
+        const requestDataGroup = {
             user_id: cartItemData.user._id,
             "type_product": "food",
             group_order: true,
@@ -89,41 +84,41 @@ const MenuList = ({ products, addItemInCart,cartUniqueToken }) => {
                     lat: 0,
                     lng: 0
                 },
-            address: ""
+                address: ""
             },
             cart_unique_token: cartUniqueToken
         }
-console.log("userToken : ",loginUser.cart_unique_token ,  ", .....Host Token :", cartUniqueToken);
+        console.log("userToken : ", loginUser.cart_unique_token, ", .....Host Token :", cartUniqueToken);
 
-            if(loginUser.cart_unique_token != cartUniqueToken && cartUniqueToken){
-              const responseData =  await post('/api/user/new_add_group_item_in_cart',requestDataGroup)
-              const userDetailsResponseprev = await post('/api/user/get_cart', {
+        if (loginUser.cart_unique_token != cartUniqueToken && cartUniqueToken) {
+            const responseData = await post('/api/user/new_add_group_item_in_cart', requestDataGroup)
+            const userDetailsResponseprev = await post('/api/user/get_cart', {
                 cart_unique_token: loginUser.cart_unique_token,
             })
-              const userDetailsResponse = await post('/api/user/get_cart', {
+            const userDetailsResponse = await post('/api/user/get_cart', {
                 cart_unique_token: cartUniqueToken,
             })
             dispatch(setCartItemData(userDetailsResponse.cart))
-            console.log(userDetailsResponse,"responseDataresponseDataresponseData");
+            console.log(userDetailsResponse, "responseDataresponseDataresponseData");
 
-            }else{
-        if (selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData) {
-            const data = await post('/api/user/new_add_item_in_cart', requestBody)
-            if(data.success){
-            const userDetailsResponse = await post('/api/user/get_cart', {
-                cart_unique_token: loginUser.cart_unique_token,
-            })
-            dispatch(setCartItemData(userDetailsResponse.cart))
-        }
         } else {
-            const data = await post('/api/user/new_add_item_in_cart', requestBody)
-            const userDetailsResponse = await post('/api/user/get_cart', {
-                cart_unique_token: loginUser.cart_unique_token,
-            })
-            dispatch(setCartItemData(userDetailsResponse.cart))
-        }
+            if (selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData) {
+                const data = await post('/api/user/new_add_item_in_cart', requestBody)
+                if (data.success) {
+                    const userDetailsResponse = await post('/api/user/get_cart', {
+                        cart_unique_token: loginUser.cart_unique_token,
+                    })
+                    dispatch(setCartItemData(userDetailsResponse.cart))
+                }
+            } else {
+                const data = await post('/api/user/new_add_item_in_cart', requestBody)
+                const userDetailsResponse = await post('/api/user/get_cart', {
+                    cart_unique_token: loginUser.cart_unique_token,
+                })
+                dispatch(setCartItemData(userDetailsResponse.cart))
+            }
 
-    }
+        }
     }
 
     // Helper function to check if an item is in the cart
