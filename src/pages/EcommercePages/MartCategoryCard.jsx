@@ -2,8 +2,10 @@ import React, { useContext } from 'react'
 import Container from '../../components/Container'
 import { useParams } from 'react-router-dom'
 import { FeresContext } from '../../context/FeresContext'
+import { useNavigate } from 'react-router-dom'
 
 const MartCategoryCard = ({ category }) => {
+    const navigate = useNavigate()
     const { id } = useParams()
     const { setEcat } = useContext(FeresContext)
     const handleClick = (name) => {

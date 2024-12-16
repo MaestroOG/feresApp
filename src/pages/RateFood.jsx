@@ -5,10 +5,16 @@ import RateFoodFb from '../components/RateFoodComps/RateFoodFb'
 import RateFoodSubmitBtn from '../components/RateFoodComps/RateFoodSubmitBtn'
 import SuccessPopup from '../components/SuccessPopup'
 import { assets } from '../assets/assets'
-import { useSelector } from 'react-redux'
+import { useSelector,useDispatch } from 'react-redux'
 import { usePost } from '../servies/usePost'
+import { loginUser } from '../redux/slices/userAuthSlice'
+import { v4 as uuidv4 } from "uuid";
+import { setCartDetails, setCartItemData } from '../redux/slices/cartDetail'
+
+
 
 const RateFood = () => {
+    const dispatch = useDispatch()
     const [successPop, setSuccessPop] = useState(false)
     const [ratingText, setRatingText] = useState('');
     const { post, error } = usePost()
@@ -26,6 +32,13 @@ const RateFood = () => {
             user_rating_to_store: 3,
             user_review_to_store: ratingText
         })
+
+        dispatch(loginUser({
+            ...userData,
+            cart_unique_token: uuidv4(),
+        }))
+        dispatch(setCartDetails(null))
+        dispatch(setCartItemData(null))
 
 
     }

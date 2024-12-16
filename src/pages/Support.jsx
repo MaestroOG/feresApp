@@ -9,7 +9,7 @@ const Support = () => {
 
     useEffect(()=>{
         const fetchFaqs =async ()=>{
-            const response =await post('/api/get_all_faqs', { type : 0 })
+            const response =await post('/api/get_all_faqs', {store_id: "62778c74080197da749b5f1f" , type : 0 })
             setFaqs(response.faqs_list);
             
         }

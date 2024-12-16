@@ -94,13 +94,16 @@ const storeLocation = cartDetail?.store[0]?.location
     }, [])
 
 
+    console.log(orderStatus, "orderStatusorderStatusorderStatus");
+    
+
     return (
         <div className='relative h-[100vh] overflow-hidden transition-all'>
             <BookRideNav storeName={selectedResturant?.store?.name} />
            {orderStatus < 1  && <p className='text-[#2F2F3F] text-lg text-center py-3 pb-8'>Waiting for {selectedResturant?.store?.name} to confirm your order</p> }
-           {orderStatus > 1 && orderStatus < 5 && <p className='text-[#2F2F3F] text-lg text-center py-3 pb-8'>{selectedResturant?.store?.name} has been confirmed your order</p> }
-           {orderStatus > 5 && orderStatus < 7 && <p className='text-[#2F2F3F] text-lg text-center py-3 pb-8'>Your order is ready for pickup</p>}
-           {orderStatus > 7 && orderStatus < 13 && <p className='text-[#2F2F3F] text-lg text-center py-3 pb-8'>Rider has been assgined to your order</p> }
+           {orderStatus >= 1 && orderStatus <= 5 && <p className='text-[#2F2F3F] text-lg text-center py-3 pb-8'>{selectedResturant?.store?.name} has been confirmed your order</p> }
+           {orderStatus >= 5 && orderStatus <= 7 && <p className='text-[#2F2F3F] text-lg text-center py-3 pb-8'>Your order is ready for pickup</p>}
+           {orderStatus > 7 && orderStatus <= 13 && <p className='text-[#2F2F3F] text-lg text-center py-3 pb-8'>Rider has been assgined to your order</p> }
            {orderStatus > 13 && orderStatus < 25 && <p className='text-[#2F2F3F] text-lg text-center py-3 pb-8'>Rider has on the way to you</p> }
            {orderStatus == 25 && <p className='text-[#2F2F3F] text-lg text-center py-3 pb-8'>your order is delivered</p>}
           

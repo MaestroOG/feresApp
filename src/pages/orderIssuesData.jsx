@@ -17,7 +17,8 @@ const OrderIssuesData = () => {
     useEffect(()=>{
         const fetchData = async ()=>{
             const response = await post('/api/get_all_faqs', {
-                type: 1
+                type: 1,
+                store_id:""
             })
 console.log(response,"responseresponseresponse");
 
