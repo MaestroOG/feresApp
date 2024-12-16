@@ -8,10 +8,13 @@ import { setCartItemData } from '../../redux/slices/cartDetail';
 import { useSelector, useDispatch } from 'react-redux';
 import NewOrderPopUpModel from '../../pages/NewOrderPopUp';
 import { setSelectedFood } from '../../redux/slices/selectedFoodSlice';
+import { useNavigate } from 'react-router-dom';
+import { setSupportItem } from '../../redux/slices/selectedResturantSlice';
 
 
-const MealsCategoriesAndItems = ({ categoryItems, store_id, cartUniqueToken }) => {
+const MealsCategoriesAndItems = ({ categoryItems, store_id, cartUniqueToken, support }) => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const newOrderPopup = useSelector((state) => state.modelToggle.newOrderPopup)
     const { tableList, setTableList, setFoodPopup } = useContext(FeresContext);
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
@@ -197,8 +200,10 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id, cartUniqueToken }) =
                 <div className='flex'>
                     {trendingItems?.map((item) => (
                         <div key={item?.product_id} className='min-w-[170px]' onClick={() => {
-                            dispatch(setSelectedFood(item));
-                            setFoodPopup(true)
+                            if (support){ 
+                                dispatch(setSupportItem(item)) 
+                                navigate('/restaurantsupport/ingredientinfo') }else{dispatch(setSelectedFood(item));
+                            setFoodPopup(true)}
                         }}>
                             <div className='relative w-max'>
                                 <img
@@ -218,7 +223,9 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id, cartUniqueToken }) =
                                         <img
                                             src={assets.add_green}
                                             alt="Add"
-                                            onClick={() => handleAddItem(item)}
+                                            onClick={() =>{ if(support){ 
+                                               dispatch(setSupportItem(item)) 
+                                                navigate('/restaurantsupport/ingredientinfo')}else{ handleAddItem(item)}}}
                                         />
                                     )}
                                 </div>
@@ -251,6 +258,7 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id, cartUniqueToken }) =
                                 img={'item.img'}
                                 name={'item.name'}
                                 desc={'item.desc'}
+                                support={support}
                                 products={cateItems?.items}
                                 cartUniqueToken={cartUniqueToken}
                             />
@@ -265,7 +273,10 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id, cartUniqueToken }) =
                                 {cateItems?.name}
                             </h3>
                             <div className='flex items-center gap-2 overflow-auto no-scrollbar flex-shrink-0 my-7'>
-                                <TableList products={cateItems?.items} />
+                                <TableList 
+                                products={cateItems?.items}
+                                support={support}
+                                />
                             </div>
                         </div>
                     ))}

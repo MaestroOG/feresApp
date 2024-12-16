@@ -7,8 +7,11 @@ import { addItem } from '../../redux/slices/cartSlice'
 import { usePost } from '../../servies/usePost'
 import { setCartItemData } from '../../redux/slices/cartDetail'
 import { FeresContext } from '../../context/FeresContext'
+import { useNavigate } from 'react-router-dom'
+import { setSupportItem } from '../../redux/slices/selectedResturantSlice'
 
-const MenuList = ({ products, addItemInCart, cartUniqueToken }) => {
+const MenuList = ({ products, addItemInCart, cartUniqueToken , support }) => {
+    const navigate =  useNavigate()
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
     const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
     const loginUser = useSelector((state) => state.userAuth.user)
@@ -58,7 +61,7 @@ const MenuList = ({ products, addItemInCart, cartUniqueToken }) => {
 
         const requestDataGroup = {
             user_id: cartItemData.user._id,
-            "type_product": "food",
+            type_product: "food",
             group_order: true,
             group_user: loginUser.user_id,
             item: {
@@ -132,6 +135,43 @@ const MenuList = ({ products, addItemInCart, cartUniqueToken }) => {
     }
     return (
         <>
+        {support ? <div>
+            <div className='bg-[#FFD335] p-2 rounded-lg text-[#2F2F3F] text-xs font-medium w-max mt-6 mb-1'>Trending</div>
+            {products?.map((item) => (
+                <div key={item._id} onClick={() => {
+                    dispatch(setSupportItem(item)) 
+                    navigate('/restaurantsupport/ingredientinfo')
+                }}>
+                    <div className={`${item?.details.length > 0 && 'my-4'}`}>
+                        <div className='flex items-center justify-between' onClick={() => {
+                    dispatch(setSupportItem(item)) 
+                    navigate('/restaurantsupport/ingredientinfo')
+                          
+                        }}>
+                            <div className='flex flex-col gap-1 flex-[3]'>
+                                <div className='flex items-center gap-2'>
+                                    <h2 className='text-[#2F2F3F] text-sm font-medium'>{item?.name}</h2>
+                                     {/* <button className='border border-[#0AB247] bg-white p-2 w-[70px] rounded-full text-[#0AB247] text-sm font-medium' onClick={() => {
+                                    }}>
+                                            Add
+                                    </button> */}
+                                </div>
+                                <p className='text-[#AEAEAE] font-normal text-sm w-[90%]'>{item?.details}</p>
+                                <div className='flex items-center gap-2'>
+                                    <p className='text-[#AEAEAE] text-sm'>{`ETB 170`}</p>
+                                    <p className='text-[#0AB247] text-sm font-bold'>{`ETB ${item?.price}`}</p>
+                                </div>
+                            </div>
+                            <div className='relative flex items-end pb-3 justify-center top-[13px]'>
+                                {item?.image_url[0] && <img src={item?.image_url[0]} className='w-[132px] h-[123px] rounded-2xl object-cover ' alt=""
+                                    style={{ width: '132px', height: '123px' }} />}
+                            </div>
+                        </div>
+                    </div>
+                    <hr className='my-3' />
+                </div>
+            ))}
+            </div> : <div>
             <div className='bg-[#FFD335] p-2 rounded-lg text-[#2F2F3F] text-xs font-medium w-max mt-6 mb-1'>Trending</div>
             {products?.map((item) => (
                 <div key={item._id} onClick={() => {
@@ -176,6 +216,7 @@ const MenuList = ({ products, addItemInCart, cartUniqueToken }) => {
                     <hr className='my-3' />
                 </div>
             ))}
+            </div>}
         </>
     )
 }
