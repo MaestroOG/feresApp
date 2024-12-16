@@ -75,13 +75,24 @@ const Restaurant = () => {
     const loginUser = useSelector((state) => state.userAuth.user)
     const cartDetails = useSelector((state) => state.cartDetails.cartDetails);
     const selectedRestaurant = useSelector((state) => state.selectedResturant.selectedResturant)
-
-
-
+    const [promoInfo, setPromoInfo] = useState(null)
     const [deadline, setDeadline] = useState('any')
 
-
-
+    const fetchPromoInfo = async () => {
+        const endpoint = '/get_all_promotions'
+        try {
+            const data = await post(endpoint, {
+                user_id: loginUser?.user_id
+            })
+            if (data) {
+                const filteredData = data?.promotions_list?.filter(store => store?.store_id === id)
+                setPromoInfo(filteredData[0]);
+                console.log(promoInfo)
+            }
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
 
     const handleDateClick = () => {
         if (ordDeadline) setOrdDeadline(false)
@@ -219,7 +230,7 @@ const Restaurant = () => {
     useEffect(() => {
         fetchRestInfo();
         fetchMenuItems();
-
+        fetchPromoInfo()
         // addCategories()
     }, [])
 
@@ -230,15 +241,15 @@ const Restaurant = () => {
         const url = new URL(currentUrl);
         const params = new URLSearchParams(url.search);
         const token = params.get('cart_unique_token');
-    
+
         if (token) {
-          setCartUniqueToken(token);
+            setCartUniqueToken(token);
             fetchCart(token)
-        }else{
+        } else {
             fetchCart(loginUser.cart_unique_token)
             console.log('not a group order !')
         }
-       
+
     }, [loginUser])
 
     // const addItemInCart = useCallback((data) => {
@@ -341,7 +352,7 @@ const Restaurant = () => {
                                 </div>
                                 <div className='flex items-center gap-2' onClick={() => setSuccessPop(true)}>
                                     <img src={assets.discount_tag} alt="" />
-                                    <p className='text-xs text-[#2F2F3F]'>{restInfo && restInfo.store_detail.store_discount ? restInfo.store_detail.store_discount : "0"}% off on their entire menu</p>
+                                    <p className='text-xs text-[#2F2F3F]'>{promoInfo ? promoInfo?.discount_percent : "0"}% off on their entire menu</p>
                                 </div>
                             </div>
                             <div onClick={() => navigate('/restaurantsupport')}>
@@ -366,7 +377,7 @@ const Restaurant = () => {
 
                         {/* Food Popup */}
 
-                        {successPop && <SuccessPopup image={assets.success_img} title={"Get 30% off everything up to EBT 150.00"} desc={"The maximum discount for preorders is EBT 150, usable once, and valid until February 22, 2024."} />}
+                        {successPop && promoInfo && <SuccessPopup image={assets.success_img} title={`Get ${promoInfo?.discount_percent}% off everything up to EBT 150.00`} desc={promoInfo?.discount_details} />}
 
                         {sharePop ? <SharePopUp /> : null}
 
@@ -407,7 +418,7 @@ const Restaurant = () => {
                 </div>
             </div></>
 
-            {foodPopup && <FoodPopUp itemFoodPopup={selectedFood} cartUniqueToken={cartUniqueToken}/>}
+            {foodPopup && <FoodPopUp itemFoodPopup={selectedFood} cartUniqueToken={cartUniqueToken} />}
             {firstGroup && <GroupOrder1 setIsOpen={setFirstGroup} onEdit={() => {
                 setFirstGroup(false)
                 setOrdDeadline(true)

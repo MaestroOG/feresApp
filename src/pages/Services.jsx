@@ -122,7 +122,7 @@ const Services = () => {
             </>
             <>
                 <div className='w-full px-2 mt-8'>
-                    <h2 className='text-[#2F2F3F] text-lg font-medium'>Our Marts</h2>
+                    <h2 className='text-[#2F2F3F] text-lg font-medium'>Groceries stores</h2>
                     <div className='flex items-center gap-3 overflow-auto no-scrollbar'>
                         {isLoading ? <div>Loading...</div> : groceryStore && groceryStore.stores.slice(0, 2).map((store, index) => (
                             <div key={index} className="flex items-center gap-4">

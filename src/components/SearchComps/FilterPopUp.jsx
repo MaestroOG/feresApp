@@ -79,7 +79,7 @@ const FilterPopUp = ({ onClick }) => {
                 {/* Sort By */}
                 <div className='px-4 py-2 mt-5 bg-white rounded-3xl'>
                     <h2 className='text-lg font-bold text-[#2F2F3F]'>Sort By</h2>
-                    {/* <div className='mt-6 flex items-center justify-between'>
+                    <div className='mt-6 flex items-center justify-between'>
                         <p className='font-normal text-base text-[#646464]'>Closest</p>
                         <input type="radio" name="closest" id="" />
                     </div>
@@ -90,7 +90,7 @@ const FilterPopUp = ({ onClick }) => {
                     <div className='mt-6 flex items-center justify-between'>
                         <p className='font-normal text-base text-[#646464]'>Fastest Delivery</p>
                         <input type="radio" name="closest" id="" />
-                    </div> */}
+                    </div>
                     <div className='mt-6 flex items-center justify-between pb-6'>
                         <p className='font-normal text-base text-[#646464]'>Top rated</p>
                         <input type="checkbox" checked={filters?.rating} name="closest" id="" onClick={() => dispatch(toggleRating())} />
@@ -98,7 +98,7 @@ const FilterPopUp = ({ onClick }) => {
                 </div>
 
                 {/* Discount And Offers */}
-                {/* <div className='px-4 py-2 mt-5 bg-white rounded-3xl'>
+                <div className='px-4 py-2 mt-5 bg-white rounded-3xl'>
                     <h2 className='text-lg font-bold text-[#2F2F3F]'>Discounts and offers</h2>
                     <div className='mt-6 flex items-center justify-between'>
                         <p className='font-normal text-base text-[#646464]'>Menu discount</p>
@@ -116,10 +116,10 @@ const FilterPopUp = ({ onClick }) => {
                         <p className='font-normal text-base text-[#646464]'>without minimum basket price for discounts</p>
                         <input type="checkbox" name="offers" id="" />
                     </div>
-                </div> */}
+                </div>
 
                 {/* Ratings Filter */}
-                {/* <div className='px-4 py-2 mt-5 bg-white rounded-3xl'>
+                <div className='px-4 py-2 mt-5 bg-white rounded-3xl'>
                     <h2 className='text-lg font-bold text-[#2F2F3F]'>Ratings</h2>
                     <div className='mt-3 flex items-center gap-2'>
                         <button className={`${rating === '4' ? 'bg-[#0AB247] text-white' : 'bg-[#F8F8F8] text-[#2F2F3F]'} rounded-lg px-4 py-2 font-medium text-xs`} onClick={(e) => {
@@ -135,7 +135,7 @@ const FilterPopUp = ({ onClick }) => {
                             handlePreventDefault(e)
                         }}>From 4.7</button>
                     </div>
-                </div> */}
+                </div>
 
                 {/* Delivery Time */}
 
@@ -159,7 +159,7 @@ const FilterPopUp = ({ onClick }) => {
                 </div>
                 {/* Distance */}
 
-                {/* <div className='px-4 py-4 mt-5 bg-white rounded-3xl'>
+                <div className='px-4 py-4 mt-5 bg-white rounded-3xl'>
                     <h2 className='text-lg font-bold text-[#2F2F3F]'>Distance</h2>
                     <div className='mt-3 flex items-center gap-2'>
                         <button className={`${distance === '1' ? 'bg-[#0AB247] text-white' : 'bg-[#F8F8F8] text-[#2F2F3F]'} rounded-lg px-4 py-2 font-medium text-xs`} onClick={(e) => {
@@ -175,7 +175,7 @@ const FilterPopUp = ({ onClick }) => {
                             handlePreventDefault(e)
                         }}>Up to 3 km</button>
                     </div>
-                </div> */}
+                </div>
 
                 {/* Cuisines */}
 

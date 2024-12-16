@@ -11,7 +11,7 @@ const ExtraNotePopUp = ({ placeholder }) => {
                     setOrderNote(false)
                 }}>Cancel</button>
                 <h3 className='text-lg text-[#1E1E1E] font-bold'>Add a Note</h3>
-                <button className='text-lg text-[#0AB247] font-bold'>Done</button>
+                <button className='text-lg text-[#0AB247] font-bold' onClick={() => setOrderNote(false)}>Done</button>
             </div>
 
             <hr />

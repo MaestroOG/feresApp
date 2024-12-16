@@ -31,6 +31,7 @@ const SelectLocation = () => {
             const mapInstance = new google.maps.Map(mapRef.current, {
               center: location,
               zoom: 16,
+              mapTypeControl: false
             });
 
             // Add draggable marker for current location
