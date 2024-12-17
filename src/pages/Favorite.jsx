@@ -3,6 +3,7 @@ import FavoriteNav from '../components/FavoriteComps/FavoriteNav'
 import EmptyFavorite from '../components/FavoriteComps/EmptyFavorite'
 import FavoriteCard from '../components/FavoriteComps/FavoriteCard'
 import { usePost } from '../servies/usePost'
+import Loader from '../components/Loader'
 
 const Favorite = () => {
 
@@ -27,7 +28,7 @@ const Favorite = () => {
     return (
         <div>
             <FavoriteNav />
-            {loading && <div>Loading...</div>}
+            {loading && <Loader />}
             {error && <div>An Error Occurred...</div>}
             {favorites && !favorites.success ? <EmptyFavorite /> : favorites?.success && favorites?.favourites.map(fav => (
                 <FavoriteCard fav={fav} />

@@ -10,6 +10,7 @@ import CustomerReviewTextArea from '../components/ReviewComps/CustomerReviewText
 import SuccessPopup from '../components/SuccessPopup';
 import CustomerReviewPopup from '../components/ReviewComps/CustomerReviewPopup';
 import { FeresContext } from '../context/FeresContext';
+import Spinner from '../components/Spinner';
 
 const Reviews = () => {
 
@@ -58,43 +59,45 @@ const Reviews = () => {
         fetchReviews()
     })
     return (
-        <div className='px-4 pt-6'>
-            {/* Top Bar */}
-            <div className='flex items-center gap-20'>
-                <img src={assets.arrow_left} alt="" className='invert' onClick={() => navigate(-1)} />
-                <h2 className='font-bold text-2xl text-center'>Rating & reviews</h2>
-            </div>
+        <>
+            {loading && <Spinner />}
+            {!loading && reviewData && <div className='px-4 pt-6'>
+                {/* Top Bar */}
+                <div className='flex items-center gap-20'>
+                    <img src={assets.arrow_left} alt="" className='invert' onClick={() => navigate(-1)} />
+                    <h2 className='font-bold text-2xl text-center'>Rating & reviews</h2>
+                </div>
 
-            <RestReview id={id} />
+                <RestReview id={id} />
 
-            <Overview />
+                <Overview />
 
-            <Address />
+                <Address />
 
-            <CustomerReview />
+                <CustomerReview />
 
-            {loading && <div>Loading...</div>}
-            {error && <div>User reviews not available</div>}
+                {error && <div>User reviews not available</div>}
 
-            {reviewData && reviewData?.review_list.map((review) => (
-                <CustomerReviewCard review={review} key={review?._id} />
-            ))}
+                {reviewData && reviewData?.review_list.map((review) => (
+                    <CustomerReviewCard review={review} key={review?._id} />
+                ))}
 
-            <CustomerReviewTextArea />
-            {reviewSuccess ? <SuccessPopup image={assets.success_img} title={"Thanks for your review"} desc={"Your review has been submitted. We’ll check your review and email you with a status update."} /> : null}
+                <CustomerReviewTextArea />
+                {reviewSuccess ? <SuccessPopup image={assets.success_img} title={"Thanks for your review"} desc={"Your review has been submitted. We’ll check your review and email you with a status update."} /> : null}
 
-            {
-                customerReview ? <CustomerReviewPopup /> : null
-            }
+                {
+                    customerReview ? <CustomerReviewPopup /> : null
+                }
 
-            {/* Submit Review Button */}
+                {/* Submit Review Button */}
 
-            <div className='bg-white px-2 py-4 fixed bottom-0 left-0 w-full'>
-                <button className='bg-[#0AB247] text-white flex items-center gap-2 w-full justify-center rounded-3xl p-4' onClick={() => setReviewSuccess(true)}>
-                    Submit a Review
-                </button>
-            </div>
-        </div>
+                <div className='bg-white px-2 py-4 fixed bottom-0 left-0 w-full'>
+                    <button className='bg-[#0AB247] text-white flex items-center gap-2 w-full justify-center rounded-3xl p-4' onClick={() => setReviewSuccess(true)}>
+                        Submit a Review
+                    </button>
+                </div>
+            </div>}
+        </>
     )
 }
 

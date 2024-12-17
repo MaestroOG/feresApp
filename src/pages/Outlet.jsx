@@ -92,6 +92,7 @@ import DeliveryRateRider from './DeliveryServicePages/DeliveryRateRider'
 import Login from './Login'
 import OrderIssuesData from '../pages/orderIssuesData'
 import EcommerceCart from './EcommercePages/EcommerceCart'
+import Spinner from '../components/Spinner'
 
 const Outlet = () => {
     return (
@@ -203,6 +204,7 @@ const Outlet = () => {
                 <Route path='/grouporder/cart' element={<GroupOrderCart />} />
 
 
+                <Route path='/loader' element={<Spinner />} />
                 {/* Auth Routes */}
                 <Route path='/login' element={<Login />} />
             </Routes>

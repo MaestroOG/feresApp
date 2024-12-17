@@ -30,6 +30,7 @@ import { FeresContext } from '../context/FeresContext';
 import { usePostRequest } from '../servies/usePostRequest';
 import { usePost } from '../servies/usePost';
 import { setCartDetails, setCartItemData } from '../redux/slices/cartDetail';
+import Loader from '../components/Loader';
 
 
 
@@ -109,12 +110,12 @@ const Order = () => {
             <DelOrPickBtn />
             {!deliveryPickup && <SelectRide />}
 
-            {isLoading && <div>Loading...</div>}
+            {isLoading && <Loader />}
             {/* Nested mapping to show each store and their items */}
             {cartItemData && cartItemData?.stores?.map((store) => (
-              <div key={store._id}>
+                <div key={store._id}>
                     {store?.items?.map((item) => (
-                       item.quantity > 0 && <OrderedFoodCard
+                        item.quantity > 0 && <OrderedFoodCard
                             key={item.unique_id}
                             title={item.name}
                             price={item.total_item_price}

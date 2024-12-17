@@ -30,6 +30,8 @@ import Container from '../components/Container';
 import TimeUpPopup from '../components/GroupOrderComps/TimeUpPopup';
 import DelByHostPopup from '../components/GroupOrderComps/DelByHostPopup';
 import { setCartItemData } from '../redux/slices/cartDetail';
+import Loader from '../components/Loader';
+import Spinner from '../components/Spinner';
 
 
 
@@ -46,8 +48,8 @@ const Restaurant = () => {
     const navigate = useNavigate()
     const { deliverPopup, setDeliverPopup } = useContext(FeresContext)
     const [categories, setCategories] = useState([])
-    const { loading, error, response, postRequest } = usePostRequest();
-    const { post } = usePost()
+    // const { loading, error, response, postRequest } = usePostRequest();
+    const { post, loading } = usePost()
     const { foodPopup, setSharePop, sharePop, addToCart, setFoodPopup } = useContext(FeresContext)
     const { foodSearch, setFoodSearch } = useContext(FeresContext)
     const [deliverPop, setDeliverPop] = useState(false)
@@ -258,10 +260,12 @@ const Restaurant = () => {
 
 
     return (
-
         <>
 
-            <><div className={`pb-16 ${foodPopup && 'blur-sm'}`}>
+            {isLoading && <Loader />}
+            {loading && <Spinner />}
+
+            <div className={`pb-16 ${foodPopup && 'blur-sm'}`}>
                 <div>
                     {/* Feature */}
                     <div className={`relative`}>
@@ -416,7 +420,7 @@ const Restaurant = () => {
                         )}
                     </div>
                 </div>
-            </div></>
+            </div>
 
             {foodPopup && <FoodPopUp itemFoodPopup={selectedFood} cartUniqueToken={cartUniqueToken} />}
             {firstGroup && <GroupOrder1 setIsOpen={setFirstGroup} onEdit={() => {
@@ -445,7 +449,6 @@ const Restaurant = () => {
             {/* <TimeUpPopup /> */}
             {/* <DelByHostPopup /> */}
         </>
-
     )
 }
 

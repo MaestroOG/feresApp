@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { assets } from '../../assets/assets'
 import { FeresContext } from '../../context/FeresContext'
 import { useSelector } from 'react-redux'
+import Spinner from '../Spinner'
 
 const SelectRide = () => {
     const selectedService = useSelector((state) => state.selectedService.selectedService)
@@ -11,7 +12,7 @@ const SelectRide = () => {
             <div>
                 <div className='flex items-center gap-1 mb-[2px]'>
                     <img src={selectedService?.image_url} alt="" width={'24px'} />
-                    {!selectedService && <div>Loading...</div>}
+                    {!selectedService && <Spinner />}
                     <p className='text-base text-[#2F2F3F]'>{selectedService?.vehicle_name}</p>
                 </div>
                 <p className='text-[#767578CC] font-medium text-[13px]'>Deliver now</p>

@@ -4,6 +4,7 @@ import PromotionCard from '../components/PromotionComps/PromotionCard'
 import SelectViewPopUp from '../components/PromotionComps/SelectViewPopUp'
 import { FeresContext } from '../context/FeresContext'
 import { usePost } from '../servies/usePost'
+import Loader from '../components/Loader'
 
 const Promotions = () => {
     const { selectView } = useContext(FeresContext)
@@ -27,7 +28,7 @@ const Promotions = () => {
         <div>
             <PromotionNav header={"Promotions"} />
             <div className='px-3 mt-10'>
-                {loading && <div>Loading...</div>}
+                {loading && <Loader />}
                 {error && <div>An Error Ocurred...</div>}
                 {promotions && promotions.success && promotions?.promotions_list.map(promo => (
                     <PromotionCard promo={promo} />

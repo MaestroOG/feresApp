@@ -7,6 +7,7 @@ import { FeresContext } from '../context/FeresContext';
 import OrderCards from '../components/OrderPageComps/OrderCards';
 import { usePost } from '../servies/usePost';
 import { useSelector } from 'react-redux';
+import Loader from '../components/Loader';
 
 const OrderPage = () => {
     const { orderCat } = useContext(FeresContext)
@@ -47,7 +48,7 @@ const OrderPage = () => {
                 paddingBottom: '40px'
             }}>
                 {
-                    loading && <div>Loading...</div>
+                    loading && <Loader />
                 }
                 {
                     error && <div>An Error Occured</div>

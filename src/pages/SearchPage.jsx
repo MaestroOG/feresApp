@@ -8,6 +8,7 @@ import { FeresContext } from '../context/FeresContext'
 import FilterPopUp from '../components/SearchComps/FilterPopUp'
 import { usePost } from '../servies/usePost'
 import { useSelector } from 'react-redux'
+import Loader from '../components/Loader'
 
 const SearchPage = () => {
     const { setFilterPop, filterPop, searchTerm, setSearchTerm, searchValue } = useContext(FeresContext)
@@ -59,6 +60,7 @@ const SearchPage = () => {
 
     return (
         <div>
+            {loading && <Loader />}
             <div className='w-full flex items-center px-2 bg-white'>
                 {/* <img src={assets.arrow_left} alt="" className='invert' /> */}
                 <SearchBar isFixed={false} onKeyDown={handleKeyDown} />

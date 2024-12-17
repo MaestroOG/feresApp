@@ -9,13 +9,14 @@ import { setCartItemData } from '../../redux/slices/cartDetail'
 import { FeresContext } from '../../context/FeresContext'
 import { useNavigate } from 'react-router-dom'
 import { setSupportItem } from '../../redux/slices/selectedResturantSlice'
+import Spinner from '../Spinner'
 
-const MenuList = ({ products, addItemInCart, cartUniqueToken , support }) => {
-    const navigate =  useNavigate()
+const MenuList = ({ products, addItemInCart, cartUniqueToken, support }) => {
+    const navigate = useNavigate()
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
     const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
     const loginUser = useSelector((state) => state.userAuth.user)
-    const { post } = usePost()
+    const { post, loading } = usePost()
     const dispatch = useDispatch()
     const [orderCount, setOrderCount] = useState(1)
     const { setFoodPopup } = useContext(FeresContext)
@@ -134,87 +135,88 @@ const MenuList = ({ products, addItemInCart, cartUniqueToken , support }) => {
     }
     return (
         <>
-        {support ? <div>
-            <div className='bg-[#FFD335] p-2 rounded-lg text-[#2F2F3F] text-xs font-medium w-max mt-6 mb-1'>Trending</div>
-            {products?.map((item) => (
-                <div key={item._id} onClick={() => {
-                    dispatch(setSupportItem(item)) 
-                    navigate('/restaurantsupport/ingredientinfo')
-                }}>
-                    <div className={`${item?.details.length > 0 && 'my-4'}`}>
-                        <div className='flex items-center justify-between' onClick={() => {
-                    dispatch(setSupportItem(item)) 
-                    navigate('/restaurantsupport/ingredientinfo')
-                          
-                        }}>
-                            <div className='flex flex-col gap-1 flex-[3]'>
-                                <div className='flex items-center gap-2'>
-                                    <h2 className='text-[#2F2F3F] text-sm font-medium'>{item?.name}</h2>
-                                     {/* <button className='border border-[#0AB247] bg-white p-2 w-[70px] rounded-full text-[#0AB247] text-sm font-medium' onClick={() => {
+            {support ? <div>
+                <div className='bg-[#FFD335] p-2 rounded-lg text-[#2F2F3F] text-xs font-medium w-max mt-6 mb-1'>Trending</div>
+                {products?.map((item) => (
+                    <div key={item._id} onClick={() => {
+                        dispatch(setSupportItem(item))
+                        navigate('/restaurantsupport/ingredientinfo')
+                    }}>
+                        <div className={`${item?.details.length > 0 && 'my-4'}`}>
+                            <div className='flex items-center justify-between' onClick={() => {
+                                dispatch(setSupportItem(item))
+                                navigate('/restaurantsupport/ingredientinfo')
+
+                            }}>
+                                <div className='flex flex-col gap-1 flex-[3]'>
+                                    <div className='flex items-center gap-2'>
+                                        <h2 className='text-[#2F2F3F] text-sm font-medium'>{item?.name}</h2>
+                                        {/* <button className='border border-[#0AB247] bg-white p-2 w-[70px] rounded-full text-[#0AB247] text-sm font-medium' onClick={() => {
                                     }}>
                                             Add
                                     </button> */}
+                                    </div>
+                                    <p className='text-[#AEAEAE] font-normal text-sm w-[90%]'>{item?.details}</p>
+                                    <div className='flex items-center gap-2'>
+                                        <p className='text-[#AEAEAE] text-sm'>{`ETB 170`}</p>
+                                        <p className='text-[#0AB247] text-sm font-bold'>{`ETB ${item?.price}`}</p>
+                                    </div>
                                 </div>
-                                <p className='text-[#AEAEAE] font-normal text-sm w-[90%]'>{item?.details}</p>
-                                <div className='flex items-center gap-2'>
-                                    <p className='text-[#AEAEAE] text-sm'>{`ETB 170`}</p>
-                                    <p className='text-[#0AB247] text-sm font-bold'>{`ETB ${item?.price}`}</p>
+                                <div className='relative flex items-end pb-3 justify-center top-[13px]'>
+                                    {item?.image_url[0] && <img src={item?.image_url[0]} className='w-[132px] h-[123px] rounded-2xl object-cover ' alt=""
+                                        style={{ width: '132px', height: '123px' }} />}
                                 </div>
-                            </div>
-                            <div className='relative flex items-end pb-3 justify-center top-[13px]'>
-                                {item?.image_url[0] && <img src={item?.image_url[0]} className='w-[132px] h-[123px] rounded-2xl object-cover ' alt=""
-                                    style={{ width: '132px', height: '123px' }} />}
                             </div>
                         </div>
+                        <hr className='my-3' />
                     </div>
-                    <hr className='my-3' />
-                </div>
-            ))}
+                ))}
             </div> : <div>
-            <div className='bg-[#FFD335] p-2 rounded-lg text-[#2F2F3F] text-xs font-medium w-max mt-6 mb-1'>Trending</div>
-            {products?.map((item) => (
-                <div key={item._id} onClick={() => {
-                    if (selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData) {
-                        setFoodPopup(true)
-                        handleAddItem(item)
-                    } else {
-                        dispatch(setNewOrderPopup(true))
-                    }
-                }}>
-                    <div className={`${item?.details.length > 0 && 'my-4'}`}>
-                        <div className='flex items-center justify-between' onClick={() => {
-                            if (selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData) {
-                                dispatch(setShowModel(true))
-                                dispatch(setSelectedFood(item))
-                            } else {
-                                dispatch(setNewOrderPopup(true))
-                            }
-                        }}>
-                            <div className='flex flex-col gap-1 flex-[3]'>
-                                <div className='flex items-center gap-2'>
-                                    <h2 className='text-[#2F2F3F] text-sm font-medium'>{item?.name}</h2>
-                                    {findCartItemQuantity(item) > 0 && <button className='border border-[#0AB247] bg-white p-2 w-[70px] rounded-full text-[#0AB247] text-sm font-medium' onClick={(e) => {
-                                        e.stopPropagation()
+                <div className='bg-[#FFD335] p-2 rounded-lg text-[#2F2F3F] text-xs font-medium w-max mt-6 mb-1'>Trending</div>
+                {products?.map((item) => (
+                    <div key={item._id} onClick={() => {
+                        if (selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData) {
+                            setFoodPopup(true)
+                            handleAddItem(item)
+                        } else {
+                            dispatch(setNewOrderPopup(true))
+                        }
+                    }}>
+                        <div className={`${item?.details.length > 0 && 'my-4'}`}>
+                            <div className='flex items-center justify-between' onClick={() => {
+                                if (selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData) {
+                                    dispatch(setShowModel(true))
+                                    dispatch(setSelectedFood(item))
+                                } else {
+                                    dispatch(setNewOrderPopup(true))
+                                }
+                            }}>
+                                <div className='flex flex-col gap-1 flex-[3]'>
+                                    <div className='flex items-center gap-2'>
+                                        <h2 className='text-[#2F2F3F] text-sm font-medium'>{item?.name}</h2>
+                                        {loading && <Spinner />}
+                                        {!loading && findCartItemQuantity(item) > 0 && <button className='border border-[#0AB247] bg-white p-2 w-[70px] rounded-full text-[#0AB247] text-sm font-medium' onClick={(e) => {
+                                            e.stopPropagation()
 
-                                    }}>
-                                        {findCartItemQuantity(item)}
-                                    </button>}
+                                        }}>
+                                            {findCartItemQuantity(item)}
+                                        </button>}
+                                    </div>
+                                    <p className='text-[#AEAEAE] font-normal text-sm w-[90%]'>{item?.details}</p>
+                                    <div className='flex items-center gap-2'>
+                                        <p className='text-[#AEAEAE] text-sm'>{`ETB 170`}</p>
+                                        <p className='text-[#0AB247] text-sm font-bold'>{`ETB ${item?.price}`}</p>
+                                    </div>
                                 </div>
-                                <p className='text-[#AEAEAE] font-normal text-sm w-[90%]'>{item?.details}</p>
-                                <div className='flex items-center gap-2'>
-                                    <p className='text-[#AEAEAE] text-sm'>{`ETB 170`}</p>
-                                    <p className='text-[#0AB247] text-sm font-bold'>{`ETB ${item?.price}`}</p>
+                                <div className='relative flex items-end pb-3 justify-center top-[13px]'>
+                                    {item?.image_url[0] && <img src={item?.image_url[0]} className='w-[132px] h-[123px] rounded-2xl object-cover ' alt=""
+                                        style={{ width: '132px', height: '123px' }} />}
                                 </div>
-                            </div>
-                            <div className='relative flex items-end pb-3 justify-center top-[13px]'>
-                                {item?.image_url[0] && <img src={item?.image_url[0]} className='w-[132px] h-[123px] rounded-2xl object-cover ' alt=""
-                                    style={{ width: '132px', height: '123px' }} />}
                             </div>
                         </div>
+                        <hr className='my-3' />
                     </div>
-                    <hr className='my-3' />
-                </div>
-            ))}
+                ))}
             </div>}
         </>
     )
