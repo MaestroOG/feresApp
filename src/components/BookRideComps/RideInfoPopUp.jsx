@@ -25,14 +25,42 @@ const RideInfoPopUp = () => {
     const mapRef = useRef(null)
     const [timerData, setTimerData] = useState(null)
     const [uniquOrderId, setUniqueOrderId] = useState(null)
-
+    const [order_status_details, setOrder_status_details] = useState([])
     const cartDetails = useSelector((state) => state.cartDetails.cartItemData)
 
 
     const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
 
+    function formatDate(timestamp) {
+        const date = new Date(timestamp);
+    
+        // Options for formatting the month, day, year, hour, and minute
+        const options = { month: 'short', day: '2-digit', year: 'numeric' };
+        const formattedDate = date.toLocaleDateString('en-US', options);
+    
+        // Get hours and minutes
+        let hours = date.getHours();
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+    
+        // Determine AM or PM
+        const ampm = hours >= 12 ? 'pm' : 'am';
+        hours = hours % 12 || 12; // Convert to 12-hour format, and ensure 12 is used instead of 0
+    
+        // Combine the date and time
+        return `${formattedDate} : ${hours}:${minutes} ${ampm}`;
+    }
 
-    // console.log(userDetail);
+    const dateGetiing = (currentStatus)=>{
+
+        
+       const findedOjb = order_status_details.find((item)=>{
+            if(item.status == currentStatus){
+                return item
+            }
+        })
+        const date = formatDate(findedOjb.date)
+        return date
+    }
 
 
     const callApi = async () => {
@@ -45,7 +73,7 @@ const RideInfoPopUp = () => {
 
             });
             const data = response
-
+            setOrder_status_details(response.order_status_details)
             dispatch(setProviderInfo({
                 provider_id: response?.provider_id,
                 provider_first_name: response?.provider_first_name,
@@ -94,7 +122,7 @@ const RideInfoPopUp = () => {
             }
 
             setUniqueOrderId(data.unique_id)
-            setTimerData(data.kitchen_time)
+            setTimerData(data?.kitchen_time+selectedResturant?.store?.delivery_time)
 
         } catch (error) {
             console.error('Error calling API:', error);
@@ -207,12 +235,12 @@ const RideInfoPopUp = () => {
             <div className='relative'>
                 <div className='flex items-center gap-2 mt-6' >
                     {progress > 1 ? <img src='/tick-icon.svg' alt="" /> : <img src={progress === 1 ? assets.order_progress : assets.order_progress_2} alt="" />}
-                    {progress > 1 ? <p className='text-base text-[#2F2F3F]'>{selectedResturant?.store?.name} has been confirmed your order</p> : <p className='text-base text-[#2F2F3F]'>Waiting for {selectedResturant?.store?.name} to confirm your order</p>}
+                    {progress > 1 ? <p className='text-base text-[#2F2F3F]'>{selectedResturant?.store?.name} has been confirmed your order</p> : <div > <p className='text-base text-[#2F2F3F]'>Waiting for {selectedResturant?.store?.name} to confirm your order</p> <p className='text-base text-[#2F2F3F]'> {dateGetiing(1)}</p> </div>}
                 </div>
                 <hr className='rotate-90 w-10 absolute top-14 -left-2 mb-5' />
                 <div className='flex items-center gap-2 mt-16' >
                     {progress > 5 ? <img src='/tick-icon.svg' alt="" /> : <img src={progress > 1 && progress <= 5 ? assets.order_progress : assets.order_progress_2} alt="" />}
-                    {progress > 5 ? <p className='text-base text-[#2F2F3F]'>Your order is ready for pickup</p> : <p className='text-base text-[#979797]'>Preparing your order</p>}
+                    {progress > 5 ? <div> <p className='text-base text-[#2F2F3F]'>Your order is ready for pickup</p> <p className='text-base text-[#2F2F3F]'> 24-12-2024, 12:00 PM</p> </div> : <p className='text-base text-[#979797]'>Preparing your order</p>}
                 </div>
                 {/* <hr className='rotate-90 w-10 absolute top-36 -left-2 mb-5' />
                 <div className='flex items-center gap-2 mt-16' >
@@ -223,19 +251,19 @@ const RideInfoPopUp = () => {
                 <hr className='rotate-90 w-10 absolute top-36 -left-2 mb-5' />
                 <div className='flex items-center gap-2 mt-16' >
                     {progress > 7 ? <img src='/tick-icon.svg' alt="" /> : <img src={progress >= 7 && progress <= 9 ? assets.order_progress : assets.order_progress_2} alt="" />}
-                    {progress > 7 ? <p className='text-base text-[#2F2F3F]'>Rider has been assgined to your order</p> : <p className='text-base text-[#979797]'>Looking for a rider</p>}
+                    {progress > 7 ? <div> <p className='text-base text-[#2F2F3F]'>Rider has been assgined to your order</p> <p className='text-base text-[#2F2F3F]'>24-12-2024, 12:00 PM</p> </div> : <p className='text-base text-[#979797]'>Looking for a rider</p>}
                 </div>
                 <hr className='rotate-90 w-10 absolute top-[230px] -left-2 mb-5' />
                 <div className='flex items-center gap-2 mt-16' >
                     {progress > 13 ? <img src='/tick-icon.svg' alt="" /> : <img src={progress >= 9 && progress <= 15 ? assets.order_progress : assets.order_progress_2} alt="" />}
-                    {progress > 13 ? <p className='text-base text-[#2F2F3F]'>Rider has picked up your order</p> : <p className='text-base text-[#979797]'>The rider is on their way to {selectedResturant?.store?.name}</p>}
+                    {progress > 13 ? <div> <p className='text-base text-[#2F2F3F]'>Rider has picked up your order</p> <p className='text-base text-[#2F2F3F]'>24-12-2024, 12:00 PM</p> </div> : <p className='text-base text-[#979797]'>The rider is on their way to {selectedResturant?.store?.name}</p>}
                 </div>
                 <hr className='rotate-90 w-10 absolute top-[318px] -left-2 mb-5' />
                 <div className='flex items-center gap-2 mt-16' onClick={() => {
                     navigate('/raterider')
                 }}>
                     {progress == 25 ? <img src='/tick-icon.svg' alt="" /> : <img src={progress >= 19 && progress <= 25 ? assets.order_progress : assets.order_progress_2} alt="" />}
-                    {progress == 25 ? <p className='text-base text-[#2F2F3F]'>your order is delivered</p> : <p className='text-base text-[#979797]'>The rider is on their way to you</p>}
+                    {progress == 25 ? <div><p className='text-base text-[#2F2F3F]'>Your order is delivered</p> <p className='text-base text-[#2F2F3F]'>24-12-2024, 12:00 PM</p></div> : <p className='text-base text-[#979797]'>The rider is on their way to you</p>}
                 </div>
             </div>
             {/* Order Info */}

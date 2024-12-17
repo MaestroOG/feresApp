@@ -22,7 +22,6 @@ const MenuList = ({ products, addItemInCart, cartUniqueToken , support }) => {
 
 
     const handleAddItem = async (item) => {
-        console.log(loginUser.user_id, "here is a group order api 2");
 
 
         const requestBody = {
@@ -91,7 +90,7 @@ const MenuList = ({ products, addItemInCart, cartUniqueToken , support }) => {
             },
             cart_unique_token: cartUniqueToken
         }
-        console.log("userToken : ", loginUser.cart_unique_token, ", .....Host Token :", cartUniqueToken);
+
 
         if (loginUser.cart_unique_token != cartUniqueToken && cartUniqueToken) {
             const responseData = await post('/api/user/new_add_group_item_in_cart', requestDataGroup)

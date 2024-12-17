@@ -89,7 +89,7 @@ const storeLocation = cartDetail?.store[0]?.location
 
     useEffect(() => {
         if (selectedResturant) {
-            setTimerData(selectedResturant?.store?.delivery_time_max)
+            setTimerData(selectedResturant?.store?.delivery_time)
         }
     }, [])
 
