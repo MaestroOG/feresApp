@@ -4,6 +4,7 @@ import { assets } from '../../assets/assets'
 import { useNavigate, useParams } from 'react-router-dom'
 import { usePost } from '../../servies/usePost'
 import { FeresContext } from '../../context/FeresContext'
+import Spinner from '../../components/Spinner'
 
 const EcommerceMartCategories = () => {
     const [activeId, setActiveId] = useState('')
@@ -49,7 +50,7 @@ const EcommerceMartCategories = () => {
             </div>}
             <Container className='grid grid-cols-3 gap-y-5 gap-x-3'>
 
-                {loading && <div>Loading...</div>}
+                {loading && <Spinner />}
                 {error && <div>An Error Occurred</div>}
                 {cat && cat?.success && cat?.products.map(product => (
                     <div key={product?.name} onClick={() => handleClick(product?.name)}>

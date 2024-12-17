@@ -7,6 +7,7 @@ import EcommerceAddBasket from './EcommerceAddBasket'
 import { usePost } from '../../servies/usePost'
 import { FeresContext } from '../../context/FeresContext'
 import { useSelector } from 'react-redux'
+import Loader from '../../components/Loader'
 
 const MartProduct = () => {
     const [products, setProducts] = useState(null)
@@ -37,7 +38,7 @@ const MartProduct = () => {
     }, [])
     return (
         <div className='pb-24'>
-            {loading && <div>Loading...</div>}
+            {loading && <Loader />}
             {error && <div>An Error Occurred</div>}
             {products && products?.map(product => (
                 <>

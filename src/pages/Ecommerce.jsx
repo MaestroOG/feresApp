@@ -8,6 +8,7 @@ import Container from '../components/Container'
 import PopularStoreCard from '../components/EcommerceComps/MainPageComps/PopularStoreCard'
 import { Link, useNavigate } from 'react-router-dom'
 import { usePost } from '../servies/usePost'
+import Spinner from '../components/Spinner'
 
 const Ecommerce = () => {
     const { loading, error, post } = usePost();
@@ -64,7 +65,7 @@ const Ecommerce = () => {
                 <div className='flex flex-row gap-5 overflow-y-scroll explore-card'>
                     {/* Card */}
                     {error && <div>An Error Occurred</div>}
-                    {loading && <div>Loading...</div>}
+                    {loading && <Spinner />}
                     {categories && categories?.success && categories?.categories.map(category => (
                         <ExploreCard onClick={() => navigate(`/ecommerce/categories/results/${category?.category_name}`)} key={category?._id} name={category?.category_name} img={category?.featured_image} />
                     ))}
@@ -113,7 +114,7 @@ const Ecommerce = () => {
                     <button className={`inactive rounded-full p-3 whitespace-nowrap text-lg`}>{buttons[1]}</button>
                     <button className={`inactive rounded-full p-3 whitespace-nowrap text-lg`}>{buttons[2]}</button>
                 </div>
-                {loading && <div>Loading...</div>}
+                {loading && <Spinner />}
                 {error && <div>Error Fetching Stores...</div>}
                 {stores && stores?.stores?.slice(0, 5).map((store, index) => (
                     <PopularStoreCard store={store} key={index} />

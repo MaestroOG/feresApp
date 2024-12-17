@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import NewOrderPopUpModel from '../NewOrderPopUp'
 import { setNewOrderPopup } from '../../redux/slices/modelToggleSlice'
 import { setCartItemData } from '../../redux/slices/cartDetail'
+import Spinner from '../../components/Spinner'
 
 const MartItemDetail = () => {
 
@@ -177,7 +178,7 @@ const MartItemDetail = () => {
             </Container>
 
             {/* Details */}
-            {loading && <div>Loading...</div>}
+            {loading && <Spinner />}
             {error && <div>An Error Ocurred</div>}
             {itemDetail && itemDetail?.success && <Container className={'pb-24'}>
                 <div className='bg-[#F1F1F1] rounded-2xl'>

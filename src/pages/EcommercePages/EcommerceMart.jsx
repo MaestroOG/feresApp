@@ -8,6 +8,8 @@ import { usePost } from '../../servies/usePost';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedResturant } from '../../redux/slices/selectedResturantSlice';
 import { setCartItemData } from '../../redux/slices/cartDetail';
+import Loader from '../../components/Loader';
+import Spinner from '../../components/Spinner';
 
 const EcommerceMart = () => {
 
@@ -93,7 +95,7 @@ const EcommerceMart = () => {
     }, [])
     return (
         <div className='pb-28'>
-            {loading && <div className='text-center'>Loading...</div>}
+            {loading && <Spinner />}
             {error && <div>An Error Occurred</div>}
             {storeInfo && storeInfo?.success && <>
                 <div className='relative'>
@@ -119,7 +121,7 @@ const EcommerceMart = () => {
 
             {/* Title */}
             <div className='bg-white'>
-                {loading && <div>Loading...</div>}
+                {loading && <Loader />}
                 {error && <div>An Error Occurred</div>}
                 {storeInfo && storeInfo?.success && <>
                     <div className="flex items-center justify-between pt-5 px-4">
@@ -153,7 +155,7 @@ const EcommerceMart = () => {
 
 
 
-                {loading && <div>Loading...</div>}
+                {loading && <Loader />}
                 {error && <div>An Error Occurred</div>}
                 {products && products?.error_code && <div className='my-8 text-center'>No Products Available</div>}
                 <>
@@ -186,9 +188,10 @@ const EcommerceMart = () => {
                                         <div className='bg-[#F1F1F1] rounded-2xl w-[135px] h-[149px] relative flex items-center justify-center'>
                                             <img src={item?.image_url[0] && item?.image_url[0]} alt="" />
                                             <div className='bg-white p-3 rounded-full w-max absolute bottom-3 right-1'>
-                                                {findCartItemQuantity(item) > 0 ? (
+                                                {loading && <Spinner />}
+                                                {!loading && findCartItemQuantity(item) > 0 ? (
                                                     <span className="text-[#0AB247] font-bold">{findCartItemQuantity(item)}</span>
-                                                ) : (
+                                                ) : !loading && (
                                                     <img src={assets.add_green} alt="" />
                                                 )}
                                             </div>
