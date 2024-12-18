@@ -4,6 +4,7 @@ import Container from '../../components/Container'
 import { assets } from '../../assets/assets'
 import { useNavigate } from 'react-router-dom'
 import { usePost } from '../../servies/usePost'
+import Spinner from '../../components/Spinner'
 
 const EcommerceCategories = () => {
     const [activeId, setActiveId] = useState("");
@@ -40,7 +41,7 @@ const EcommerceCategories = () => {
                 <p className='text-[#E6352B] font-medium'>Choose one out those categories and apply</p>
             </div>}
             <Container className='grid grid-cols-3 gap-y-5 gap-x-3'>
-                {loading && <div>Loading...</div>}
+                {loading && <Spinner />}
                 {error && <div>An Error Occurred</div>}
                 {categories && categories?.success && categories?.categories.map(category => (
                     <div key={category?._id} onClick={() => {

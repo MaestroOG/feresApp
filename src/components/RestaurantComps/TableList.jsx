@@ -8,12 +8,13 @@ import { assets } from '../../assets/assets';
 import { FeresContext } from '../../context/FeresContext';
 import { useNavigate } from 'react-router-dom';
 import { setSupportItem } from '../../redux/slices/selectedResturantSlice';
+import Spinner from '../Spinner';
 
 
-const TableList = ({ products,support }) => {
+const TableList = ({ products, support }) => {
     const dispatch = useDispatch();
-    const { post } = usePost();
-    const navigate =useNavigate()
+    const { post, loading } = usePost();
+    const navigate = useNavigate()
     // Redux Selectors
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData);
     const loginUser = useSelector((state) => state.userAuth.user);
@@ -54,20 +55,20 @@ const TableList = ({ products,support }) => {
             },
         };
 
-        if(selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData ){
+        if (selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData) {
             const data = await post('/api/user/new_add_item_in_cart', requestBody)
             const userDetailsResponse = await post('/api/user/get_cart', {
                 cart_unique_token: loginUser.cart_unique_token,
             })
             dispatch(setCartItemData(userDetailsResponse.cart))
-        }else{
+        } else {
             const data = await post('/api/user/new_add_item_in_cart', requestBody)
             const userDetailsResponse = await post('/api/user/get_cart', {
                 cart_unique_token: loginUser.cart_unique_token,
             })
             dispatch(setCartItemData(userDetailsResponse.cart))
         }
-        }
+    }
 
     const findCartItemQuantity = (item) => {
         const cartItem = cartItemData?.stores[0]?.items?.find(
@@ -83,26 +84,27 @@ const TableList = ({ products,support }) => {
             <div className="flex" key={item?._id}>
                 <div className="min-w-[170px]" onClick={() => {
 
-                  if(selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData){
-                    setFoodPopup(true)
-                } else{
-                    dispatch(setNewOrderPopup(true))
-                  }
+                    if (selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData) {
+                        setFoodPopup(true)
+                    } else {
+                        dispatch(setNewOrderPopup(true))
+                    }
                 }}>
                     <div
                         className="relative w-max"
                         onClick={() => {
-                            if(support){ 
-                                dispatch(setSupportItem(item)) 
-                                navigate('/restaurantsupport/ingredientinfo') }else{
-                  if(selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData){
-                            dispatch(setShowModel(true));
-                            dispatch(setSelectedFood(item));
-                        } else{
-                            dispatch(setNewOrderPopup(true))
-                          }
+                            if (support) {
+                                dispatch(setSupportItem(item))
+                                navigate('/restaurantsupport/ingredientinfo')
+                            } else {
+                                if (selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData) {
+                                    dispatch(setShowModel(true));
+                                    dispatch(setSelectedFood(item));
+                                } else {
+                                    dispatch(setNewOrderPopup(true))
+                                }
 
-                        }
+                            }
 
                         }}
                     >
@@ -115,18 +117,21 @@ const TableList = ({ products,support }) => {
                         />
 
                         <div className={`rounded-full bg-white ${itemQuantity > 0 ? 'py-[9px] px-[16.5px]' : 'p-[9px]'} absolute bottom-2 right-2`}>
-                            {itemQuantity > 0 ? (
+                            {loading && <Spinner />}
+                            {!loading && itemQuantity > 0 ? (
                                 <span className="text-[#0AB247] font-bold">{itemQuantity}</span>
-                            ) : (
+                            ) : !loading && (
                                 <img
                                     src={assets.add_green}
                                     alt=""
                                     onClick={(e) => {
-                            if(support){ 
-                                dispatch(setSupportItem(item)) 
-                                navigate('/restaurantsupport/ingredientinfo') }else{
-                                        e.stopPropagation(); // Prevent parent div click
-                                        handleAddItem(item);}
+                                        if (support) {
+                                            dispatch(setSupportItem(item))
+                                            navigate('/restaurantsupport/ingredientinfo')
+                                        } else {
+                                            e.stopPropagation(); // Prevent parent div click
+                                            handleAddItem(item);
+                                        }
                                     }}
                                 />
                             )}

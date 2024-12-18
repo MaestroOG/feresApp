@@ -12,6 +12,8 @@ import { usePost } from '../../servies/usePost'
 import { setShowModel } from '../../redux/slices/modelToggleSlice'
 import { useNavigate } from 'react-router-dom'
 import { setSelectedResturant } from '../../redux/slices/selectedResturantSlice'
+import Loader from '../Loader'
+import Spinner from '../Spinner'
 
 const FoodPopUp = ({ img, text, itemFoodPopup, cartUniqueToken }) => {
 
@@ -21,8 +23,22 @@ const FoodPopUp = ({ img, text, itemFoodPopup, cartUniqueToken }) => {
     const navigate = useNavigate()
     const [note, setNote] = useState('')
     const [details, setDetails] = useState(null)
-    const { post } = usePost()
+    const { post, loading: postLoading } = usePost()
     const closeRef = useRef()
+    const [isLoad, setIsLoad] = useState(false)
+
+    const [isLoading, setIsLoading] = useState(false); // Track the loading state
+
+    const handleClick = async () => {
+        setIsLoading(true); // Set loading to true
+        try {
+            await toggleFavorite(); // Call your toggleFavorite function
+        } finally {
+            setIsLoading(false); // Reset loading state
+        }
+    };
+
+
     const handleMinusClick = () => {
         if (orderCount > 1) {
             setOrderCount(orderCount - 1)
@@ -71,6 +87,7 @@ const FoodPopUp = ({ img, text, itemFoodPopup, cartUniqueToken }) => {
 
         closeRef.current.click()
         if (itemFoodPopup) {
+            setIsLoad(true)
             const requestBody = {
                 cart_unique_token: loginUser.cart_unique_token,
                 user_id: loginUser.user_id,
@@ -156,6 +173,7 @@ const FoodPopUp = ({ img, text, itemFoodPopup, cartUniqueToken }) => {
                 })
                 dispatch(setCartItemData(userDetailsResponse.cart));
             }
+            setIsLoad(false)
         }
         dispatch(setShowModel(false))
     }
@@ -218,114 +236,122 @@ const FoodPopUp = ({ img, text, itemFoodPopup, cartUniqueToken }) => {
     };
 
     return (
-        <div>
-            {/* Background Overlay */}
-            <div
-                className={`${foodPopup || !foodSelected ? '' : 'hidden'} fixed inset-0 bg-black bg-opacity-50 z-[1000]`}
-                onClick={() => setFoodPopup(false)}
-            ></div>
-
-            {/* Popup Component */}
-            <div
-                className={`${foodPopup || !foodSelected ? '' : 'hidden'} fixed bottom-0 left-0 right-0 z-[1005] bg-[grey] h-[85vh] flex flex-col rounded-tl-[16px] rounded-tr-[16px]`}
-            >
+        <>
+            {loading && <Loader />}
+            {postLoading && <Loader />}
+            <div>
+                {/* Background Overlay */}
                 <div
-                    className="relative flex-[3] rounded-tl-[16px] rounded-tr-[16px]"
-                    style={{
-                        backgroundImage: `url(${itemFoodPopup?.image_url})`,
-                        backgroundPosition: 'center',
-                        backgroundSize: 'cover',
-                    }}
+                    className={`${foodPopup || !foodSelected ? '' : 'hidden'} fixed inset-0 bg-black bg-opacity-50 z-[1000]`}
+                    onClick={() => setFoodPopup(false)}
+                ></div>
+
+                {/* Popup Component */}
+                <div
+                    className={`${foodPopup || !foodSelected ? '' : 'hidden'} fixed bottom-0 left-0 right-0 z-[1005] bg-[grey] h-[85vh] flex flex-col rounded-tl-[16px] rounded-tr-[16px]`}
                 >
-                    <div className='w-full flex justify-between p-6'>
-                        <div>
-                            <img
-                                ref={closeRef}
-                                src={assets.cancel_icon}
-                                alt=""
-                                className="bg-white rounded-full"
-                                onClick={() => setFoodPopup(false)}
-                            />
-                        </div>
-                        <div className='flex h-fit gap-6'>
-                            <button className="bg-[#FFFFFF33] p-[10px] rounded-[10px] flex items-center justify-center" onClick={handleShare}>
-                                <img src={'/share-icon.svg'} />
-                            </button>
-                            <button
-                                onClick={() => toggleFavorite()}
-                                className="bg-[#FFFFFF33] p-[10px] rounded-[10px] flex items-center justify-center"
-                            >
+                    <div
+                        className="relative flex-[3] rounded-tl-[16px] rounded-tr-[16px]"
+                        style={{
+                            backgroundImage: `url(${itemFoodPopup?.image_url})`,
+                            backgroundPosition: 'center',
+                            backgroundSize: 'cover',
+                        }}
+                    >
+                        <div className='w-full flex justify-between p-6'>
+                            <div>
                                 <img
-                                    src={
-                                        fvrt && fvrt?.message.startsWith('Item added')
-                                            ? assets.favourite_active
-                                            : assets.heart_icon
-                                    }
+                                    ref={closeRef}
+                                    src={assets.cancel_icon}
                                     alt=""
-                                    width={'30px'}
+                                    className="bg-white rounded-full"
+                                    onClick={() => setFoodPopup(false)}
                                 />
-                            </button>
+                            </div>
+                            <div className='flex h-fit gap-6'>
+                                <button className="bg-[#FFFFFF33] p-[10px] rounded-[10px] flex items-center justify-center" onClick={handleShare}>
+                                    <img src={'/share-icon.svg'} />
+                                </button>
+                                <button
+                                    onClick={handleClick}
+                                    className="bg-[#FFFFFF33] p-[10px] rounded-[10px] flex items-center justify-center"
+                                >
+                                    {isLoading ? (
+                                        <Spinner />
+                                    ) : (
+                                        <img
+                                            src={
+                                                fvrt && fvrt?.message.startsWith("Item added")
+                                                    ? assets.favourite_active
+                                                    : assets.heart_icon
+                                            }
+                                            alt="favorite"
+                                            width="30px"
+                                        />
+                                    )}
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="bg-[#eaeaea] flex-[1]">
-                    <div className='px-4 py-4 rounded-bl-[16px] rounded-br-[16px] bg-[white]'>
-                        <h2 className="text-[#2F2F3F] text-xl font-bold mb-2">
-                            {itemFoodPopup?.name}
-                        </h2>
-                        <p className="text-[#767578] text-base">{itemFoodPopup?.details}</p>
-                        <div className="flex items-center gap-2 mt-3">
-                            <p className="text-[#9E9E9E] line-through text-base">ETB 170</p>
-                            <p className="text-[#0AB247] font-bold text-base">
-                                {itemFoodPopup?.price}
-                            </p>
-                        </div></div>
+                    <div className="bg-[#eaeaea] flex-[1]">
+                        <div className='px-4 py-4 rounded-bl-[16px] rounded-br-[16px] bg-[white]'>
+                            <h2 className="text-[#2F2F3F] text-xl font-bold mb-2">
+                                {itemFoodPopup?.name}
+                            </h2>
+                            <p className="text-[#767578] text-base">{itemFoodPopup?.details}</p>
+                            <div className="flex items-center gap-2 mt-3">
+                                <p className="text-[#9E9E9E] line-through text-base">ETB 170</p>
+                                <p className="text-[#0AB247] font-bold text-base">
+                                    {itemFoodPopup?.price}
+                                </p>
+                            </div></div>
 
-                    <div className='rounded-tl-[16px] rounded-tr-[16px] p-4 bg-white mt-[15px]'>
-                        <textarea
-                            className="mt-6 mb-5 text-base w-[100%] focus:outline-none"
-                            maxLength={100}
-                            style={{ maxHeight: '100px' }}
-                            placeholder="Add a note"
-                            value={note}
-                            onChange={(e) => setNote(e.target.value)}
-                        />
-                        <FoodOptions options={details} />
-                        <div className="flex items-center w-full justify-between" >
-                            <button className="border border-[#EEEEEE] py-[12px] px-[16px] rounded-3xl flex items-center justify-between w-[45%]">
-                                <img
-                                    src={assets.minus_sign}
-                                    alt=""
-                                    onClick={handleMinusClick}
-                                />
-                                <p>{orderCount}</p>
-                                <img
-                                    src={assets.plus_sign}
-                                    alt=""
-                                    onClick={handlePlusClick}
-                                />
-                            </button>
-                            <button
-                                className="bg-[#0AB247] py-[12px] px-[16px] rounded-3xl text-white w-[50%]"
-                                onClick={() => {
-                                    handleAddItem();
-                                    setFoodSelected(text);
-                                }}
-                            >
-                                {`Add EBT ${orderCount === 1
-                                    ? itemFoodPopup?.price
-                                    : (
-                                        (modifiersSum + itemFoodPopup?.price) *
-                                        orderCount
-                                    ).toFixed(2)
-                                    }`}
-                            </button>
+                        <div className='rounded-tl-[16px] rounded-tr-[16px] p-4 bg-white mt-[15px]'>
+                            <textarea
+                                className="mt-6 mb-5 text-base w-[100%] focus:outline-none"
+                                maxLength={100}
+                                style={{ maxHeight: '100px' }}
+                                placeholder="Add a note"
+                                value={note}
+                                onChange={(e) => setNote(e.target.value)}
+                            />
+                            <FoodOptions options={details} />
+                            <div className="flex items-center w-full justify-between" >
+                                <button className="border border-[#EEEEEE] py-[12px] px-[16px] rounded-3xl flex items-center justify-between w-[45%]">
+                                    <img
+                                        src={assets.minus_sign}
+                                        alt=""
+                                        onClick={handleMinusClick}
+                                    />
+                                    <p>{orderCount}</p>
+                                    <img
+                                        src={assets.plus_sign}
+                                        alt=""
+                                        onClick={handlePlusClick}
+                                    />
+                                </button>
+                                <button
+                                    className="bg-[#0AB247] py-[12px] px-[16px] rounded-3xl text-white w-[50%]"
+                                    onClick={() => {
+                                        handleAddItem();
+                                        setFoodSelected(text);
+                                    }}
+                                >
+                                    {isLoad && <Spinner />}
+                                    {!isLoad && `Add EBT ${orderCount === 1
+                                        ? itemFoodPopup?.price
+                                        : (
+                                            (modifiersSum + itemFoodPopup?.price) *
+                                            orderCount
+                                        ).toFixed(2)
+                                        }`}
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-
+        </>
     )
 }
 

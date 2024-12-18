@@ -18,19 +18,35 @@ const CancelOrder = () => {
     const userDetail = useSelector((state) => state.userAuth.user)
     const navigate = useNavigate()
     const { cancelReason } = useContext(FeresContext)
-    const { post, error } = usePost()
+    const { post } = usePost()
+    const [isLoading, setIsLoading] = useState(false);
     const [successPop, setSuccessPop] = useState(false)
     const dispatch = useDispatch()
 
     const cancelOrder = async () => {
-        await post('/api/user/user_reject_order', {
-            user_id: userDetail.user_id,
-            order_id: userDetail.order_id,
-            server_token: userDetail?.token,
-            order_reject_reason_comment: "test",
-            emurabaha_cancel_request: false,
-            cancel_reason: "cancelReason dont want to cahncel"
-        })
+        setIsLoading(true);
+        try {
+            await post('/api/user/user_reject_order', {
+                user_id: userDetail.user_id,
+                order_id: userDetail.order_id,
+                server_token: userDetail?.token,
+                order_reject_reason_comment: 'test',
+                emurabaha_cancel_request: false,
+                cancel_reason: 'cancelReason dont want to cahncel',
+            });
+            setSuccessPop(true);
+            navigate('/');
+            dispatch(
+                loginUser({
+                    ...userDetail,
+                    cart_unique_token: uuidv4(),
+                })
+            );
+        } catch (error) {
+            console.error('Error cancelling order:', error);
+        } finally {
+            setIsLoading(false);
+        }
     }
 
     return (
@@ -41,15 +57,10 @@ const CancelOrder = () => {
             <CancelOrderForm />
             {cancelReason ? <OtherReasonPop /> : null}
             {successPop ? <SuccessPopup image={assets.success_img_3} title={"We’re so sad about your cancellation"} desc={"We will continue to improve our service & satisfy you on the next order."} /> : null}
-            <CancelOrderSubmitBtn onClick={() => {
-                cancelOrder()
-                setSuccessPop(true)
-                navigate('/')
-                dispatch(loginUser({
-                    ...userDetail,
-                    cart_unique_token: uuidv4(),
-                }))
-            }} />
+            <CancelOrderSubmitBtn
+                onClick={cancelOrder}
+                isLoading={isLoading}
+            />
         </div>
     )
 }

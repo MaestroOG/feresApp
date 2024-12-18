@@ -7,6 +7,7 @@ import Offers from '../components/ServiceComps/Offers'
 import Menu from '../components/ServiceComps/Menu'
 import { assets } from '../assets/assets'
 import { useNavigate } from 'react-router-dom'
+import Loader from '../components/Loader'
 
 const Services = () => {
 
@@ -95,7 +96,8 @@ const Services = () => {
                 <div className='w-full px-2'>
                     <h2 className='text-[#2F2F3F] text-lg font-medium'>Top-rated restaurants</h2>
                     <div className='flex items-center gap-3 overflow-auto no-scrollbar'>
-                        {isLoading ? <div>Loading...</div> : topRest && topRest.stores.map((store, index) => (
+                        {isLoading && <Loader />}
+                        {topRest && topRest.stores.map((store, index) => (
 
                             store.stores.slice(0, 1).map((store, index) => (
                                 <div key={index} className="flex items-center gap-4">

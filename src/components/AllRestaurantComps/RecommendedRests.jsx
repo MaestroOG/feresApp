@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { assets } from '../../assets/assets'
 import { useNavigate } from 'react-router-dom'
+import Loader from '../Loader';
 
 const RecommendedRests = () => {
     const navigate = useNavigate();
@@ -59,7 +60,7 @@ const RecommendedRests = () => {
             <h2 className='text-[#2F2F3F] text-lg font-medium px-2'>Recommended restaurant</h2>
 
             {recommendedRests && recommendedRests.success === false || error && <div className='text-center my-5'>Error Fetching Stores</div>}
-            {isLoading && <div>Loading...</div>}
+            {isLoading && <Loader />}
             <div className='flex items-center gap-3 overflow-auto no-scrollbar'>
                 <div className="flex items-center gap-4">
                     {recommendedRests && recommendedRests.success && recommendedRests?.stores.map((store) => (

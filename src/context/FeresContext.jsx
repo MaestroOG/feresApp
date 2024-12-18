@@ -38,7 +38,7 @@ const FeresContextProvider = (props) => {
     const [callTypePop, setCallTypePop] = useState(false)
     const [deleteGroupOrder, setDeleteGroupOrder] = useState(false)
     const [selectView, setSelectView] = useState(false)
-    const [tableList, setTableList] = useState(false)
+    const [tableList, setTableList] = useState(true)
     const [smValue, setSmValue] = useState('30 mins')
     const [smPop, setSmPop] = useState(false)
     const [deliveryPickup, setDeliveryPick] = useState(false)
@@ -50,7 +50,7 @@ const FeresContextProvider = (props) => {
     const [delItemPhoto, setDelItemPhoto] = useState(null)
     const [deliveryPayment, setDeliveryPayment] = useState("")
     const [ecat, setEcat] = useState("")
-    const [review,setReview] = useState(false)
+    const [review, setReview] = useState(false)
     const [checkedItems, setCheckedItems] = useState({});
     const [restFilter, setRestFilter] = useState(null)
 

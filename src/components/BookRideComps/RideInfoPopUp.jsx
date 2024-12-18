@@ -10,6 +10,7 @@ import { Loader } from '@googlemaps/js-api-loader'
 import CountDownTimer from './CountDownTimer'
 import { setUserChat } from '../../redux/slices/chatSlice'
 import axios from 'axios'
+import Spinner from '../Spinner'
 
 
 const RideInfoPopUp = () => {
@@ -33,32 +34,32 @@ const RideInfoPopUp = () => {
 
     function formatDate(timestamp) {
         const date = new Date(timestamp);
-    
+
         // Options for formatting the month, day, year, hour, and minute
         const options = { month: 'short', day: '2-digit', year: 'numeric' };
         const formattedDate = date.toLocaleDateString('en-US', options);
-    
+
         // Get hours and minutes
         let hours = date.getHours();
         const minutes = date.getMinutes().toString().padStart(2, '0');
-    
+
         // Determine AM or PM
         const ampm = hours >= 12 ? 'pm' : 'am';
         hours = hours % 12 || 12; // Convert to 12-hour format, and ensure 12 is used instead of 0
-    
+
         // Combine the date and time
         return `${formattedDate} : ${hours}:${minutes} ${ampm}`;
     }
 
-    const dateGetiing = (currentStatus)=>{
+    const dateGetiing = (currentStatus) => {
 
-        
-       const findedOjb = order_status_details.find((item)=>{
-            if(item.status == currentStatus){
+
+        const findedOjb = order_status_details.find((item) => {
+            if (item.status == currentStatus) {
                 return item
             }
         })
-        const date = formatDate(findedOjb.date)
+        const date = formatDate(findedOjb?.date)
         return date
     }
 
@@ -122,7 +123,7 @@ const RideInfoPopUp = () => {
             }
 
             setUniqueOrderId(data.unique_id)
-            setTimerData(data?.kitchen_time+selectedResturant?.store?.delivery_time)
+            setTimerData(data?.kitchen_time + selectedResturant?.store?.delivery_time)
 
         } catch (error) {
             console.error('Error calling API:', error);
@@ -224,7 +225,7 @@ const RideInfoPopUp = () => {
                     {timerData !== null ? (
                         <CountDownTimer initialTimeInSeconds={timerData} />
                     ) : (
-                        <p>Loading timer...</p>
+                        <Spinner />
                     )}
                     {/* <h1 className='text-[#2F2F3F] text-4xl font-medium'>15:25</h1> */}
                     <p className='text-lg text-[#979797]'>Estimated time of delivery</p>

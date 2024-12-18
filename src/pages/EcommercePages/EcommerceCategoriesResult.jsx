@@ -7,6 +7,7 @@ import Container from '../../components/Container'
 import { FeresContext } from '../../context/FeresContext'
 import FilterPopUp from '../../components/SearchComps/FilterPopUp'
 import { usePost } from '../../servies/usePost'
+import Loader from '../../components/Loader'
 
 const EcommerceCategoriesResult = () => {
     const { name } = useParams()
@@ -62,7 +63,7 @@ const EcommerceCategoriesResult = () => {
 
             <Container className={'my-10'}>
 
-                {loading && <div>Loading...</div>}
+                {loading && <Loader />}
                 {error && <div>An Error Occurred</div>}
 
                 {list && <>
