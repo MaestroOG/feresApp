@@ -14,7 +14,7 @@ export const usePost = () => {
       const { data } = response;
 
       if (!data || data.success === false) {
-        setError("Request failed");
+
         return null; // Explicitly return null in case of failure
       }
 
