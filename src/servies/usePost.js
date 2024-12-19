@@ -1,4 +1,3 @@
-// services/usePostRequest.js
 import { useState } from "react";
 import api from "./apiConfig";
 
@@ -11,14 +10,19 @@ export const usePost = () => {
     setError(null);
 
     try {
-      const res = await api.post(endpoint, body);
-      if (res.data.success && res.data.success === false) {
-        setError(true)
+      const response = await api.post(endpoint, body);
+      const { data } = response;
+
+      if (!data || data.success === false) {
+        setError("Request failed");
+        return null; // Explicitly return null in case of failure
       }
-      return res.data; // Return the response data directly
-    } catch (err) {
-      setError(err.message);
-      throw err; // Throw the error to handle it when calling the function
+
+      return data; // Return the response data directly
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || error.message || "An unknown error occurred";
+      setError(errorMessage);
+      throw new Error(errorMessage); // Re-throw with a detailed message
     } finally {
       setLoading(false);
     }
