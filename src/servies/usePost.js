@@ -1,5 +1,5 @@
 import { useState } from "react";
-import api from './'
+import api from './apiConfig'
 
 export const usePost = () => {
   const [loading, setLoading] = useState(false);
