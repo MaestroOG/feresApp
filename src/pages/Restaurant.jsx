@@ -163,9 +163,10 @@ const Restaurant = () => {
 
     const fetchCart = async (cart_unique_token) => {
         const cartDetailsResponse = await post('/api/user/get_cart', { cart_unique_token: cart_unique_token })
-        dispatch(setCartItemData(cartDetailsResponse.cart))
+        if (cartDetailsResponse.status) {
+        dispatch(setCartItemData(cartDetailsResponse?.cart))
         localStorage.setItem("cartData", JSON.stringify(cartDetailsResponse))
-
+        }
     }
 
     const fetchMenuItems = async () => {
@@ -248,7 +249,7 @@ const Restaurant = () => {
             setCartUniqueToken(token);
             fetchCart(token)
         } else {
-            fetchCart(loginUser.cart_unique_token)
+            fetchCart(loginUser?.cart_unique_token)
             console.log('not a group order !')
         }
 
