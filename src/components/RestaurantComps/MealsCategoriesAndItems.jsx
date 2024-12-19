@@ -275,10 +275,10 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id, cartUniqueToken, sup
                                 />
                             </div>
                         ))
-                        : categoryItems.map((cateItems, index) => (
+                        : categoryItems?.map((cateItems, index) => (
                             <div key={index} className='my-5'>
                                 <h3
-                                    ref={(el) => (headingRefs.current[index] = el)}
+                                    ref={(el) => (headingRefs?.current[index] = el)}
                                     className='heading-class text-xl font-bold text-[#2F2F3F]'
                                 >
                                     {cateItems?.name}
