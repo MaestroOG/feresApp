@@ -151,7 +151,7 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id, cartUniqueToken, sup
                 {newOrderPopup && <NewOrderPopUpModel />}
                 {/* Table Or List Row */}
                 <div className='px-4 pt-9 pb-4 flex items-center justify-between'>
-                    <h2 className='text-[#2F2F3F] text-xl font-medium'>Meals Categories</h2>
+                    <h2 className='text-[#2F2F3F] text-xl font-bold'>Meals Categories</h2>
                     <div className='border border-[#EEEEEE] flex items-center rounded-2xl'>
                         <div
                             className={`${tableList ? 'bg-[#EBF9EE]' : ''} p-3 rounded-tl-2xl rounded-bl-2xl transition-all`}
@@ -260,7 +260,7 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id, cartUniqueToken, sup
                             <div className='mt-3' key={index}>
                                 <h3
                                     ref={(el) => (headingRefs.current[index] = el)}
-                                    className='heading-class text-xl font-bold text-[#2F2F3F]'
+                                    className='heading-class text-xl font-extrabold text-[#2F2F3F]'
                                 >
                                     {cateItems?.name}
                                 </h3>
@@ -279,7 +279,7 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id, cartUniqueToken, sup
                             <div key={index} className='my-5'>
                                 <h3
                                     ref={(el) => (headingRefs.current[index] = el)}
-                                    className='heading-class text-xl font-bold text-[#2F2F3F]'
+                                    className='heading-class text-xl font-extrabold text-[#2F2F3F]'
                                 >
                                     {cateItems?.name}
                                 </h3>

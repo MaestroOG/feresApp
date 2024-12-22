@@ -165,7 +165,7 @@ const Outlet = () => {
                 <Route path='/ecommerce/electronic' element={<EcommerceElectronics />} />
                 <Route path='/ecommerce/electronic/allproducts' element={<ElectronicsAllProducts />} />
                 <Route path='/ecommerce/electronic/allproducts/item' element={<ElectronicItemDetail />} />
-                <Route path='/ecommerce/electronic/allproducts/item/itemzoom' element={<ItemZoom />} />
+                <Route path='/ecommerce/item/itemzoom/:id' element={<ItemZoom />} />
 
                 {/* Delivery Service Routes */}
                 <Route path='/deliveryservice' element={<DeliveryService />} />
