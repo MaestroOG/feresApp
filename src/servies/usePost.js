@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import api from './apiConfig'
 
 export const usePost = () => {
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const post = async (endpoint, body) => {
     setLoading(true);
