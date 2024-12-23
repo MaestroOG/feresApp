@@ -3,6 +3,7 @@ import { assets } from "../assets/assets";
 import { useNavigate } from "react-router-dom";
 import { Loader } from "@googlemaps/js-api-loader";
 import Container from "../components/Container";
+import './map.css'
 
 const SelectLocation = () => {
   const navigate = useNavigate();
@@ -31,18 +32,7 @@ const SelectLocation = () => {
             const mapInstance = new google.maps.Map(mapRef.current, {
               center: location,
               zoom: 16,
-              mapTypeControl: false
-            });
-
-            // Add draggable marker for current location
-            const marker = new google.maps.Marker({
-              position: location,
-              map: mapInstance,
-              draggable: true, // Enable dragging
-              icon: {
-                url: assets.map_pointer, // Replace with your icon
-                scaledSize: new google.maps.Size(51, 72, "px", "px"),
-              },
+              mapTypeControl: false,
             });
 
             // Reverse geocoding to get the address
@@ -65,12 +55,12 @@ const SelectLocation = () => {
             // Get the initial address
             getAddress(location);
 
-            // Update location and address when the marker is dragged
-            marker.addListener("dragend", () => {
-              const newPosition = marker.getPosition();
+            // Update location and address when the map stops moving
+            mapInstance.addListener("idle", () => {
+              const center = mapInstance.getCenter();
               const newLocation = {
-                lat: newPosition.lat(),
-                lng: newPosition.lng(),
+                lat: center.lat(),
+                lng: center.lng(),
               };
 
               setCurrentLocation(newLocation);
@@ -89,6 +79,19 @@ const SelectLocation = () => {
 
   return (
     <div className="relative">
+      <style>
+        {`
+          .map-pin {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -100%);
+            z-index: 1;
+            pointer-events: none; /* Allow map interactions through the pin */
+          }
+        `}
+      </style>
+
       <div className="p-3 rounded-full bg-white w-max absolute top-5 left-3 z-[10001]">
         <img
           src={assets.arrow_left}
@@ -105,9 +108,8 @@ const SelectLocation = () => {
         className="w-screen"
       ></div>
 
-      <div className="p-3 rounded-full bg-white w-max absolute bottom-48 right-5">
-        <img src={assets.gps_01} alt="" />
-      </div>
+      {/* Pin Icon */}
+      <img src={assets.map_pointer} alt="Map Pin" className="map-pin" />
 
       <Container className="fixed bottom-0 left-0 w-full bg-white py-5">
         <div className="flex items-center justify-between">

@@ -111,7 +111,7 @@ const MapScreen = () => {
                             <img src={assets.location_02} alt="" />
                             <div>
                                 <span className='text-[#2F2F3F] text-lg'>Elgin St. Celina, Delaware</span>
-                                <p className='text-[#75777C] text-sm'>Melli-Beese-Ring1, Schoenfeld</p>
+                                <p className='text-[#75777C] text-sm'>Melli-Beese-Ring1, </p>
                             </div>
                         </li>
                         <li className="location-item flex items-center gap-2">
