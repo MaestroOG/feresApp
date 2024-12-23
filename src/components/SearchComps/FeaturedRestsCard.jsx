@@ -3,7 +3,7 @@ import { assets } from '../../assets/assets'
 
 const FeaturedRestsCard = ({ onClick, img, title, desc, userRate, userRateQuantity, price, delivery }) => {
     return (
-        <div className='border border-[#F4F4F4] py-3 mt-5 flex rounded-xl' onClick={onClick}>
+        <div className='border border-[#F4F4F4] py-3 pb-3 mt-5 flex gap-2 rounded-xl mr-5 pr-3 min-w-[302px] h-[98px]' onClick={onClick}>
             {/* Card Left */}
             <div className='px-2'>
                 <img src={img} alt="" className='w-[85px] h-[84px] object-cover rounded-xl' />

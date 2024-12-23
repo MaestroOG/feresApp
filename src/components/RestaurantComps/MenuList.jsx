@@ -150,13 +150,13 @@ const MenuList = ({ products, addItemInCart, cartUniqueToken, support }) => {
                             }}>
                                 <div className='flex flex-col gap-1 flex-[3]'>
                                     <div className='flex items-center gap-2'>
-                                        <h2 className='text-[#2F2F3F] text-sm font-medium'>{item?.name}</h2>
+                                        <h2 className='text-[#2F2F3F] text-sm font-medium'>{item?.name.split(/\s+/).slice(0, 3).join(' ')}</h2>
                                         {/* <button className='border border-[#0AB247] bg-white p-2 w-[70px] rounded-full text-[#0AB247] text-sm font-medium' onClick={() => {
                                     }}>
                                             Add
                                     </button> */}
                                     </div>
-                                    <p className='text-[#AEAEAE] font-normal text-sm w-[90%]'>{item?.details}</p>
+                                    <p className='text-[#AEAEAE] font-normal text-sm w-[90%]'>{item?.details.split(/\s+/).slice(0, 3).join(' ')}</p>
                                     <div className='flex items-center gap-2'>
                                         <p className='text-[#AEAEAE] text-sm'>{`ETB 170`}</p>
                                         <p className='text-[#0AB247] text-sm font-bold'>{`ETB ${item?.price}`}</p>

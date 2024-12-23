@@ -83,31 +83,49 @@ const FeaturedRests = ({ type, stores }) => {
         }
     }, [searchData])
     return (
-        <div className='mt-12 px-4'>
-            {searchResult && <h2 className='text-base text-[#2F2F3F] font-medium'>Featured {type}</h2>}
-            {isLoading && <Spinner />}
-            {searchResult && searchResult.hasOwnProperty('message') ? searchResult.stores.map(store => (
-                store.stores.map((store, index) => (
-                    <FeaturedRestsCard key={index} title={store.name} desc={store.Description} userRate={store.user_rate} userRateQuantity={store.user_rate_count} img={store.image_url} delivery={store.delivery_time} onClick={() => navigate(`/restaurant/${store._id}`)} />
-                ))
-            )) : null}
+        <>
+            {searchResult && <h2 className='text-base text-[#2F2F3F] font-medium mt-3 pt-4 px-4'>Featured {type}</h2>}
+            <div className='px-4 overflow-x-auto no-scrollbar'>
+                {isLoading && <Spinner />}
+                {searchResult && searchResult.hasOwnProperty('message') ? (
+                    <div className='flex overflow-x-auto space-x-6 no-scrollbar'>
+                        {searchResult?.stores.map(store => (
+                            store?.stores.map((store, index) => (
+                                <div key={index}
+                                    className="grid grid-rows-2 gap-y-4 min-w-[300px] max-w-[300px] shrink-0 pr-3">
+                                    <FeaturedRestsCard key={index} title={store.name} desc={store.Description} userRate={store.user_rate} userRateQuantity={store.user_rate_count} img={store.image_url} delivery={store.delivery_time} onClick={() => navigate(`/restaurant/${store._id}`)} />
+                                </div>
+                            ))
+                        ))}
+                    </div>
+                ) : null}
 
-            {!searchResult && stores && stores.stores.map(store => (
-                store.stores.map(st => (
-                    <FeaturedRestsCard key={st?._id} title={st?.name} desc={st?.Description} userRate={st?.user_rate} userRateQuantity={st?.user_rate_count} img={st?.image_url} delivery={st?.delivery_time} onClick={() => navigate(`/restaurant/${st?._id}`)} />
-                ))
-            ))}
+                {!searchResult && stores && <div className='flex overflow-x-auto space-x-6 no-scrollbar'>
+                    {stores.stores.map(store => (
+                        store.stores.map(st => (
+                            <div key={st?._id} className='grid grid-rows-2 gap-y-4 min-w-[300px] max-w-[300px] shrink-0 pr-3'>
+                                <FeaturedRestsCard key={st?._id} title={st?.name} desc={st?.Description} userRate={st?.user_rate} userRateQuantity={st?.user_rate_count} img={st?.image_url} delivery={st?.delivery_time} onClick={() => navigate(`/restaurant/${st?._id}`)} />
+                            </div>
+                        ))
+                    ))}
+                </div>}
 
-            {loading && <Loader />}
-            {error && <div>An Error Occurred</div>}
-            {searchMarts && searchMarts?.success && searchMarts?.foundItems?.map(items => (
-                <FeaturedRestsCard onClick={() => navigate(`/ecommerce/mart/${items?.store_id}`)} key={items?._id} title={items?.name} desc={items?.store_name} img={items?.image_url[0]} />
-            ))}
-            {/* <FeaturedRestsCard img={assets.featured_rest_img} title={"KFC Eastlight"} desc={"Burger, Fast Food, American..."} userRate={"4.50"} userRateQuantity={"50+"} price={"150.00"} delivery={"40"} onClick={() => navigate('/restaurant')} /> */}
+                {loading && <Loader />}
+                {error && <div>An Error Occurred</div>}
+                {searchMarts && searchMarts?.success && <div className='flex overflow-x-auto space-x-6 no-scrollbar'>
+                    {searchMarts?.foundItems?.map(items => (
+                        <div key={items?._id} className='grid grid-rows-2 gap-y-4 min-w-[300px] max-w-[300px] shrink-0 pr-3'>
+                            <FeaturedRestsCard onClick={() => navigate(`/ecommerce/mart/${items?.store_id}`)} key={items?._id} title={items?.name} desc={items?.store_name} img={items?.image_url[0]} />
+                        </div>
+                    ))}
+                </div>}
 
 
 
-        </div>
+                {/* <FeaturedRestsCard img={assets.featured_rest_img} title={"KFC Eastlight"} desc={"Burger, Fast Food, American..."} userRate={"4.50"} userRateQuantity={"50+"} price={"150.00"} delivery={"40"} onClick={() => navigate('/restaurant')} /> */}
+
+            </div>
+        </>
     )
 }
 

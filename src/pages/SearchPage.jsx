@@ -16,7 +16,7 @@ const SearchPage = () => {
     const [filteredStores, setFilteredStores] = useState(null)
     const options = useSelector(state => state.filter.options)
     console.log(options);
-
+    const searchData = useSelector((state) => state.search.searchData);
 
     const { post, loading, error } = usePost()
 
@@ -59,15 +59,15 @@ const SearchPage = () => {
     }, [options])
 
     return (
-        <div>
+        <div className='bg-[#EEEEEE]'>
             {loading && <Loader />}
             <div className='w-full flex items-center px-2 bg-white'>
                 {/* <img src={assets.arrow_left} alt="" className='invert' /> */}
                 <SearchBar isFixed={false} onKeyDown={handleKeyDown} />
             </div>
 
-            <div className='mt-9 px-4'>
-                {recentSearch.length > 0 &&
+            {searchData.length > 0 &&
+                <div className='mt-4 px-4 py-4 bg-white rounded-[20px]'>
                     <>
                         <h2 className='text-base text-[#2F2F3F] font-medium'>Recent Search</h2>
                         <div className='grid grid-cols-4 gap-2'>
@@ -76,14 +76,14 @@ const SearchPage = () => {
                             ))}
                         </div>
                     </>
-                }
-            </div>
+                </div>
+            }
 
-            <div className='mt-9 px-4'>
+            <div className='mt-4 px-4 bg-white py-4 rounded-[20px]'>
                 <PopularSearches />
             </div>
 
-            <div>
+            <div className='bg-white rounded-t-[20px]'>
                 <FeaturedRests stores={filteredStores} type={"restaurants"} />
             </div>
             <div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { assets } from '../../assets/assets'
 import Container from '../../components/Container';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -10,6 +10,7 @@ import { setSelectedResturant } from '../../redux/slices/selectedResturantSlice'
 import { setCartItemData } from '../../redux/slices/cartDetail';
 import Loader from '../../components/Loader';
 import Spinner from '../../components/Spinner';
+import { FeresContext } from '../../context/FeresContext';
 
 const EcommerceMart = () => {
 
@@ -20,6 +21,11 @@ const EcommerceMart = () => {
     const loginUser = useSelector((state) => state.userAuth.user)
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData);
 
+    const { setEcat } = useContext(FeresContext)
+    const handleClick = (name) => {
+        setEcat(name)
+        navigate(`/ecommerce/mart/martproduct/${id}`)
+    };
 
     const [cartInfo, setCartInfo] = useState(null)
 
@@ -160,12 +166,12 @@ const EcommerceMart = () => {
                 {products && products?.error_code && <div className='my-8 text-center'>No Products Available</div>}
                 <>
                     <div className='flex items-center justify-between px-4 my-7'>
-                        <h3 className='text-[18px] font-medium'>Categories</h3>
+                        <h3 className='text-[18px] font-bold'>Categories</h3>
                         <Link to={`/ecommerce/mart/categories/${id}`} className='text-[#999999] font-medium'>View all</Link>
                     </div>
-                    <div className='flex items-center gap-4 overflow-auto no-scrollbar'>
+                    <div className='flex items-center overflow-auto no-scrollbar'>
                         {products && products?.products.map(product => (
-                            <div className='flex items-center gap-4'>
+                            <div className='flex items-center gap-2'>
                                 <MartCategoryCard category={product} />
                             </div>
                         ))}
@@ -175,8 +181,8 @@ const EcommerceMart = () => {
                 {products && products?.products.map(product => (
                     <>
                         <div className='flex items-center justify-between px-4 my-7'>
-                            <h3 className='text-[18px] font-medium'>{product?.name.split(" ")[0]}</h3>
-                            <Link className='text-[#999999] font-medium'>View all</Link>
+                            <h3 className='text-[18px] font-bold'>{product?.name.split(" ")[0]}</h3>
+                            <p className='text-[#999999] font-medium' onClick={() => handleClick(product?.name)}>View all</p>
                         </div>
 
 

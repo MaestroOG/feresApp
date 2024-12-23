@@ -181,7 +181,8 @@ const MartItemDetail = () => {
             {loading && <Spinner />}
             {error && <div>An Error Ocurred</div>}
             {itemDetail && itemDetail?.success && <Container className={'pb-24'}>
-                <div className='bg-[#F1F1F1] rounded-2xl'>
+                <div className='bg-[#F1F1F1] rounded-2xl relative'>
+                    <img src={assets.zoom_in_area} alt="" className='absolute top-4 right-4' onClick={() => navigate(`/ecommerce/item/itemzoom/${id}`)} />
                     <img src={itemDetail?.item?.image_url[0] && itemDetail?.item?.image_url[0]} className="object-cover rounded-2xl" width={"398px"} height={"297px"} />
                 </div>
 

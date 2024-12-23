@@ -138,7 +138,7 @@ const TableList = ({ products, support }) => {
                         </div>
                     </div>
                     <div className="my-1">
-                        <h4 className="text-[#2F2F3F] text-sm mb-1 w-[165px]">{item?.name}</h4>
+                        <h4 className="text-[#2F2F3F] text-sm mb-1 w-[165px]">{item?.name.split(/\s+/).slice(0, 3).join(' ')}</h4>
                         <p className="text-[#AEAEAE] font-normal text-sm w-[165px] mb-1">
                             {item?.details.slice(0, 40)}..
                         </p>

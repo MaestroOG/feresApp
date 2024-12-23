@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { assets } from '../../assets/assets';
+import { useSelector } from 'react-redux';
 
 const Offers = () => {
 
@@ -8,10 +9,11 @@ const Offers = () => {
     const [error, setError] = useState(false)
     const [promotionData, setPromotionData] = useState(null);
     const navigate = useNavigate();
+    const loginUser = useSelector(state => state.userAuth.user)
 
     const getData = async () => {
         const body = {
-            "user_id": "667bf7ce908d766ee16482da"
+            "user_id": loginUser?.user_id
         }
         try {
             const res = await fetch(import.meta.env.VITE_API_URI + '/get_all_promotions', {
@@ -63,8 +65,8 @@ const Offers = () => {
                     <div className='relative flex-shrink-0'>
                         {/* <img src={assets.offer_bg} alt="" /> */}
                         {promotionData && promotionData.promotions_list.map((item) => (
-                            item.store_info.map((store, index) => (
-                                <img key={index} src={store.image_url} alt="" className='w-[365px] h-[140.98px] rounded-tr-3xl rounded-tl-3xl object-cover' onClick={() => navigate(`/restaurant/${store._id}`)} />
+                            item?.store_info?.slice(0, 1).map((store, index) => (
+                                <img key={index} src={store?.cover_image_url} alt="" className='w-[365px] h-[140.98px] rounded-tr-3xl rounded-tl-3xl object-cover' onClick={() => navigate(`/restaurant/${store._id}`)} />
                             ))
                         ))}
                         {/* Card Top Stickers */}
@@ -122,7 +124,7 @@ const Offers = () => {
                         {/* <img src={assets.offer_bg} alt="" /> */}
                         {promotionData && promotionData.promotions_list.map((item) => (
                             item.store_info.map((store, index) => (
-                                <img key={index} src={store.image_url} alt="" className='w-[365px] h-[140.98px] rounded-tr-3xl rounded-tl-3xl object-cover' onClick={() => navigate(`/restaurant/${store._id}`)} />
+                                <img key={index} src={store?.cover_image_url} alt="" className='w-[365px] h-[140.98px] rounded-tr-3xl rounded-tl-3xl object-cover' onClick={() => navigate(`/restaurant/${store._id}`)} />
                             ))
                         ))}
                         {/* Card Top Stickers */}
