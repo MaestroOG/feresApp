@@ -1,10 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import { assets } from '../../assets/assets'
 import PopSearchRec from './PopSearchRec'
-import Spinner from '../Spinner'
-import { popSearchArr } from './popsearcharr'
 
 const PopularSearches = () => {
+
+    const popSearchArr = [
+        { id: 1, name: "Avocado Toast" },
+        { id: 2, name: "Bubble Tea" },
+        { id: 3, name: "Plant-Based Burger" },
+        { id: 4, name: "Keto Brownies" },
+        { id: 5, name: "Matcha Latte" },
+        { id: 6, name: "Sushi Burrito" },
+        { id: 7, name: "Vegan Cheese" },
+        { id: 8, name: "Charcoal Ice Cream" },
+        { id: 9, name: "Spicy Ramen" },
+        { id: 10, name: "Acai Bowl" },
+        { id: 11, name: "Cloud Bread" },
+        { id: 12, name: "Taco Pizza" },
+        { id: 13, name: "Kombucha" },
+        { id: 14, name: "Rainbow Bagel" },
+    ]
     return (
         <div>
             <div className='mb-3'>
