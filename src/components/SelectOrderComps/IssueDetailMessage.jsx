@@ -33,11 +33,11 @@ const IssueDetailMessage = () => {
                 faq_id: faqData?.faq_id, // Use appropriate key for FAQ ID
             });
             let roomId;
-            console.log('response',response.data);
-            if ( response.data.chat ){
-                    roomId = response.data.chat._id
-                    dispatch(setUserChat(response.data.chat.message))
-            }else{
+            console.log('response', response.data);
+            if (response.data.chat) {
+                roomId = response.data.chat._id
+                dispatch(setUserChat(response.data.chat.message))
+            } else {
                 roomId = response.data.room_id
             }
             navigate(`/feressupport/${roomId}`); // Navigate to chat room
@@ -89,7 +89,7 @@ const IssueDetailMessage = () => {
                 </div>
             )}
 
-            <div className='px-4 mt-6'>
+            {/* <div className='px-4 mt-6'>
                 <p className='text-[#2F2F3F] text-lg font-bold'>Order</p>
                 <div className='flex items-center justify-between my-4'>
                     <div className='flex items-center gap-3'>
@@ -103,7 +103,7 @@ const IssueDetailMessage = () => {
                     </div>
                     <img src={assets.arrow_right} alt="Arrow" />
                 </div>
-            </div>
+            </div> */}
 
             <button
                 onClick={handleSendMessage}
