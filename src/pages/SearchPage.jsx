@@ -60,7 +60,7 @@ const SearchPage = () => {
 
     return (
         <div className='bg-[#EEEEEE]'>
-            {/* {loading && <Loader />} */}
+            {loading && <Loader />}
             <div className='w-full flex items-center px-2 bg-white'>
                 {/* <img src={assets.arrow_left} alt="" className='invert' /> */}
                 <SearchBar isFixed={false} onKeyDown={handleKeyDown} />
