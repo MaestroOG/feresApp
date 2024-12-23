@@ -1,0 +1,9 @@
+.map-pin {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    z-index: 1;
+    pointer-events: none; /* Allow map interactions through the pin */
+  }
+  
