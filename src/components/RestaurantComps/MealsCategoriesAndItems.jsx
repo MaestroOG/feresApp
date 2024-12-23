@@ -146,11 +146,11 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id, cartUniqueToken, sup
 
     return (
         <>
-            {loading && <Loader />}
-            <div className='relative'>
+            {/* {loading && <Loader />} */}
+            <div className='relative mt-[10px] rounded-[20px]'>
                 {newOrderPopup && <NewOrderPopUpModel />}
                 {/* Table Or List Row */}
-                <div className='px-4 pt-9 pb-4 flex items-center justify-between'>
+                <div className='px-4 pt-4 pb-4 flex items-center justify-between bg-white rounded-t-[20px]'>
                     <h2 className='text-[#2F2F3F] text-xl font-bold'>Meals Categories</h2>
                     <div className='border border-[#EEEEEE] flex items-center rounded-2xl'>
                         <div
@@ -177,7 +177,7 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id, cartUniqueToken, sup
                 </div>
 
                 {/* Category Buttons */}
-                <div className='px-3 flex items-center gap-4 overflow-auto no-scrollbar sticky top-24 z-20 bg-white pb-3 category-buttons-container pt-5'>
+                <div className='px-3 flex items-center gap-4 overflow-auto no-scrollbar sticky top-24 z-20 bg-white pb-3 category-buttons-container pt-1 shadow-md'>
                     {categoryItems?.map((button, index) => (
                         <button
                             key={index}
@@ -191,7 +191,7 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id, cartUniqueToken, sup
                 </div>
 
                 {/* Trending Items Row */}
-                <div className='px-4 mt-9 flex items-center justify-between'>
+                <div className='px-4 pt-9 flex items-center justify-between bg-white'>
                     <h2 className='text-[#2F2F3F] text-xl font-bold'>Most Trending</h2>
                     <div className='flex items-center gap-1'>
                         <p className='text-[#979797] font-medium'>View all</p>
@@ -200,7 +200,7 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id, cartUniqueToken, sup
                 </div>
 
                 {/* Trending Items Row */}
-                <div className='px-4 my-7 flex items-center overflow-auto no-scrollbar flex-shrink-0 z-10'>
+                <div className='px-4 py-7 flex items-center overflow-auto no-scrollbar flex-shrink-0 z-10 bg-white'>
                     <div className='flex'>
                         {trendingItems?.map((item) => (
                             <div key={item?.product_id} className='min-w-[170px]' onClick={() => {
@@ -254,7 +254,7 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id, cartUniqueToken, sup
                 </div>
 
                 {/* Items Menu Table Or List */}
-                <div className='px-4 mt-6'>
+                <div className='px-4 pt-4 bg-white'>
                     {!tableList
                         ? categoryItems?.map((cateItems, index) => (
                             <div className='mt-3' key={index}>

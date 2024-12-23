@@ -191,8 +191,8 @@ const Login = () => {
                             <h2 className='text-[#2F2F3F] text-[26px] font-bold text-center'>Enter your mobile number</h2>
                             <div className='flex items-center gap-3 mt-6'>
                                 <Link to={'/deliveryservice/deliverydetails/recipientdetails/updatephone/selectphonecountry'} className='w-[129px] lg:w-[180px] h-[58px] p-2 rounded-xl bg-[#F8F8F8] flex items-center justify-between'>
-                                    <img src={assets.country_flag} alt="" />
-                                    <p className='font-medium text-[#2F2F3F]'>+44</p>
+                                    <img src={assets.ethiopia} alt="" width={'50px'} height={'38px'} className='object-cover rounded' />
+                                    <p className='font-medium text-[#2F2F3F]'>+251</p>
                                     <img src={assets.arrow_down} alt="" />
                                 </Link>
                                 <div className='w-[259px] lg:w-full h-[58px] rounded-xl py-2 px-5 bg-[#F8F8F8] focus-within:bg-white focus-within:border focus-within:border-[#0AB247] flex items-center justify-between transition-all'>

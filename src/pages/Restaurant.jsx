@@ -164,8 +164,8 @@ const Restaurant = () => {
     const fetchCart = async (cart_unique_token) => {
         const cartDetailsResponse = await post('/api/user/get_cart', { cart_unique_token: cart_unique_token })
         if (cartDetailsResponse.status) {
-        dispatch(setCartItemData(cartDetailsResponse?.cart))
-        localStorage.setItem("cartData", JSON.stringify(cartDetailsResponse))
+            dispatch(setCartItemData(cartDetailsResponse?.cart))
+            localStorage.setItem("cartData", JSON.stringify(cartDetailsResponse))
         }
     }
 
@@ -306,8 +306,8 @@ const Restaurant = () => {
 
                     {/* Restaurant Title */}
 
-                    <div className='bg-white'>
-                        <div className="flex items-center justify-between pt-5 px-4">
+                    <div className='bg-[#EEEEEE]'>
+                        <div className="flex items-center justify-between pt-5 px-4 bg-white">
                             <div className='flex items-center gap-2'>
                                 <img src={assets.logo_placeholder} alt="" />
                                 {isLoading ? <div>Loading...</div> : restInfo && <h2 className={`transition-all text-xl font-bold text-[#2F2F3F] ${scrolled ? 'fixed left-20 top-9 z-50' : ''}`}>{restInfo.store_detail.name.slice(0, 11)}..</h2>}
@@ -317,7 +317,7 @@ const Restaurant = () => {
                                 <p className='text-base font-normal whitespace-nowrap'>{restInfo && restInfo.store_detail.user_rate} ({restInfo && restInfo.store_detail.user_rate_count} reviews)</p>
                             </div>
                         </div>
-                        <div className='px-4 mt-5 flex items-center gap-5'>
+                        <div className='px-4 pt-5 flex items-center gap-5 bg-white'>
                             <div className='flex items-center gap-2' onClick={() => setDeliverPop(true)}>
                                 <img src={assets.scooter_img} alt="" />
                                 <p className='text-base text-[#646464]' unselectable='on'>Delivery</p>
@@ -332,7 +332,7 @@ const Restaurant = () => {
                             </div>
                         </div>
                         {/* Delivery Details */}
-                        <div className='mt-7 px-4'>
+                        <div className='pt-7 pb-4 px-4 rounded-b-[20px] bg-white'>
                             <div className='flex items-center gap-2 mb-4'>
                                 <img src={assets.clock_green} alt="" />
                                 <label className='text-base text-[#1E1E1E]'>{restInfo && restInfo.store_detail.delivery_time + " mins"}</label>
@@ -345,7 +345,7 @@ const Restaurant = () => {
                         </div>
 
                         {/* Help Cirlce */}
-                        <div className='mt-7 px-4 flex items-center justify-between gap-4'>
+                        <div className='mt-2 py-4 px-4 flex items-center justify-between gap-4 rounded-[20px] bg-white'>
                             <div className='flex flex-col gap-4'>
                                 <div className='flex items-center gap-2'>
                                     <img src={assets.scooter_green} alt="" />

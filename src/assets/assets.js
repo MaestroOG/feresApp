@@ -307,8 +307,10 @@ import feres_icon from './feres_icon.png'
 import google_icon from './google_icon.png'
 import help_circle_green from './help_circle_green.png'
 import message_translate_green from './message_translate_green.png'
+import ethiopia from './ethiopia.png'
 
 export const assets = {
+    ethiopia,
     arrow_down_green,
     fb_icon,
     feres_icon,
