@@ -1,11 +1,14 @@
 import React from 'react'
 import { assets } from '../../assets/assets'
 
-export const RecentLocations = ({item}) => {
+export const RecentLocations = ({ item, onClick }) => {
 
     return (
         <>
-            <div className='px-4 mt-6 flex items-center gap-4' onClick={()=>{}}>
+            <div className='px-4 mt-6 flex items-center gap-4' onClick={() => {
+                localStorage.setItem("currentAddress", item?.description)
+                navigate('/')
+            }}>
                 <div>
                     <img src={assets.location_black} alt="" />
                 </div>
