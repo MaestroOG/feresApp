@@ -74,7 +74,7 @@ const LocationSearchNav = ({ getSearchedLoc }) => {
             </div>
 
             {/* Suggestions */}
-            {suggestions.length > 0 && (
+            {/* {suggestions.length > 0 && (
                 <ul className="bg-white shadow-lg w-[90%] mx-auto rounded mt-2">
                     {suggestions.map((suggestion, index) => (
                         <li
@@ -86,7 +86,7 @@ const LocationSearchNav = ({ getSearchedLoc }) => {
                         </li>
                     ))}
                 </ul>
-            )}
+            )} */}
         </div>
     );
 };

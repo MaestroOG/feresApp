@@ -4,16 +4,19 @@ import { RecentLocations } from '../components/LocationSeachComps/RecentLocation
 import LocationConfirmBtn from '../components/LocationSeachComps/LocationConfirmBtn'
 
 const LocationSearch = () => {
-        const [searchedLocation, setSearchedLocation] = useState()
+        const [searchedLocation, setSearchedLocation] = useState([])
         
         const getSearchedLoc = useCallback((data)=>{
                 setSearchedLocation(data)
         },[])
 
+
+        console.log(searchedLocation,"searchedLocationsearchedLocation");
+        
     return (
         <div>
             <LocationSearchNav getSearchedLoc={getSearchedLoc} />
-            <RecentLocations />
+           {searchedLocation.map ((item)=> <RecentLocations item={item} key={item.placeId}/> )}
             <LocationConfirmBtn />
         </div>
     )
