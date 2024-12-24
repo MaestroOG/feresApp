@@ -140,7 +140,6 @@ const TableList = ({ products, support }) => {
                                             if (selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData) {
                                                 dispatch(setSelectedFood(item));
                                                 dispatch(setShowModel(true));
-                                        console.log("4");
                                                 
                                             } else {
                                                 dispatch(setNewOrderPopup(true))

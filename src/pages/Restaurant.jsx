@@ -86,6 +86,10 @@ const Restaurant = () => {
             const data = await post(endpoint, {
                 user_id: loginUser?.user_id
             })
+
+            console.log(data,"datadatadata");
+            
+
             if (data) {
                 const filteredData = data?.promotions_list?.filter(store => store?.store_id === id)
                 setPromoInfo(filteredData[0]);

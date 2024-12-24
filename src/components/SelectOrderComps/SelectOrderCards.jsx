@@ -1,10 +1,20 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { setReportOrder } from '../../redux/slices/orderSlice'
 
-const SelectOrderCards = ({ img, name, desc, successStat, isDetail }) => {
+
+const SelectOrderCards = ({ img, name, desc, successStat, isDetail,item }) => {
+  const navigate =  useNavigate()
+  const dispatch = useDispatch()
+    const handleOrderMove = ()=>{
+        dispatch(setReportOrder(item))
+        navigate('/support/selectorder/orderissues')
+    }
+
     return (
         <>
-            <Link to={`/support/selectorder/orderissues`} className='flex items-center justify-between px-4 mb-4'>
+            <div className='flex items-center justify-between px-4 mb-4' onClick={handleOrderMove}>
                 <div className='flex items-center gap-3'>
                     <div className='bg-[#F8F8F8] rounded-full'>
                         <img src={img} alt="" className='p-[13px]' />
@@ -15,7 +25,7 @@ const SelectOrderCards = ({ img, name, desc, successStat, isDetail }) => {
                     </div>
                 </div>
                 {isDetail ? <img src={assets.arrow_right} /> : successStat ? <p className='text-[#0AB247] text-sm'>Successful</p> : <p className='text-[#E92D53] text-sm'>Cancelled</p>}
-            </Link>
+            </div>
             <hr className='my-3' />
         </>
     )
