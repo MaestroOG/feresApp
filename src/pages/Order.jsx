@@ -86,6 +86,11 @@ const Order = () => {
                 tipPaymeny_other_amount: "0",
                 is_delivery_keeper: true
             });
+
+            if (cartDetail?.success === false) {
+                setCartDetail('Error')
+                return;
+            }
             setCartDetail(cartDetail)
             dispatch(setCartDetails(cartDetail))
             console.log(cartDetail, 'here is a data of detail carts');
@@ -103,6 +108,9 @@ const Order = () => {
 
     }, [])
 
+    if (cartDetail === 'Error') {
+        return <h1>Session Expired Please Log In Again</h1>
+    }
 
     return (
         <div className='pb-24'>

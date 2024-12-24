@@ -13,60 +13,67 @@ import Spinner from '../Spinner';
 
 const TableList = ({ products, support }) => {
     const dispatch = useDispatch();
-    const { post, loading } = usePost();
+    const { post } = usePost();
     const navigate = useNavigate()
     // Redux Selectors
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData);
     const loginUser = useSelector((state) => state.userAuth.user);
     const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
-
+    const [loadingItems, setLoadingItems] = useState({});
     const { setFoodPopup } = useContext(FeresContext)
 
     const handleAddItem = async (item) => {
-        const requestBody = {
-            cart_unique_token: loginUser.cart_unique_token,
-            user_id: loginUser.user_id,
-            server_token: loginUser.token,
-            device_type: loginUser.device_type,
-            destination: {
-                address: "",
-                location: {
-                    lat: 9.001826571711009,
-                    lng: 38.76956474035978,
+        try {
+            setLoadingItems((prev) => ({ ...prev, [item._id]: true }));
+            const requestBody = {
+                cart_unique_token: loginUser.cart_unique_token,
+                user_id: loginUser.user_id,
+                server_token: loginUser.token,
+                device_type: loginUser.device_type,
+                destination: {
+                    address: "",
+                    location: {
+                        lat: 9.001826571711009,
+                        lng: 38.76956474035978,
+                    },
                 },
-            },
-            item: {
-                _id: item._id,
-                name: item.name,
-                price: item.price,
-                quantity: 1,
-                specification: item.specifications || [],
-                unique_id: item.unique_id,
-                product_id: item.product_id,
-                image_url: item.image_url ? item.image_url[0] : "",
-                is_promotion_available: item.is_promotion_available,
-                order_item_description: item.details || "",
-                promotion: item.promotion || 0,
-                total_quantity: item.total_quantity,
-                sales_commission: 0,
-                shipment_commission: 0,
-                total_item_price: item.price,
-                store_id: item.store_id,
-            },
-        };
+                item: {
+                    _id: item._id,
+                    name: item.name,
+                    price: item.price,
+                    quantity: 1,
+                    specification: item.specifications || [],
+                    unique_id: item.unique_id,
+                    product_id: item.product_id,
+                    image_url: item.image_url ? item.image_url[0] : "",
+                    is_promotion_available: item.is_promotion_available,
+                    order_item_description: item.details || "",
+                    promotion: item.promotion || 0,
+                    total_quantity: item.total_quantity,
+                    sales_commission: 0,
+                    shipment_commission: 0,
+                    total_item_price: item.price,
+                    store_id: item.store_id,
+                },
+            };
 
-        if (selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData) {
-            const data = await post('/api/user/new_add_item_in_cart', requestBody)
-            const userDetailsResponse = await post('/api/user/get_cart', {
-                cart_unique_token: loginUser.cart_unique_token,
-            })
-            dispatch(setCartItemData(userDetailsResponse.cart))
-        } else {
-            const data = await post('/api/user/new_add_item_in_cart', requestBody)
-            const userDetailsResponse = await post('/api/user/get_cart', {
-                cart_unique_token: loginUser.cart_unique_token,
-            })
-            dispatch(setCartItemData(userDetailsResponse.cart))
+            if (selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData) {
+                const data = await post('/api/user/new_add_item_in_cart', requestBody)
+                const userDetailsResponse = await post('/api/user/get_cart', {
+                    cart_unique_token: loginUser.cart_unique_token,
+                })
+                dispatch(setCartItemData(userDetailsResponse.cart))
+            } else {
+                const data = await post('/api/user/new_add_item_in_cart', requestBody)
+                const userDetailsResponse = await post('/api/user/get_cart', {
+                    cart_unique_token: loginUser.cart_unique_token,
+                })
+                dispatch(setCartItemData(userDetailsResponse.cart))
+            }
+        } catch (error) {
+            console.log(error.message)
+        } finally {
+            setLoadingItems((prev) => ({ ...prev, [item._id]: false }));
         }
     }
 
@@ -79,6 +86,7 @@ const TableList = ({ products, support }) => {
 
     return products.map((item) => {
         const itemQuantity = findCartItemQuantity(item);
+        const isLoading = loadingItems[item._id];
 
         return (
             <div className="flex" key={item?._id}>
@@ -117,10 +125,10 @@ const TableList = ({ products, support }) => {
                         />
 
                         <div className={`rounded-full bg-white ${itemQuantity > 0 ? 'py-[9px] px-[16.5px]' : 'p-[9px]'} absolute bottom-2 right-2`}>
-                            {loading && <Spinner />}
-                            {!loading && itemQuantity > 0 ? (
+                            {isLoading && <Spinner />}
+                            {!isLoading && itemQuantity > 0 ? (
                                 <span className="text-[#0AB247] font-bold">{itemQuantity}</span>
-                            ) : !loading && (
+                            ) : !isLoading && (
                                 <img
                                     src={assets.add_green}
                                     alt=""
