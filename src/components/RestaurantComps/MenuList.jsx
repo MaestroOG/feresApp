@@ -21,11 +21,6 @@ const MenuList = ({ products, addItemInCart, cartUniqueToken, support }) => {
     const [orderCount, setOrderCount] = useState(1)
     const { setFoodPopup } = useContext(FeresContext)
 
-console.log(selectedResturant?.store?._id, "selected Resturant ....."  );
-console.log(cartItemData?.stores[0]?._id, "carts Resturant ....."  );
-
-
-
     const handleAddItem = async (item) => {
 
 

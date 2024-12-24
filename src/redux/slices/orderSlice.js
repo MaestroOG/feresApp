@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     orders: [],
+    reportOrder : null
 };
 
 const orderSlice = createSlice({
@@ -17,8 +18,11 @@ const orderSlice = createSlice({
                 (order) => order.id !== action.payload
             );
         },
+        setReportOrder: (state, action) => {
+            state.reportOrder = action.payload;
+        }
     },
 });
 
-export const { placeOrder, cancelOrder } = orderSlice.actions;
+export const { placeOrder, cancelOrder, setReportOrder } = orderSlice.actions;
 export default orderSlice.reducer;

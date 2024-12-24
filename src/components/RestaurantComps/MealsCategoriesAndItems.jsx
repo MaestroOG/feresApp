@@ -14,6 +14,7 @@ import Loader from '../Loader';
 import Spinner from '../Spinner';
 
 
+
 const MealsCategoriesAndItems = ({ categoryItems, store_id, cartUniqueToken, support }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
