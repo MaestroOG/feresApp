@@ -4,6 +4,7 @@ import { setNewOrderPopup } from '../redux/slices/modelToggleSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid'  // Import uuid for unique token generation
 import { loginUser } from '../redux/slices/userAuthSlice';
+import { setCartDetails, setCartItemData } from '../redux/slices/cartDetail';
 
 
 
@@ -15,6 +16,8 @@ const NewOrderPopUpModel = ({handleOK}) => {
        const cartUniqueToken = uuidv4()
         const newObj = {...userDetail , cart_unique_token: cartUniqueToken }
         dispatch(loginUser(newObj))
+        dispatch(setCartItemData(null))
+        dispatch(setCartDetails(null))
         localStorage.setItem("userData", JSON.stringify(newObj))
         handleOK && handleOK(cartUniqueToken)
         dispatch(setNewOrderPopup(false))

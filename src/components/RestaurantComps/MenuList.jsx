@@ -5,7 +5,7 @@ import { setNewOrderPopup, setShowModel } from '../../redux/slices/modelToggleSl
 import { setSelectedFood } from '../../redux/slices/selectedFoodSlice'
 import { addItem } from '../../redux/slices/cartSlice'
 import { usePost } from '../../servies/usePost'
-import { setCartItemData } from '../../redux/slices/cartDetail'
+import { setCartDetails, setCartItemData } from '../../redux/slices/cartDetail'
 import { FeresContext } from '../../context/FeresContext'
 import { useNavigate } from 'react-router-dom'
 import { setSupportItem } from '../../redux/slices/selectedResturantSlice'
@@ -20,6 +20,10 @@ const MenuList = ({ products, addItemInCart, cartUniqueToken, support }) => {
     const dispatch = useDispatch()
     const [orderCount, setOrderCount] = useState(1)
     const { setFoodPopup } = useContext(FeresContext)
+
+console.log(selectedResturant?.store?._id, "selected Resturant ....."  );
+console.log(cartItemData?.stores[0]?._id, "carts Resturant ....."  );
+
 
 
     const handleAddItem = async (item) => {
@@ -60,7 +64,7 @@ const MenuList = ({ products, addItemInCart, cartUniqueToken, support }) => {
         }
 
         const requestDataGroup = {
-            user_id: cartItemData.user._id,
+            user_id: cartItemData?.user?._id,
             type_product: "food",
             group_order: true,
             group_user: loginUser.user_id,

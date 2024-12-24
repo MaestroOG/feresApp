@@ -124,14 +124,22 @@ const TableList = ({ products, support }) => {
                                 <img
                                     src={assets.add_green}
                                     alt=""
-                                    onClick={(e) => {
+                                    onClick={(e) => {                                    
                                         if (support) {
                                             dispatch(setSupportItem(item))
                                             navigate('/restaurantsupport/ingredientinfo')
                                         } else {
-                                            e.stopPropagation(); // Prevent parent div click
-                                            handleAddItem(item);
+                                            if (selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData) {
+                                                dispatch(setSelectedFood(item));
+                                                dispatch(setShowModel(true));
+                                        console.log("4");
+                                                
+                                            } else {
+                                                dispatch(setNewOrderPopup(true))
+                                            }
+            
                                         }
+                                        
                                     }}
                                 />
                             )}
