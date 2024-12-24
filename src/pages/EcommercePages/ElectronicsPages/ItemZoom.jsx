@@ -10,6 +10,7 @@ const ItemZoom = () => {
     const [cardImgSrc, setCardImgSrc] = useState([]);
     const navigate = useNavigate();
     const { post, loading } = usePost()
+    const [zoom, setZoom] = useState(10)
 
     const fetchImages = async () => {
         const endpoint = '/api/e-commerce/get_item_detial'
@@ -28,26 +29,25 @@ const ItemZoom = () => {
     }
 
     const [current, setCurrent] = useState(0)
-
-    const prevSlide = () => {
-        if (current === 0) {
-            setCurrent(cardImgSrc.length - 1)
-        } else {
-            setCurrent(current - 1)
+    const handlePlusClick = () => {
+        if (zoom <= 100) {
+            setZoom(prev => prev + 10)
         }
     }
 
-    const nextSlide = () => {
-        if (current === cardImgSrc.length - 1) {
-            setCurrent(0)
-        } else {
-            setCurrent(current + 1)
+    const handleMinusClick = () => {
+        if (zoom > 10) {
+            setZoom(prev => prev - 10)
         }
     }
 
     useEffect(() => {
         fetchImages()
     }, [])
+
+    useEffect(() => {
+        console.log(zoom)
+    }, [zoom])
     return (
         <div className='flex items-center justify-center h-screen w-full'>
             <div className='w-[398px] h-[811px] flex flex-col justify-between rounded-xl bg-[#00000008] py-3'>
@@ -55,12 +55,14 @@ const ItemZoom = () => {
                 {cardImgSrc && <>
                     <Container className={'flex items-center justify-between'}>
                         <img src={assets.cancel_icon} alt="" onClick={() => navigate(-1)} />
-                        <p className='text-[#2F2F3F] text-lg font-medium'>10%</p>
+                        <p className='text-[#2F2F3F] text-lg font-medium'>{zoom}%</p>
                     </Container>
-                    <img src={cardImgSrc[current]} alt="" onClick={nextSlide} className='w-[398px] h-[514px] object-contain' />
+                    <img src={cardImgSrc[current]} alt="" style={{
+                        scale: '1.' + zoom.toString()
+                    }} width={'398px'} height={'514px'} className={`object-cover`} />
                     <Container className={'flex items-end justify-between'}>
-                        <img src={assets.search_minus} alt="" />
-                        <img src={assets.search_add} alt="" />
+                        <img src={assets.search_minus} alt="" onClick={handleMinusClick} />
+                        <img src={assets.search_add} alt="" onClick={handlePlusClick} />
                     </Container>
                 </>}
             </div>

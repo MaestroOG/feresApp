@@ -8,10 +8,15 @@ import { FeresContext } from '../../context/FeresContext'
 import FilterPopUp from '../../components/SearchComps/FilterPopUp'
 import { usePost } from '../../servies/usePost'
 import Loader from '../../components/Loader'
+import { useSelector } from 'react-redux'
 
 const EcommerceCategoriesResult = () => {
     const { name } = useParams()
     const [list, setList] = useState(null)
+    const last_location = localStorage.getItem("currentAddress")
+    const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
+    const cartCount = useSelector((state) => state.cartDetails.cartCount)
+    const store_id = cartItemData?.stores[0]?._id;
 
     const navigate = useNavigate()
     const { post, loading, error } = usePost();
@@ -46,14 +51,14 @@ const EcommerceCategoriesResult = () => {
                     <div className='flex flex-col'>
                         <h3 className='text-sm font-medium'>Delivery to</h3>
                         <div className='flex gap-2 items-center'>
-                            <h3 className='text-[#0AB247] text-sm font-medium'>Elgin St. Celina, Delaware 10299</h3>
+                            <h3 className='text-[#0AB247] text-sm font-medium'>{last_location?.split(" ")?.slice(0, 4)?.join(" ") || "select location"}</h3>
                         </div>
                     </div>
                 </div>
 
                 <button className='relative'>
-                    <img src={assets.shopping_basket} className="border border-[#EEEEEE] p-2 rounded-lg" onClick={() => navigate('/cart')} />
-                    <p className='absolute text-[10px] text-white bg-[#E92D53] font-bold px-1 rounded-full top-[18%] left-[54%]'>3</p>
+                    <img src={assets.shopping_basket} className="border border-[#EEEEEE] p-2 rounded-lg" onClick={() => navigate(`/cart/${store_id}`)} />
+                    <p className='absolute text-[10px] text-white bg-[#E92D53] font-bold px-1 rounded-full top-[18%] left-[54%]'>{cartCount}</p>
                 </button>
             </div>
 

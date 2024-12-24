@@ -5,12 +5,13 @@ import { useNavigate } from 'react-router-dom'
 import SelectOrderCards from '../components/SelectOrderComps/SelectOrderCards'
 import { useSelector } from 'react-redux'
 import { usePost } from '../servies/usePost'
+import Spinner from '../components/Spinner'
 
 const SelectOrder = () => {
     const navigate = useNavigate();
     const userDetail = useSelector((state) => state.userAuth.user)
     const [history, setHistory] = useState([])
-    const {post} = usePost()
+    const { post, loading } = usePost()
 
     function formatDate(isoString) {
         const date = new Date(isoString);
@@ -22,30 +23,30 @@ const SelectOrder = () => {
             minute: 'numeric',
             hour12: true,
         };
-    
+
         return new Intl.DateTimeFormat('en-US', options).format(date);
     }
 
-    useEffect(()=>{
+    useEffect(() => {
 
-            const fetchHistory = async (id, token)=>{
-                const response =await post('/api/user/order_history',{
-                        start_date: "",
-                        end_date: "",
-                        user_id: id,
-                        server_token: token,
-                        type: 1
-                    }
-                )
-
-                setHistory(response.order_list);
-                
+        const fetchHistory = async (id, token) => {
+            const response = await post('/api/user/order_history', {
+                start_date: "",
+                end_date: "",
+                user_id: id,
+                server_token: token,
+                type: 1
             }
+            )
 
-        if(userDetail.user_id && userDetail.token){
-            fetchHistory(userDetail.user_id , userDetail.token)
+            setHistory(response.order_list);
+
         }
-    },[])
+
+        if (userDetail.user_id && userDetail.token) {
+            fetchHistory(userDetail.user_id, userDetail.token)
+        }
+    }, [])
 
     return (
         <div>
@@ -53,8 +54,8 @@ const SelectOrder = () => {
             {/* Timeline */}
             <div>
                 <h1 className='text-[#2F2F3F] text-lg font-medium px-3 my-7'>{`${new Date().getDate()}-${new Date().getUTCMonth()}-${new Date().getFullYear()}`}</h1>
-
-              {history?.map((item)=>  <SelectOrderCards img={item?.store_detail?.image_url} name={item?.store_detail?.name} desc={formatDate(item?.created_at)} successStat={true} key={item._id}/> )}
+                {loading && <Spinner />}
+                {history?.map((item) => <SelectOrderCards img={assets.pie} name={item?.store_detail?.name} desc={formatDate(item?.created_at)} successStat={true} key={item._id} />)}
             </div>
         </div>
     )

@@ -4,7 +4,7 @@ import { json, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { usePost } from '../servies/usePost'
 import { loginUser } from '../redux/slices/userAuthSlice'
-import { setCartItemData , setCartCount } from '../redux/slices/cartDetail'
+import { setCartItemData, setCartCount } from '../redux/slices/cartDetail'
 
 const Navbar = () => {
     const { post } = usePost()
@@ -12,13 +12,13 @@ const Navbar = () => {
     const userDetail = useSelector((state) => state.userAuth.user)
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
     const cartCount = useSelector((state) => state.cartDetails.cartCount)
-    const last_location = localStorage.getItem("currentAddress") 
+    const last_location = localStorage.getItem("currentAddress")
     const navigate = useNavigate()
     const initialized = useRef(false) // Ref to track if API call was made
     const store_id = cartItemData?.stores[0]?._id
 
-    console.log(cartCount,'cart count ');
-    
+    console.log(cartCount, 'cart count ');
+
 
     useEffect(() => {
         const fetchUserDetail = async () => {
@@ -46,13 +46,13 @@ const Navbar = () => {
                     const userDetailsResponse = await post('/api/user/get_cart', {
                         cart_unique_token: cartUniqueToken,
                     })
-                    dispatch(setCartItemData(userDetailsResponse.cart))
-                    const itemCount = userDetailsResponse?.cart?.stores[0]?.items.filter((item)=>{
-                            return item.quantity > 0
+                    dispatch(setCartItemData(userDetailsResponse?.cart))
+                    const itemCount = userDetailsResponse?.cart?.stores[0]?.items.filter((item) => {
+                        return item.quantity > 0
                     })
                     dispatch(setCartCount(itemCount?.length))
                     localStorage.setItem("cartCount", JSON.stringify(cartCount))
-                    
+
                 }
             } catch (error) {
                 console.error("Error fetching user details:", error)

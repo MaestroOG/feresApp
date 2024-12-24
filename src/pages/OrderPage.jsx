@@ -35,7 +35,7 @@ const OrderPage = () => {
 
     useEffect(() => {
         getOrderHistory()
-        console.log(cartItemData);
+        console.log(orderCat);
     }, [])
     return (
         <div className='h-screen pb-24'>
@@ -60,6 +60,8 @@ const OrderPage = () => {
                             orderCat == "Cancelled" ? order.order_status == 101 && <OrderCards order={order} key={index} /> : order.order_status != 101 && <OrderCards order={order} key={index} />
                         ))
                 }
+
+                {orderCat === 'Upcoming' && <NoOrderWarn orderCat={'Upcoming'} />}
 
                 {history && !history?.success && <NoOrderWarn orderCat={"Completed"} />}
             </div>
