@@ -212,31 +212,6 @@ const EcommerceMart = () => {
                         </Container>
                     </>
                 ))}
-
-
-
-                {/* <div className='flex items-center justify-between px-4 my-7'>
-                    <h3 className='text-[18px] font-medium'>Trending items </h3>
-                    <Link className='text-[#999999] font-medium'>View all</Link>
-                </div>
-
-                <Container className={'flex items-center gap-4 overflow-auto no-scrollbar'}>
-                    {trendingItems?.map(item => (
-                        <MartTrendingCard key={item.id} img={item.img} name={item.name} oldPrice={item.oldPrice} price={item.price} />
-                    ))}
-                </Container> */}
-
-
-                {/* <div className='flex items-center justify-between px-4 my-7'>
-                    <h3 className='text-[18px] font-medium'>Top weekly items</h3>
-                    <Link className='text-[#999999] font-medium'>View all</Link>
-                </div>
-
-                <Container className={'flex items-center gap-4 overflow-auto no-scrollbar'}>
-                    {weeklyItems?.map(item => (
-                        <MartItemCard key={item.id} img={item.img} name={item.name} price={item.price} />
-                    ))}
-                </Container> */}
             </div>
 
 
@@ -248,12 +223,3 @@ const EcommerceMart = () => {
 }
 
 export default EcommerceMart
-
-//     < img
-// src = { assets.add_green }
-// alt = ""
-// onClick = {(e) => {
-//     e.stopPropagation(); // Prevent parent div click
-//     handleAddItem(item);
-// }}
-//                                                     />

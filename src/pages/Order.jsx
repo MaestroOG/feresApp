@@ -48,15 +48,14 @@ const Order = () => {
     const cartData = useSelector((state) => state.cart.items);
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
     const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
-    const { loading, error, response, postRequest } = usePostRequest();
+    const { loading, response, postRequest } = usePostRequest();
     const { post } = usePost()
     const [dataFetched, setDataFetched] = useState(false); // Track if data is fetched
     const [quantityUpdate, setQuantityUpdate] = useState()
-    const [cartDetail, setCartDetail] = useState()
+    const [cartDetail, setCartDetail] = useState(null)
     const userDetail = useSelector((state) => state.userAuth.user)
     const [isLoading, setLoading] = useState(true)
-
-    console.log(userDetail);
+    const [error, setError] = useState(false)
 
 
     const [review, setReview] = useState(false)
@@ -86,9 +85,14 @@ const Order = () => {
                 tipPaymeny_other_amount: "0",
                 is_delivery_keeper: true
             });
+            if (!cartDetail || cartDetail && cartDetail?.success === false) {
+                setError(true);
+                return;
+            }
+
             setCartDetail(cartDetail)
             dispatch(setCartDetails(cartDetail))
-            console.log(cartDetail, 'here is a data of detail carts');
+
 
         }
 
@@ -103,6 +107,9 @@ const Order = () => {
 
     }, [])
 
+    if (error) {
+        return <h1>Session Expired Please Log In Again</h1>
+    }
 
     return (
         <div className='pb-24'>

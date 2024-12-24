@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { assets } from '../../assets/assets';
 import { useSelector } from 'react-redux';
+import Spinner from '../Spinner';
 
 const Offers = () => {
 
@@ -46,7 +47,15 @@ const Offers = () => {
         console.log(promotionData);
     }, [])
 
+    if (error || promotionData && promotionData.success === false) {
+        return (
+            <div className='text-center'>Error Fetching Stores</div>
+        )
+    }
 
+    if (isLoading) {
+        return <Spinner />
+    }
 
     return (
         <div className='px-1 mt-10'>
@@ -59,119 +68,40 @@ const Offers = () => {
             <div className='flex items-center gap-2 overflow-x-auto offers mb-8 w-screen'>
                 {/* Card */}
                 {/* Card Top */}
-                {isLoading && <div className='text-center'>Loading...</div>}
-                {error || promotionData && promotionData.success === false && <div className='text-center'>Error Fetching Stores</div>}
                 {promotionData && promotionData.success && <>
-                    <div className='relative flex-shrink-0'>
+                    <div className='relative flex items-center gap-[10px] flex-shrink-0'>
                         {/* <img src={assets.offer_bg} alt="" /> */}
-                        {promotionData && promotionData.promotions_list.map((item) => (
-                            item?.store_info?.slice(0, 1).map((store, index) => (
-                                <img key={index} src={store?.cover_image_url} alt="" className='w-[365px] h-[140.98px] rounded-tr-3xl rounded-tl-3xl object-cover' onClick={() => navigate(`/restaurant/${store._id}`)} />
+                        {promotionData && promotionData?.promotions_list?.map(item => (
+                            item?.store_info?.map(store => (
+                                <div key={store?._id}>
+                                    <img src={store?.image_url} alt="" className='w-[365px] h-[140.98px] rounded-tr-3xl rounded-tl-3xl object-cover' onClick={() => navigate(`/restaurant/${store?._id}`)} />
+                                    {/* Card Top Stickers */}
+                                    <div className='bg-[#F2FDF8] w-[154px] h-[34px] rounded-[30px] p-[10px] text-[#0AB247] font-medium text-xs text-center absolute top-2 left-2 whitespace-nowrap'>{item?.discount_percent}% off selected items</div>
+
+                                    <div className='flex items-center gap-2 bg-white w-[91px] h-[40px] p-[10px] rounded-[30px] absolute bottom-14 right-28'>
+                                        <img src={assets.clock_01} alt="" className='w-5' />
+                                        <p className='text-xs font-medium text-[#1E1E1E] whitespace-nowrap'>{store?.delivery_time || 'N/A'} mins</p>
+
+                                    </div>
+                                    <div className='flex items-center gap-2 bg-white w-[91px] h-[40px] p-[10px] rounded-[30px] absolute bottom-14 right-3'>
+                                        <img src={assets.scooter_02} alt="" className='w-5' />
+                                        <p className='text-xs font-medium text-[#1E1E1E] whitespace-nowrap'>{store?.wallet_currency_code} {store?.wallet}</p>
+
+                                    </div>
+                                    {/* Card Info */}
+                                    <div className='px-2'>
+                                        <div className='flex items-center justify-between mt-2'>
+                                            <h2 className='text-base font-bold text-[#2F2F3F]'>{store?.name}</h2>
+                                            <div className='flex items-center gap-2'>
+                                                <img src={assets.star} alt="" className='w-[18px]' />
+                                                <p className='text-[#1E1E1E] text-sm whitespace-nowrap'>{store?.user_rate}</p>
+                                            </div>
+                                        </div>
+                                        <p className='text-xs text-[#979797] mt-1'>{store?.Description}</p>
+                                    </div>
+                                </div>
                             ))
                         ))}
-                        {/* Card Top Stickers */}
-                        {promotionData && promotionData.promotions_list.map((item, index) => (
-                            <div key={index} className='bg-[#F2FDF8] w-[154px] h-[34px] rounded-[30px] p-[10px] text-[#0AB247] font-medium text-xs text-center absolute top-2 left-2 whitespace-nowrap'>{item.discount_percent}% off selected items</div>
-                        ))}
-                        <div className='flex items-center gap-2 bg-white w-[91px] h-[40px] p-[10px] rounded-[30px] absolute bottom-14 right-28'>
-                            <img src={assets.clock_01} alt="" className='w-5' />
-                            {promotionData && promotionData.promotions_list.map(item => (
-                                item.store_info.map((store, index) => (
-                                    <p key={index} className='text-xs font-medium text-[#1E1E1E] whitespace-nowrap'>{store.delivery_time} mins</p>
-                                ))
-                            ))}
-
-                        </div>
-                        <div className='flex items-center gap-2 bg-white w-[91px] h-[40px] p-[10px] rounded-[30px] absolute bottom-14 right-3'>
-                            <img src={assets.scooter_02} alt="" className='w-5' />
-                            {promotionData && promotionData.promotions_list.map(item => (
-                                item.store_info.map(store => (
-                                    <p className='text-xs font-medium text-[#1E1E1E] whitespace-nowrap'>{store.wallet_currency_code} {store.wallet}</p>
-                                ))
-                            ))}
-
-                        </div>
-                        {/* Card Info */}
-                        <div className='px-2'>
-                            <div className='flex items-center justify-between mt-2'>
-                                {promotionData && promotionData.promotions_list.map(item => (
-                                    item.store_info.map(store => (
-                                        <h2 className='text-base font-bold text-[#2F2F3F]'>{store.name}</h2>
-                                    ))
-                                ))}
-                                <div className='flex items-center gap-2'>
-                                    <img src={assets.star} alt="" className='w-[18px]' />
-                                    {promotionData && promotionData.promotions_list.map(item => (
-                                        item.store_info.map(store => (
-                                            <p className='text-[#1E1E1E] text-sm whitespace-nowrap'>{store.user_rate}</p>
-                                        ))
-                                    ))}
-                                </div>
-                            </div>
-                            {promotionData && promotionData.promotions_list.map(item => (
-                                item.store_info.map(store => (
-                                    <p className='text-xs text-[#979797] mt-1'>{store.Description}</p>
-                                ))
-                            ))}
-                        </div>
-                    </div>
-                </>}
-
-                {isLoading && <div className='text-center'>Loading...</div>}
-                {error || promotionData && promotionData.success === false && <div className='text-center'>Error Fetching Stores</div>}
-                {promotionData && promotionData.success && <>
-                    <div className='relative flex-shrink-0'>
-                        {/* <img src={assets.offer_bg} alt="" /> */}
-                        {promotionData && promotionData.promotions_list.map((item) => (
-                            item.store_info.map((store, index) => (
-                                <img key={index} src={store?.cover_image_url} alt="" className='w-[365px] h-[140.98px] rounded-tr-3xl rounded-tl-3xl object-cover' onClick={() => navigate(`/restaurant/${store._id}`)} />
-                            ))
-                        ))}
-                        {/* Card Top Stickers */}
-                        {promotionData && promotionData.promotions_list.map((item, index) => (
-                            <div key={index} className='bg-[#F2FDF8] w-[154px] h-[34px] rounded-[30px] p-[10px] text-[#0AB247] font-medium text-xs text-center absolute top-2 left-2 whitespace-nowrap'>{item.discount_percent}% off selected items</div>
-                        ))}
-                        <div className='flex items-center gap-2 bg-white w-[91px] h-[40px] p-[10px] rounded-[30px] absolute bottom-14 right-28'>
-                            <img src={assets.clock_01} alt="" className='w-5' />
-                            {promotionData && promotionData.promotions_list.map(item => (
-                                item.store_info.map((store, index) => (
-                                    <p key={index} className='text-xs font-medium text-[#1E1E1E] whitespace-nowrap'>{store.delivery_time} mins</p>
-                                ))
-                            ))}
-
-                        </div>
-                        <div className='flex items-center gap-2 bg-white w-[91px] h-[40px] p-[10px] rounded-[30px] absolute bottom-14 right-3'>
-                            <img src={assets.scooter_02} alt="" className='w-5' />
-                            {promotionData && promotionData.promotions_list.map(item => (
-                                item.store_info.map(store => (
-                                    <p className='text-xs font-medium text-[#1E1E1E] whitespace-nowrap'>{store.wallet_currency_code} {store.wallet}</p>
-                                ))
-                            ))}
-
-                        </div>
-                        {/* Card Info */}
-                        <div className='px-2'>
-                            <div className='flex items-center justify-between mt-2'>
-                                {promotionData && promotionData.promotions_list.map(item => (
-                                    item.store_info.map(store => (
-                                        <h2 className='text-base font-bold text-[#2F2F3F]'>{store.name}</h2>
-                                    ))
-                                ))}
-                                <div className='flex items-center gap-2'>
-                                    <img src={assets.star} alt="" className='w-[18px]' />
-                                    {promotionData && promotionData.promotions_list.map(item => (
-                                        item.store_info.map(store => (
-                                            <p className='text-[#1E1E1E] text-sm whitespace-nowrap'>{store.user_rate}</p>
-                                        ))
-                                    ))}
-                                </div>
-                            </div>
-                            {promotionData && promotionData.promotions_list.map(item => (
-                                item.store_info.map(store => (
-                                    <p className='text-xs text-[#979797] mt-1'>{store.Description}</p>
-                                ))
-                            ))}
-                        </div>
                     </div>
                 </>}
             </div>

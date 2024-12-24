@@ -15,11 +15,9 @@ const DelOrderPopUp = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate();
 
-    console.log(userDetail, "here is a details ");
-
     const handleDelete = () => {
         const cartUniqueToken = uuidv4()
-        const newUserDetail = { ...userDetail, cart_unique_token : cartUniqueToken }
+        const newUserDetail = { ...userDetail, cart_unique_token: cartUniqueToken }
         dispatch(loginUser(newUserDetail))
         localStorage.setItem("cart_unique_token", cartUniqueToken)
         localStorage.setItem("userData", JSON.stringify(newUserDetail))

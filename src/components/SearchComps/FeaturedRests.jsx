@@ -84,8 +84,9 @@ const FeaturedRests = ({ type, stores }) => {
     }, [searchData])
     return (
         <>
-            {searchResult && <h2 className='text-base text-[#2F2F3F] font-medium mt-3 pt-4 px-4'>Featured {type}</h2>}
+            <h2 className='text-base text-[#2F2F3F] font-medium mt-3 pt-4 px-4'>Featured {type}</h2>
             <div className='px-4 overflow-x-auto no-scrollbar'>
+
                 {isLoading && <Spinner />}
                 {searchResult && searchResult.hasOwnProperty('message') ? (
                     <div className='flex overflow-x-auto space-x-6 no-scrollbar'>
@@ -100,12 +101,33 @@ const FeaturedRests = ({ type, stores }) => {
                     </div>
                 ) : null}
 
-                {!searchResult && stores && <div className='flex overflow-x-auto space-x-6 no-scrollbar'>
+                {!searchResult && stores && <div className='flex overflow-x-auto no-scrollbar no-scrollbar'>
                     {stores.stores.map(store => (
-                        store.stores.map(st => (
-                            <div key={st?._id} className='grid grid-rows-2 gap-y-4 min-w-[300px] max-w-[300px] shrink-0 pr-3'>
-                                <FeaturedRestsCard key={st?._id} title={st?.name} desc={st?.Description} userRate={st?.user_rate} userRateQuantity={st?.user_rate_count} img={st?.image_url} delivery={st?.delivery_time} onClick={() => navigate(`/restaurant/${st?._id}`)} />
-                            </div>
+                        store.stores.slice(0, 15).map(st => (
+                            <>
+                                <div key={st?._id} className="grid grid-cols-2 gap-6 mr-6 min-w-[300px] max-w-[300px]"
+                                    style={{
+                                        gridTemplateRows: 'repeat(auto-fill, minmax(150px, 1fr))',
+                                        width: `${Math.ceil(st?.length / 4) * 100}%`, // Dynamically adjust the width for scrolling
+                                    }}>
+                                    <FeaturedRestsCard key={st?._id} title={st?.name} desc={st?.Description} userRate={st?.user_rate} userRateQuantity={st?.user_rate_count} img={st?.image_url} delivery={st?.delivery_time} onClick={() => navigate(`/restaurant/${st?._id}`)} />
+                                </div>
+                            </>
+                        ))
+                    ))}
+                </div>}
+                {!searchResult && stores && <div className='flex overflow-x-auto no-scrollbar no-scrollbar'>
+                    {stores.stores.map(store => (
+                        store.stores.slice(15, 30).map(st => (
+                            <>
+                                <div key={st?._id} className="grid grid-cols-2 gap-6 mr-6 min-w-[300px] max-w-[300px]"
+                                    style={{
+                                        gridTemplateRows: 'repeat(auto-fill, minmax(150px, 1fr))',
+                                        width: `${Math.ceil(st?.length / 4) * 100}%`, // Dynamically adjust the width for scrolling
+                                    }}>
+                                    <FeaturedRestsCard key={st?._id} title={st?.name} desc={st?.Description} userRate={st?.user_rate} userRateQuantity={st?.user_rate_count} img={st?.image_url} delivery={st?.delivery_time} onClick={() => navigate(`/restaurant/${st?._id}`)} />
+                                </div>
+                            </>
                         ))
                     ))}
                 </div>}
@@ -119,14 +141,14 @@ const FeaturedRests = ({ type, stores }) => {
                         </div>
                     ))}
                 </div>}
-
-
-
-                {/* <FeaturedRestsCard img={assets.featured_rest_img} title={"KFC Eastlight"} desc={"Burger, Fast Food, American..."} userRate={"4.50"} userRateQuantity={"50+"} price={"150.00"} delivery={"40"} onClick={() => navigate('/restaurant')} /> */}
-
             </div>
         </>
     )
 }
 
 export default FeaturedRests
+
+
+
+
+
