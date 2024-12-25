@@ -57,7 +57,7 @@ const Reviews = () => {
 
     useEffect(() => {
         fetchReviews()
-    })
+    }, [])
     return (
         <>
             {loading && <Spinner />}

@@ -35,13 +35,13 @@ const CancelOrder = () => {
                 cancel_reason: 'cancelReason dont want to cahncel',
             });
             setSuccessPop(true);
-            navigate('/');
             dispatch(
                 loginUser({
                     ...userDetail,
                     cart_unique_token: uuidv4(),
                 })
             );
+            navigate('/');
         } catch (error) {
             console.error('Error cancelling order:', error);
         } finally {

@@ -15,7 +15,7 @@ import Spinner from '../Spinner';
 
 
 
-const MealsCategoriesAndItems = ({ categoryItems, store_id, cartUniqueToken, support }) => {
+const MealsCategoriesAndItems = ({ categoryItems, store_id, cartUniqueToken, support, notSticky = false }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const newOrderPopup = useSelector((state) => state.modelToggle.newOrderPopup)
@@ -178,7 +178,7 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id, cartUniqueToken, sup
                 </div>
 
                 {/* Category Buttons */}
-                <div className='px-3 flex items-center gap-4 overflow-auto no-scrollbar sticky top-24 z-20 bg-white pb-3 category-buttons-container pt-1 shadow-md'>
+                <div className={`px-3 flex items-center gap-4 overflow-auto no-scrollbar top-24 z-20 bg-white pb-3 category-buttons-container pt-1 shadow-md ${notSticky ? '' : 'sticky'}`}>
                     {categoryItems?.map((button, index) => (
                         <button
                             key={index}
@@ -203,6 +203,7 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id, cartUniqueToken, sup
                 {/* Trending Items Row */}
                 <div className='px-4 py-7 flex items-center overflow-auto no-scrollbar flex-shrink-0 z-10 bg-white'>
                     <div className='flex'>
+                        {loading && <Spinner />}
                         {trendingItems?.map((item) => (
                             <div key={item?.product_id} className='min-w-[170px]' onClick={() => {
                                 if (support) {

@@ -14,13 +14,11 @@ const SelectMenu = () => {
 
 
 
-    
+
     return (
         <div className='w-full'>
-            <SupportNav />
-            <MealsCategoriesAndItems categoryItems={selectedResturant?.store?.products} store_id={selectedResturant?.store?._id} cartUniqueToken={loginUser?.cart_unique_token} support={true}/>
-
-            {/* <MealsCategoriesAndItems /> */}
+            <SupportNav isGap={true} />
+            <MealsCategoriesAndItems categoryItems={selectedResturant?.store?.products} store_id={selectedResturant?.store?._id} cartUniqueToken={loginUser?.cart_unique_token} support={true} notSticky={true} />
         </div>
     )
 }

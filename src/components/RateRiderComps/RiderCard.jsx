@@ -3,6 +3,7 @@ import { assets } from '../../assets/assets'
 import { useNavigate } from 'react-router-dom'
 import { usePost } from '../../servies/usePost'
 import { useSelector } from 'react-redux'
+import Spinner from '../Spinner'
 
 
 const RiderCard = ({ providerInfo }) => {
@@ -17,13 +18,8 @@ const RiderCard = ({ providerInfo }) => {
         try {
             const porviderDetail = await post('/api/get_order_detail',
                 {
-                    // TODO: Make it dynamic
-                    order_id: "6746c3ad0e3e69d36d540ed7",
-                    // id: "674194cbba82cd9b9b72d4ea",
-                    // server_token: "Qcy3jLI3DLqRl4esMs98p0YjxVXx8TRU",
                     type: 7,
-                    // order_id: userDetail?.order_id,
-                    // type: 7,
+                    order_id: userDetail?.order_id,
                     id: userDetail?.user_id,
                     server_token: userDetail?.token
                 }
@@ -48,9 +44,12 @@ const RiderCard = ({ providerInfo }) => {
         return () => clearInterval(intervalId);
     }, [])
 
+    if (loading) {
+        return <Spinner />
+    }
+
     return (
         <div className='border border-[#EEEEEE] rounded-[16px] flex items-center justify-between p-5 mt-5' onClick={() => navigate('/riderinfo')}>
-            {loading && <div>Loading....</div>}
             {error && <div>Error fetching details</div>}
             {!providerInfo && <div>Waiting for acceptance</div>}
             {providerInfo && <>

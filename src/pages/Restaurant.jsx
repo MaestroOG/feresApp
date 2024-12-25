@@ -87,8 +87,8 @@ const Restaurant = () => {
                 user_id: loginUser?.user_id
             })
 
-            console.log(data,"datadatadata");
-            
+            console.log(data, "datadatadata");
+
 
             if (data) {
                 const filteredData = data?.promotions_list?.filter(store => store?.store_id === id)
@@ -263,13 +263,16 @@ const Restaurant = () => {
     //     setIsItemAdded(data)
     // }, [])
 
+    if (isLoading) {
+        return <Loader />
+    }
+
+    if (loading) {
+        <Spinner />
+    }
 
     return (
         <>
-
-            {isLoading && <Loader />}
-            {loading && <Spinner />}
-
             <div className={`pb-16 ${foodPopup && 'blur-sm'}`}>
                 <div>
                     {/* Feature */}
@@ -381,7 +384,7 @@ const Restaurant = () => {
 
                         {/* <NewOrderPopUp /> */}
 
-                        {foodSearch ? <FoodSearchPopUp itemFoodPopup={selectedFood} /> : null}
+                        {foodSearch && <FoodSearchPopUp />}
 
 
                         {/* Food Popup */}

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { assets } from '../../assets/assets'
+import Spinner from '../Spinner'
 
 const RestReview = ({ id }) => {
 
@@ -44,7 +45,7 @@ const RestReview = ({ id }) => {
 
     useEffect(() => {
         getReviewAverage();
-    })
+    }, [])
     return (
         <div className='px-1 mt-11'>
             {/* <h2 className='text-[#2F2F3F] font-bold text-2xl'>KFC Eastlight</h2> */}
@@ -52,12 +53,14 @@ const RestReview = ({ id }) => {
             {/* Left */}
             <div className='flex items-center'>
 
-                {loading && <div>Loading...</div>}
+                {loading && <Spinner />}
                 {error && <div>User reviews not available</div>}
                 {reviewAverage && <div className='flex w-[36%] mx-4 flex-col items-start justify-center mt-6'>
                     <h1 className='text-3xl text-[#2F2F3F] font-bold text-center m-auto'>{reviewAverage}</h1>
                     <div className='flex items-center justify-center m-auto gap-3 mt-1'>
-                        {Array(reviewAverage).fill().map((_, index) => (
+                        {Array(
+                            Math.floor(reviewAverage)
+                        ).fill().map((_, index) => (
                             <img src={assets.star} alt="" key={index} />
                         ))}
                     </div>
