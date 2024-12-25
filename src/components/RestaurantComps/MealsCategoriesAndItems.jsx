@@ -10,6 +10,7 @@ import NewOrderPopUpModel from '../../pages/NewOrderPopUp';
 import { setSelectedFood } from '../../redux/slices/selectedFoodSlice';
 import { useNavigate } from 'react-router-dom';
 import { setSupportItem } from '../../redux/slices/selectedResturantSlice';
+
 import Loader from '../Loader';
 import Spinner from '../Spinner';
 
@@ -18,6 +19,8 @@ import Spinner from '../Spinner';
 const MealsCategoriesAndItems = ({ categoryItems, store_id, cartUniqueToken, support, notSticky = false }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const item_info = useSelector((state)=>state.promotions.item_info)
+    const promoPer = useSelector((state)=>state.promotions.promoPer)
     const newOrderPopup = useSelector((state) => state.modelToggle.newOrderPopup)
     const { tableList, setTableList, setFoodPopup } = useContext(FeresContext);
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
@@ -136,6 +139,17 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id, cartUniqueToken, sup
         })
         dispatch(setCartItemData(userDetailsResponse.cart))
     }
+    const checkDiscount = (itemId) => {
+        const promoItem =  item_info.find(element => {
+                if(element._id == itemId){
+                  return true
+                }else{
+                  return false
+                }
+          })
+          return promoItem    
+          
+      }
 
     const findCartItemQuantity = (item) => {
         const cartItem = cartItemData?.stores[0]?.items?.find(
@@ -220,7 +234,9 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id, cartUniqueToken, sup
                                         alt=""
                                         className='w-[155px] h-[144px] rounded-[13px] object-cover'
                                     />
-                                    <div className='bg-[#0AB247] rounded-lg p-2 text-xs text-white absolute top-2 left-2'>-35%</div>
+
+
+                                    {checkDiscount(item?._id) && <div className='bg-[#0AB247] rounded-lg p-2 text-xs text-white absolute top-2 left-2'>-{promoPer}%</div>}
                                     <div className='rounded-full bg-white p-2 absolute bottom-2 right-2'>
                                         {loading && <Spinner />}
                                         {findCartItemQuantity(item) ? (

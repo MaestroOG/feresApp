@@ -16,6 +16,9 @@ const MenuList = ({ products, addItemInCart, cartUniqueToken, support }) => {
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
     const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
     const loginUser = useSelector((state) => state.userAuth.user)
+    const item_info = useSelector((state)=>state.promotions.item_info)
+    const promoPer = useSelector((state)=>state.promotions.promoPer) 
+
     const { post, loading } = usePost()
     const dispatch = useDispatch()
     const [orderCount, setOrderCount] = useState(1)
@@ -57,6 +60,8 @@ const MenuList = ({ products, addItemInCart, cartUniqueToken, support }) => {
                 store_id: item.store_id,
             }
         }
+
+        
 
         const requestDataGroup = {
             user_id: cartItemData?.user?._id,
@@ -123,6 +128,17 @@ const MenuList = ({ products, addItemInCart, cartUniqueToken, support }) => {
         }
     }
 
+    const checkDiscount = (itemId) => {
+        const promoItem =  item_info.find(element => {
+                if(element._id == itemId){
+                  return true
+                }else{
+                  return false
+                }
+          })
+          return promoItem    
+          
+      }
     // Helper function to check if an item is in the cart
     const findCartItemQuantity = (item) => {
         // Find matching item by _id or image_url
@@ -162,6 +178,7 @@ const MenuList = ({ products, addItemInCart, cartUniqueToken, support }) => {
                                     </div>
                                 </div>
                                 <div className='relative flex items-end pb-3 justify-center top-[13px]'>
+
                                     {item?.image_url[0] && <img src={item?.image_url[0]} className='w-[132px] h-[123px] rounded-2xl object-cover ' alt=""
                                         style={{ width: '132px', height: '123px' }} />}
                                 </div>
@@ -193,6 +210,8 @@ const MenuList = ({ products, addItemInCart, cartUniqueToken, support }) => {
                                 <div className='flex flex-col gap-1 flex-[3]'>
                                     <div className='flex items-center gap-2'>
                                         <h2 className='text-[#2F2F3F] text-sm font-medium'>{item?.name}</h2>
+                                   {checkDiscount(item?._id) && <div className='bg-[#0AB247] rounded-lg p-2 text-xs text-white'>-{promoPer}%</div>}
+
                                         {loading && <Spinner />}
                                         {!loading && findCartItemQuantity(item) > 0 && <button className='border border-[#0AB247] bg-white p-2 w-[70px] rounded-full text-[#0AB247] text-sm font-medium' onClick={(e) => {
                                             e.stopPropagation()
@@ -200,7 +219,9 @@ const MenuList = ({ products, addItemInCart, cartUniqueToken, support }) => {
                                         }}>
                                             {findCartItemQuantity(item)}
                                         </button>}
+
                                     </div>
+                                    
                                     <p className='text-[#AEAEAE] font-normal text-sm w-[90%]'>{item?.details}</p>
                                     <div className='flex items-center gap-2'>
                                         <p className='text-[#AEAEAE] text-sm'>{`ETB 170`}</p>
@@ -208,6 +229,7 @@ const MenuList = ({ products, addItemInCart, cartUniqueToken, support }) => {
                                     </div>
                                 </div>
                                 <div className='relative flex items-end pb-3 justify-center top-[13px]'>
+
                                     {item?.image_url[0] && <img src={item?.image_url[0]} className='w-[132px] h-[123px] rounded-2xl object-cover ' alt=""
                                         style={{ width: '132px', height: '123px' }} />}
                                 </div>

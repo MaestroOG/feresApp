@@ -19,8 +19,14 @@ const TableList = ({ products, support }) => {
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData);
     const loginUser = useSelector((state) => state.userAuth.user);
     const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
+    const item_info = useSelector((state)=>state.promotions.item_info)
+    const promoPer = useSelector((state)=>state.promotions.promoPer)
     const [loadingItems, setLoadingItems] = useState({});
     const { setFoodPopup } = useContext(FeresContext)
+
+
+
+    
 
     const handleAddItem = async (item) => {
         try {
@@ -84,6 +90,18 @@ const TableList = ({ products, support }) => {
         return cartItem ? cartItem.quantity : 0;
     };
 
+    const checkDiscount = (itemId) => {
+      const promoItem =  item_info.find(element => {
+              if(element._id == itemId){
+                return true
+              }else{
+                return false
+              }
+        })
+        return promoItem    
+        
+    }
+
     return products.map((item) => {
         const itemQuantity = findCartItemQuantity(item);
         const isLoading = loadingItems[item._id];
@@ -116,6 +134,8 @@ const TableList = ({ products, support }) => {
 
                         }}
                     >
+                                   {checkDiscount(item?._id) && <div className='bg-[#0AB247] rounded-lg p-2 text-xs text-white absolute top-2 left-2'>-{promoPer}%</div>}
+
                         <img
                             src={item?.image_url[0]}
                             alt=""
