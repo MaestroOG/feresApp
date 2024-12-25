@@ -17,9 +17,12 @@ const EcommerceMart = () => {
     const dispatch = useDispatch()
     const { id } = useParams()
     const [scrolled, setScrolled] = useState(false)
+    const [promoInfo, setPromoInfo] = useState(false)
     const navigate = useNavigate();
     const loginUser = useSelector((state) => state.userAuth.user)
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData);
+    const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
+
 
     const { setEcat } = useContext(FeresContext)
     const handleClick = (name) => {
@@ -52,6 +55,32 @@ const EcommerceMart = () => {
             console.error(error.message);
         }
     };
+
+    const fetchPromoInfo = async () => {
+        const endpoint = '/get_all_promotions'
+        try {
+            const data = await post(endpoint, {
+                user_id: loginUser?.user_id
+            })
+
+            const promotion = data.promotions_list
+            const promoStore = promotion.find((item)=>{
+               if(item.store_id == selectedResturant.store._id){
+                return item
+               }
+            })
+            console.log(promoStore,"promotionpromotionpromotion");
+            
+
+            if (data) {
+                const filteredData = data?.promotions_list?.filter(store => store?.store_id === id)
+                setPromoInfo(filteredData[0]);
+                // console.log(promoInfo)
+            }
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
 
     const getCart = async () => {
         const endpoint = '/api/user/get_cart';
@@ -97,6 +126,7 @@ const EcommerceMart = () => {
     useEffect(() => {
         fetchProductsAndStoreInfo()
         getCart()
+        fetchPromoInfo()
         console.log(cartItemData)
     }, [])
     return (

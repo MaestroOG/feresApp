@@ -12,7 +12,7 @@ import cartDetailsReducer from "./slices/cartDetail";
 import filterReducer from './slices/filterSlice'
 import faqReducer from "./slices/faqSlice"
 import chatReducer from "./slices/chatSlice"
-
+import promotionsReducer from "./slices/promotion"
 const store = configureStore({
   reducer: {
     userAuth: userAuthReducer,
@@ -26,7 +26,8 @@ const store = configureStore({
     cartDetails: cartDetailsReducer,
     filter: filterReducer,
     faq:faqReducer,
-    chat:chatReducer
+    chat:chatReducer,
+    promotions: promotionsReducer
   },
 });
 

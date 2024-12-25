@@ -32,6 +32,7 @@ import DelByHostPopup from '../components/GroupOrderComps/DelByHostPopup';
 import { setCartItemData } from '../redux/slices/cartDetail';
 import Loader from '../components/Loader';
 import Spinner from '../components/Spinner';
+import { setItem_info, setProduct_info, setPromoPer, setStore_info } from '../redux/slices/promotion';
 
 
 
@@ -87,13 +88,26 @@ const Restaurant = () => {
                 user_id: loginUser?.user_id
             })
 
-            console.log(data, "datadatadata");
-
+            const promotion = data.promotions_list
+            const promoStore = promotion.find((item)=>{
+               if(item?.store_info[0]?._id == selectedRestaurant?.store?._id){
+                dispatch(setPromoPer(item?.discount_percent))
+               if (item?.item_info?.length > 0){
+                 dispatch(setItem_info(item.item_info))
+               }else if(item?.product_info?.length > 0){
+                dispatch(setProduct_info(item.product_info))
+               }else if(item?.store_info?.lenth > 0){
+                dispatch(setStore_info(item.store_info))
+               }
+                
+               }
+            })
+            
 
             if (data) {
                 const filteredData = data?.promotions_list?.filter(store => store?.store_id === id)
                 setPromoInfo(filteredData[0]);
-                console.log(promoInfo)
+                // console.log(promoInfo)
             }
         } catch (error) {
             console.log(error.message)
@@ -164,6 +178,7 @@ const Restaurant = () => {
             console.error('Fetch error: ', error);
         }
     }
+
 
     const fetchCart = async (cart_unique_token) => {
         const cartDetailsResponse = await post('/api/user/get_cart', { cart_unique_token: cart_unique_token })
