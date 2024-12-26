@@ -19,6 +19,8 @@ const Login = () => {
     const [fadingOut, setFadingOut] = useState(false)
     const [showOtpInput, setShowOtpInput] = useState(false)
     const [otp, setOtp] = useState(['', '', '', ''])
+    const [isErr, setIsErr] = useState(false)
+    const [noNum, setNoNum] = useState(false)
 
     const otpRefs = Array(4).fill().map(() => useRef())
 
@@ -40,7 +42,12 @@ const Login = () => {
     }, [])
 
     const handleLogin = () => {
-        setShowOtpInput(true)
+        if (number.length < 9) {
+            setNoNum(true)
+        } else {
+            setNoNum(false)
+            setShowOtpInput(true)
+        }
     }
 
     const handleOtpChange = (value, index) => {
@@ -116,56 +123,17 @@ const Login = () => {
 
             navigate('/')
         } catch (error) {
-            let cartUniqueToken = localStorage.getItem("cart_unique_token")
-            if (!cartUniqueToken) {
-                // Generate a new cart_unique_token if it doesn't exist
-                cartUniqueToken = uuidv4()
-                localStorage.setItem("cart_unique_token", cartUniqueToken)
-            }
-            let dummmyData = {
-                success: true,
-                message: "3",
-                user_id: "6226148455ec30fb5b3f84e5",
-                first_name: "Mohamed",
-                middle_name: "",
-                last_name: "Ali ",
-                country_phone_code: "+251",
-                phone: "921082068",
-                email: "harisjamil52@gmail.com",
-                picture: "user_profile/6211f0912c7d6d07e9ca8bf76i2h.jpg.jpg",
-                address: "",
-                city: "",
-                country: "ethiopia",
-                zipcode: "(615)",
-                login_by: "",
-                social_unique_id: "",
-                device_token: "",
-                device_type: "android",
-                device_timezone: "africa/mogadishu",
-                referral_code: "615481129",
-                token: "nr5luq2xztchcbz0wkhqsshml5npbuco",
-                is_approved: 1,
-                app_version: "1.0.0",
-                is_referral: 1,
-                is_document_uploaded: 1,
-                country_detail: {
-                    _id: "5d46c279f3a0bd1c037e8316",
-                    phone_number_length: 9,
-                    is_referral: true,
-                    countryname: "ethiopia",
-                    flag_url: "/flags/ethiopia.gif",
-                    countryphonecode: "+251",
-                    userSms: true
-                },
-                is_ebirr_user: 0,
-                cart_unique_token: cartUniqueToken,
-
-            }
-            dispatch(loginUser(dummmyData))
-            localStorage.setItem("userData", JSON.stringify(dummmyData))
+            setIsErr(true)
             console.error("Error during OTP verification:", error)
-            navigate('/')
         }
+    }
+
+    if (isErr) {
+        return (
+            <div className='h-screen w-full flex items-center justify-center'>
+                <h1 className='text-[#2F2F3F] text-lg'>Error during OTP verification. Please log in again</h1>
+            </div>
+        )
     }
 
     return (
@@ -188,9 +156,9 @@ const Login = () => {
 
                     {!showOtpInput ? (
                         <div className='mt-12'>
-                            <h2 className='text-[#2F2F3F] text-[26px] font-bold text-center'>Enter your mobile number</h2>
+                            <h2 className='text-[#2F2F3F] text-[26px] font-bold text-center'>{noNum ? 'Invalid Mobile Number' : 'Enter your mobile number'}</h2>
                             <div className='flex items-center gap-3 mt-6'>
-                                <Link to={'/deliveryservice/deliverydetails/recipientdetails/updatephone/selectphonecountry'} className='w-[129px] lg:w-[180px] h-[58px] p-2 rounded-xl bg-[#F8F8F8] flex items-center justify-between'>
+                                <Link className='w-[129px] lg:w-[180px] h-[58px] p-2 rounded-xl bg-[#F8F8F8] flex items-center justify-between'>
                                     <img src={assets.ethiopia} alt="" width={'50px'} height={'38px'} className='object-cover rounded' />
                                     <p className='font-medium text-[#2F2F3F]'>+251</p>
                                     <img src={assets.arrow_down} alt="" />

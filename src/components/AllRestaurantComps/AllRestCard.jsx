@@ -3,6 +3,7 @@ import { assets } from '../../assets/assets';
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 import { usePost } from '../../servies/usePost';
+import Spinner from '../Spinner';
 
 const AllRestCard = () => {
     const navigate = useNavigate();
@@ -81,12 +82,18 @@ const AllRestCard = () => {
             fetchAllRests();
         }
     }, [searchData])
+
+    if (isLoading) {
+        return <Spinner />
+    }
+
+    if (error) {
+        return <div className='my-5 text-center'>Error Fetching Stores</div>
+    }
+
     return (
         <div className='px-4 mt-6 relative'>
             <h2 className='text-[#2F2F3F] text-lg font-medium'>{searchRes ? "Search results" : allRests && !searchRes && "All restaurants"}</h2>
-
-            {error && <div className='my-5 text-center'>Error Fetching Stores</div>}
-            {isLoading && <div className='text-center'>Loading...</div>}
             {allRests && !searchRes && allRests?.stores.map((store) => (
                 store?.stores.map((store, index) => (
                     <>

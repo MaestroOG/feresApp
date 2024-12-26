@@ -41,6 +41,11 @@ const CancelOrder = () => {
                     cart_unique_token: uuidv4(),
                 })
             );
+            const updUserData = {
+                ...userDetail,
+                cart_unique_token: uuidv4(),
+            }
+            localStorage.setItem("userData", JSON.stringify(updUserData))
             navigate('/');
         } catch (error) {
             console.error('Error cancelling order:', error);

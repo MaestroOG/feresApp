@@ -50,10 +50,6 @@ const OrderConfirmBtn = ({ orderData, setReview }) => {
     const handleChange = async (e) => {
         const newValue = e.target.value;
         setValue(newValue);
-
-        console.log(paymentMethod, "paymentMethodpaymentMethodpaymentMethod");
-
-
         if (newValue === "100") {
 
             if (paymentMethod === 'ebirr') {

@@ -14,7 +14,7 @@ const Offers = () => {
 
     const getData = async () => {
         const body = {
-            "user_id": loginUser?.user_id
+            user_id: loginUser?.user_id
         }
         try {
             const res = await fetch(import.meta.env.VITE_API_URI + '/get_all_promotions', {
@@ -31,13 +31,13 @@ const Offers = () => {
 
             const data = await res.json();
             setPromotionData(data);
-            setIsLoading(false);
-            // console.log(promotionData);
 
         } catch (error) {
             setError(true)
             setIsLoading(false)
             console.error('Fetch error: ', error);
+        } finally {
+            setIsLoading(false);
         }
 
     }
@@ -49,7 +49,7 @@ const Offers = () => {
 
     if (error || promotionData && promotionData.success === false) {
         return (
-            <div className='text-center'>Error Fetching Stores</div>
+            <div className='text-center my-5'>Something went wrong</div>
         )
     }
 
@@ -63,7 +63,7 @@ const Offers = () => {
 
             <div className='flex items-center justify-between mb-6 px-3'>
                 <h3 className='text-[#2F2F3F] text-lg font-medium'>Special offers</h3>
-                <p className='text-base font-medium text-[#979797]'>See all</p>
+                {/* <p className='text-base font-medium text-[#979797]'>See all</p> */}
             </div>
             <div className='flex items-center gap-2 overflow-x-auto offers mb-8 w-screen'>
                 {/* Card */}

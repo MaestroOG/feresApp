@@ -4,29 +4,33 @@ import { FeresContext } from '../../context/FeresContext'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { addItem } from '../../redux/slices/cartSlice'
-import { v4 as uuidv4 } from 'uuid'  // Import uuid for unique token generation
+import { v4 as uuidv4 } from 'uuid'
 import { loginUser } from '../../redux/slices/userAuthSlice'
 import { setCartItemData, setCartDetails, setCartCount } from '../../redux/slices/cartDetail'
 
 
 const DelOrderPopUp = () => {
-    const { delOrderVisible, setDelOrderVisible, clearCart } = useContext(FeresContext)
+    const { delOrderVisible, setDelOrderVisible } = useContext(FeresContext)
     const userDetail = useSelector((state) => state.userAuth.user)
     const dispatch = useDispatch()
     const navigate = useNavigate();
 
-    const handleDelete = () => {
-        const cartUniqueToken = uuidv4()
-        const newUserDetail = { ...userDetail, cart_unique_token: cartUniqueToken }
-        dispatch(loginUser(newUserDetail))
-        localStorage.setItem("cart_unique_token", cartUniqueToken)
-        localStorage.setItem("userData", JSON.stringify(newUserDetail))
-        dispatch(addItem([]))
-        dispatch(setCartItemData(null))
-        dispatch(setCartDetails(null))
-        dispatch(setCartCount(null))
-        navigate('/')
-        setDelOrderVisible(false)
+    const handleDelete = async () => {
+        try {
+            const cartUniqueToken = uuidv4()
+            const newUserDetail = { ...userDetail, cart_unique_token: cartUniqueToken }
+            dispatch(loginUser(newUserDetail))
+            localStorage.setItem("cart_unique_token", cartUniqueToken)
+            localStorage.setItem("userData", JSON.stringify(newUserDetail))
+            dispatch(addItem([]))
+            dispatch(setCartItemData(null))
+            dispatch(setCartDetails(null))
+            dispatch(setCartCount(null))
+            navigate('/')
+            setDelOrderVisible(false)
+        } catch (error) {
+            console.error(error.message)
+        }
     }
 
 

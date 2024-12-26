@@ -19,14 +19,14 @@ const TableList = ({ products, support }) => {
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData);
     const loginUser = useSelector((state) => state.userAuth.user);
     const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
-    const item_info = useSelector((state)=>state.promotions.item_info)
-    const promoPer = useSelector((state)=>state.promotions.promoPer)
+    const item_info = useSelector((state) => state.promotions.item_info)
+    const promoPer = useSelector((state) => state.promotions.promoPer)
     const [loadingItems, setLoadingItems] = useState({});
     const { setFoodPopup } = useContext(FeresContext)
 
 
 
-    
+
 
     const handleAddItem = async (item) => {
         try {
@@ -91,15 +91,15 @@ const TableList = ({ products, support }) => {
     };
 
     const checkDiscount = (itemId) => {
-      const promoItem =  item_info.find(element => {
-              if(element._id == itemId){
+        const promoItem = item_info?.find(element => {
+            if (element._id == itemId) {
                 return true
-              }else{
+            } else {
                 return false
-              }
+            }
         })
-        return promoItem    
-        
+        return promoItem
+
     }
 
     return products.map((item) => {
@@ -134,7 +134,7 @@ const TableList = ({ products, support }) => {
 
                         }}
                     >
-                                   {checkDiscount(item?._id) && <div className='bg-[#0AB247] rounded-lg p-2 text-xs text-white absolute top-2 left-2'>-{promoPer}%</div>}
+                        {checkDiscount(item?._id) && <div className='bg-[#0AB247] rounded-lg p-2 text-xs text-white absolute top-2 left-2'>-{promoPer}%</div>}
 
                         <img
                             src={item?.image_url[0]}
@@ -152,7 +152,7 @@ const TableList = ({ products, support }) => {
                                 <img
                                     src={assets.add_green}
                                     alt=""
-                                    onClick={(e) => {                                    
+                                    onClick={(e) => {
                                         if (support) {
                                             dispatch(setSupportItem(item))
                                             navigate('/restaurantsupport/ingredientinfo')
@@ -160,13 +160,13 @@ const TableList = ({ products, support }) => {
                                             if (selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData) {
                                                 dispatch(setSelectedFood(item));
                                                 dispatch(setShowModel(true));
-                                                
+
                                             } else {
                                                 dispatch(setNewOrderPopup(true))
                                             }
-            
+
                                         }
-                                        
+
                                     }}
                                 />
                             )}

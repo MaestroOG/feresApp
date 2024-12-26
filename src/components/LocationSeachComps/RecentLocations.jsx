@@ -1,8 +1,9 @@
 import React from 'react'
 import { assets } from '../../assets/assets'
+import { useNavigate } from 'react-router-dom'
 
 export const RecentLocations = ({ item, onClick }) => {
-
+    const navigate = useNavigate()
     return (
         <>
             <div className='px-4 mt-6 flex items-center gap-4' onClick={() => {
