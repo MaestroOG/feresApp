@@ -41,7 +41,7 @@ const OrderConfirmBtn = ({ orderData, setReview }) => {
 
         // Calculate percentage and thumb position
         const percent = (value - min) / (max - min);
-        const thumbPosition = percent * (rangeWidth - thumbWidth - 10) + thumbWidth / 2;
+        const thumbPosition = percent * (rangeWidth - thumbWidth - 10) + thumbWidth / 2.2;
 
         // Update thumb tracker position
         thumb.style.left = `${thumbPosition + 7}px`;
