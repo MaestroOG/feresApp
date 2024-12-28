@@ -13,6 +13,7 @@ const MartProduct = () => {
     const [products, setProducts] = useState(null)
     const navigate = useNavigate()
     const { loading, error, post } = usePost()
+  
     const { id } = useParams()
     const { ecat } = useContext(FeresContext)
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData)

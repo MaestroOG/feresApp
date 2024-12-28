@@ -8,11 +8,13 @@ import { FeresContext } from '../../context/FeresContext'
 import FilterPopUp from '../../components/SearchComps/FilterPopUp'
 import { usePost } from '../../servies/usePost'
 import Loader from '../../components/Loader'
-import { useSelector } from 'react-redux'
+import { useDispatch,useSelector } from 'react-redux'
+import { setCategory_info, setItem_info, setProduct_info, setPromoPer, setStore_info } from '../../redux/slices/promotion'
 
 const EcommerceCategoriesResult = () => {
     const { name } = useParams()
     const [list, setList] = useState(null)
+    const dispatch = useDispatch()
     const last_location = localStorage.getItem("currentAddress")
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
     const cartCount = useSelector((state) => state.cartDetails.cartCount)
@@ -38,6 +40,12 @@ const EcommerceCategoriesResult = () => {
 
     useEffect(() => {
         fetchCategories()
+        dispatch(setStore_info(null))
+        dispatch(setItem_info(null))
+        dispatch(setCategory_info(null))
+        dispatch(setProduct_info(null))
+        dispatch(setPromoPer(null))
+
     }, [])
     return (
         <div>

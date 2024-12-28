@@ -4,7 +4,8 @@ const initialState = {
     item_info: null,
     product_info:null,
     store_info:null,
-    promoPer:null
+    promoPer:null,
+    category_info:null
 };
 
 const promotions = createSlice({
@@ -20,6 +21,9 @@ const promotions = createSlice({
       setStore_info: (state, action) => {
         state.store_info = action.payload;
       },
+      setCategory_info: (state, action) => {
+        state.category_info = action.payload;
+      },
       setPromoPer: (state, action) => {
         state.promoPer = action.payload;
       },
@@ -27,6 +31,6 @@ const promotions = createSlice({
   },
 });
 
-export const { setStore_info,setProduct_info,setItem_info,setPromoPer } = promotions.actions;
+export const { setStore_info,setProduct_info,setItem_info,setPromoPer,setCategory_info } = promotions.actions;
 
 export default promotions.reducer;

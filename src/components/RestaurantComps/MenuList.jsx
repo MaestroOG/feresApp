@@ -16,7 +16,9 @@ const MenuList = ({ products, addItemInCart, cartUniqueToken, support }) => {
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
     const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
     const loginUser = useSelector((state) => state.userAuth.user)
-    const item_info = useSelector((state) => state.promotions.item_info)
+    const store_info = useSelector((state)=> state.promotions.store_info)
+    const product_info = useSelector((state)=> state.promotions.product_info)
+    const item_info = useSelector((state)=> state.promotions.item_info)
     const promoPer = useSelector((state) => state.promotions.promoPer)
     const [loadingItems, setLoadingItems] = useState({});
 
@@ -150,6 +152,39 @@ const MenuList = ({ products, addItemInCart, cartUniqueToken, support }) => {
         )
         return cartItem ? cartItem.quantity : null
     }
+
+    function calculateDiscount(amount, discountPer) {
+
+        
+        const discount = (parseFloat(amount) * parseInt(discountPer)) /100;
+        const finalPrice =  amount-discount ; 
+        return finalPrice;
+    }
+    
+    const checkProductInfo = (item) => {
+        const promoItem = product_info?.find(element => {
+            if (element._id == item.product_id) {
+                return true
+            } else {
+                return false
+            }
+        })
+        return promoItem
+
+    }
+
+    const checkItemInfo = (item) => {
+        const promoItem = item_info?.find(element => {
+            if (element._id == item._id) {
+                return true
+            } else {
+                return false
+            }
+        })
+        return promoItem
+
+    }
+
     return (
         <>
             {support ? <div>
@@ -214,7 +249,8 @@ const MenuList = ({ products, addItemInCart, cartUniqueToken, support }) => {
                                     <div className='flex flex-col gap-1 flex-[3]'>
                                         <div className='flex items-center gap-2'>
                                             <h2 className='text-[#2F2F3F] text-sm font-medium'>{item?.name}</h2>
-                                            {checkDiscount(item?._id) && <div className='bg-[#0AB247] rounded-lg p-2 text-xs text-white'>-{promoPer}%</div>}
+                                            {product_info ? checkProductInfo(item) && <div className='bg-[#0AB247] rounded-lg p-2 text-xs text-white'>-{promoPer}%</div> : item_info ? checkItemInfo(item) && <div className='bg-[#0AB247] rounded-lg p-2 text-xs text-white'>-{promoPer}%</div> : store_info ? <div className='bg-[#0AB247] rounded-lg p-2 text-xs text-white'>-{promoPer}%</div> : <></> }
+
 
                                             {isLoading && <Spinner />}
                                             {!isLoading && findCartItemQuantity(item) > 0 && <button className='border border-[#0AB247] bg-white p-2 w-[70px] rounded-full text-[#0AB247] text-sm font-medium' onClick={(e) => {
@@ -228,8 +264,21 @@ const MenuList = ({ products, addItemInCart, cartUniqueToken, support }) => {
 
                                         <p className='text-[#AEAEAE] font-normal text-sm w-[90%]'>{item?.details}</p>
                                         <div className='flex items-center gap-2'>
-                                            <p className='text-[#AEAEAE] text-sm'>{`ETB 170`}</p>
-                                            <p className='text-[#0AB247] text-sm font-bold'>{`ETB ${item?.price}`}</p>
+
+                                           {store_info ? <> <p className='text-[#9E9E9E] line-through text-base'>{`ETB ${item?.price}`}</p>
+                                           <p className='text-[#0AB247] font-bold text-base'>{`ETB ${calculateDiscount(item?.price,promoPer)}`}</p></>
+                                             : product_info ?  
+                                             checkProductInfo(item) ? <> <p className='text-[#9E9E9E] line-through text-base'>{`ETB ${item?.price}`}</p>
+                                            <p className='text-[#0AB247] font-bold text-base'>{`ETB ${calculateDiscount(item?.price,promoPer)}`}</p></> :                                   
+                                             <>
+                                            <p className='text-[#0AB247] font-bold text-sm'>EBT {item?.price}</p> </> :
+                                             item_info ?  
+                                             checkItemInfo(item) ? <> <p className='text-[#9E9E9E] line-through text-base'>{`ETB ${item?.price}`}</p>
+                                            <p className='text-[#0AB247] font-bold text-base'>{`ETB ${calculateDiscount(item?.price,promoPer)}`}</p></> :                                   
+                                             <> 
+                                            <p className='text-[#0AB247] font-bold text-sm'>EBT {item?.price}</p> </> :  <> 
+                                            <p className='text-[#0AB247] font-bold text-sm'>EBT {item?.price}</p> </>}
+                                        
                                         </div>
                                     </div>
                                     <div className='relative flex items-end pb-3 justify-center top-[13px]'>
