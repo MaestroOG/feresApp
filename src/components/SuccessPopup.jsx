@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const SuccessPopup = ({ image, title, desc, extraFunc }) => {
+const SuccessPopup = ({ image, title, desc, extraFunc , promoPer}) => {
 
     const navigate = useNavigate()
     const [successVisible, setSuccessVisible] = useState(true)

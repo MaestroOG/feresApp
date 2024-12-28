@@ -94,10 +94,21 @@ const Restaurant = () => {
                 dispatch(setPromoPer(item?.discount_percent))
                if (item?.item_info?.length > 0){
                  dispatch(setItem_info(item.item_info))
+                dispatch(setProduct_info(null))
+                dispatch(setStore_info(null))
                }else if(item?.product_info?.length > 0){
                 dispatch(setProduct_info(item.product_info))
+                dispatch(setItem_info(null))
+                dispatch(setStore_info(null))
                }else if(item?.store_info?.lenth > 0){
                 dispatch(setStore_info(item.store_info))
+                dispatch(setItem_info(null))
+                dispatch(setProduct_info(null))
+               }else{
+                dispatch(setStore_info(null))
+                dispatch(setItem_info(null))
+                dispatch(setProduct_info(null))
+                dispatch(setPromoPer(null))
                }
                 
                }
