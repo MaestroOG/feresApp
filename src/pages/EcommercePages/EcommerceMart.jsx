@@ -21,9 +21,9 @@ const EcommerceMart = () => {
     const [scrolled, setScrolled] = useState(false)
     const [promoInfo, setPromoInfo] = useState(false)
     const [successPop, setSuccessPop] = useState(false)
-    const store_info = useSelector((state)=> state.promotions.store_info)
-    const product_info = useSelector((state)=> state.promotions.product_info)
-    const item_info = useSelector((state)=> state.promotions.item_info)
+    const store_info = useSelector((state) => state.promotions.store_info)
+    const product_info = useSelector((state) => state.promotions.product_info)
+    const item_info = useSelector((state) => state.promotions.item_info)
     const promoPer = useSelector((state) => state.promotions.promoPer)
     const navigate = useNavigate();
     const loginUser = useSelector((state) => state.userAuth.user)
@@ -71,28 +71,28 @@ const EcommerceMart = () => {
             })
 
             const promotion = data.promotions_list
-            const promoStore = promotion.forEach((item)=>{
-               if(item.store_id == selectedResturant.store._id){
-                dispatch(setPromoPer(item?.discount_percent))
-               if (item?.item_info?.length > 0){
-                 dispatch(setItem_info(item.item_info))
-               }else if(item?.product_info?.length > 0){
-                dispatch(setProduct_info(item.product_info))
-               }else if(item?.category_info?.length > 0){
-                dispatch(setStore_info(item.store_info))
-               }else if(item?.store_info?.lenth > 0){
-                dispatch(setStore_info(item.store_info))
-               }else{
-                dispatch(setStore_info(null))
-                dispatch(setItem_info(null))
-                dispatch(setProduct_info(null))
-                dispatch(setPromoPer(null))
+            const promoStore = promotion.forEach((item) => {
+                if (item.store_id == selectedResturant.store._id) {
+                    dispatch(setPromoPer(item?.discount_percent))
+                    if (item?.item_info?.length > 0) {
+                        dispatch(setItem_info(item.item_info))
+                    } else if (item?.product_info?.length > 0) {
+                        dispatch(setProduct_info(item.product_info))
+                    } else if (item?.category_info?.length > 0) {
+                        dispatch(setStore_info(item.store_info))
+                    } else if (item?.store_info?.lenth > 0) {
+                        dispatch(setStore_info(item.store_info))
+                    } else {
+                        dispatch(setStore_info(null))
+                        dispatch(setItem_info(null))
+                        dispatch(setProduct_info(null))
+                        dispatch(setPromoPer(null))
 
-               }
+                    }
 
-               }
+                }
             })
-            
+
 
             if (data) {
                 const filteredData = data?.promotions_list?.filter(store => store?.store_id === id)
@@ -150,15 +150,15 @@ const EcommerceMart = () => {
         getCart()
         fetchPromoInfo()
     }, [])
-    
+
     function calculateDiscount(amount, discountPer) {
 
-        
-       const discount = (parseFloat(amount) * parseInt(discountPer)) /100;
-        const finalPrice =  amount-discount ; 
+
+        const discount = (parseFloat(amount) * parseInt(discountPer)) / 100;
+        const finalPrice = amount - discount;
         return finalPrice;
     }
-    
+
     const checkProductInfo = (item) => {
         const promoItem = product_info?.find(element => {
             if (element._id == item.product_id) {
@@ -182,13 +182,13 @@ const EcommerceMart = () => {
         return promoItem
 
     }
-console.log(product_info,"product_infoproduct_info");
+    console.log(product_info, "product_infoproduct_info");
 
 
 
     return (
         <div className='pb-28'>
-           {successPop && <SuccessPopup image={assets.success_img} title={"Congratulations!"} desc={"You've successfully add your card ****2305 has been added to the payment method"} discount={promoPer}/>}
+            {successPop && <SuccessPopup image={assets.success_img} title={"Congratulations!"} desc={"You've successfully add your card ****2305 has been added to the payment method"} discount={promoPer} />}
             {loading && <Spinner />}
             {error && <div>An Error Occurred</div>}
             {storeInfo && storeInfo?.success && <>
@@ -240,14 +240,14 @@ console.log(product_info,"product_infoproduct_info");
                             <label className='text-base text-[#1E1E1E]'>{storeInfo?.store?.delivery_time} minutes</label>
 
                         </div>
-                        <div className='flex items-center gap-2'>
+                        <div className='flex items-center gap-2 mb-4'>
                             <img src={assets.location_green} alt="" />
                             <p className='text-base text-[#1E1E1E]'>{storeInfo?.store?.address} {storeInfo?.store?.store_Address}</p>
                         </div>
                         <div className='flex items-center gap-2' onClick={() => setSuccessPop(true)}>
-                                    <img src={assets.discount_tag} alt="" />
-                                    <p className='text-xs text-[#2F2F3F]'>{promoPer ? promoPer : "0"}% off on their entire menu</p>
-                                </div>
+                            <img src={assets.discount_tag} alt="" />
+                            <p className='text-base text-[#1E1E1E]'>{promoPer ? promoPer : "0"}% off on their entire menu</p>
+                        </div>
                     </div>
                 </>}
 
@@ -284,7 +284,7 @@ console.log(product_info,"product_infoproduct_info");
                                 <>
                                     <div key={item?._id} onClick={() => navigate(`/ecommerce/mart/martproduct/item/${item?._id}`)}>
                                         <div className='bg-[#F1F1F1] rounded-2xl w-[135px] h-[149px] relative flex items-center justify-center'>
-                                       {product_info ? checkProductInfo(item) && <div className='bg-[#0AB247] rounded-lg p-2 text-xs text-white absolute top-2 left-2'>-{promoPer}%</div> : item_info ? checkItemInfo(item) && <div className='bg-[#0AB247] rounded-lg p-2 text-xs text-white absolute top-2 left-2'>-{promoPer}%</div> : store_info ? <div className='bg-[#0AB247] rounded-lg p-2 text-xs text-white absolute top-2 left-2'>-{promoPer}%</div> : <></> }
+                                            {product_info ? checkProductInfo(item) && <div className='bg-[#0AB247] rounded-lg p-2 text-xs text-white absolute top-2 left-2'>-{promoPer}%</div> : item_info ? checkItemInfo(item) && <div className='bg-[#0AB247] rounded-lg p-2 text-white absolute top-2 left-2 text-xs'>-{promoPer}%</div> : store_info ? <div className='bg-[#0AB247] rounded-lg p-2 text-xs text-white absolute top-2 left-2'>-{promoPer}%</div> : <></>}
                                             <img src={item?.image_url[0] && item?.image_url[0]} alt="" />
                                             <div className='bg-white p-3 rounded-full w-max absolute bottom-3 right-1'>
                                                 {loading && <Spinner />}
@@ -296,19 +296,20 @@ console.log(product_info,"product_infoproduct_info");
                                             </div>
                                         </div>
                                         <div className='my-2'>
-                                           {store_info ? <> <p className='text-[#9E9E9E] line-through text-base'>{`ETB ${item?.price}`}</p>
-                                           <p className='text-[#0AB247] font-bold text-base'>{`ETB ${calculateDiscount(item?.price,promoPer)}`}</p></>
-                                             : product_info ?  
-                                             checkProductInfo(item) ? <> <p className='text-[#9E9E9E] line-through text-base'>{`ETB ${item?.price}`}</p>
-                                            <p className='text-[#0AB247] font-bold text-base'>{`ETB ${calculateDiscount(item?.price,promoPer)}`}</p></> :                                   
-                                             <> <p className='text-sm font-medium text-[#2F2F3F] w-[135px] whitespace-nowrap'>{item?.name.split(" ").slice(0, 3).join(" ")}</p>
-                                            <p className='text-[#0AB247] font-bold text-sm'>EBT {item?.price}</p> </> :
-                                             item_info ?  
-                                             checkItemInfo(item) ? <> <p className='text-[#9E9E9E] line-through text-base'>{`ETB ${item?.price}`}</p>
-                                            <p className='text-[#0AB247] font-bold text-base'>{`ETB ${calculateDiscount(item?.price,promoPer)}`}</p></> :                                   
-                                             <> <p className='text-sm font-medium text-[#2F2F3F] w-[135px] whitespace-nowrap'>{item?.name.split(" ").slice(0, 3).join(" ")}</p>
-                                            <p className='text-[#0AB247] font-bold text-sm'>EBT {item?.price}</p> </> :  <> <p className='text-sm font-medium text-[#2F2F3F] w-[135px] whitespace-nowrap'>{item?.name.split(" ").slice(0, 3).join(" ")}</p>
-                                            <p className='text-[#0AB247] font-bold text-sm'>EBT {item?.price}</p> </>}
+                                            {store_info ? <><p className='text-sm font-medium text-[#2F2F3F] w-[135px] whitespace-nowrap'>{item?.name.split(" ").slice(0, 3).join(" ")}..</p>
+                                                <p className='text-[#9E9E9E] line-through text-base'>{`ETB ${item?.price}`}</p>
+                                                <p className='text-[#0AB247] font-bold text-base'>{`ETB ${calculateDiscount(item?.price, promoPer)}`}</p></>
+                                                : product_info ?
+                                                    checkProductInfo(item) ? <> <p className='text-[#9E9E9E] line-through text-base'>{`ETB ${item?.price}`}</p>
+                                                        <p className='text-[#0AB247] font-bold text-base'>{`ETB ${calculateDiscount(item?.price, promoPer)}`}</p></> :
+                                                        <> <p className='text-sm font-medium text-[#2F2F3F] w-[135px] whitespace-nowrap'>{item?.name}</p>
+                                                            <p className='text-[#0AB247] font-bold text-sm'>EBT {item?.price}</p> </> :
+                                                    item_info ?
+                                                        checkItemInfo(item) ? <> <p className='text-[#9E9E9E] line-through text-base'>{`ETB ${item?.price}`}</p>
+                                                            <p className='text-[#0AB247] font-bold text-base'>{`ETB ${calculateDiscount(item?.price, promoPer)}`}</p></> :
+                                                            <> <p className='text-sm font-medium text-[#2F2F3F] w-[135px] whitespace-nowrap'>{item?.name}</p>
+                                                                <p className='text-[#0AB247] font-bold text-sm'>EBT {item?.price}</p> </> : <> <p className='text-sm font-medium text-[#2F2F3F] w-[135px] whitespace-nowrap'>{item?.name}</p>
+                                                            <p className='text-[#0AB247] font-bold text-sm'>EBT {item?.price}</p> </>}
                                         </div>
 
                                     </div>
