@@ -11,7 +11,7 @@ import { setCartItemData } from '../../redux/slices/cartDetail';
 import Loader from '../../components/Loader';
 import Spinner from '../../components/Spinner';
 import { FeresContext } from '../../context/FeresContext';
-import { setCategory_info, setItem_info, setProduct_info, setPromoPer, setStore_info } from '../../redux/slices/promotion';
+import { setCategory_info, setItem_info, setProduct_info, setPromo_id, setPromoPer, setStore_info } from '../../redux/slices/promotion';
 import SuccessPopup from '../../components/SuccessPopup';
 
 const EcommerceMart = () => {
@@ -74,6 +74,7 @@ const EcommerceMart = () => {
             const promoStore = promotion.forEach((item) => {
                 if (item.store_id == selectedResturant.store._id) {
                     dispatch(setPromoPer(item?.discount_percent))
+                    dispatch(setPromo_id(item?._id))
                     if (item?.item_info?.length > 0) {
                         dispatch(setItem_info(item.item_info))
                     } else if (item?.product_info?.length > 0) {

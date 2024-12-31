@@ -6,7 +6,8 @@ const initialState = {
   store_info: null,
   promoPer: null,
   category_info: null,
-  allPromo: null
+  allPromo: null,
+  promo_id: null
 };
 
 const promotions = createSlice({
@@ -31,10 +32,12 @@ const promotions = createSlice({
     setAllPromo: (state, action) => {
       state.allPromo = action.payload;
     },
-
+    setPromo_id: (state, action) => {
+      state.promo_id = action.payload;
+    }, 
   },
 });
 
-export const { setStore_info, setProduct_info, setItem_info, setPromoPer, setCategory_info, setAllPromo } = promotions.actions;
+export const { setStore_info, setProduct_info, setItem_info, setPromoPer, setCategory_info, setAllPromo,setPromo_id } = promotions.actions;
 
 export default promotions.reducer;

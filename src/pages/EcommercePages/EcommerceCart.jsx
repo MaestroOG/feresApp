@@ -37,6 +37,8 @@ const EcommerceCart = () => {
     const { post, loading, error } = usePost();
     const loginUser = useSelector((state) => state.userAuth.user)
     const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
+    const promo_id = useSelector((state) => state.promotions.promo_id);
+
 
     const getCart = async () => {
         const endpoint = '/api/user/get_cart';
@@ -65,7 +67,9 @@ const EcommerceCart = () => {
                         vehicle_id: "",
                         tip_payment_id: "",
                         tipPaymeny_other_amount: "0",
-                        is_delivery_keeper: true
+                        is_delivery_keeper: true,
+                        isPromotion: true,
+                        promotion_id:promo_id
                     });
 
                     setCartInvoice(cartDetail)
@@ -84,6 +88,10 @@ const EcommerceCart = () => {
         console.log(selectedResturant);
 
     }, [])
+
+
+    console.log(cartInvoice,"setCartInvoicesetCartInvoice");
+    
     return (
         <div className='pb-24'>
             <div className='flex items-center justify-between px-4 py-7'>
