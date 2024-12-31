@@ -100,7 +100,7 @@ const Services = () => {
                         {topRest && topRest.stores.map((store, index) => (
 
                             store.stores.slice(0, 1).map((store, index) => (
-                                <div key={index} className="flex items-center gap-4">
+                                <div key={index} className="flex items-center gap-4 relative">
                                     <div className='mt-6 w-max' onClick={() => navigate(`/restaurant/${store._id}`)}>
                                         {/* Top */}
                                         <img src={store.image_url} alt="" className='w-[365px] h-[166px] rounded-tr-3xl rounded-tl-3xl object-cover' />
@@ -116,6 +116,16 @@ const Services = () => {
                                             <p className='text-xs text-[#979797]'>{store.Description}</p>
                                         </div>
                                     </div>
+                                    <div className='flex items-center gap-2 bg-white w-[91px] h-[40px] p-[10px] rounded-[30px] absolute bottom-14 right-28'>
+                                        <img src={assets.clock_01} alt="" className='w-5' />
+                                        <p className='text-xs font-medium text-[#1E1E1E] whitespace-nowrap'>{store?.delivery_time || 'N/A'} mins</p>
+
+                                    </div>
+                                    <div className='flex items-center gap-2 bg-white w-[91px] h-[40px] p-[10px] rounded-[30px] absolute bottom-14 right-3'>
+                                        <img src={assets.scooter_02} alt="" className='w-5' />
+                                        <p className='text-xs font-medium text-[#1E1E1E] whitespace-nowrap'>{store?.wallet_currency_code} {store?.wallet || '0'} ETB</p>
+
+                                    </div>
                                 </div>
                             ))
                         ))}
@@ -127,7 +137,7 @@ const Services = () => {
                     <h2 className='text-[#2F2F3F] text-lg font-medium'>Groceries stores</h2>
                     <div className='flex items-center gap-3 overflow-auto no-scrollbar'>
                         {isLoading ? <div>Loading...</div> : groceryStore && groceryStore.stores.slice(0, 2).map((store, index) => (
-                            <div key={index} className="flex items-center gap-4">
+                            <div key={index} className="flex items-center gap-4 relative">
                                 <div className='mt-6 w-max' onClick={() => navigate(`/ecommerce/mart/${store?.category_id}`)}>
                                     {/* Top */}
                                     <img src={store.image_url} alt="" className='w-[365px] h-[166px] rounded-tr-3xl rounded-tl-3xl object-cover' />
@@ -142,6 +152,16 @@ const Services = () => {
                                         </div>
                                         <p className='text-xs text-[#979797]'>{store.Description}</p>
                                     </div>
+                                </div>
+                                <div className='flex items-center gap-2 bg-white w-[91px] h-[40px] p-[10px] rounded-[30px] absolute bottom-14 right-28'>
+                                    <img src={assets.clock_01} alt="" className='w-5' />
+                                    <p className='text-xs font-medium text-[#1E1E1E] whitespace-nowrap'>{store?.delivery_time || 'N/A'} mins</p>
+
+                                </div>
+                                <div className='flex items-center gap-2 bg-white w-[91px] h-[40px] p-[10px] rounded-[30px] absolute bottom-14 right-3'>
+                                    <img src={assets.scooter_02} alt="" className='w-5' />
+                                    <p className='text-xs font-medium text-[#1E1E1E] whitespace-nowrap'>{store?.wallet_currency_code} {store?.wallet || '0'} ETB</p>
+
                                 </div>
                             </div>
                         ))}

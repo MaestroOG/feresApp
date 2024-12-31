@@ -73,8 +73,8 @@ const Offers = () => {
                         {/* <img src={assets.offer_bg} alt="" /> */}
                         {promotionData && promotionData?.promotions_list?.map(item => (
                             item?.store_info?.map(store => (
-                                <div key={store?._id}>
-                                    <img src={store?.image_url} alt="" className='w-[365px] h-[140.98px] rounded-tr-3xl rounded-tl-3xl object-cover' onClick={() => navigate(`/restaurant/${store?._id}`)} />
+                                <div key={store?._id} className='relative'>
+                                    <img src={store?.image_url} alt="" className='w-[365px] h-[140.98px] rounded-tr-3xl rounded-tl-3xl object-cover' onClick={() => navigate(item?.store_type === 'food' ? `/restaurant/${store?._id}` : `/ecommerce/mart/${item?.category_id}`)} />
                                     {/* Card Top Stickers */}
                                     <div className='bg-[#F2FDF8] w-[154px] h-[34px] rounded-[30px] p-[10px] text-[#0AB247] font-medium text-xs text-center absolute top-2 left-2 whitespace-nowrap'>{item?.discount_percent}% off selected items</div>
 
