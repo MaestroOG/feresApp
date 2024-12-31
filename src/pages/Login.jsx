@@ -119,9 +119,11 @@ const Login = () => {
 
                 dispatch(loginUser(userData))
                 localStorage.setItem("userData", JSON.stringify(userData))
+                navigate('/')
+            } else if (response?.data?.success === false) {
+                setIsErr(true)
             }
 
-            navigate('/')
         } catch (error) {
             setIsErr(true)
             console.error("Error during OTP verification:", error)

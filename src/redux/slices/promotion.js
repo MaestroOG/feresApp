@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    item_info: null,
-    product_info:null,
-    store_info:null,
-    promoPer:null,
-    category_info:null
+  item_info: null,
+  product_info: null,
+  store_info: null,
+  promoPer: null,
+  category_info: null,
+  allPromo: null
 };
 
 const promotions = createSlice({
@@ -16,21 +17,24 @@ const promotions = createSlice({
       state.item_info = action.payload;
     },
     setProduct_info: (state, action) => {
-        state.product_info = action.payload;
-      },
-      setStore_info: (state, action) => {
-        state.store_info = action.payload;
-      },
-      setCategory_info: (state, action) => {
-        state.category_info = action.payload;
-      },
-      setPromoPer: (state, action) => {
-        state.promoPer = action.payload;
-      },
+      state.product_info = action.payload;
+    },
+    setStore_info: (state, action) => {
+      state.store_info = action.payload;
+    },
+    setCategory_info: (state, action) => {
+      state.category_info = action.payload;
+    },
+    setPromoPer: (state, action) => {
+      state.promoPer = action.payload;
+    },
+    setAllPromo: (state, action) => {
+      state.allPromo = action.payload;
+    },
 
   },
 });
 
-export const { setStore_info,setProduct_info,setItem_info,setPromoPer,setCategory_info } = promotions.actions;
+export const { setStore_info, setProduct_info, setItem_info, setPromoPer, setCategory_info, setAllPromo } = promotions.actions;
 
 export default promotions.reducer;

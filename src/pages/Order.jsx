@@ -69,21 +69,18 @@ const Order = () => {
 
             const cartDetail = await post('/api/user/get_order_cart_invoice', {
                 is_user_pick_up_order: false,
-                // server_token: "0Iqb69j2rP7x4yY7ZGeRst5pfnyp8vfZ",
                 server_token: userDetail?.token,
                 order_type: 7,
                 total_distance: 2.096696376800537,
                 total_time: 5.0,
                 cart_id: cartItemData?.cart?._id,
-                // cart_id: "67404d2b48f5037e9a037be0",
-                cart_unique_token: userDetail.cart_unique_token,
-                // user_id: "674194c6b50f6aecb5b65526",
-                user_id: userDetail.user_id,
-                // user_id: "674194cbba82cd9b9b72d4ea",
+                cart_unique_token: userDetail?.cart_unique_token,
+                user_id: userDetail?.user_id,
                 vehicle_id: "",
                 tip_payment_id: "",
                 tipPaymeny_other_amount: "0",
-                is_delivery_keeper: true
+                is_delivery_keeper: true,
+                isPromotion: true
             });
             if (!cartDetail || cartDetail && cartDetail?.success === false) {
                 setError(true);
