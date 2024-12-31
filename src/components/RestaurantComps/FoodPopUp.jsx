@@ -83,7 +83,7 @@ const FoodPopUp = ({ img, text, itemFoodPopup, cartUniqueToken }) => {
 
 
     const handleAddItem = async () => {
-        console.log(loginUser.user_id, "here is a group order api 1");
+        console.log( "here is a group order api 1");
 
         closeRef.current.click()
         if (itemFoodPopup) {
@@ -234,6 +234,9 @@ const FoodPopUp = ({ img, text, itemFoodPopup, cartUniqueToken }) => {
                 .catch((error) => console.error('Error copying link:', error));
         }
     };
+
+
+    
 
     return (
         <>

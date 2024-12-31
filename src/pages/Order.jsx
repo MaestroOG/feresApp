@@ -48,6 +48,7 @@ const Order = () => {
     const cartData = useSelector((state) => state.cart.items);
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
     const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
+    const promo_id = useSelector((state) => state.promotions.promo_id);
     const { loading, response, postRequest } = usePostRequest();
     const { post } = usePost()
     const [dataFetched, setDataFetched] = useState(false); // Track if data is fetched
@@ -65,7 +66,7 @@ const Order = () => {
 
             const cartItemData = await post('/api/user/get_cart', { cart_unique_token: userDetail.cart_unique_token });
             dispatch(setCartItemData(cartItemData.cart))
-            setCartItemsData(cartItemData.cart, "dsfdfsdfdfd")
+            setCartItemsData(cartItemData.cart)
 
             const cartDetail = await post('/api/user/get_order_cart_invoice', {
                 is_user_pick_up_order: false,
@@ -80,13 +81,14 @@ const Order = () => {
                 tip_payment_id: "",
                 tipPaymeny_other_amount: "0",
                 is_delivery_keeper: true,
-                isPromotion: true
+                isPromotion: true,
+                promotion_id:promo_id
             });
             if (!cartDetail || cartDetail && cartDetail?.success === false) {
                 setError(true);
                 return;
             }
-
+            
             setCartDetail(cartDetail)
             dispatch(setCartDetails(cartDetail))
 
@@ -107,6 +109,7 @@ const Order = () => {
     if (error) {
         return <h1>Session Expired Please Log In Again</h1>
     }
+    console.log(cartDetail,"cartDetailcartDetailcartDetail");
 
     return (
         <div className='pb-24'>

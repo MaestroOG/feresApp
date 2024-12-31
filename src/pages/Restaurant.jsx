@@ -32,7 +32,7 @@ import DelByHostPopup from '../components/GroupOrderComps/DelByHostPopup';
 import { setCartItemData } from '../redux/slices/cartDetail';
 import Loader from '../components/Loader';
 import Spinner from '../components/Spinner';
-import { setItem_info, setProduct_info, setPromoPer, setStore_info } from '../redux/slices/promotion';
+import { setItem_info, setProduct_info, setPromo_id, setPromoPer, setStore_info } from '../redux/slices/promotion';
 
 
 
@@ -92,6 +92,7 @@ const Restaurant = () => {
             const promoStore = promotion.find((item)=>{
                if(item?.store_info[0]?._id == selectedRestaurant?.store?._id){
                 dispatch(setPromoPer(item?.discount_percent))
+                dispatch(setPromo_id(item?._id))
                if (item?.item_info?.length > 0){
                  dispatch(setItem_info(item.item_info))
                 dispatch(setProduct_info(null))
@@ -193,7 +194,10 @@ const Restaurant = () => {
 
     const fetchCart = async (cart_unique_token) => {
         const cartDetailsResponse = await post('/api/user/get_cart', { cart_unique_token: cart_unique_token })
+        console.log(cartDetailsResponse,'cartDetailsResponse');
+
         if (cartDetailsResponse.status) {
+            
             dispatch(setCartItemData(cartDetailsResponse?.cart))
             localStorage.setItem("cartData", JSON.stringify(cartDetailsResponse))
         }
