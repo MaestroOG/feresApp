@@ -41,7 +41,7 @@ const MartItemDetail = () => {
         try {
             const data = await post(endpoint, {
                 "user_id": loginUser?.user_id,
-                "item_id": itemDetail?.item.store_id,
+                "item_id": id,
                 "store_id": itemDetail?.item.store_id
             })
 
@@ -53,6 +53,12 @@ const MartItemDetail = () => {
         }
     }
 
+
+    const favSrc = () => {
+        if (condition) {
+
+        }
+    }
     const removeNextFourAfterAmpersand = (inputString) => {
         return inputString.replace(/&.{4}/g, ''); // Match '&' followed by any 4 characters and replace it with an empty string
     };
@@ -173,7 +179,7 @@ const MartItemDetail = () => {
                 <img src={assets.arrow_left} alt="" className='invert' onClick={() => navigate(-1)} />
                 <h1 className='text-[#2F2F3F] text-[23px] font-bold'>Product details</h1>
                 <button className='border border-[#EEEEEE] rounded-xl p-2' onClick={() => toggleFavorite()}>
-                    <img src={favRes && favRes?.success ? assets.favourite_active : assets.favourite} alt="" />
+                    <img src={favRes && favRes?.success && favRes?.message.startsWith('Item added') ? assets.favourite_active : assets.favourite} alt="" />
                 </button>
             </Container>
 

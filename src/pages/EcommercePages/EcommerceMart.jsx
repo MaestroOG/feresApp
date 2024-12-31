@@ -183,7 +183,6 @@ const EcommerceMart = () => {
         return promoItem
 
     }
-    console.log(product_info, "product_infoproduct_info");
 
 
 
@@ -297,19 +296,19 @@ const EcommerceMart = () => {
                                             </div>
                                         </div>
                                         <div className='my-2'>
-                                            {store_info ? <><p className='text-sm font-medium text-[#2F2F3F] w-[135px] whitespace-nowrap'>{item?.name.split(" ").slice(0, 3).join(" ")}..</p>
+                                            {store_info ? <><p className='text-sm font-medium text-[#2F2F3F] w-[135px] whitespace-nowrap'>{item?.name.split(" ").slice(0, 2).join(" ")}..</p>
                                                 <p className='text-[#9E9E9E] line-through text-base'>{`ETB ${item?.price}`}</p>
                                                 <p className='text-[#0AB247] font-bold text-base'>{`ETB ${calculateDiscount(item?.price, promoPer)}`}</p></>
                                                 : product_info ?
                                                     checkProductInfo(item) ? <> <p className='text-[#9E9E9E] line-through text-base'>{`ETB ${item?.price}`}</p>
                                                         <p className='text-[#0AB247] font-bold text-base'>{`ETB ${calculateDiscount(item?.price, promoPer)}`}</p></> :
-                                                        <> <p className='text-sm font-medium text-[#2F2F3F] w-[135px] whitespace-nowrap'>{item?.name}</p>
+                                                        <> <p className='text-sm font-medium text-[#2F2F3F] w-[135px] whitespace-nowrap'>{item?.name.split(" ").slice(0, 2).join(" ")}..</p>
                                                             <p className='text-[#0AB247] font-bold text-sm'>EBT {item?.price}</p> </> :
                                                     item_info ?
                                                         checkItemInfo(item) ? <> <p className='text-[#9E9E9E] line-through text-base'>{`ETB ${item?.price}`}</p>
                                                             <p className='text-[#0AB247] font-bold text-base'>{`ETB ${calculateDiscount(item?.price, promoPer)}`}</p></> :
-                                                            <> <p className='text-sm font-medium text-[#2F2F3F] w-[135px] whitespace-nowrap'>{item?.name}</p>
-                                                                <p className='text-[#0AB247] font-bold text-sm'>EBT {item?.price}</p> </> : <> <p className='text-sm font-medium text-[#2F2F3F] w-[135px] whitespace-nowrap'>{item?.name}</p>
+                                                            <> <p className='text-sm font-medium text-[#2F2F3F] w-[135px] whitespace-nowrap'>{item?.name.split(" ").slice(0, 2).join(" ")}..</p>
+                                                                <p className='text-[#0AB247] font-bold text-sm'>EBT {item?.price}</p> </> : <> <p className='text-sm font-medium text-[#2F2F3F] w-[135px] whitespace-nowrap'>{item?.name.split(" ").slice(0, 2).join(" ")}..</p>
                                                             <p className='text-[#0AB247] font-bold text-sm'>EBT {item?.price}</p> </>}
                                         </div>
 
