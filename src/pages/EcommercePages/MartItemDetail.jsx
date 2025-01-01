@@ -19,6 +19,10 @@ const MartItemDetail = () => {
     const newOrderPopup = useSelector((state) => state.modelToggle.newOrderPopup)
     const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
+    const store_info = useSelector((state) => state.promotions.store_info)
+    const product_info = useSelector((state) => state.promotions.product_info)
+    const item_info = useSelector((state) => state.promotions.item_info)
+    const promoPer = useSelector((state) => state.promotions.promoPer)
     const loginUser = useSelector((state) => state.userAuth.user)
     const dispatch = useDispatch()
     const [favRes, setFavRes] = useState(null)
@@ -171,6 +175,41 @@ const MartItemDetail = () => {
     useEffect(() => {
         fetchItemDetail()
     }, [])
+
+
+    function calculateDiscount(amount, discountPer) {
+
+
+        const discount = (parseFloat(amount) * parseInt(discountPer)) / 100;
+        const finalPrice = amount - discount;
+        return finalPrice;
+    }
+
+    const checkProductInfo = (item) => {
+        const promoItem = product_info?.find(element => {
+            if (element._id == item.product_id) {
+                return true
+            } else {
+                return false
+            }
+        })
+        return promoItem
+
+    }
+
+    const checkItemInfo = (item) => {
+        const promoItem = item_info?.find(element => {
+            if (element._id == item._id) {
+                return true
+            } else {
+                return false
+            }
+        })
+        return promoItem
+
+    }
+
+
     return (
         <div>
             {newOrderPopup && <NewOrderPopUpModel handleOK={handleNewItem} />}
@@ -204,9 +243,23 @@ const MartItemDetail = () => {
 
                 {/* Price */}
                 <div className='flex items-center gap-2 my-3'>
-                    <p className='text-[#0AB247] text-lg font-bold'>EBT {itemDetail?.item?.price}.00</p>
+                                            {store_info ? <>
+                                                <p className='text-[#9E9E9E] line-through text-base'>{`ETB ${itemDetail?.item?.price}`}</p>
+                                                <p className='text-[#0AB247] font-bold text-base'>{`ETB ${calculateDiscount(itemDetail?.item?.price, promoPer)}`}</p></>
+                                                : product_info ?
+                                                    checkProductInfo(itemDetail?.item) ? <> <p className='text-[#9E9E9E] line-through text-base'>{`ETB ${itemDetail?.item?.price}`}</p>
+                                                        <p className='text-[#0AB247] font-bold text-base'>{`ETB ${calculateDiscount(itemDetail?.item?.price, promoPer)}`}</p></> :
+                                                        <> 
+                                                            <p className='text-[#0AB247] font-bold text-sm'>EBT {itemDetail?.item?.price}</p> </> :
+                                                    item_info ?
+                                                        checkItemInfo(itemDetail?.item) ? <> <p className='text-[#9E9E9E] line-through text-base'>{`ETB ${itemDetail?.item?.price}`}</p>
+                                                            <p className='text-[#0AB247] font-bold text-base'>{`ETB ${calculateDiscount(itemDetail?.item?.price, promoPer)}`}</p></> :
+                                                            <> 
+                                                                <p className='text-[#0AB247] font-bold text-sm'>EBT {itemDetail?.item?.price}</p> </> : <> 
+                                                            <p className='text-[#0AB247] font-bold text-sm'>EBT {itemDetail?.item?.price}</p> </>}
                     <p className='text-sm text-[#767578]'>(Incl. VAT)</p>
-                </div>
+                                        </div>
+
 
                 {/* Description */}
                 <div className='text-[#767578]'>{removeNextFourAfterAmpersand(itemDetail?.item?.details.replace(/<[^>]+>/g, ''))}</div>
