@@ -11,7 +11,7 @@ const IssueDetailMessage = () => {
     const dispatch = useDispatch()
     const faqData = useSelector((state) => state.faq.faqData);
     const userDetail = useSelector((state) => state.userAuth.user);
-    const orderDetail = useSelector((state)=> state.orders.reportOrder )
+    const orderDetail = useSelector((state) => state.orders.reportOrder)
     const [selectedFile, setSelectedFile] = useState(null);
     const [inputMsg, setInputMsg] = useState('');
     const [loading, setLoading] = useState(false);
@@ -29,24 +29,24 @@ const IssueDetailMessage = () => {
 
     function formatDate(dateString) {
         const date = new Date(dateString);
-      
+
         // Format options
         const options = {
-          day: '2-digit',
-          month: 'short',
-          year: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit',
-          hour12: true,
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true,
         };
-      
+
         // Convert the date to a readable string
         const formattedDate = date.toLocaleString('en-US', options);
-      
+
         // Rearrange the parts to match the desired format
-        const [month, day, year, time] = formattedDate.match(/(\w+)\s(\d+),\s(\d+),\s(.+)/).slice(1);
+        const [month, day, year, time] = formattedDate?.match(/(\w+)\s(\d+),\s(\d+),\s(.+)/).slice(1);
         return `${day} ${month} ${year}, ${time}`;
-      }
+    }
 
     const handleSendMessage = async () => {
         setLoading(true);
@@ -71,8 +71,6 @@ const IssueDetailMessage = () => {
         }
     };
 
-    console.log(orderDetail.store_detail,"orderDetailorderDetail");
-    
 
     return (
         <div>
@@ -119,7 +117,7 @@ const IssueDetailMessage = () => {
                 <p className='text-[#2F2F3F] text-lg font-bold'>Order</p>
                 <div className='flex items-center justify-between my-4'>
                     <div className='flex items-center gap-3'>
-                        <div className='bg-[#F8F8F8] rounded-full p-[1.5rem]' style={{backgroundImage: `url(${orderDetail.store_detail?.image_url})`,backgroundPosition:'center' ,backgroundSize:'cover'}}>
+                        <div className='bg-[#F8F8F8] rounded-full p-[1.5rem]' style={{ backgroundImage: `url(${orderDetail?.store_detail?.image_url})`, backgroundPosition: 'center', backgroundSize: 'cover' }}>
                             {/* <img src={orderDetail?.store_detail?.image_url} alt="Order" className='w-6' /> */}
                         </div>
                         <div>

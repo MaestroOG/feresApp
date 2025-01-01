@@ -26,13 +26,13 @@ const FoodDeliveryLabel = ({ restaurantCordinates, delivery_time, wallet_currenc
 
     return (
         <>
-            <div className='whitespace-nowrap bg-white text-black flex items-center gap-2 p-3 rounded-3xl absolute bottom-2 right-[8.6rem]'>
+            <div className='whitespace-nowrap bg-white text-black flex items-center gap-2 p-3 rounded-3xl absolute bottom-2 right-[8.2rem]'>
                 <img src={assets.clock_img} alt="" />
                 <p className='text-sm'>{delivery_time || 'N/A'} mins</p>
             </div>
             <div className='whitespace-nowrap bg-white text-black flex items-center gap-2 p-3 rounded-3xl absolute bottom-2 right-2'>
                 <img src={assets.scooter_img} alt="" />
-                <p className='text-sm'> ETB {Math.floor(multipliedDistance)}</p>
+                <p className='text-sm'> ETB {Number(Math.floor(multipliedDistance))}</p>
             </div>
         </>
     )

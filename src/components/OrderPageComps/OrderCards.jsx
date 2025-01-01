@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { assets } from '../../assets/assets'
 import OrderCardBtn from './OrderCardBtn'
 import { useNavigate } from 'react-router-dom'
+import { FeresContext } from '../../context/FeresContext'
 
 const OrderCards = ({ order }) => {
     const navigate = useNavigate();
-    console.log(order);
+    const { orderCat } = useContext(FeresContext)
 
     return (
         <div className='px-4 shadow py-3 rounded-2xl mb-6'>
@@ -19,7 +20,7 @@ const OrderCards = ({ order }) => {
                     <div className='flex items-center gap-3'>
                         <p className='text-sm text-[#979797] whitespace-nowrap'>{order?.quantity || order?.items.length} item(s)</p>
                         <img src={assets.line} alt="" />
-                        <p className='text-sm text-[#979797] whitespace-nowrap'>Order # {order?.unique_id}</p>
+                        {order?.unique_id && <p className='text-sm text-[#979797] whitespace-nowrap'>Order # {order?.unique_id}</p>}
                     </div>
                     <div className='text-[#0AB247] flex items-center gap-2'>
                         <p className='font-medium text-base'>{order?.total_order_price ? `ETB ${order?.total_order_price}.00` : 'Active order'}</p>
@@ -28,7 +29,7 @@ const OrderCards = ({ order }) => {
                 </div>
             </div>
             <hr className='my-5 w-[95%] mx-auto' />
-            <OrderCardBtn text={"Reorder"} onClick={() => order?.item_name[0]?.store_id ? navigate(`/restaurant/${order?.item_name[0]?.store_id}`) : navigate('/bookride')} />
+            <OrderCardBtn text={orderCat === 'Active' ? 'Track Order' : orderCat === 'Upcoming' ? 'View Order' : 'Reorder'} onClick={() => order?.item_name[0]?.store_id ? navigate(`/restaurant/${order?.item_name[0]?.store_id}`) : navigate('/bookride')} />
         </div>
     )
 }
