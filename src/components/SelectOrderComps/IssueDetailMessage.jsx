@@ -41,8 +41,8 @@ const IssueDetailMessage = () => {
         };
 
         // Convert the date to a readable string
-        const formattedDate = date.toLocaleString('en-US', options);
 
+        const formattedDate = date?.toLocaleString('en-US', options);
         // Rearrange the parts to match the desired format
         const [month, day, year, time] = formattedDate?.match(/(\w+)\s(\d+),\s(\d+),\s(.+)/).slice(1);
         return `${day} ${month} ${year}, ${time}`;
@@ -113,12 +113,12 @@ const IssueDetailMessage = () => {
                 </div>
             )}
 
-            <div className='px-4 mt-6'>
+           {orderDetail && <div className='px-4 mt-6'>
                 <p className='text-[#2F2F3F] text-lg font-bold'>Order</p>
                 <div className='flex items-center justify-between my-4'>
                     <div className='flex items-center gap-3'>
-                        <div className='bg-[#F8F8F8] rounded-full p-[1.5rem]' style={{ backgroundImage: `url(${orderDetail?.store_detail?.image_url})`, backgroundPosition: 'center', backgroundSize: 'cover' }}>
-                            {/* <img src={orderDetail?.store_detail?.image_url} alt="Order" className='w-6' /> */}
+                        <div className='bg-[#F8F8F8] rounded-full p-[1.5rem]' style={{backgroundImage: `url(${orderDetail?.store_detail?.image_url})`,backgroundPosition:'center' ,backgroundSize:'cover'}}>
+                            <img src={orderDetail?.store_detail?.image_url} alt="Order" className='w-6' />
                         </div>
                         <div>
                             <h3 className='text-[#2F2F3F] text-base font-medium'>{orderDetail?.store_detail?.name}</h3>
@@ -127,7 +127,7 @@ const IssueDetailMessage = () => {
                     </div>
                     <img src={assets.arrow_right} alt="Arrow" />
                 </div>
-            </div>
+            </div>}
 
             <button
                 onClick={handleSendMessage}
