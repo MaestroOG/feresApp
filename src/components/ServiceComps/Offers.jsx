@@ -80,7 +80,7 @@ const Offers = () => {
 
                                     <div className='flex items-center gap-2 bg-white w-[91px] h-[40px] p-[10px] rounded-[30px] absolute bottom-14 right-28'>
                                         <img src={assets.clock_01} alt="" className='w-5' />
-                                        <p className='text-xs font-medium text-[#1E1E1E] whitespace-nowrap'>{store?.delivery_time || 'N/A'} mins</p>
+                                        <p className='text-xs font-medium text-[#1E1E1E] whitespace-nowrap'>{store?.delivery_time || '0'} mins</p>
 
                                     </div>
                                     <div className='flex items-center gap-2 bg-white w-[91px] h-[40px] p-[10px] rounded-[30px] absolute bottom-14 right-3'>

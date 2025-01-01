@@ -49,8 +49,8 @@ const ItemZoom = () => {
         console.log(zoom)
     }, [zoom])
     return (
-        <div className='flex items-center justify-center h-screen w-full'>
-            <div className='w-[398px] h-[811px] flex flex-col justify-between rounded-xl bg-[#00000008] py-3'>
+        <div className='h-screen w-full'>
+            <div className='max-w-[398px] h-[800px] flex mx-4 my-5 overflow-hidden flex-col justify-between rounded-xl bg-[#00000008] py-3'>
                 {loading && <Loader />}
                 {cardImgSrc && <>
                     <Container className={'flex items-center justify-between'}>
