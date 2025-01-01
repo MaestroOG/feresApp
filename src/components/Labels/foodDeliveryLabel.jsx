@@ -2,7 +2,7 @@ import { assets } from "../../assets/assets"
 import { useSelector } from "react-redux";
 
 
-const calculateDistance = (lat1, lon1, lat2, lon2,basePrice) => {
+const calculateDistance = (lat1, lon1, lat2, lon2, basePrice) => {
     const R = 6371; // Radius of the Earth in kilometers
     const toRad = (deg) => (deg * Math.PI) / 180;
 
@@ -17,23 +17,23 @@ const calculateDistance = (lat1, lon1, lat2, lon2,basePrice) => {
 };
 
 
-const FoodDeliveryLabel = ({ restaurantCordinates,delivery_time,wallet_currency_code })=>{
+const FoodDeliveryLabel = ({ restaurantCordinates, delivery_time, wallet_currency_code }) => {
 
     const currentCoordinate = useSelector((state) => state.baseData.location);
     const baseData = useSelector((state) => state.baseData.baseData);
-    const distance = calculateDistance(currentCoordinate?.lat, currentCoordinate?.lng, restaurantCordinates[0], restaurantCordinates[1] , baseData?.service_details?.base_price);
+    const distance = calculateDistance(currentCoordinate?.lat, currentCoordinate?.lng, restaurantCordinates[0], restaurantCordinates[1], baseData?.service_details?.base_price);
     const multipliedDistance = (distance * 2).toFixed(2);
 
-    return(
+    return (
         <>
-        <div className='whitespace-nowrap bg-white text-black flex items-center gap-2 p-3 rounded-3xl absolute bottom-2 right-[8.6rem]'>
-                                <img src={assets.clock_img} alt="" />
-                                <p className='text-sm'>{delivery_time || 'N/A'} mins</p>
-                            </div>
-                            <div className='whitespace-nowrap bg-white text-black flex items-center gap-2 p-3 rounded-3xl absolute bottom-2 right-2'>
-                                <img src={assets.scooter_img} alt="" />
-                                <p className='text-sm'> ETB {multipliedDistance}</p>
-                            </div>
+            <div className='whitespace-nowrap bg-white text-black flex items-center gap-2 p-3 rounded-3xl absolute bottom-2 right-[8.6rem]'>
+                <img src={assets.clock_img} alt="" />
+                <p className='text-sm'>{delivery_time || 'N/A'} mins</p>
+            </div>
+            <div className='whitespace-nowrap bg-white text-black flex items-center gap-2 p-3 rounded-3xl absolute bottom-2 right-2'>
+                <img src={assets.scooter_img} alt="" />
+                <p className='text-sm'> ETB {Math.floor(multipliedDistance)}</p>
+            </div>
         </>
     )
 }
