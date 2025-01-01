@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { assets } from '../../assets/assets'
 import { useNavigate } from 'react-router-dom'
 import Loader from '../Loader';
+import DeliveryTimeLabel from '../Labels/deliveryTime';
 
 const RecommendedRests = () => {
     const navigate = useNavigate();
@@ -68,6 +69,8 @@ const RecommendedRests = () => {
                             <div key={index} className='mt-6 w-max' onClick={() => navigate(`/restaurant/${store._id}`)}>
                                 {/* Top */}
                                 <img src={store.image_url} alt="" className='w-[309px] h-[140px] rounded-tr-2xl rounded-tl-2xl object-cover' />
+                                <DeliveryTimeLabel restaurantCordinates={store?.location} delivery_time={store?.delivery_time + store.kitchen_time} wallet_currency_code={"ETB"} />
+
                                 {/* Bottom */}
                                 <div className='mt-3'>
                                     <div className='flex items-center justify-between gap-2'>

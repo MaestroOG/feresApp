@@ -1,6 +1,7 @@
 import React from 'react'
 import { assets } from '../../../assets/assets'
 import { Link } from 'react-router-dom'
+import MartDeliveryLabel from '../../Labels/martDeliveryTime'
 
 const PopularStoreCard = ({ isDiscount = false, store, onClick }) => {
     return (
@@ -18,16 +19,8 @@ const PopularStoreCard = ({ isDiscount = false, store, onClick }) => {
                     <div>
                         <p className='text-sm text-[#979797]'>{store?.Description}</p>
                     </div>
-                    <div className='flex items-center gap-4'>
-                        <div className='flex items-center gap-1'>
-                            <img src={assets.clock_01} alt="" />
-                            <p className='text-[#2F2F3F] text-sm'>{store?.delivery_time} mins</p>
-                        </div>
-                        <div className='flex items-center gap-1'>
-                            <img src={assets.scooter_02} alt="" />
-                            <p className='text-[#2F2F3F] text-sm'>ETB {store?.discount}</p>
-                        </div>
-                    </div>
+                    
+                    <MartDeliveryLabel  restaurantCordinates={store?.location} delivery_time={store?.delivery_time + store?.kitchen_time} wallet_currency_code={"ETB"}/>
                     {isDiscount && <div className='text-[#0AB247] text-[9px] font-medium bg-[#0AB2471A] p-1 rounded w-[88px]'>
                         Up to ETB 120 OFF
                     </div>}

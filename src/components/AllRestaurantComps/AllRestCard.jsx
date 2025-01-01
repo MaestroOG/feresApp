@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 import { usePost } from '../../servies/usePost';
 import Spinner from '../Spinner';
+import DeliveryTimeLabel from '../Labels/deliveryTime';
+import FoodDeliveryLabel from '../Labels/foodDeliveryLabel';
 
 const AllRestCard = () => {
     const navigate = useNavigate();
@@ -99,15 +101,7 @@ const AllRestCard = () => {
                     <>
                         <div key={index} className='w-full mt-8 mb-5 relative' onClick={() => navigate(`/restaurant/${store._id}`)}>
                             <img src={store.image_url} alt="" className='rounded-tr-2xl rounded-tl-2xl object-cover h-[154px] w-full' />
-
-                            <div className='whitespace-nowrap bg-white text-black flex items-center gap-2 p-3 rounded-3xl absolute bottom-2 right-[7.4rem]'>
-                                <img src={assets.clock_img} alt="" />
-                                <p className='text-sm'>{store.delivery_time} mins</p>
-                            </div>
-                            <div className='whitespace-nowrap bg-white text-black flex items-center gap-2 p-3 rounded-3xl absolute bottom-2 right-2'>
-                                <img src={assets.scooter_img} alt="" />
-                                <p className='text-sm'>EBT 150</p>
-                            </div>
+                            <FoodDeliveryLabel restaurantCordinates={store?.location} delivery_time={store?.delivery_time + store.kitchen_time} wallet_currency_code={"ETB"} />
                         </div>
                         <div className='mb-8'>
                             <div className='flex items-center justify-between gap-2'>
