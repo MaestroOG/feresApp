@@ -221,11 +221,11 @@ const EcommerceMart = () => {
                     <div className="flex items-center justify-between pt-5 px-4">
                         <div className='flex items-center gap-2'>
                             <img src={storeInfo && storeInfo?.store?.image_url && storeInfo?.store?.image_url} alt="" className='object-cover' width={"23px"} height={"16px"} />
-                            <h2 className={`transition-all text-xl font-bold text-[#2F2F3F] whitespace-nowrap ${scrolled ? 'fixed left-20 top-9 z-50' : ''}`}>{storeInfo?.store?.name.slice(0, 19)}</h2>
+                            <h2 className={`transition-all text-xl font-bold text-[#2F2F3F] ${scrolled ? 'fixed left-20 top-9 z-50' : ''}`}>{storeInfo?.store?.name.slice(0, 19)}</h2>
                         </div>
                         <div className='flex items-center gap-1' onClick={() => navigate(`/review/${storeInfo?.store?._id}`)}>
                             <img src={assets.star} alt="" />
-                            <Link to={`/review/${storeInfo?.store?._id}`} className='text-base font-normal whitespace-nowrap'>{storeInfo?.store?.user_rate} ({storeInfo?.store?.user_rate_count} reviews)</Link>
+                            <Link to={`/review/${storeInfo?.store?._id}`} className='text-base font-normal'>{storeInfo?.store?.user_rate} ({storeInfo?.store?.user_rate_count} reviews)</Link>
                         </div>
                     </div>
 
@@ -296,19 +296,19 @@ const EcommerceMart = () => {
                                             </div>
                                         </div>
                                         <div className='my-2'>
-                                            {store_info ? <><p className='text-sm font-medium text-[#2F2F3F] w-[135px] whitespace-nowrap'>{item?.name.split(" ").slice(0, 2).join(" ")}..</p>
+                                            {store_info ? <><p className='text-sm font-medium text-[#2F2F3F] w-[135px] truncate'>{item?.name}</p>
                                                 <p className='text-[#9E9E9E] line-through text-base'>{`ETB ${item?.price}`}</p>
                                                 <p className='text-[#0AB247] font-bold text-base'>{`ETB ${calculateDiscount(item?.price, promoPer)}`}</p></>
                                                 : product_info ?
-                                                    checkProductInfo(item) ? <> <p className='text-[#9E9E9E] line-through text-base'>{`ETB ${item?.price}`}</p>
+                                                    checkProductInfo(item) ? <><p className='text-sm truncate font-medium text-[#2F2F3F] w-[135px]'>{item?.name.split(" ").slice(0, 3).join(" ")}</p> <p className='text-[#9E9E9E] line-through text-base'>{`ETB ${item?.price}`}</p>
                                                         <p className='text-[#0AB247] font-bold text-base'>{`ETB ${calculateDiscount(item?.price, promoPer)}`}</p></> :
-                                                        <> <p className='text-sm font-medium text-[#2F2F3F] w-[135px] whitespace-nowrap'>{item?.name.split(" ").slice(0, 2).join(" ")}..</p>
+                                                        <> <p className='text-sm font-medium text-[#2F2F3F] w-[135px] truncate'>{item?.name}</p>
                                                             <p className='text-[#0AB247] font-bold text-sm'>EBT {item?.price}</p> </> :
                                                     item_info ?
                                                         checkItemInfo(item) ? <> <p className='text-[#9E9E9E] line-through text-base'>{`ETB ${item?.price}`}</p>
                                                             <p className='text-[#0AB247] font-bold text-base'>{`ETB ${calculateDiscount(item?.price, promoPer)}`}</p></> :
-                                                            <> <p className='text-sm font-medium text-[#2F2F3F] w-[135px] whitespace-nowrap'>{item?.name.split(" ").slice(0, 2).join(" ")}..</p>
-                                                                <p className='text-[#0AB247] font-bold text-sm'>EBT {item?.price}</p> </> : <> <p className='text-sm font-medium text-[#2F2F3F] w-[135px] whitespace-nowrap'>{item?.name.split(" ").slice(0, 2).join(" ")}..</p>
+                                                            <> <p className='text-sm font-medium text-[#2F2F3F] w-[135px] truncate'>{item?.name}</p>
+                                                                <p className='text-[#0AB247] font-bold text-sm'>EBT {item?.price}</p> </> : <> <p className='text-sm font-medium text-[#2F2F3F] w-[135px] truncate'>{item?.name}</p>
                                                             <p className='text-[#0AB247] font-bold text-sm'>EBT {item?.price}</p> </>}
                                         </div>
 

@@ -9,6 +9,7 @@ import PopularStoreCard from '../components/EcommerceComps/MainPageComps/Popular
 import { Link, useNavigate } from 'react-router-dom'
 import { usePost } from '../servies/usePost'
 import Spinner from '../components/Spinner'
+import Loader from '../components/Loader'
 
 const Ecommerce = () => {
     const { loading, error, post } = usePost();
@@ -46,6 +47,9 @@ const Ecommerce = () => {
         fetchCategories()
         fetchStores()
     }, [])
+    if (loading) {
+        return <Loader />
+    }
     return (
         <div className='overflow-x-hidden'>
             <Navbar />

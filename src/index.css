@@ -33,13 +33,11 @@
 }
 
 .clipped {
-    clip-path: polygon(0 0, 100% 0%, 85% 100%, 0% 100%);
-
-
+    clip-path: polygon(0 0, 100% 0%, 95% 100%, 0% 100%);
 }
 
 .clipped_2 {
-    clip-path: polygon(13% 0, 100% 0%, 100% 100%, 0 100%);
+    clip-path: polygon(5% 0, 100% 0%, 100% 100%, 0% 100%);
 }
 
 .explore-card::-webkit-scrollbar {
