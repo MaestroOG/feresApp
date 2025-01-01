@@ -13,6 +13,9 @@ import filterReducer from './slices/filterSlice'
 import faqReducer from "./slices/faqSlice"
 import chatReducer from "./slices/chatSlice"
 import promotionsReducer from "./slices/promotion"
+import baseDataReducer from "./slices/basePriceSlice"
+
+
 const store = configureStore({
   reducer: {
     userAuth: userAuthReducer,
@@ -27,7 +30,8 @@ const store = configureStore({
     filter: filterReducer,
     faq:faqReducer,
     chat:chatReducer,
-    promotions: promotionsReducer
+    promotions: promotionsReducer,
+    baseData: baseDataReducer
   },
 });
 

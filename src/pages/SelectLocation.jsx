@@ -4,10 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { Loader } from "@googlemaps/js-api-loader";
 import Container from "../components/Container";
 import './map.css'
+import { useDispatch } from "react-redux";
+import { setFormatedAddress, setLocation } from "../redux/slices/basePriceSlice";
 
 const SelectLocation = () => {
   const navigate = useNavigate();
   const mapRef = useRef(null);
+  const dispatch = useDispatch()
   const [currentLocation, setCurrentLocation] = useState(null);
   const [address, setAddress] = useState("");
 
@@ -44,6 +47,8 @@ const SelectLocation = () => {
                   const formattedAddress = results[0].formatted_address;
                   setAddress(formattedAddress);
 
+                    dispatch(setLocation(location))
+                    dispatch(setFormatedAddress(formattedAddress))
                   // Store the address in localStorage
                   localStorage.setItem("currentAddress", formattedAddress);
                 } else {

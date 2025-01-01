@@ -10,6 +10,7 @@ import { usePost } from '../../servies/usePost'
 import Loader from '../../components/Loader'
 import { useDispatch,useSelector } from 'react-redux'
 import { setCategory_info, setItem_info, setProduct_info, setPromoPer, setStore_info } from '../../redux/slices/promotion'
+import MartDeliveryLabel from '../../components/Labels/martDeliveryTime'
 
 const EcommerceCategoriesResult = () => {
     const { name } = useParams()
@@ -97,16 +98,7 @@ const EcommerceCategoriesResult = () => {
                                     <div>
                                         <p className='text-sm text-[#979797]'>{category?.Description}</p>
                                     </div>
-                                    <div className='flex items-center gap-4'>
-                                        <div className='flex items-center gap-1'>
-                                            <img src={assets.clock_01} alt="" />
-                                            <p className='text-[#2F2F3F] text-sm'>{category?.delivery_time} mins</p>
-                                        </div>
-                                        <div className='flex items-center gap-1'>
-                                            <img src={assets.scooter_02} alt="" />
-                                            <p className='text-[#2F2F3F] text-sm'>ETB {category?.discount}</p>
-                                        </div>
-                                    </div>
+                                    <MartDeliveryLabel  restaurantCordinates={category?.location} delivery_time={category?.delivery_time + category?.kitchen_time} wallet_currency_code={"ETB"}/>
                                     {/* {isDiscount && <div className='text-[#0AB247] text-[9px] font-medium bg-[#0AB2471A] p-1 rounded w-[88px]'>
                                         Up to ETB 120 OFF
                                     </div>} */}

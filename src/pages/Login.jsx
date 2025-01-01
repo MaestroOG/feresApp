@@ -119,7 +119,7 @@ const Login = () => {
 
                 dispatch(loginUser(userData))
                 localStorage.setItem("userData", JSON.stringify(userData))
-                navigate('/')
+                navigate('/selectlocation')
             } else if (response?.data?.success === false) {
                 setIsErr(true)
             }

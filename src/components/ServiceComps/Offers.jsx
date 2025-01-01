@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { assets } from '../../assets/assets';
 import { useSelector } from 'react-redux';
 import Spinner from '../Spinner';
+import DeliveryTimeLabel from '../Labels/deliveryTime';
 
 const Offers = () => {
 
@@ -77,17 +78,8 @@ const Offers = () => {
                                     <img src={store?.image_url} alt="" className='w-[365px] h-[140.98px] rounded-tr-3xl rounded-tl-3xl object-cover' onClick={() => navigate(item?.store_type === 'food' ? `/restaurant/${store?._id}` : `/ecommerce/mart/${item?.category_id}`)} />
                                     {/* Card Top Stickers */}
                                     <div className='bg-[#F2FDF8] w-[154px] h-[34px] rounded-[30px] p-[10px] text-[#0AB247] font-medium text-xs text-center absolute top-2 left-2 whitespace-nowrap'>{item?.discount_percent}% off selected items</div>
-
-                                    <div className='flex items-center gap-2 bg-white w-[91px] h-[40px] p-[10px] rounded-[30px] absolute bottom-14 right-28'>
-                                        <img src={assets.clock_01} alt="" className='w-5' />
-                                        <p className='text-xs font-medium text-[#1E1E1E] whitespace-nowrap'>{store?.delivery_time || '0'} mins</p>
-
-                                    </div>
-                                    <div className='flex items-center gap-2 bg-white w-[91px] h-[40px] p-[10px] rounded-[30px] absolute bottom-14 right-3'>
-                                        <img src={assets.scooter_02} alt="" className='w-5' />
-                                        <p className='text-xs font-medium text-[#1E1E1E] whitespace-nowrap'>{store?.wallet_currency_code} {store?.wallet}</p>
-
-                                    </div>
+                                        {/* {JSON.stringify(store)} */}
+                                    <DeliveryTimeLabel restaurantCordinates={store.location} delivery_time={store?.delivery_time + store.kitchen_time} wallet_currency_code={store?.wallet_currency_code} />
                                     {/* Card Info */}
                                     <div className='px-2'>
                                         <div className='flex items-center justify-between mt-2'>

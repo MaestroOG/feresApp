@@ -7,6 +7,7 @@ import Menu from '../components/ServiceComps/Menu'
 import { assets } from '../assets/assets'
 import { useNavigate } from 'react-router-dom'
 import Loader from '../components/Loader'
+import DeliveryTimeLabel from '../components/Labels/deliveryTime'
 
 const Services = () => {
 
@@ -115,16 +116,8 @@ const Services = () => {
                                             <p className='text-xs text-[#979797]'>{store.Description}</p>
                                         </div>
                                     </div>
-                                    <div className='flex items-center gap-2 bg-white w-[91px] h-[40px] p-[10px] rounded-[30px] absolute bottom-14 right-28'>
-                                        <img src={assets.clock_01} alt="" className='w-5' />
-                                        <p className='text-xs font-medium text-[#1E1E1E] whitespace-nowrap'>{store?.delivery_time || 'N/A'} mins</p>
 
-                                    </div>
-                                    <div className='flex items-center gap-2 bg-white w-[91px] h-[40px] p-[10px] rounded-[30px] absolute bottom-14 right-3'>
-                                        <img src={assets.scooter_02} alt="" className='w-5' />
-                                        <p className='text-xs font-medium text-[#1E1E1E] whitespace-nowrap'>{store?.wallet_currency_code} {store?.wallet || '0'} ETB</p>
-
-                                    </div>
+                                    <DeliveryTimeLabel restaurantCordinates={store?.location} delivery_time={store?.delivery_time + store.kitchen_time} wallet_currency_code={"ETB"} />
                                 </div>
                             ))
                         ))}
@@ -152,16 +145,7 @@ const Services = () => {
                                         <p className='text-xs text-[#979797]'>{store.Description}</p>
                                     </div>
                                 </div>
-                                <div className='flex items-center gap-2 bg-white w-[91px] h-[40px] p-[10px] rounded-[30px] absolute bottom-14 right-28'>
-                                    <img src={assets.clock_01} alt="" className='w-5' />
-                                    <p className='text-xs font-medium text-[#1E1E1E] whitespace-nowrap'>{store?.delivery_time || 'N/A'} mins</p>
-
-                                </div>
-                                <div className='flex items-center gap-2 bg-white w-[91px] h-[40px] p-[10px] rounded-[30px] absolute bottom-14 right-3'>
-                                    <img src={assets.scooter_02} alt="" className='w-5' />
-                                    <p className='text-xs font-medium text-[#1E1E1E] whitespace-nowrap'>{store?.wallet_currency_code} {store?.wallet || '0'} ETB</p>
-
-                                </div>
+                                <DeliveryTimeLabel restaurantCordinates={store?.location} delivery_time={store?.delivery_time + store.kitchen_time} wallet_currency_code={"ETB"} />
                             </div>
                         ))}
                     </div>
