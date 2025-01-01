@@ -11,7 +11,7 @@ const IssueDetailMessage = () => {
     const dispatch = useDispatch()
     const faqData = useSelector((state) => state.faq.faqData);
     const userDetail = useSelector((state) => state.userAuth.user);
-    const orderDetail = useSelector((state)=> state.orders.reportOrder )
+    const orderDetail = useSelector((state) => state.orders.reportOrder)
     const [selectedFile, setSelectedFile] = useState(null);
     const [inputMsg, setInputMsg] = useState('');
     const [loading, setLoading] = useState(false);
@@ -29,24 +29,24 @@ const IssueDetailMessage = () => {
 
     function formatDate(dateString) {
         const date = new Date(dateString);
-      
+
         // Format options
         const options = {
-          day: '2-digit',
-          month: 'short',
-          year: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit',
-          hour12: true,
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true,
         };
-      
+
         // Convert the date to a readable string
+
         const formattedDate = date?.toLocaleString('en-US', options);
-      
         // Rearrange the parts to match the desired format
-        const [month, day, year, time] = formattedDate.match(/(\w+)\s(\d+),\s(\d+),\s(.+)/).slice(1);
+        const [month, day, year, time] = formattedDate?.match(/(\w+)\s(\d+),\s(\d+),\s(.+)/).slice(1);
         return `${day} ${month} ${year}, ${time}`;
-      }
+    }
 
     const handleSendMessage = async () => {
         setLoading(true);
@@ -71,8 +71,6 @@ const IssueDetailMessage = () => {
         }
     };
 
-    console.log(orderDetail,"orderDetailorderDetail");
-    
 
     return (
         <div>

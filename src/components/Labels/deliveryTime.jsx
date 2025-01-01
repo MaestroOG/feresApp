@@ -37,7 +37,7 @@ const DeliveryTimeLabel = ({ restaurantCordinates, delivery_time, wallet_currenc
             <div className="flex items-center gap-2 bg-white w-[91px] h-[40px] p-[10px] pr-2 rounded-[30px] absolute bottom-14 right-3">
                 <img src={assets.scooter_02} alt="" className="w-5" />
                 <p className="text-xs font-medium text-[#1E1E1E] whitespace-nowrap">
-                    {wallet_currency_code} {Math.floor(multipliedDistance)}
+                    {wallet_currency_code} {Number(Math.floor(multipliedDistance))}
                 </p>
             </div>
         </>
