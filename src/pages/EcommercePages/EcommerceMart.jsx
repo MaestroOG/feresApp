@@ -150,7 +150,7 @@ const EcommerceMart = () => {
         fetchProductsAndStoreInfo()
         getCart()
         fetchPromoInfo()
-    }, [selectedResturant])
+    }, [])
 
     function calculateDiscount(amount, discountPer) {
 
