@@ -267,9 +267,10 @@ const Restaurant = () => {
     useEffect(() => {
         fetchRestInfo();
         fetchMenuItems();
+        if(sele)
         fetchPromoInfo()
         // addCategories()
-    }, [])
+    }, [selectedRestaurant,selectedResturant])
 
     useEffect(() => {
         const currentUrl = window.location.href;
