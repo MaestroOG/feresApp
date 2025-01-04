@@ -267,8 +267,8 @@ const Restaurant = () => {
     useEffect(() => {
         fetchRestInfo();
         fetchMenuItems();
-        if(sele)
-        fetchPromoInfo()
+        if(selectedResturant){
+        fetchPromoInfo()}
         // addCategories()
     }, [selectedRestaurant,selectedResturant])
 
