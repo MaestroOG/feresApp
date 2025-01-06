@@ -127,6 +127,8 @@ const EcommerceMart = () => {
         return cartItem ? cartItem.quantity : null
     }
 
+    
+
     useEffect(() => {
         const handleScroll = () => {
             // Check if the page has been scrolled 50px or more
@@ -150,8 +152,14 @@ const EcommerceMart = () => {
         fetchProductsAndStoreInfo()
         getCart()
         fetchPromoInfo()
-        console.log(cartItemData)
+
     }, [])
+
+    useEffect(()=>{
+        fetchPromoInfo()
+    },[selectedResturant,loginUser])
+
+
 
     function calculateDiscount(amount, discountPer) {
 
@@ -265,7 +273,7 @@ const EcommerceMart = () => {
                     <div className='flex items-center overflow-auto no-scrollbar'>
                         {products && products?.products.map(product => (
                             <div className='flex items-center gap-2'>
-                                <MartCategoryCard category={product} />
+                                <MartCategoryCard category={product} product_info={product_info} promoPer={promoPer}/>
                             </div>
                         ))}
                     </div>
