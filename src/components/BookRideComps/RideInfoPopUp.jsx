@@ -183,7 +183,7 @@ const RideInfoPopUp = () => {
 
     useEffect(() => {
         callApi();
-        intervalRef.current = setInterval(callApi, 4000);
+        intervalRef.current = setInterval(callApi, 6000);
 
         return () => clearInterval(intervalRef.current); // Cleanup on unmount
     }, [])
