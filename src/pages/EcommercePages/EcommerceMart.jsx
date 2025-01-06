@@ -150,6 +150,7 @@ const EcommerceMart = () => {
         fetchProductsAndStoreInfo()
         getCart()
         fetchPromoInfo()
+        console.log(cartItemData)
     }, [])
 
     function calculateDiscount(amount, discountPer) {
@@ -322,7 +323,7 @@ const EcommerceMart = () => {
 
 
             {/* Add To Basket */}
-            {cartItemData && <EcommerceAddBasket cart_price={cartItemData?.total_cart_price} cart_quantity={cartItemData?.total_item_count} to={`/ecommerce/cart/${id}`} />}
+            {cartItemData && cartItemData.stores.length > 0 && <EcommerceAddBasket cart_price={cartItemData?.total_cart_price} cart_quantity={cartItemData?.total_item_count} to={`/ecommerce/cart/${id}`} />}
 
         </div>
     )
