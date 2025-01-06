@@ -18,7 +18,7 @@ const Explore = () => {
     }
 
     const handleGetServices = async(city_id)=>{
-        const response = await axios.post('https://demo.feres.co/get_delivery_types',{ cityname : city_id })
+        const response = await axios.post('https://demo.feres.co/get_delivery_types',{ cityname : city_id ,service_type:0})
         setServices(response?.data?.type_data)
 
         
