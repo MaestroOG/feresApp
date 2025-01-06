@@ -2,9 +2,9 @@ import React from 'react'
 import { assets } from '../../assets/assets'
 import { Link } from 'react-router-dom'
 
-const NotificationCard = ({ img, name, desc, successStat, isDetail, onClick }) => {
+const NotificationCard = ({ img, name, desc, successStat, isDetail, onClick, id }) => {
     return (
-        <Link onClick={onClick} to={`${isDetail ? '/detailnotification' : successStat ? '/foodorderdetails' : ''}`} className='flex items-center justify-between px-4 mb-4'>
+        <Link onClick={onClick} to={`${isDetail ? `/detailnotification/${id}` : successStat ? '/foodorderdetails' : ''}`} className='flex items-center justify-between px-4 mb-4'>
             <div className='flex items-center gap-3'>
                 <div className='bg-[#F8F8F8] rounded-full p-4'>
                     <img src={img} alt="" className='w-6' />

@@ -61,7 +61,7 @@ const TotalBill = ({ onDelClick, onServiceClick, selectedResturant, order_paymen
                     </div>
                     <p className='text-[#0AB247] font-medium text-base'>ETB{customTip}</p>
                 </div>}
-                {order_payment[0]?.order_discount && order_payment[0]?.order_discount > 0 &&
+                {order_payment && order_payment[0]?.order_discount && order_payment[0]?.order_discount > 0 ?
                     <div className='flex items-center justify-between mt-2'>
                         <div className='flex items-center gap-2'>
                             <h3 className='text-[#767578]'>Discount</h3>
@@ -69,7 +69,7 @@ const TotalBill = ({ onDelClick, onServiceClick, selectedResturant, order_paymen
                         </div>
                         <p className='text-[#0AB247] font-medium text-base'>{`-ETB${Number(Math.floor(calculateDiscountedAmount(order_payment[0]?.total, order_payment[0]?.order_discount)))}`}</p>
                     </div>
-                }
+                    : null}
                 <div className='flex items-center justify-between mt-2'>
                     <h3 className='text-[#767578]'>Total</h3>
                     <p className='text-[#0AB247] font-medium text-base'>{`ETB${order_payment && order_payment[0]?.total}`}</p>
