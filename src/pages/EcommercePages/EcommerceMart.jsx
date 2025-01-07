@@ -127,7 +127,7 @@ const EcommerceMart = () => {
         return cartItem ? cartItem.quantity : null
     }
 
-    
+
 
     useEffect(() => {
         const handleScroll = () => {
@@ -155,9 +155,9 @@ const EcommerceMart = () => {
 
     }, [])
 
-    useEffect(()=>{
+    useEffect(() => {
         fetchPromoInfo()
-    },[selectedResturant,loginUser])
+    }, [selectedResturant, loginUser])
 
 
 
@@ -271,9 +271,9 @@ const EcommerceMart = () => {
                         <Link to={`/ecommerce/mart/categories/${id}`} className='text-[#999999] font-medium'>View all</Link>
                     </div>
                     <div className='flex items-center overflow-auto no-scrollbar'>
-                        {products && products?.products.map(product => (
-                            <div className='flex items-center gap-2'>
-                                <MartCategoryCard category={product} product_info={product_info} promoPer={promoPer}/>
+                        {products && products?.products.map((product, i) => (
+                            <div className='flex items-center gap-2' key={i}>
+                                <MartCategoryCard category={product} product_info={product_info} promoPer={promoPer} />
                             </div>
                         ))}
                     </div>
