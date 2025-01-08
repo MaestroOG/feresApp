@@ -10,23 +10,46 @@ import { Link, useNavigate } from 'react-router-dom'
 import { usePost } from '../servies/usePost'
 import Spinner from '../components/Spinner'
 import Loader from '../components/Loader'
+import axios from 'axios'
 
 const Ecommerce = () => {
     const { loading, error, post } = usePost();
     const [stores, setStores] = useState(null);
+    const [offers, setOffers] = useState(null)
+    const [offerLoading, setOfferLoading] = useState(false)
+    const [offerErr, setOfferErr] = useState(false)
     const navigate = useNavigate()
-    const [activeButtonIndex, setActiveButtonIndex] = useState(0);
     const buttons = ["Popular stores", "Grocery stores", "Specialty stores"];
 
 
     const [categories, setCategories] = useState(null)
+
+    const fetchOffers = async () => {
+        const endpoint = import.meta.env.VITE_FARASANYA + '/get_all_offers'
+        try {
+            setOfferLoading(true)
+            const response = await axios.post(endpoint)
+            if (response.data.success) {
+                setOffers(response.data?.offers)
+                console.log(offers)
+            } else if (response.data.success === false) {
+                setOfferErr(true)
+                setOfferLoading(false)
+                return;
+            }
+        } catch (error) {
+            setOfferErr(true)
+            setOfferLoading(false)
+            console.log(error.message)
+        } finally {
+            setOfferLoading(false)
+        }
+    }
     const fetchStores = async () => {
         const endpoint = "/api/e-commerce/get_ecommerce_stores_list"
         try {
             const data = await post(endpoint, {});
             setStores(data);
-            console.log(stores);
-
         } catch (err) {
             console.error("Error fetching stores:", err);
         }
@@ -37,19 +60,36 @@ const Ecommerce = () => {
         try {
             const data = await post(endpoint, {})
             setCategories(data)
-            console.log(categories)
         } catch (error) {
             console.log(error.message)
         }
     }
 
+    const groupedOffers = offers?.flatMap(offer => offer?.list).reduce((acc, li) => {
+        const key = li?.position?.position_title;
+        if (!acc[key]) {
+            acc[key] = [];
+        }
+        acc[key].push(li);
+        return acc;
+    }, {});
+
     useEffect(() => {
         fetchCategories()
+        fetchOffers()
         fetchStores()
     }, [])
-    if (loading) {
+
+
+    if (loading || offerLoading) {
         return <Loader />
     }
+
+    if (error || offerErr) {
+        return <h1>Error Fetching Offers</h1>
+    }
+
+
     return (
         <div className='overflow-x-hidden'>
             <Navbar />
@@ -78,35 +118,30 @@ const Ecommerce = () => {
 
             {/* Offers */}
             <div className='px-1 mt-10'>
-                <div className='flex items-center justify-between mb-6 px-3'>
-                    <h3 className='text-[#2F2F3F] text-lg font-medium'>Special offers</h3>
-                </div>
+
                 {/* Card */}
-                <div className='flex items-center overflow-auto no-scrollbar'>
-                    <Container>
-                        <div className='w-36 h-44 rounded-xl bg-[#EFF7D7] p-2 px-3 relative'>
-                            <h3 className='text-[#2F2F3F]'>New day <br /><span className='font-bold'>new deal</span></h3>
-                            <img src={assets.coke} alt="" className='absolute bottom-0 right-0' />
-                            <img src={assets.ecommerce_card_shape} alt="" className='absolute bottom-0 left-0' />
-                            <p className='text-white text-[11px] z-50 absolute bottom-2 left-2'>up to <br /><span className='font-bold'>60%</span><br /> off</p>
-                        </div>
-                    </Container>
-                    <Container>
-                        <div className='w-36 h-44 rounded-xl bg-[#DBEDF3] p-2 px-3 relative'>
-                            <h3 className='text-[#2F2F3F]'>New day <br /><span className='font-bold'>new deal</span></h3>
-                            <img src={assets.healthy_fruits} alt="" className='absolute bottom-0 right-0' />
-                            <img src={assets.ecommerce_card_shape} alt="" className='absolute bottom-0 left-0' />
-                            <p className='text-white text-[11px] z-50 absolute bottom-2 left-2'>up to <br /><span className='font-bold'>60%</span><br /> off</p>
-                        </div>
-                    </Container>
-                    <Container>
-                        <div className='w-36 h-44 rounded-xl bg-[#EFF7D7] p-2 px-3 relative'>
-                            <h3 className='text-[#2F2F3F]'>New day <br /><span className='font-bold'>new deal</span></h3>
-                            <img src={assets.coke} alt="" className='absolute bottom-0 right-0' />
-                            <img src={assets.ecommerce_card_shape} alt="" className='absolute bottom-0 left-0' />
-                            <p className='text-white text-[11px] z-50 absolute bottom-2 left-2'>up to <br /><span className='font-bold'>60%</span><br /> off</p>
-                        </div>
-                    </Container>
+                <div className='items-center overflow-auto no-scrollbar'>
+                    {groupedOffers &&
+                        Object.entries(groupedOffers).map(([title, items]) => (
+                            <div key={title} className="my-5">
+                                <div className='flex items-center justify-between mb-6 px-3'>
+                                    <h3 className='text-[#2F2F3F] text-lg font-medium'>{title}</h3>
+                                </div>
+                                <div className="flex flex-wrap gap-4">
+                                    {items.map(li => (
+                                        <Container key={li?.id} onClick={() => navigate(`/ecommerce/mart/${li?.category_id}`)}>
+                                            <div className='w-36 h-44 rounded-xl bg-[#EFF7D7] p-2 px-3 relative'>
+                                                <h3 className='text-[#2F2F3F]'>{li?.category[0]}</h3>
+                                                <img src={li?.featured_image} alt="" className='absolute bottom-0 right-0 object-cover' width={"127px"} height={"179px"} />
+                                                <img src={assets.ecommerce_card_shape} alt="" className='absolute bottom-0 left-0' />
+                                                <p className='text-white text-[11px] z-50 absolute bottom-2 left-2'>up to <br /><span className='font-bold'>{li?.offer_detail}%</span><br /> off</p>
+                                            </div>
+                                        </Container>
+                                    ))}
+                                </div>
+                            </div>
+                        ))
+                    }
                 </div>
             </div>
 

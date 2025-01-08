@@ -17,7 +17,7 @@ const Navbar = () => {
     const initialized = useRef(false) // Ref to track if API call was made
     const store_id = cartItemData?.stores[0]?._id
 
-    console.log(cartCount, 'cart count ');
+    // console.log(cartCount, 'cart count ');
 
 
     useEffect(() => {
