@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { assets } from '../../assets/assets';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Spinner from '../Spinner';
 import DeliveryTimeLabel from '../Labels/deliveryTime';
+import { setAllPromo } from '../../redux/slices/promotion';
 
 const Offers = () => {
 
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(false)
     const [promotionData, setPromotionData] = useState(null);
+    const dispatch = useDispatch()
     const navigate = useNavigate();
     const loginUser = useSelector(state => state.userAuth.user)
 
@@ -32,7 +34,9 @@ const Offers = () => {
 
             const data = await res.json();
             setPromotionData(data);
+            dispatch(setAllPromo(data.promotions_list))
 
+                
         } catch (error) {
             setError(true)
             setIsLoading(false)

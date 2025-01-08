@@ -21,7 +21,7 @@ const TotalBill = ({ onDelClick, onServiceClick, selectedResturant, order_paymen
             {order_payment !== undefined && <>
                 <div className='flex items-center justify-between'>
                     <h3 className='text-[#767578]'>Subtotal</h3>
-                    <p className='text-[#2F2F3F] font-medium text-base'>{`ETB${order_payment && order_payment[0]?.total_store_income}`}</p>
+                    <p className='text-[#2F2F3F] font-medium text-base'>{`ETB${order_payment && order_payment[0]?.total}`}</p>
                 </div>
                 {/* {!deliveryPickup && <div className='flex items-center justify-between mt-2'>
                     <div className='flex items-center gap-2'>

@@ -8,18 +8,44 @@ import RiderCard from '../components/RateRiderComps/RiderCard';
 import { useSelector } from 'react-redux';
 import Container from '../components/Container';
 import CountDownTimer from '../components/BookRideComps/CountDownTimer';
-
+import { usePost } from '../servies/usePost';
 
 const BookRide = () => {
     const { rideInfoPop, setRideInfoPop } = useContext(FeresContext);
     const mapRef = useRef(null);
     const [map, setMap] = useState(null);
-    const [providerOverview, setProviderOverview] = useState(false)
-    const [timerData, setTimerData] = useState(null)
-    const orderStatus = useSelector(state => state.cartDetails.orderStatus)
-    const cartDetail = useSelector(state => state.cartDetails.cartDetails)
+    const { post } = usePost();
+    const [providerOverview, setProviderOverview] = useState(false);
+    const [timerData, setTimerData] = useState(null);
+    const [providerLocation, setProviderLocation] = useState(null);
+    const orderStatus = useSelector(state => state.cartDetails.orderStatus);
+    const cartDetail = useSelector(state => state.cartDetails.cartDetails);
+    const userDetail = useSelector((state) => state.userAuth.user);
 
-const storeLocation = cartDetail?.store[0]?.location
+    const storeLocation = cartDetail?.store[0]?.location;
+
+    const callApi = async () => {
+        try {
+            const response = await post('/api/user/get_order_status', {
+                server_token: userDetail?.token,
+                user_id: userDetail?.user_id,
+                order_id: userDetail?.order_id
+            });
+            if (response.success) {
+                setProviderLocation(response.provider_previous_location);
+            }
+        } catch (error) {
+            console.error('Error fetching order status:', error);
+        }
+    };
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            callApi();
+        }, 10000); // Call API every 10 seconds
+
+        return () => clearInterval(intervalId); // Cleanup interval on component unmount
+    }, []);
 
     useEffect(() => {
         const loader = new Loader({
@@ -43,69 +69,96 @@ const storeLocation = cartDetail?.store[0]?.location
             directionsRenderer.setMap(mapInstance);
             setMap(mapInstance);
 
-            // Define start (bike location) and destination (store location)
-            const start = { lat: 37.7749, lng: -122.4194 }; // Replace with dynamic coordinates
-            const destination = { lat: 37.7849, lng: -122.4094 }; // Replace with dynamic coordinates
+            const updateRoute = () => {
+                if (providerLocation && providerLocation.length === 2) {
+                    const start = { lat: providerLocation[0], lng: providerLocation[1] };
+                    const destination = { lat: storeLocation[0], lng: storeLocation[1] };
 
-            // Add custom markers
-            new google.maps.Marker({
-                position: start,
-                map: mapInstance,
-                icon: {
-                    url: assets.bike_icon, // Replace with bike logo URL
-                    scaledSize: new google.maps.Size(50, 50), // Adjust size as needed
-                },
-            });
+                    directionsService.route(
+                        {
+                            origin: start,
+                            destination: destination,
+                            travelMode: google.maps.TravelMode.DRIVING,
+                        },
+                        (result, status) => {
+                            if (status === "OK") {
+                                directionsRenderer.setDirections(result);
+                            } else {
+                                console.error("Directions request failed due to " + status);
+                            }
+                        }
+                    );
 
-            new google.maps.Marker({
-                position: destination,
-                map: mapInstance,
-                icon: {
-                    url: assets.store_loco, // Replace with store logo URL
-                    scaledSize: new google.maps.Size(50, 50), // Adjust size as needed
-                },
-            });
+                    new google.maps.Marker({
+                        position: start,
+                        map: mapInstance,
+                        icon: {
+                            url: assets.bike_icon, // Replace with bike logo URL
+                            scaledSize: new google.maps.Size(50, 50), // Adjust size as needed
+                        },
+                    });
 
-            // Calculate and display route
-            directionsService.route(
-                {
-                    origin: start,
-                    destination: destination,
-                    travelMode: google.maps.TravelMode.DRIVING,
-                },
-                (result, status) => {
-                    if (status === "OK") {
-                        directionsRenderer.setDirections(result);
-                    } else {
-                        console.error("Directions request failed due to " + status);
-                    }
+                    new google.maps.Marker({
+                        position: destination,
+                        map: mapInstance,
+                        icon: {
+                            url: assets.store_loco, // Replace with store logo URL
+                            scaledSize: new google.maps.Size(50, 50), // Adjust size as needed
+                        },
+                    });
+                } else if (storeLocation) {
+                    const destination = { lat: storeLocation[0], lng: storeLocation[1] };
+
+                    new google.maps.Marker({
+                        position: destination,
+                        map: mapInstance,
+                        icon: {
+                            url: assets.store_loco, // Replace with store logo URL
+                            scaledSize: new google.maps.Size(50, 50), // Adjust size as needed
+                        },
+                    });
+
+                    const userLocation = new google.maps.LatLng(37.7749, -122.4194); // Replace with current user location
+
+                    directionsService.route(
+                        {
+                            origin: userLocation,
+                            destination: destination,
+                            travelMode: google.maps.TravelMode.DRIVING,
+                        },
+                        (result, status) => {
+                            if (status === "OK") {
+                                directionsRenderer.setDirections(result);
+                            } else {
+                                console.error("Directions request failed due to " + status);
+                            }
+                        }
+                    );
                 }
-            );
-        });
-    }, []);
+            };
 
-    const providerInfo = useSelector((state) => state.cartDetails.providerInfo)
+            updateRoute();
+        });
+    }, [providerLocation, storeLocation]);
+
+    const providerInfo = useSelector((state) => state.cartDetails.providerInfo);
     const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
 
     useEffect(() => {
         if (selectedResturant) {
-            setTimerData(selectedResturant?.store?.delivery_time)
+            setTimerData(selectedResturant?.store?.delivery_time);
         }
-    }, [])
-
-
-    console.log(orderStatus, "orderStatusorderStatusorderStatus");
-    
+    }, []);
 
     return (
         <div className='relative h-[100vh] overflow-hidden transition-all'>
             <BookRideNav storeName={selectedResturant?.store?.name} />
            {orderStatus < 1  && <p className='text-[#2F2F3F] text-lg text-center py-3 pb-8'>Waiting for {selectedResturant?.store?.name} to confirm your order</p> }
-           {orderStatus >= 1 && orderStatus <= 5 && <p className='text-[#2F2F3F] text-lg text-center py-3 pb-8'>{selectedResturant?.store?.name} has been confirmed your order</p> }
+           {orderStatus >= 1 && orderStatus <= 5 && <p className='text-[#2F2F3F] text-lg text-center py-3 pb-8'>{selectedResturant?.store?.name} has confirmed your order</p> }
            {orderStatus >= 5 && orderStatus <= 7 && <p className='text-[#2F2F3F] text-lg text-center py-3 pb-8'>Your order is ready for pickup</p>}
-           {orderStatus > 7 && orderStatus <= 13 && <p className='text-[#2F2F3F] text-lg text-center py-3 pb-8'>Rider has been assgined to your order</p> }
-           {orderStatus > 13 && orderStatus < 25 && <p className='text-[#2F2F3F] text-lg text-center py-3 pb-8'>Rider has on the way to you</p> }
-           {orderStatus == 25 && <p className='text-[#2F2F3F] text-lg text-center py-3 pb-8'>your order is delivered</p>}
+           {orderStatus > 7 && orderStatus <= 13 && <p className='text-[#2F2F3F] text-lg text-center py-3 pb-8'>Rider has been assigned to your order</p> }
+           {orderStatus > 13 && orderStatus < 25 && <p className='text-[#2F2F3F] text-lg text-center py-3 pb-8'>Rider is on the way to you</p> }
+           {orderStatus == 25 && <p className='text-[#2F2F3F] text-lg text-center py-3 pb-8'>Your order is delivered</p>}
           
             {/* Map Container */}
             <div
@@ -113,7 +166,6 @@ const storeLocation = cartDetail?.store[0]?.location
                 style={{ width: '100%', height: '100vh' }}
                 className='w-screen'
             ></div>
-
 
             <button className='flex items-center gap-2 p-2 bg-white rounded-full fixed z-[100] bottom-96 right-16' style={{
                 bottom: "158px",
@@ -133,7 +185,6 @@ const storeLocation = cartDetail?.store[0]?.location
                     ) : (
                         <p>Loading timer...</p>
                     )}
-                    {/* <h1 className='text-[#2F2F3F] text-4xl font-medium'>15:25</h1> */}
                     <p className='text-lg text-[#979797]'>Estimated time of delivery</p>
                 </div>
                 <p className='mt-5 text-[#2F2F3F] text-xl font-medium'>Order progress</p>
@@ -145,9 +196,6 @@ const storeLocation = cartDetail?.store[0]?.location
                 <div className='bg-white w-full py-2 mb-1'>
                     <img src={assets.popup_bar} alt="" className='mx-auto' />
                     <img src={assets.cancel_circle} alt="" className='float-right pr-4' onClick={() => setProviderOverview(false)} />
-                    {/* <div className='mt-5 pl-4'>
-                        <h1 className='text-[#2F2F3F] font-medium text-xl'>Rider is heading to {selectedResturant?.store.name}...</h1>
-                    </div> */}
                     <hr className='my-5 w-[90%] mx-auto' />
                     <RiderCard providerInfo={providerInfo} />
                 </div>

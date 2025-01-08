@@ -7,7 +7,8 @@ const initialState = {
   promoPer: null,
   category_info: null,
   allPromo: null,
-  promo_id: null
+  promo_id: null,
+  
 };
 
 const promotions = createSlice({
