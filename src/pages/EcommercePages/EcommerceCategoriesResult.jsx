@@ -20,6 +20,8 @@ const EcommerceCategoriesResult = () => {
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
     const cartCount = useSelector((state) => state.cartDetails.cartCount)
     const store_id = cartItemData?.stores[0]?._id;
+    const allPromo = useSelector((state) => state.promotions.allPromo);
+
 
     const navigate = useNavigate()
     const { post, loading, error } = usePost();
@@ -48,6 +50,17 @@ const EcommerceCategoriesResult = () => {
         dispatch(setPromoPer(null))
 
     }, [])
+
+
+    
+    const checkRes = (storeId) => {
+        return allPromo?.some((item) => item?.store_info[0]?._id === storeId);
+    };
+
+    const getDiscount = (storeId) => {
+        const promo = allPromo?.find((item) => item?.store_info[0]?._id === storeId);
+        return promo ? promo.discount_percent : null;
+    };
     return (
         <div>
             <div className='w-full flex items-center justify-between pt-6 px-2 sticky top-0 bg-white z-50 '>
@@ -85,8 +98,12 @@ const EcommerceCategoriesResult = () => {
                     {list.length === 0 && <h1 className='text-center my-5'>No Stores Found...</h1>}
                     {list?.map(category => (
                         <>
-                            <Link to={`/ecommerce/mart/${category?.category_id}`} className='my-4 flex items-center gap-5'>
+                            <Link to={`/ecommerce/mart/${category?.category_id}`} className='my-4 flex items-center gap-5 relative'>
+                            {checkRes(category?._id) && (
+                               <div className="bg-[#0AB247] rounded-lg p-2 text-xs text-white absolute top-2 left-2">{"-"+getDiscount(category?._id)+"% off "}</div>
+                            )}
                                 <img src={category?.image_url} alt="" width={"85px"} height={"85px"} className='rounded-lg' />
+
                                 <div className='flex flex-col gap-1'>
                                     <div className='flex items-center gap-4'>
                                         <h3 className='text-[#2F2F3F] font-medium'>{category?.name}</h3>
