@@ -25,7 +25,7 @@ const Ecommerce = () => {
     const [categories, setCategories] = useState(null)
 
     const fetchOffers = async () => {
-        const endpoint = import.meta.env.VITE_FARASANYA + '/get_all_offers'
+        const endpoint = 'https://farasanya.feres.co/get_all_offers'
         try {
             setOfferLoading(true)
             const response = await axios.post(endpoint)
