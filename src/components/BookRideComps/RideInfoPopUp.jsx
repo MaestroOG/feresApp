@@ -74,6 +74,7 @@ const RideInfoPopUp = () => {
 
             });
             const data = response
+            setTimerData(data?.kitchen_time + selectedResturant?.store?.delivery_time)
             setOrder_status_details(response.order_status_details)
             dispatch(setProviderInfo({
                 provider_id: response?.provider_id,
@@ -123,7 +124,7 @@ const RideInfoPopUp = () => {
             }
 
             setUniqueOrderId(data.unique_id)
-            setTimerData(data?.kitchen_time + selectedResturant?.store?.delivery_time)
+
 
         } catch (error) {
             console.error('Error calling API:', error);

@@ -89,32 +89,32 @@ const Restaurant = () => {
             })
 
             const promotion = data.promotions_list
-            const promoStore = promotion.find((item)=>{
-               if(item?.store_info[0]?._id == selectedRestaurant?.store?._id){
-                dispatch(setPromoPer(item?.discount_percent))
-                dispatch(setPromo_id(item?._id))
-               if (item?.item_info?.length > 0){
-                 dispatch(setItem_info(item.item_info))
-                dispatch(setProduct_info(null))
-                dispatch(setStore_info(null))
-               }else if(item?.product_info?.length > 0){
-                dispatch(setProduct_info(item.product_info))
-                dispatch(setItem_info(null))
-                dispatch(setStore_info(null))
-               }else if(item?.store_info?.lenth > 0){
-                dispatch(setStore_info(item.store_info))
-                dispatch(setItem_info(null))
-                dispatch(setProduct_info(null))
-               }else{
-                dispatch(setStore_info(null))
-                dispatch(setItem_info(null))
-                dispatch(setProduct_info(null))
-                dispatch(setPromoPer(null))
-               }
-                
-               }
+            const promoStore = promotion.find((item) => {
+                if (item?.store_info[0]?._id == selectedRestaurant?.store?._id) {
+                    dispatch(setPromoPer(item?.discount_percent))
+                    dispatch(setPromo_id(item?._id))
+                    if (item?.item_info?.length > 0) {
+                        dispatch(setItem_info(item.item_info))
+                        dispatch(setProduct_info(null))
+                        dispatch(setStore_info(null))
+                    } else if (item?.product_info?.length > 0) {
+                        dispatch(setProduct_info(item.product_info))
+                        dispatch(setItem_info(null))
+                        dispatch(setStore_info(null))
+                    } else if (item?.store_info?.lenth > 0) {
+                        dispatch(setStore_info(item.store_info))
+                        dispatch(setItem_info(null))
+                        dispatch(setProduct_info(null))
+                    } else {
+                        dispatch(setStore_info(null))
+                        dispatch(setItem_info(null))
+                        dispatch(setProduct_info(null))
+                        dispatch(setPromoPer(null))
+                    }
+
+                }
             })
-            
+
 
             if (data) {
                 const filteredData = data?.promotions_list?.filter(store => store?.store_id === id)
@@ -194,10 +194,10 @@ const Restaurant = () => {
 
     const fetchCart = async (cart_unique_token) => {
         const cartDetailsResponse = await post('/api/user/get_cart', { cart_unique_token: cart_unique_token })
-        console.log(cartDetailsResponse,'cartDetailsResponse');
+        console.log(cartDetailsResponse, 'cartDetailsResponse');
 
         if (cartDetailsResponse.status) {
-            
+
             dispatch(setCartItemData(cartDetailsResponse?.cart))
             localStorage.setItem("cartData", JSON.stringify(cartDetailsResponse))
         }
@@ -265,13 +265,16 @@ const Restaurant = () => {
         };
     }, []);
     useEffect(() => {
+        if (selectedResturant) {
+            fetchPromoInfo()
+        }
+        // addCategories()
+    }, [selectedRestaurant])
+
+    useEffect(() => {
         fetchRestInfo();
         fetchMenuItems();
-        if(selectedResturant){
-        fetchPromoInfo()}
-        // addCategories()
-    }, [selectedRestaurant,selectedResturant])
-
+    }, [])
     useEffect(() => {
         const currentUrl = window.location.href;
 
