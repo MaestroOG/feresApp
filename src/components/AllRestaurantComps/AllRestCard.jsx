@@ -128,7 +128,7 @@ const AllRestCard = () => {
                                 delivery_time={store?.delivery_time + store.kitchen_time}
                                 wallet_currency_code={'ETB'}
                             />
-                            <div className='mb-8'>
+                            <div className='mb-8 mt-3'>
                                 <div className='flex items-center justify-between gap-2'>
                                     <h2 className='font-bold text-base'>{store.name}</h2>
                                     <div className='flex items-center gap-1 justify-center mr-1'>
