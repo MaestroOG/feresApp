@@ -17,7 +17,7 @@ const calculateDistance = (lat1, lon1, lat2, lon2, basePrice) => {
 };
 
 
-const FoodDeliveryLabel = ({ restaurantCordinates, delivery_time, wallet_currency_code }) => {
+const FoodDeliveryLabel = ({ restaurantCordinates, delivery_time, wallet_currency_code, className }) => {
 
     const currentCoordinate = useSelector((state) => state.baseData.location);
     const baseData = useSelector((state) => state.baseData.baseData);
@@ -25,7 +25,7 @@ const FoodDeliveryLabel = ({ restaurantCordinates, delivery_time, wallet_currenc
     const multipliedDistance = (distance * 2).toFixed(2);
 
     return (
-        <>
+        <div className={className}>
             <div className='whitespace-nowrap bg-white text-black flex items-center gap-2 p-3 rounded-3xl absolute bottom-2 right-[8.2rem]'>
                 <img src={assets.clock_img} alt="" />
                 <p className='text-sm'>{delivery_time || 'N/A'} mins</p>
@@ -34,7 +34,7 @@ const FoodDeliveryLabel = ({ restaurantCordinates, delivery_time, wallet_currenc
                 <img src={assets.scooter_img} alt="" />
                 <p className='text-sm'> ETB {Number(Math.floor(multipliedDistance))}</p>
             </div>
-        </>
+        </div>
     )
 }
 

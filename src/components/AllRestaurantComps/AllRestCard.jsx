@@ -115,7 +115,7 @@ const AllRestCard = () => {
                     store?.stores.map((store, index) => (
                         <div key={index} className='w-full mt-8 mb-5 relative' onClick={() => navigate(`/restaurant/${store._id}`)}>
                             {checkRes(store?._id) && (
-                               <div className='bg-[#F2FDF8] w-[154px] h-[34px] rounded-[30px] p-[10px] text-[#0AB247] font-medium text-xs text-center absolute top-2 left-2 whitespace-nowrap'>{getDiscount(store?._id)}% off selected items</div>
+                                <div className='bg-[#F2FDF8] w-[154px] h-[34px] rounded-[30px] p-[10px] text-[#0AB247] font-medium text-xs text-center absolute top-2 left-2 whitespace-nowrap'>{getDiscount(store?._id)}% off selected items</div>
                             )}
                             <img
                                 src={store.image_url}
@@ -123,6 +123,7 @@ const AllRestCard = () => {
                                 className='rounded-tr-2xl rounded-tl-2xl object-cover h-[154px] w-full'
                             />
                             <FoodDeliveryLabel
+                                className={'bottom-[2px] relative'}
                                 restaurantCordinates={store?.location}
                                 delivery_time={store?.delivery_time + store.kitchen_time}
                                 wallet_currency_code={'ETB'}
@@ -146,7 +147,7 @@ const AllRestCard = () => {
                     store?.stores.map((st) => (
                         <div key={st?._id} className='w-full mt-8 mb-5 relative' onClick={() => navigate(`/restaurant/${st._id}`)}>
                             {checkRes(store?._id) && (
-                               <div className='bg-[#F2FDF8] w-[154px] h-[34px] rounded-[30px] p-[10px] text-[#0AB247] font-medium text-xs text-center absolute top-2 left-2 whitespace-nowrap'>{getDiscount(store?._id)}% off selected items</div>
+                                <div className='bg-[#F2FDF8] w-[154px] h-[34px] rounded-[30px] p-[10px] text-[#0AB247] font-medium text-xs text-center absolute top-2 left-2 whitespace-nowrap'>{getDiscount(store?._id)}% off selected items</div>
                             )}
                             <img
                                 src={st?.image_url}

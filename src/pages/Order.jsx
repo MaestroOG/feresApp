@@ -82,13 +82,13 @@ const Order = () => {
                 tipPaymeny_other_amount: "0",
                 is_delivery_keeper: true,
                 isPromotion: true,
-                promotion_id:promo_id
+                promotion_id: promo_id
             });
             if (!cartDetail || cartDetail && cartDetail?.success === false) {
                 setError(true);
                 return;
             }
-            
+
             setCartDetail(cartDetail)
             dispatch(setCartDetails(cartDetail))
 
@@ -109,7 +109,7 @@ const Order = () => {
     if (error) {
         return <h1>Session Expired Please Log In Again</h1>
     }
-    console.log(cartDetail,"cartDetailcartDetailcartDetail");
+    console.log(cartDetail, "cartDetailcartDetailcartDetail");
 
     return (
         <div className='pb-24'>
@@ -143,7 +143,7 @@ const Order = () => {
             <SpecialReq />
             <AddNoteBtn />
             <hr className='my-3' />
-            {/* <ExtraOrder /> */}
+            <ExtraOrder />
             <OrderSchedule onThirtyClick={() => setSmPop(true)} />
 
             {!deliveryPickup && <LocationPick />}
