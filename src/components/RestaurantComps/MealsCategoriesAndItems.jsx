@@ -30,6 +30,10 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id, cartUniqueToken, sup
     const headingRefs = useRef([]);
     const { post, loading } = usePost();
     const [trendingItems, setTrendingItems] = useState([]);
+    const thristyItemId = useSelector((state) => state.selectedResturant.thristyItem);
+    const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
+
+
 
     // Handle IntersectionObserver to sync scrolling
     useEffect(() => {
@@ -158,6 +162,23 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id, cartUniqueToken, sup
         return cartItem ? cartItem.quantity : null;
     };
 
+    // tristyitemdatahere
+
+    // const findTristyProducts= (id)=>{
+    //     let dataGetted = []
+    //     selectedResturant?.store?.products?.map((product)=>{
+    //         product?.items?.map((item)=>{
+    //             if(item?.product_id==id){
+    //                 // console.log(item,"productdataID");
+    //                 dataGetted.push(item) 
+    //             }
+    //         })
+    //     })
+    //     return dataGetted
+    // }
+
+    // tristyitemdatahere
+
 
     return (
         <>
@@ -204,6 +225,14 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id, cartUniqueToken, sup
                         </button>
                     ))}
                 </div>
+
+                {/* thristy item data logic here */}
+
+                {/* { thristyItemId.map((item)=>
+                        JSON.stringify(findTristyProducts(item.related_product_id))
+                ) } */}
+
+                {/*  thristy item data logic here  */}
 
                 {/* Trending Items Row */}
                 <div className='px-4 pt-9 flex items-center justify-between bg-white'>
