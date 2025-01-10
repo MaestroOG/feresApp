@@ -8,7 +8,7 @@ const SelectRide = () => {
     const selectedService = useSelector((state) => state.selectedService.selectedService)
     const { setSelectDel } = useContext(FeresContext)
     return (
-        <div className='px-4 mt-9 flex items-center justify-between' onClick={() => setSelectDel(true)}>
+        <div className='px-4 pt-9 flex items-center justify-between bg-white rounded-t-[20px]' onClick={() => setSelectDel(true)}>
             <div>
                 <div className='flex items-center gap-1 mb-[2px]'>
                     <img src={selectedService?.image_url} alt="" width={'24px'} />

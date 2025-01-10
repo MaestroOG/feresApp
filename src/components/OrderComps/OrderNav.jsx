@@ -38,7 +38,7 @@ const OrderNav = () => {
         fetchRest();
     }, [])
     return (
-        <div className='flex items-center justify-between px-4 py-7'>
+        <div className='flex items-center justify-between px-4 py-7 bg-white pb-[29px]'>
             <img src={assets.arrow_left} alt="" className='invert' onClick={() => navigate(-1)} />
             {loading ? <Spinner /> : <h2 className='text-[#2F2F3F] text-2xl font-bold'>{restInfo?.store_detail.name}</h2>}
             <img src={assets.delete_02} alt="" onClick={() => setDelOrderVisible(true)} />

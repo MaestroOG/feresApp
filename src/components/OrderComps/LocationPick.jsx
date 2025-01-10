@@ -64,7 +64,7 @@ const LocationPick = () => {
     }, []);
 
     return (
-        <div className='px-4 rounded-[13px]'>
+        <div className='px-4 rounded-[13px] bg-white mb-[10px]'>
             <div className='relative'>
                 {/* Map Container */}
                 <div

@@ -6,7 +6,7 @@ import { FeresContext } from '../../context/FeresContext'
 const TipRider = ({ tips_list }) => {
     const { tipBtn, setTipBtn, setTipRidePop } = useContext(FeresContext)
     return (
-        <div className='px-4 mt-5 pb-5'>
+        <div className='px-4 pt-5 pb-5 bg-white rounded-[13px]'>
             {/* Top */}
             <div className='flex items-center gap-2'>
                 <div className='bg-[#F2FDF8] rounded-full p-3'>

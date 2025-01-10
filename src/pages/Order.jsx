@@ -112,7 +112,7 @@ const Order = () => {
     console.log(cartDetail, "cartDetailcartDetailcartDetail");
 
     return (
-        <div className='pb-24'>
+        <div className='pb-24 bg-[#EAEAEA]'>
             <OrderNav />
             <DelOrPickBtn />
             {!deliveryPickup && <SelectRide />}
@@ -120,7 +120,7 @@ const Order = () => {
             {isLoading && <Loader />}
             {/* Nested mapping to show each store and their items */}
             {cartItemData && cartItemData?.stores?.map((store) => (
-                <div key={store._id}>
+                <div key={store._id} className='bg-white'>
                     {store?.items?.map((item) => (
                         item.quantity > 0 && <OrderedFoodCard
                             key={item.unique_id}
@@ -142,7 +142,7 @@ const Order = () => {
             <AddItemBtn isHr={true} />
             <SpecialReq />
             <AddNoteBtn />
-            <hr className='my-3' />
+            <hr />
             <ExtraOrder />
             <OrderSchedule onThirtyClick={() => setSmPop(true)} />
 
@@ -150,8 +150,8 @@ const Order = () => {
             {!deliveryPickup && <TipRider tips_list={cartDetail?.tips_list} />}
 
             {tipBtn === 'other' && <OtherTip />}
-            <PaymentMethods img={assets.wallet_01} text={"Payment Methods"} isCard={true} onClick={() => navigate('/selectpayment')} />
-            <PaymentMethods img={assets.discount} text={"Get Discounts"} onClick={() => navigate('/getdiscount')} />
+            <PaymentMethods className={'mt-[10px] rounded-t-[13px]'} img={assets.wallet_01} text={"Payment Methods"} isCard={true} onClick={() => navigate('/selectpayment')} />
+            <PaymentMethods className={'rounded-b-[13px]'} img={assets.discount} text={"Get Discounts"} onClick={() => navigate('/getdiscount')} />
             <TotalBill onDelClick={() => setDelPop(true)} onServiceClick={() => setServicePop(true)} selectedResturant={selectedResturant} order_payment={cartDetail?.order_payment} />
 
             {riderNote && <RiderNote />}

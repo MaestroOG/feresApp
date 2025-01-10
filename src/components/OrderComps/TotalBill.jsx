@@ -17,7 +17,7 @@ const TotalBill = ({ onDelClick, onServiceClick, selectedResturant, order_paymen
 
 
     return (
-        <div className='px-4 mt-7 pb-4'>
+        <div className='px-4 pt-7 mt-[10px] pb-4 bg-white'>
             {order_payment !== undefined && <>
                 <div className='flex items-center justify-between'>
                     <h3 className='text-[#767578]'>Subtotal</h3>

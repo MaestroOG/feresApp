@@ -3,7 +3,7 @@ import { assets } from '../../assets/assets'
 
 const SpecialReq = () => {
     return (
-        <div className='mt-4 px-4'>
+        <div className='pt-4 px-4 bg-white'>
             <h2 className='text-[#2F2F3F] font-bold text-lg'>Special request</h2>
             <div className='flex items-center justify-between mt-4'>
                 <div className='flex gap-2'>

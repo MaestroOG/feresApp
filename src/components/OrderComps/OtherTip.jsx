@@ -16,7 +16,7 @@ const OtherTip = () => {
         console.log(customTip);
     }
     return (
-        <div className={`${visible ? '' : 'hidden'} px-4 pt-4 pb-6`}>
+        <div className={`${visible ? '' : 'hidden'} px-4 pt-4 pb-6 bg-white`}>
             <h2 className='text-[#2F2F3F] font-medium text-lg'>Others</h2>
             <input type="number" placeholder='Enter amount' value={value} onChange={onChange} className='bg-[#F8F8F8] py-[20px] px-[10px] w-full rounded-[13px] mt-4 mb-8 placeholder:text-[#767578] focus:bg-white focus:outline-[#0AB247]' />
             <div className='flex items-center gap-3'>

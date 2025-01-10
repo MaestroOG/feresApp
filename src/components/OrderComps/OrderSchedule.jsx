@@ -47,7 +47,7 @@ const OrderSchedule = ({ onThirtyClick }) => {
         : { year: '2024', day: 'Thu', monthDay: '22 Feb' }; // Default text when no date is selected
 
     return (
-        <div className='px-4 mt-5 bg-white rounded-tl-3xl rounded-tr-3xl flex flex-col gap-5'>
+        <div className='px-4 pt-5 mt-[10px] bg-white rounded-tl-3xl rounded-tr-3xl flex flex-col gap-5'>
             {/* Schedule Order Section */}
             <div className='flex items-center justify-between' onClick={handleDateClick}>
                 <div className='flex items-center gap-2'>

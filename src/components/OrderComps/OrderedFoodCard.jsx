@@ -7,9 +7,9 @@ import { useSelector } from 'react-redux'
 
 const OrderedFoodCard = ({ title, desc, price, quantity, img, item, quaUpdate }) => {
     const userDetail = useSelector((state) => state.userAuth.user)
-    const store_info = useSelector((state)=> state.promotions.store_info)
-    const product_info = useSelector((state)=> state.promotions.product_info)
-    const item_info = useSelector((state)=> state.promotions.item_info)
+    const store_info = useSelector((state) => state.promotions.store_info)
+    const product_info = useSelector((state) => state.promotions.product_info)
+    const item_info = useSelector((state) => state.promotions.item_info)
     const promoPer = useSelector((state) => state.promotions.promoPer)
     const { error, loading, postRequest, response } = usePostRequest()
     const dispatch = useDispatch()
@@ -79,12 +79,12 @@ const OrderedFoodCard = ({ title, desc, price, quantity, img, item, quaUpdate })
 
     function calculateDiscount(amount, discountPer) {
 
-        
-        const discount = (parseFloat(amount) * parseInt(discountPer)) /100;
-        const finalPrice =  amount-discount ; 
+
+        const discount = (parseFloat(amount) * parseInt(discountPer)) / 100;
+        const finalPrice = amount - discount;
         return finalPrice;
     }
-    
+
     const checkProductInfo = (item) => {
         const promoItem = product_info?.find(element => {
             if (element._id == item.product_id) {
@@ -111,27 +111,27 @@ const OrderedFoodCard = ({ title, desc, price, quantity, img, item, quaUpdate })
 
     return (
         <>
-            <div className='mt-6 flex items-center gap-3 rounded-2xl px-6'>
+            <div className='pt-6 flex items-center gap-3 rounded-2xl px-6'>
                 <img src={img && img} alt="" className='w-[111px] h-[98px] mb-auto py-[6px] rounded-[13px] object-cover' />
                 <div className='pr-1 w-[100%]'>
                     <h2 className='text-[#2F2F3F] font-medium text-base'>{title}</h2>
                     <p className='text-[#2F2F3F66] text-xs'>{desc}</p>
                     <div className='flex items-center justify-between mt-2'>
-                    <div className="flex items-center gap-2 mt-3">
+                        <div className="flex items-center gap-2 mt-3">
                             {store_info ? <> <p className='text-[#9E9E9E] line-through text-base'>{`ETB ${(price * quantity).toFixed(2)}`}</p>
-                                           <p className='text-[#0AB247] font-bold text-base'>{`ETB ${calculateDiscount((price * quantity).toFixed(2),promoPer)}`}</p></>
-                                             : product_info ?  
-                                             checkProductInfo(item) ? <> <p className='text-[#9E9E9E] line-through text-base'>{`ETB ${(price * quantity).toFixed(2)}`}</p>
-                                            <p className='text-[#0AB247] font-bold text-base'>{`ETB ${calculateDiscount((price * quantity).toFixed(2),promoPer)}`}</p></> :                                   
-                                             <>
+                                <p className='text-[#0AB247] font-bold text-base'>{`ETB ${calculateDiscount((price * quantity).toFixed(2), promoPer)}`}</p></>
+                                : product_info ?
+                                    checkProductInfo(item) ? <> <p className='text-[#9E9E9E] line-through text-base'>{`ETB ${(price * quantity).toFixed(2)}`}</p>
+                                        <p className='text-[#0AB247] font-bold text-base'>{`ETB ${calculateDiscount((price * quantity).toFixed(2), promoPer)}`}</p></> :
+                                        <>
                                             <p className='text-[#0AB247] font-bold text-sm'>EBT {item?.price}</p> </> :
-                                             item_info ?  
-                                             checkItemInfo(item) ? <> <p className='text-[#9E9E9E] line-through text-base'>{`ETB ${(price * quantity).toFixed(2)}`}</p>
-                                            <p className='text-[#0AB247] font-bold text-base'>{`ETB ${calculateDiscount((price * quantity).toFixed(2),promoPer)}`}</p></> :                                   
-                                             <> 
-                                            <p className='text-[#0AB247] font-bold text-sm'>EBT {(price * quantity).toFixed(2)}</p> </> :  <> 
+                                    item_info ?
+                                        checkItemInfo(item) ? <> <p className='text-[#9E9E9E] line-through text-base'>{`ETB ${(price * quantity).toFixed(2)}`}</p>
+                                            <p className='text-[#0AB247] font-bold text-base'>{`ETB ${calculateDiscount((price * quantity).toFixed(2), promoPer)}`}</p></> :
+                                            <>
+                                                <p className='text-[#0AB247] font-bold text-sm'>EBT {(price * quantity).toFixed(2)}</p> </> : <>
                                             <p className='text-[#0AB247] font-bold text-sm'>EBT {(price * quantity).toFixed(2)}</p> </>}
-                            </div>
+                        </div>
                         <div className='flex items-center justify-between border border-[#EEEEEE] rounded-full gap-5 px-2 py-1'>
                             <img src={assets.minus_sign} alt="" className='invert w-[11px]'
                                 onClick={handleDecrease} />
