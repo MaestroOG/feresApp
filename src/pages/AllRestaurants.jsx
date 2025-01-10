@@ -22,7 +22,7 @@ const AllRestaurants = () => {
     const [details, setDetails] = useState(null)
 
     const getNotifications = async () => {
-        const endpoint = import.meta.env.VITE_FARASANYA + '/getNotifications'
+        const endpoint = 'https://farasanya.feres.co/getNotifications'
         try {
             setNotLoad(true)
             const response = await axios.post(endpoint)
