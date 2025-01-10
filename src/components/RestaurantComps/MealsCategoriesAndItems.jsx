@@ -226,13 +226,6 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id, cartUniqueToken, sup
                     ))}
                 </div>
 
-                {/* thristy item data logic here */}
-
-                {/* { thristyItemId.map((item)=>
-                        JSON.stringify(findTristyProducts(item.related_product_id))
-                ) } */}
-
-                {/*  thristy item data logic here  */}
 
                 {/* Trending Items Row */}
                 <div className='px-4 pt-9 flex items-center justify-between bg-white'>
