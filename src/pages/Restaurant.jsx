@@ -19,7 +19,7 @@ import '../components/OrderComps/datepicker-custom.css'
 import 'react-time-picker/dist/TimePicker.css';
 import CustomTimePicker from '../components/CustomTimePicker';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSelectedResturant } from '../redux/slices/selectedResturantSlice';
+import { setSelectedResturant, setThristyItem } from '../redux/slices/selectedResturantSlice';
 import { usePost } from '../servies/usePost';
 import { usePostRequest } from '../servies/usePostRequest';
 import GroupOrder1 from '../components/GroupOrderComps/GroupOrder1';
@@ -222,9 +222,19 @@ const Restaurant = () => {
             }
 
             const data = await res.json();
+            
+           const thristyItem = data?.store?.products.filter(element => {
+                    if(element.related_product_id){
+                        const ids_of_thristy_item = "element.related_product_id"
+                            return ids_of_thristy_item
+                    }   
+            });
+            
+            
 
             setMenuItems(data)
             dispatch(setSelectedResturant(data))
+            dispatch(setThristyItem(thristyItem))
             setLoading(false);
 
 

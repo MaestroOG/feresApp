@@ -3,7 +3,8 @@ const storedResturant = JSON.parse(localStorage.getItem("selectedResturant"))
 
 const initialState = {
   selectedResturant: storedResturant || null,
-  supportItem : null
+  supportItem : null,
+  thristyItem : null
 };
 
 const selectedResturantSlice = createSlice({
@@ -16,10 +17,13 @@ const selectedResturantSlice = createSlice({
     },
     setSupportItem : (state, action)=>{
       state.supportItem = action.payload;
+    },
+    setThristyItem : (state, action)=>{
+      state.thristyItem = action.payload;
     }
   },
 });
 
-export const { setSelectedResturant,setSupportItem } = selectedResturantSlice.actions;
+export const { setSelectedResturant,setSupportItem,setThristyItem } = selectedResturantSlice.actions;
 
 export default selectedResturantSlice.reducer;
