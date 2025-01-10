@@ -11,6 +11,8 @@ const ExtraOrder = () => {
     const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
     const { post, loading } = usePost()
     const [trendingItems, setTrendingItems] = useState([])
+    const thristyItemId = useSelector((state) => state.selectedResturant.thristyItem);
+
     const { id } = useParams()
     useEffect(() => {
         const getTrendingItems = async () => {
@@ -33,15 +35,29 @@ const ExtraOrder = () => {
         return <Spinner />
     }
 
+    const findTristyProducts= (id)=>{
+        let dataGetted = []
+        selectedResturant?.store?.products?.map((product)=>{
+            product?.items?.map((item)=>{
+                if(item?.product_id==id){
+                    // console.log(item,"productdataID");
+                    dataGetted.push(item) 
+                }
+            })
+        })
+        return dataGetted
+    }
+
     return (
         <div className='px-4 mt-5'>
             <h3 className='text-[#2F2F3F] font-bold text-lg mt-4 mb-5'>Are you thirsty?</h3>
             <div className='flex items-center gap-6 overflow-x-auto no-scrollbar'>
-                {trendingItems?.map(trend => (
-                    trend?.items.map(item => (
-                        <ExtraOrderCard key={item?.product_id} img={item?.image_url[0]} name={item?.name} price={item?.price} details={item?.details} />
-                    ))
-                ))}
+                { thristyItemId?.map((item)=>
+                        findTristyProducts(item.related_product_id)?.map((item)=> <ExtraOrderCard key={item?.product_id} img={item?.image_url[0]} name={item?.name} price={item?.price} details={item?.details} />)
+                ) } 
+                
+
+
 
             </div>
         </div>
