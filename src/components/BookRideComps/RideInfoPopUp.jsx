@@ -243,7 +243,7 @@ const RideInfoPopUp = () => {
                 <hr className='rotate-90 w-10 absolute top-14 left-[2px] mb-5' />
                 <div className='flex items-center gap-2 mt-16' >
                     {progress > 5 ? <img className='ml-[10px]' src='/tick-icon.svg' alt="" /> : <img className='ml-[10px]' src={progress > 1 && progress <= 5 ? assets.order_progress : assets.order_progress_2} alt="" />}
-                    {progress > 5 ? <div> <p className='text-base text-[#2F2F3F]'>Your order is ready for pickup</p> <p className='text-base text-[#2F2F3F]'> 24-12-2024, 12:00 PM</p> </div> : <p className='text-base text-[#979797]'>Preparing your order</p>}
+                    {progress > 5 ? <div> <p className='text-base text-[#2F2F3F]'>Your order is ready for pickup</p> </div> : <p className='text-base text-[#979797]'>Preparing your order</p>}
                 </div>
                 {/* <hr className='rotate-90 w-10 absolute top-36 -left-2 mb-5' />
                 <div className='flex items-center gap-2 mt-16' >
@@ -254,19 +254,19 @@ const RideInfoPopUp = () => {
                 <hr className='rotate-90 w-10 absolute top-[150px] left-[2px] mb-5' />
                 <div className='flex items-center gap-2 mt-16' >
                     {progress > 7 ? <img className='ml-[10px]' src='/tick-icon.svg' alt="" /> : <img className='ml-[10px]' src={progress >= 7 && progress <= 9 ? assets.order_progress : assets.order_progress_2} alt="" />}
-                    {progress > 7 ? <div> <p className='text-base text-[#2F2F3F]'>Rider has been assgined to your order</p> <p className='text-base text-[#2F2F3F]'>24-12-2024, 12:00 PM</p> </div> : <p className='text-base text-[#979797]'>Looking for a rider</p>}
+                    {progress > 7 ? <div> <p className='text-base text-[#2F2F3F]'>Rider has been assgined to your order</p> </div> : <p className='text-base text-[#979797]'>Looking for a rider</p>}
                 </div>
                 <hr className='rotate-90 w-10 absolute top-[236px] left-[2px] mb-5' />
                 <div className='flex items-center gap-2 mt-16' >
                     {progress > 13 ? <img className='ml-[10px]' src='/tick-icon.svg' alt="" /> : <img className='ml-[10px]' src={progress >= 9 && progress <= 15 ? assets.order_progress : assets.order_progress_2} alt="" />}
-                    {progress > 13 ? <div> <p className='text-base text-[#2F2F3F]'>Rider has picked up your order</p> <p className='text-base text-[#2F2F3F]'>24-12-2024, 12:00 PM</p> </div> : <p className='text-base text-[#979797]'>The rider is on their way to {selectedResturant?.store?.name}</p>}
+                    {progress > 13 ? <div> <p className='text-base text-[#2F2F3F]'>Rider has picked up your order</p> </div> : <p className='text-base text-[#979797]'>The rider is on their way to {selectedResturant?.store?.name}</p>}
                 </div>
                 <hr className='rotate-90 w-10 absolute top-[319px] left-[2px] mb-5' />
                 <div className='flex items-center gap-2 mt-16' onClick={() => {
                     navigate('/raterider')
                 }}>
                     {progress == 25 ? <img className='ml-[10px]' src='/tick-icon.svg' alt="" /> : <img className='ml-[10px]' src={progress >= 19 && progress <= 25 ? assets.order_progress : assets.order_progress_2} alt="" />}
-                    {progress == 25 ? <div><p className='text-base text-[#2F2F3F]'>Your order is delivered</p> <p className='text-base text-[#2F2F3F]'>24-12-2024, 12:00 PM</p></div> : <p className='text-base text-[#979797]'>The rider is on their way to you</p>}
+                    {progress == 25 ? <div><p className='text-base text-[#2F2F3F]'>Your order is delivered</p> </div> : <p className='text-base text-[#979797]'>The rider is on their way to you</p>}
                 </div>
             </div>
             {/* Order Info */}
