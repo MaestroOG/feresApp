@@ -201,6 +201,10 @@ const Restaurant = () => {
             dispatch(setCartItemData(cartDetailsResponse?.cart))
             localStorage.setItem("cartData", JSON.stringify(cartDetailsResponse))
         }
+
+
+        dispatch(setCartItemData(cartDetailsResponse?.cart))
+        localStorage.setItem("cartData", JSON.stringify(cartDetailsResponse))
     }
 
     const fetchMenuItems = async () => {
@@ -295,6 +299,7 @@ const Restaurant = () => {
 
         if (token) {
             setCartUniqueToken(token);
+            localStorage.setItem("groupToken",token)
             fetchCart(token)
         } else {
             fetchCart(loginUser?.cart_unique_token)
@@ -437,7 +442,7 @@ const Restaurant = () => {
 
                         {sharePop ? <SharePopUp /> : null}
 
-                        <AddBi items={items} cartResponse={cartItemData} loading={loading} total_item_count={cartCount} total_cart_price={cartItemData?.total_cart_price} />
+                        <AddBi items={items} cartResponse={cartItemData} loading={loading} total_item_count={cartCount} total_cart_price={cartItemData?.total_cart_price} cartUniqueToken={cartUniqueToken} />
 
                         {/* {foodPopup ? <FoodPopUp /> : null} */}
 
