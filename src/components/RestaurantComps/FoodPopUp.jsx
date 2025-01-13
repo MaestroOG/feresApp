@@ -159,9 +159,11 @@ const FoodPopUp = ({ img, text, itemFoodPopup, cartUniqueToken }) => {
                 }
 
                 const responseData = await post('/api/user/new_add_group_item_in_cart', requestDataGroup)
-                //     const userDetailsResponse = await post('/api/user/get_cart', {
-                //       cart_unique_token: cartUniqueToken,
-                //   })
+                    const userDetailsResponse = await post('/api/user/get_cart', {
+                      cart_unique_token: cartUniqueToken,
+                  })
+                dispatch(setCartItemData(userDetailsResponse.cart));
+
                 console.log('responseData::::::::', responseData);
 
 

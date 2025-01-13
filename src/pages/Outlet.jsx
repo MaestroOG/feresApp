@@ -201,7 +201,7 @@ const Outlet = () => {
 
                 {/* Group Order Routes */}
                 <Route path='/grouporder/review' element={<GroupOrderReview />} />
-                <Route path='/grouporder/cart' element={<GroupOrderCart />} />
+                <Route path='/grouporder/cart/:id' element={<GroupOrderCart />} />
 
 
                 <Route path='/loader' element={<Spinner />} />

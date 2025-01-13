@@ -31,6 +31,7 @@ import { usePostRequest } from '../servies/usePostRequest';
 import { usePost } from '../servies/usePost';
 import { setCartDetails, setCartItemData } from '../redux/slices/cartDetail';
 import Loader from '../components/Loader';
+import Container from '../components/Container';
 
 
 
@@ -57,6 +58,8 @@ const Order = () => {
     const userDetail = useSelector((state) => state.userAuth.user)
     const [isLoading, setLoading] = useState(true)
     const [error, setError] = useState(false)
+    const cartUniqueToken = localStorage.getItem("groupToken")
+
 
 
     const [review, setReview] = useState(false)
@@ -118,11 +121,31 @@ const Order = () => {
             {!deliveryPickup && <SelectRide />}
 
             {isLoading && <Loader />}
-            {/* Nested mapping to show each store and their items */}
+ 
+            
+
             {cartItemData && cartItemData?.stores?.map((store) => (
                 <div key={store._id} className='bg-white'>
                     {store?.items?.map((item) => (
-                        item.quantity > 0 && <OrderedFoodCard
+                        item.quantity > 0 && 
+                        cartUniqueToken && userDetail?.cart_unique_token != cartUniqueToken ? 
+                      <>  
+                    <div className='flex items-center gap-1 mb-5'>
+                        <img src={assets.user_blue} alt="" />
+                        {item.user ? <h2 className='text-[#2F2F3F] text-lg'>{`${item?.user?.first_name} ${item?.user?.last_name}`} (Host)</h2> : <h2 className='text-[#2F2F3F] text-lg'>{`${userDetail.first_name} ${userDetail?.last_name}`}</h2>}
+                    </div>
+
+                    <OrderedFoodCard key={item.unique_id}
+                            title={item.name}
+                            price={item.total_item_price}
+                            desc={item.order_item_description}
+                            img={item.image_url}
+                            quantity={item.quantity}
+                            item={item}
+                            quaUpdate={quaUpdate} />
+                </>
+                        :
+                        <OrderedFoodCard
                             key={item.unique_id}
                             title={item.name}
                             price={item.total_item_price}
