@@ -19,9 +19,9 @@ const TableList = ({ products, support }) => {
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData);
     const loginUser = useSelector((state) => state.userAuth.user);
     const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
-    const store_info = useSelector((state)=> state.promotions.store_info)
-    const product_info = useSelector((state)=> state.promotions.product_info)
-    const item_info = useSelector((state)=> state.promotions.item_info)
+    const store_info = useSelector((state) => state.promotions.store_info)
+    const product_info = useSelector((state) => state.promotions.product_info)
+    const item_info = useSelector((state) => state.promotions.item_info)
     const promoPer = useSelector((state) => state.promotions.promoPer)
     const [loadingItems, setLoadingItems] = useState({});
     const { setFoodPopup } = useContext(FeresContext)
@@ -94,12 +94,12 @@ const TableList = ({ products, support }) => {
 
     function calculateDiscount(amount, discountPer) {
 
-        
-        const discount = (parseFloat(amount) * parseInt(discountPer)) /100;
-        const finalPrice =  amount-discount ; 
+
+        const discount = (parseFloat(amount) * parseInt(discountPer)) / 100;
+        const finalPrice = amount - discount;
         return finalPrice;
     }
-    
+
     const checkProductInfo = (item) => {
         const promoItem = product_info?.find(element => {
             if (element._id == item.product_id) {
@@ -156,7 +156,7 @@ const TableList = ({ products, support }) => {
 
                         }}
                     >
-                                            {product_info ? checkProductInfo(item) && <div className='bg-[#0AB247] rounded-lg p-2 text-xs text-white absolute top-2 left-2'>-{promoPer}%</div> : item_info ? checkItemInfo(item) && <div className='bg-[#0AB247] rounded-lg p-2 text-xs text-white absolute top-2 left-2'>-{promoPer}%</div> : store_info ? <div className='bg-[#0AB247] rounded-lg p-2 text-xs text-white absolute top-2 left-2'>-{promoPer}%</div> : <></> }
+                        {product_info ? checkProductInfo(item) && <div className='bg-[#0AB247] rounded-lg p-2 text-xs text-white absolute top-2 left-2'>-{promoPer}%</div> : item_info ? checkItemInfo(item) && <div className='bg-[#0AB247] rounded-lg p-2 text-xs text-white absolute top-2 left-2'>-{promoPer}%</div> : store_info ? <div className='bg-[#0AB247] rounded-lg p-2 text-xs text-white absolute top-2 left-2'>-{promoPer}%</div> : <></>}
 
 
 
@@ -198,26 +198,26 @@ const TableList = ({ products, support }) => {
                     </div>
                     <div className="my-1">
                         <h4 className="text-[#2F2F3F] text-sm mb-1 w-[165px]">{item?.name.split(/\s+/).slice(0, 3).join(' ')}</h4>
-                        <p className="text-[#AEAEAE] font-normal text-sm w-[165px] mb-1">
+                        <p className="text-[#AEAEAE] font-normal text-sm w-[165px] mb-1 truncate">
                             {item?.details.slice(0, 40)}..
                         </p>
                         <div className='flex items-center gap-2'>
 
-{store_info ? <> <p className='text-[#9E9E9E] line-through text-base'>{`ETB ${item?.price}`}</p>
-<p className='text-[#0AB247] font-bold text-base'>{`ETB ${calculateDiscount(item?.price,promoPer)}`}</p></>
-  : product_info ?  
-  checkProductInfo(item) ? <> <p className='text-[#9E9E9E] line-through text-base'>{`ETB ${item?.price}`}</p>
- <p className='text-[#0AB247] font-bold text-base'>{`ETB ${calculateDiscount(item?.price,promoPer)}`}</p></> :                                   
-  <>
- <p className='text-[#0AB247] font-bold text-sm'>EBT {item?.price}</p> </> :
-  item_info ?  
-  checkItemInfo(item) ? <> <p className='text-[#9E9E9E] line-through text-base'>{`ETB ${item?.price}`}</p>
- <p className='text-[#0AB247] font-bold text-base'>{`ETB ${calculateDiscount(item?.price,promoPer)}`}</p></> :                                   
-  <> 
- <p className='text-[#0AB247] font-bold text-sm'>EBT {item?.price}</p> </> :  <> 
- <p className='text-[#0AB247] font-bold text-sm'>EBT {item?.price}</p> </>}
+                            {store_info ? <> <p className='text-[#9E9E9E] line-through text-base'>{`ETB ${item?.price}`}</p>
+                                <p className='text-[#0AB247] font-bold text-base'>{`ETB ${calculateDiscount(item?.price, promoPer)}`}</p></>
+                                : product_info ?
+                                    checkProductInfo(item) ? <> <p className='text-[#9E9E9E] line-through text-base'>{`ETB ${item?.price}`}</p>
+                                        <p className='text-[#0AB247] font-bold text-base'>{`ETB ${calculateDiscount(item?.price, promoPer)}`}</p></> :
+                                        <>
+                                            <p className='text-[#0AB247] font-bold text-sm'>EBT {item?.price}</p> </> :
+                                    item_info ?
+                                        checkItemInfo(item) ? <> <p className='text-[#9E9E9E] line-through text-base'>{`ETB ${item?.price}`}</p>
+                                            <p className='text-[#0AB247] font-bold text-base'>{`ETB ${calculateDiscount(item?.price, promoPer)}`}</p></> :
+                                            <>
+                                                <p className='text-[#0AB247] font-bold text-sm'>EBT {item?.price}</p> </> : <>
+                                            <p className='text-[#0AB247] font-bold text-sm'>EBT {item?.price}</p> </>}
 
-</div>
+                        </div>
                     </div>
                 </div>
             </div>
