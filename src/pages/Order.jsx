@@ -112,7 +112,7 @@ const Order = () => {
     if (error) {
         return <h1>Session Expired Please Log In Again</h1>
     }
-    console.log(cartDetail, "cartDetailcartDetailcartDetail");
+
 
     return (
         <div className='pb-24 bg-[#EAEAEA]'>

@@ -16,6 +16,9 @@ const OrderConfirmBtn = ({ orderData, setReview }) => {
     const userDetail = useSelector((state) => state.userAuth.user)
     const cartDetail = useSelector((state) => state.cartDetails.cartDetails)
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
+    const selectedDate = useSelector((state) => state.schecduleOrder.selectedDate)
+    const selectedTime = useSelector((state) => state.schecduleOrder.selectedTime)
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const { postRequest } = usePostRequest();
@@ -26,7 +29,7 @@ const OrderConfirmBtn = ({ orderData, setReview }) => {
     const [loading, setLoading] = useState(false);
 
 
-    // console.log(cartItemData._id);
+    console.log(selectedDate,selectedTime, "time is here");
     // const { paymentMethod } = useContext(FeresContext)
 
     // Update thumb tracker position
@@ -46,6 +49,24 @@ const OrderConfirmBtn = ({ orderData, setReview }) => {
         // Update thumb tracker position
         thumb.style.left = `${thumbPosition + 7}px`;
     };
+
+    function formatToMongoDate(selectedDate, selectedTime) {
+        // Parse the date and time
+        const [hours, minutes] = selectedTime.split(':').map(Number);
+        const date = new Date(selectedDate);
+        
+        // Set hours and minutes
+        date.setHours(hours, minutes, 0, 0);
+    
+        // Format the date to the desired ISO string format
+        const timezoneOffset = -date.getTimezoneOffset();
+        const sign = timezoneOffset >= 0 ? '+' : '-';
+        const offsetHours = String(Math.floor(Math.abs(timezoneOffset) / 60)).padStart(2, '0');
+        const offsetMinutes = String(Math.abs(timezoneOffset) % 60).padStart(2, '0');
+    
+        const formattedDate = date.toISOString().replace('Z', `${sign}${offsetHours}:${offsetMinutes}`);
+        return formattedDate;
+    }
 
     const handleChange = async (e) => {
         const newValue = e.target.value;
@@ -78,7 +99,7 @@ const OrderConfirmBtn = ({ orderData, setReview }) => {
                             order_Kitchen_detail: "",
                             last_address: "",
                             normal_address: "",
-                            schedule_order_start_at: ""
+                            schedule_order_start_at: selectedDate ? formatToMongoDate(selectedDate,selectedTime): ""
                         })
 
                     if (payOrderResponse) {
@@ -91,8 +112,8 @@ const OrderConfirmBtn = ({ orderData, setReview }) => {
                             delivery_user_phone: "",
                             is_user_pick_up_order: "",
                             order_start_at: 0,
-                            schedule_order_start_at: "",
-                            is_schedule_order: false
+                            schedule_order_start_at:selectedDate ? formatToMongoDate(selectedDate,selectedTime): "",
+                            is_schedule_order: selectedDate ? true:false
                         })
 
 
@@ -126,7 +147,7 @@ const OrderConfirmBtn = ({ orderData, setReview }) => {
                             order_Kitchen_detail: "",
                             last_address: "",
                             normal_address: "",
-                            schedule_order_start_at: ""
+                            schedule_order_start_at: selectedDate ? formatToMongoDate(selectedDate,selectedTime): ""
                         })
                     if (payOrderResponse2) {
                         const createOrder = await post('/api/user/create_order', {
@@ -138,8 +159,8 @@ const OrderConfirmBtn = ({ orderData, setReview }) => {
                             delivery_user_phone: "",
                             is_user_pick_up_order: "",
                             order_start_at: 0,
-                            schedule_order_start_at: "",
-                            is_schedule_order: false
+                            schedule_order_start_at: selectedDate ? formatToMongoDate(selectedDate,selectedTime): "",
+                            is_schedule_order: selectedDate? true :false
 
                         })
 
