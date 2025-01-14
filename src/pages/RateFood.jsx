@@ -33,10 +33,11 @@ const RateFood = () => {
             user_review_to_store: ratingText
         })
 
-        dispatch(loginUser({
-            ...userData,
-            cart_unique_token: uuidv4(),
-        }))
+         const updUserData = { ...userData, cart_unique_token: uuidv4() } 
+
+
+        dispatch(loginUser(updUserData))
+        localStorage.setItem("userData", JSON.stringify(updUserData))
         dispatch(setCartDetails(null))
         dispatch(setCartItemData(null))
 

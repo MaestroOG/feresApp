@@ -66,7 +66,7 @@ const RecommendedRests = () => {
                 <div className="flex items-center gap-4">
                     {recommendedRests && recommendedRests.success && recommendedRests?.stores.map((store) => (
                         store.stores.map((store, index) => (
-                            <div key={index} className='mt-6 w-max' onClick={() => navigate(`/restaurant/${store._id}`)}>
+                            <div key={index} className='mt-6 w-max relative' onClick={() => navigate(`/restaurant/${store._id}`)}>
                                 {/* Top */}
                                 <img src={store.image_url} alt="" className='w-[309px] h-[140px] rounded-tr-2xl rounded-tl-2xl object-cover' />
                                 <DeliveryTimeLabel restaurantCordinates={store?.location} delivery_time={store?.delivery_time + store.kitchen_time} wallet_currency_code={"ETB"} />
