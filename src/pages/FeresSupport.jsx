@@ -6,13 +6,10 @@ import { useParams } from 'react-router-dom';
 
 const FeresSupport = () => {
     const { roomId } = useParams();
-
-
-    
     return (
         <div>
             <FeresSupportNav />
-            <FeresChats roomId={roomId}/>
+            <FeresChats roomId={roomId} />
         </div>
     )
 }

@@ -1,14 +1,10 @@
-import React, { useContext, useState, useEffect, useRef } from 'react';
-import { assets } from '../../assets/assets';
-import { FeresContext } from '../../context/FeresContext';
-import { Loader } from "@googlemaps/js-api-loader";
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useRef, useEffect } from 'react'
+import { assets } from '../../assets/assets'
+import { Loader } from '@googlemaps/js-api-loader';
 
-const LocationPick = () => {
-    const { setRiderNote } = useContext(FeresContext);
+const AddressMap = () => {
     const [address, setAddress] = useState(''); // Store the address in state
     const mapRef = useRef(null); // Reference to the map container
-    const navigate = useNavigate()
 
     useEffect(() => {
         // Load the Google Maps API
@@ -64,35 +60,25 @@ const LocationPick = () => {
             }
         });
     }, []);
-
     return (
-        <div className='px-4 rounded-[13px] bg-white mb-[10px]'>
+        <div className='bg-white min-h-[244px] mt-[47px] mb-5 w-[92%] rounded-[20px] mx-auto' style={{
+            boxShadow: "0px 4px 60px 0px rgba(4, 6, 15, 0.05)",
+        }}>
             <div className='relative'>
                 {/* Map Container */}
                 <div
                     ref={mapRef}
-                    style={{ width: '100%', height: '200px' }}
-                    className='rounded-[13px] border border-gray-200'
+                    style={{ width: '99%', height: '200px' }}
+                    className='rounded-[13px] border mx-auto border-gray-200 pt-[10px] px-[10px]'
                 />
-                <button onClick={() => navigate('/changeaddress')} className='bg-white rounded-[20px] font-bold text-sm text-[#2F2F3F] px-[12.5px] absolute left-32 top-28 py-[11.5px]'>Change address</button>
+                <button onClick={() => navigate('/changeaddress')} className='bg-white rounded-[20px] font-bold text-sm text-[#2F2F3F] px-[12.5px] absolute left-[8.2rem] top-28 py-[11.5px]'>Change address</button>
             </div>
-            <div className='w-full mt-4 flex flex-col gap-3 pb-5'>
-                <input
-                    type="text"
-                    value={address} // Bind the input to the address state
-                    onChange={(e) => setAddress(e.target.value)} // Allow users to change the address
-                    placeholder='Apt./office/floor/postal code'
-                    className='bg-[#F8F8F8] w-full py-[10px] px-[20px] rounded-[13px] placeholder:text-[#767578] outline-none transition-all ease-linear focus:bg-white focus:border focus:border-[#0AB247]'
-                />
-                <input
-                    type="text"
-                    placeholder='Add a note for the rider'
-                    className='bg-[#F8F8F8] w-full py-[10px] px-[20px] rounded-[13px] placeholder:text-[#767578] border-none outline-none'
-                    onClick={() => setRiderNote(true)}
-                />
+            <div className='py-[17px] px-4 flex items-center gap-3'>
+                <img src={assets.location_black} alt="" />
+                <p className='text-[#2F2F3F] text-lg'>Elgin St. Celina, Delaware 10299</p>
             </div>
         </div>
-    );
+    )
 }
 
-export default LocationPick;
+export default AddressMap

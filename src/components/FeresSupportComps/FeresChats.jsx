@@ -12,7 +12,7 @@ const FeresChats = () => {
     const [newMessage, setNewMessage] = useState('');
     const [reciveMsg, setReciveMsg] = useState([])
 
-const previousChats = useSelector((state)=> state.chat.userChat)
+    const previousChats = useSelector((state) => state.chat.userChat)
 
     useEffect(() => {
         setMessages(previousChats || [])
@@ -29,7 +29,7 @@ const previousChats = useSelector((state)=> state.chat.userChat)
             // Listen for messages from the server
             socket.on('sendMessage', (message) => {
                 console.log('Message received:', message);
-                let newObj = { ...message, timestamp: new Date().toISOString() }; 
+                let newObj = { ...message, timestamp: new Date().toISOString() };
                 setMessages((prevMessages) => [...prevMessages, newObj]);
             });
 
@@ -74,15 +74,15 @@ const previousChats = useSelector((state)=> state.chat.userChat)
             });
 
             // Add the message locally to the chat
-            let newObj = { ...message, timestamp: new Date().toISOString() }; 
+            let newObj = { ...message, timestamp: new Date().toISOString() };
             setMessages((prevMessages) => [...prevMessages, newObj]);
             setNewMessage(''); // Clear the input field
         }
     };
 
-    socket.on('message', (msg)=>{
+    socket.on('message', (msg) => {
         let message = msg[0]
-        let newObj = { ...message, timestamp: new Date().toISOString() }; 
+        let newObj = { ...message, timestamp: new Date().toISOString() };
 
         setMessages([...messages, newObj])
     })
@@ -90,29 +90,30 @@ const previousChats = useSelector((state)=> state.chat.userChat)
     function formatTime(dateString) {
         // Create a Date object from the input string
         const date = new Date(dateString);
-      
+
         // Get hours and minutes
         const hours = date.getHours();
         const minutes = date.getMinutes();
-      
+
         // Format hours and minutes to always have 2 digits
         const formattedHours = hours.toString().padStart(2, '0');
         const formattedMinutes = minutes.toString().padStart(2, '0');
-      
+
         // Return the time in the format "HH:MM"
         return `${formattedHours}:${formattedMinutes}`;
-      }
-      
+    }
+
 
     return (
         <div className='bg-[#F8F8F8] w-screen h-[90vh] flex flex-col justify-between py-5'>
             <div className='flex-1 overflow-auto px-4'>
 
 
-            {messages.map((msg, index) => (
-               msg.sender == "user" ? <div key={index}><FeresChatTabs text={msg.text} /></div> : <FeresChatRec text={msg?.text} key={index}/>
-        ))}   
+                {messages.map((msg, index) => (
+                    msg.sender == "user" ? <FeresChatRec text={msg?.text} key={index} /> : <div key={index}><FeresChatTabs text={msg.text} /></div>
+                ))}
             </div>
+
 
             {/* Message Input */}
             {/* <div className='w-full bg-white p-4 flex items-center gap-3'>

@@ -93,6 +93,8 @@ import Login from './Login'
 import OrderIssuesData from '../pages/orderIssuesData'
 import EcommerceCart from './EcommercePages/EcommerceCart'
 import Spinner from '../components/Spinner'
+import ChangeAddress from './ChangeAddress'
+import PlaceName from './PlaceName'
 
 const Outlet = () => {
     return (
@@ -148,6 +150,8 @@ const Outlet = () => {
                 <Route path='/support/selectorder/orderissues/orderdetails' element={<IssueDetails />} />
                 <Route path='/support/selectorder/orderissues/orderdetails/sendmessage' element={<IssueDetailMessage />} />
                 <Route path='/supportmessage' element={<SupportMessage />} />
+                <Route path='/changeaddress' element={<ChangeAddress />} />
+                <Route path='/placename' element={<PlaceName />} />
 
                 {/* Ecommerce Routes */}
                 <Route path='/ecommerce' element={<Ecommerce />} />

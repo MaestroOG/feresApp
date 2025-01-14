@@ -308,8 +308,14 @@ import google_icon from './google_icon.png'
 import help_circle_green from './help_circle_green.png'
 import message_translate_green from './message_translate_green.png'
 import ethiopia from './ethiopia.png'
+import home_11 from './home_11.png'
+import pin_location_03 from './pin_location_03.png'
+import sent from './sent.png'
 
 export const assets = {
+    sent,
+    pin_location_03,
+    home_11,
     ethiopia,
     arrow_down_green,
     fb_icon,

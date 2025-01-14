@@ -8,6 +8,7 @@ import { assets } from '../assets/assets'
 import { useNavigate } from 'react-router-dom'
 import Loader from '../components/Loader'
 import DeliveryTimeLabel from '../components/Labels/deliveryTime'
+import ChooseAddressPopup from '../components/ServiceComps/ChooseAddressPopup'
 
 const Services = () => {
 
@@ -15,6 +16,7 @@ const Services = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [topRest, setTopRest] = useState(null)
     const [groceryStore, setGroceryStore] = useState(null)
+    const [addressPop, setAddressPop] = useState(false)
 
     const fetchGroceryStores = async () => {
         try {
@@ -86,22 +88,52 @@ const Services = () => {
     }, [])
 
     return (
-        <div className='pt-20 pb-24 overflow-hidden'>
-            {/* <Navbar /> */}
-            <SearchBar onClick={() => navigate('/search')} className="sticky top-0 left-0 bg-white" />
-            <ServiceCard to={() => navigate('/allrestaurants')} />
-            <Explore />
-            <Offers />
-            <>
-                <div className='w-full px-2'>
-                    <h2 className='text-[#2F2F3F] text-lg font-medium'>Top-rated restaurants</h2>
-                    <div className='flex items-center gap-3 overflow-auto no-scrollbar'>
-                        {isLoading && <Loader />}
-                        {topRest && topRest.stores.map((store, index) => (
+        <>
+            <div className={`pt-20 pb-24 overflow-hidden ${addressPop && 'blur-sm'}`}>
+                {/* <Navbar /> */}
+                <SearchBar onClick={() => navigate('/search')} className="sticky top-0 left-0 bg-white" />
+                <ServiceCard to={() => navigate('/allrestaurants')} />
+                <Explore />
+                <Offers />
+                <>
+                    <div className='w-full px-2'>
+                        <h2 className='text-[#2F2F3F] text-lg font-medium' onClick={() => setAddressPop(true)}>Top-rated restaurants</h2>
+                        <div className='flex items-center gap-3 overflow-auto no-scrollbar'>
+                            {isLoading && <Loader />}
+                            {topRest && topRest.stores.map((store, index) => (
 
-                            store.stores.slice(0, 1).map((store, index) => (
+                                store.stores.slice(0, 1).map((store, index) => (
+                                    <div key={index} className="flex items-center gap-4 relative">
+                                        <div className='mt-6 w-max' onClick={() => navigate(`/restaurant/${store._id}`)}>
+                                            {/* Top */}
+                                            <img src={store.image_url} alt="" className='w-[365px] h-[166px] rounded-tr-3xl rounded-tl-3xl object-cover' />
+                                            {/* Bottom */}
+                                            <div className='mt-3'>
+                                                <div className='flex items-center justify-between gap-2'>
+                                                    <h2 className='font-bold text-base'>{store.name}</h2>
+                                                    <div className='flex items-center gap-1 justify-center'>
+                                                        <img className='mb-1' src={assets.star} alt="" />
+                                                        <h2 className='text-base'>{store.user_rate}</h2>
+                                                    </div>
+                                                </div>
+                                                <p className='text-xs text-[#979797]'>{store.Description}</p>
+                                            </div>
+                                        </div>
+
+                                        <DeliveryTimeLabel restaurantCordinates={store?.location} delivery_time={store?.delivery_time + store.kitchen_time} wallet_currency_code={"ETB"} />
+                                    </div>
+                                ))
+                            ))}
+                        </div>
+                    </div>
+                </>
+                <>
+                    <div className='w-full px-2 mt-8'>
+                        <h2 className='text-[#2F2F3F] text-lg font-medium'>Groceries stores</h2>
+                        <div className='flex items-center gap-3 overflow-auto no-scrollbar'>
+                            {isLoading ? <div>Loading...</div> : groceryStore && groceryStore.stores.slice(0, 2).map((store, index) => (
                                 <div key={index} className="flex items-center gap-4 relative">
-                                    <div className='mt-6 w-max' onClick={() => navigate(`/restaurant/${store._id}`)}>
+                                    <div className='mt-6 w-max' onClick={() => navigate(`/ecommerce/mart/${store?.category_id}`)}>
                                         {/* Top */}
                                         <img src={store.image_url} alt="" className='w-[365px] h-[166px] rounded-tr-3xl rounded-tl-3xl object-cover' />
                                         {/* Bottom */}
@@ -116,45 +148,20 @@ const Services = () => {
                                             <p className='text-xs text-[#979797]'>{store.Description}</p>
                                         </div>
                                     </div>
-
                                     <DeliveryTimeLabel restaurantCordinates={store?.location} delivery_time={store?.delivery_time + store.kitchen_time} wallet_currency_code={"ETB"} />
                                 </div>
-                            ))
-                        ))}
+                            ))}
+                        </div>
                     </div>
-                </div>
-            </>
-            <>
-                <div className='w-full px-2 mt-8'>
-                    <h2 className='text-[#2F2F3F] text-lg font-medium'>Groceries stores</h2>
-                    <div className='flex items-center gap-3 overflow-auto no-scrollbar'>
-                        {isLoading ? <div>Loading...</div> : groceryStore && groceryStore.stores.slice(0, 2).map((store, index) => (
-                            <div key={index} className="flex items-center gap-4 relative">
-                                <div className='mt-6 w-max' onClick={() => navigate(`/ecommerce/mart/${store?.category_id}`)}>
-                                    {/* Top */}
-                                    <img src={store.image_url} alt="" className='w-[365px] h-[166px] rounded-tr-3xl rounded-tl-3xl object-cover' />
-                                    {/* Bottom */}
-                                    <div className='mt-3'>
-                                        <div className='flex items-center justify-between gap-2'>
-                                            <h2 className='font-bold text-base'>{store.name}</h2>
-                                            <div className='flex items-center gap-1 justify-center'>
-                                                <img className='mb-1' src={assets.star} alt="" />
-                                                <h2 className='text-base'>{store.user_rate}</h2>
-                                            </div>
-                                        </div>
-                                        <p className='text-xs text-[#979797]'>{store.Description}</p>
-                                    </div>
-                                </div>
-                                <DeliveryTimeLabel restaurantCordinates={store?.location} delivery_time={store?.delivery_time + store.kitchen_time} wallet_currency_code={"ETB"} />
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </>
+                </>
 
-            {/* <GroceryStore /> */}
-            <Menu />
-        </div>
+                {/* <GroceryStore /> */}
+                <Menu />
+            </div>
+
+            {addressPop && <ChooseAddressPopup onClick={() => setAddressPop(false)} />}
+
+        </>
     )
 }
 
