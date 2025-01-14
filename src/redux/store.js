@@ -14,6 +14,7 @@ import faqReducer from "./slices/faqSlice"
 import chatReducer from "./slices/chatSlice"
 import promotionsReducer from "./slices/promotion"
 import baseDataReducer from "./slices/basePriceSlice"
+import schecduleOrderReducer from "./slices/scdueleDateTime"
 
 
 const store = configureStore({
@@ -31,7 +32,8 @@ const store = configureStore({
     faq:faqReducer,
     chat:chatReducer,
     promotions: promotionsReducer,
-    baseData: baseDataReducer
+    baseData: baseDataReducer,
+    schecduleOrder:schecduleOrderReducer
   },
 });
 

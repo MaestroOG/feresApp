@@ -7,12 +7,15 @@ import 'react-time-picker/dist/TimePicker.css';
 import { assets } from '../../assets/assets';
 import CustomTimePicker from '../CustomTimePicker';
 import { FeresContext } from '../../context/FeresContext';
+import { useDispatch } from 'react-redux';
+import { setSchSelectedDate, setSchSelectedTime } from '../../redux/slices/scdueleDateTime';
 
 const OrderSchedule = ({ onThirtyClick }) => {
     const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
     const [isTimePickerOpen, setIsTimePickerOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTime, setSelectedTime] = useState('16:00');
+    const dispatch =useDispatch()
     const { smValue } = useContext(FeresContext)
     const handleDateClick = () => {
         setIsDatePickerOpen(true);
@@ -20,6 +23,7 @@ const OrderSchedule = ({ onThirtyClick }) => {
 
     const handleDateChange = (date) => {
         setSelectedDate(date);
+        dispatch(setSchSelectedDate(date))
     };
 
     const handleDateConfirm = () => {
@@ -29,6 +33,7 @@ const OrderSchedule = ({ onThirtyClick }) => {
 
     const handleTimeConfirm = (time) => {
         setSelectedTime(time);
+        dispatch(setSchSelectedTime(time))
         setIsTimePickerOpen(false);
     };
 

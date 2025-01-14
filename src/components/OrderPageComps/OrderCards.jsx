@@ -29,7 +29,7 @@ const OrderCards = ({ order }) => {
                 </div>
             </div>
             <hr className='my-5 w-[95%] mx-auto' />
-            <OrderCardBtn text={orderCat === 'Active' ? 'Track Order' : orderCat === 'Upcoming' ? 'View Order' : 'Reorder'} onClick={() => order?.item_name[0]?.store_id ? navigate(`/restaurant/${order?.item_name[0]?.store_id}`) : navigate('/bookride')} />
+            <OrderCardBtn text={orderCat === 'Active' ? 'Track Order' : orderCat === 'Upcoming' ? 'View Order' : 'Reorder'} onClick={() => orderCat != 'Active'  ? navigate(`/restaurant/${order?.item_name[0]?.store_id}`) : navigate('/bookride')} />
         </div>
     )
 }
