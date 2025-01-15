@@ -95,6 +95,8 @@ import EcommerceCart from './EcommercePages/EcommerceCart'
 import Spinner from '../components/Spinner'
 import ChangeAddress from './ChangeAddress'
 import PlaceName from './PlaceName'
+import PendingMurabaha from './PendingMurabaha'
+import MurabahaDetails from '../components/MurabahaComps/MurabahaDetails'
 
 const Outlet = () => {
     return (
@@ -152,6 +154,8 @@ const Outlet = () => {
                 <Route path='/supportmessage' element={<SupportMessage />} />
                 <Route path='/changeaddress' element={<ChangeAddress />} />
                 <Route path='/placename' element={<PlaceName />} />
+                <Route path='/pendingmurabaha' element={<PendingMurabaha />} />
+                <Route path='/murabahadetails' element={<MurabahaDetails />} />
 
                 {/* Ecommerce Routes */}
                 <Route path='/ecommerce' element={<Ecommerce />} />

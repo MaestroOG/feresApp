@@ -32,6 +32,8 @@ import { usePost } from '../servies/usePost';
 import { setCartDetails, setCartItemData } from '../redux/slices/cartDetail';
 import Loader from '../components/Loader';
 import Container from '../components/Container';
+import MurabahaPopUp from '../components/OrderComps/MurabahaPopUp';
+import MurabahaPin from '../components/OrderComps/MurabahaPin';
 
 
 
@@ -115,87 +117,91 @@ const Order = () => {
 
 
     return (
-        <div className='pb-24 bg-[#EAEAEA]'>
-            <OrderNav />
-            <DelOrPickBtn />
-            {!deliveryPickup && <SelectRide />}
+        <>
+            <div className='pb-24 bg-[#EAEAEA]'>
+                <OrderNav />
+                <DelOrPickBtn />
+                {!deliveryPickup && <SelectRide />}
 
-            {isLoading && <Loader />}
- 
-            
+                {isLoading && <Loader />}
 
-            {cartItemData && cartItemData?.stores?.map((store) => (
-                <div key={store._id} className='bg-white'>
-                    {store?.items?.map((item) => (
-                        item.quantity > 0 && 
-                        cartUniqueToken && userDetail?.cart_unique_token != cartUniqueToken ? 
-                      <>  
-                    <div className='flex items-center gap-1 mb-5'>
-                        <img src={assets.user_blue} alt="" />
-                        {item.user ? <h2 className='text-[#2F2F3F] text-lg'>{`${item?.user?.first_name} ${item?.user?.last_name}`} (Host)</h2> : <h2 className='text-[#2F2F3F] text-lg'>{`${userDetail.first_name} ${userDetail?.last_name}`}</h2>}
+
+
+                {cartItemData && cartItemData?.stores?.map((store) => (
+                    <div key={store._id} className='bg-white'>
+                        {store?.items?.map((item) => (
+                            item.quantity > 0 &&
+                                cartUniqueToken && userDetail?.cart_unique_token != cartUniqueToken ?
+                                <>
+                                    <div className='flex items-center gap-1 mb-5'>
+                                        <img src={assets.user_blue} alt="" />
+                                        {item.user ? <h2 className='text-[#2F2F3F] text-lg'>{`${item?.user?.first_name} ${item?.user?.last_name}`} (Host)</h2> : <h2 className='text-[#2F2F3F] text-lg'>{`${userDetail.first_name} ${userDetail?.last_name}`}</h2>}
+                                    </div>
+
+                                    <OrderedFoodCard key={item.unique_id}
+                                        title={item.name}
+                                        price={item.total_item_price}
+                                        desc={item.order_item_description}
+                                        img={item.image_url}
+                                        quantity={item.quantity}
+                                        item={item}
+                                        quaUpdate={quaUpdate} />
+                                </>
+                                :
+                                <OrderedFoodCard
+                                    key={item.unique_id}
+                                    title={item.name}
+                                    price={item.total_item_price}
+                                    desc={item.order_item_description}
+                                    img={item.image_url}
+                                    quantity={item.quantity}
+                                    item={item}
+                                    quaUpdate={quaUpdate}
+                                />
+                        ))}
                     </div>
-
-                    <OrderedFoodCard key={item.unique_id}
-                            title={item.name}
-                            price={item.total_item_price}
-                            desc={item.order_item_description}
-                            img={item.image_url}
-                            quantity={item.quantity}
-                            item={item}
-                            quaUpdate={quaUpdate} />
-                </>
-                        :
-                        <OrderedFoodCard
-                            key={item.unique_id}
-                            title={item.name}
-                            price={item.total_item_price}
-                            desc={item.order_item_description}
-                            img={item.image_url}
-                            quantity={item.quantity}
-                            item={item}
-                            quaUpdate={quaUpdate}
-                        />
-                    ))}
-                </div>
-            ))}
+                ))}
 
 
 
-            {/* <OrderedFoodCard title={item.name} price={item.price} desc={item.details} quantity={item.quantity} /> */}
-            <AddItemBtn isHr={true} />
-            <SpecialReq />
-            <AddNoteBtn />
-            <hr />
-            <ExtraOrder />
-            <OrderSchedule onThirtyClick={() => setSmPop(true)} />
+                {/* <OrderedFoodCard title={item.name} price={item.price} desc={item.details} quantity={item.quantity} /> */}
+                <AddItemBtn isHr={true} />
+                <SpecialReq />
+                <AddNoteBtn />
+                <hr />
+                <ExtraOrder />
+                <OrderSchedule onThirtyClick={() => setSmPop(true)} />
 
-            {!deliveryPickup && <LocationPick />}
-            {!deliveryPickup && <TipRider tips_list={cartDetail?.tips_list} />}
+                {!deliveryPickup && <LocationPick />}
+                {!deliveryPickup && <TipRider tips_list={cartDetail?.tips_list} />}
 
-            {tipBtn === 'other' && <OtherTip />}
-            <PaymentMethods className={'mt-[10px] rounded-t-[13px]'} img={assets.wallet_01} text={"Payment Methods"} isCard={true} onClick={() => navigate('/selectpayment')} />
-            <PaymentMethods className={'rounded-b-[13px]'} img={assets.discount} text={"Get Discounts"} onClick={() => navigate('/getdiscount')} />
-            <TotalBill onDelClick={() => setDelPop(true)} onServiceClick={() => setServicePop(true)} selectedResturant={selectedResturant} order_payment={cartDetail?.order_payment} />
+                {tipBtn === 'other' && <OtherTip />}
+                <PaymentMethods className={'mt-[10px] rounded-t-[13px]'} img={assets.wallet_01} text={"Payment Methods"} isCard={true} onClick={() => navigate('/selectpayment')} />
+                <PaymentMethods className={'rounded-b-[13px]'} img={assets.discount} text={"Get Discounts"} onClick={() => navigate('/getdiscount')} />
+                <TotalBill onDelClick={() => setDelPop(true)} onServiceClick={() => setServicePop(true)} selectedResturant={selectedResturant} order_payment={cartDetail?.order_payment} />
 
-            {riderNote && <RiderNote />}
-            {tipRidePop && <TIpRiderPopUp />}
-            {smPop && <SaveMoneyPopUp />}
-            {delPop && <DeliveryFeePopup />}
-            {servicePop && <ServiceFeePopup />}
-            <DelOrderPopUp />
+                {riderNote && <RiderNote />}
+                {tipRidePop && <TIpRiderPopUp />}
+                {smPop && <SaveMoneyPopUp />}
+                {delPop && <DeliveryFeePopup />}
+                {servicePop && <ServiceFeePopup />}
+                <DelOrderPopUp />
 
-            <SelectDeliveryPopup service={cartDetail?.service} />
+                <SelectDeliveryPopup service={cartDetail?.service} />
 
 
-            {/* <SelectDeliveryPopup /> */}
+                {/* <SelectDeliveryPopup /> */}
 
-            {orderNote ? <ExtraNotePopUp placeholder={"Write anything else we need to know"} /> : null}
+                {orderNote ? <ExtraNotePopUp placeholder={"Write anything else we need to know"} /> : null}
 
-            <OrderConfirmBtn setReview={setReview} orderData={response} />
-            {/* <SwipeToConfirm /> */}
+                <OrderConfirmBtn setReview={setReview} orderData={response} />
+                {/* <SwipeToConfirm /> */}
 
-            {review && <ReviewPayPopup selectedResturant={selectedResturant?.store} order_payment={cartDetail?.order_payment} isDelivery={false} onCancelClick={() => setReview(false)} onPayClick={() => navigate('/bookride')} onNotNowClick={() => setReview(false)} />}
-        </div>
+                {review && <ReviewPayPopup selectedResturant={selectedResturant?.store} order_payment={cartDetail?.order_payment} isDelivery={false} onCancelClick={() => setReview(false)} onPayClick={() => navigate('/bookride')} onNotNowClick={() => setReview(false)} />}
+            </div>
+            {/* <MurabahaPopUp /> */}
+            {/* <MurabahaPin /> */}
+        </>
     );
 };
 
