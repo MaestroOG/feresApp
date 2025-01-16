@@ -54,7 +54,7 @@ const OrderPage = () => {
                     error && <div>An Error Occured</div>
                 }
                 {
-                    orderCat == "Active" ? <OrderCards order={cartItemData?.stores[0]} key={0} /> :
+                    orderCat == "Active" ? cartItemData ? <OrderCards order={cartItemData?.stores[0]} key={0} /> : <NoOrderWarn orderCat={'Active'} /> :
                         history && history?.success && history?.order_list.map((order, index) => (
 
                             orderCat == "Cancelled" ? order.order_status == 101 && <OrderCards order={order} key={index} /> : order.order_status != 101 && <OrderCards order={order} key={index} />
