@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import MurabahaNav from './MurabahaNav'
 import Container from '../Container'
 import { assets } from '../../assets/assets'
@@ -7,6 +7,9 @@ import ConfirmInstallmentPopup from './ConfirmInstallmentPopup'
 import VerifyMurabaha from './VerifyMurabaha'
 
 const MurabahaDetails = () => {
+    const [months, setMonths] = useState(false)
+    const [confirmPop, setConfirmPop] = useState(false)
+    const [verifyPop, setVerifyPop] = useState(false)
     const data = [
         { id: 23216, storeName: "KFC Eastlands", amount: "ETB 600" },
     ];
@@ -46,7 +49,7 @@ const MurabahaDetails = () => {
                             <input type="number" className='bg-transparent border-none outline-none w-full placeholder:text-[#8E8E93]' placeholder='Enter advance' />
                             <h2 className='text-[#8E8E93] text-lg'>(ETB)</h2>
                         </div>
-                        <div className='w-full mb-5 flex items-center justify-between bg-[#F8F8F8] px-5 py-[18px] outline-none rounded-[13px] transition-all focus-within:border focus-within:border-[#0AB247] focus-within:bg-white'>
+                        <div onClick={() => setMonths(true)} className='w-full mb-5 flex items-center justify-between bg-[#F8F8F8] px-5 py-[18px] outline-none rounded-[13px] transition-all focus-within:border focus-within:border-[#0AB247] focus-within:bg-white'>
                             <input type="text" className='bg-transparent border-none outline-none w-full placeholder:text-[#8E8E93]' placeholder='Select installment months' />
                             <img src={assets.arrow_down} alt="" />
                         </div>
@@ -78,12 +81,15 @@ const MurabahaDetails = () => {
                     </div>
                 </div>
                 <div className='fixed bottom-0 left-0 w-full py-5 px-4'>
-                    <button className='w-full rounded-full bg-[#0AB247] text-white font-semibold text-lg px-4 py-[15px]'>Confirm</button>
+                    <button className='w-full rounded-full bg-[#0AB247] text-white font-semibold text-lg px-4 py-[15px]' onClick={() => setConfirmPop(true)}>Confirm</button>
                 </div>
             </div>
-            {/* <InstallmentMonthPopup /> */}
-            {/* <ConfirmInstallmentPopup /> */}
-            <VerifyMurabaha />
+            {months && <InstallmentMonthPopup onClick={() => setMonths(false)} />}
+            {confirmPop && <ConfirmInstallmentPopup onConfirm={() => {
+                setVerifyPop(true)
+                setConfirmPop(false)
+            }} onCancel={() => setConfirmPop(false)} />}
+            {verifyPop && <VerifyMurabaha onVerify={() => setVerifyPop(false)} />}
         </>
     )
 }

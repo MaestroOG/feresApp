@@ -15,6 +15,7 @@ import chatReducer from "./slices/chatSlice"
 import promotionsReducer from "./slices/promotion"
 import baseDataReducer from "./slices/basePriceSlice"
 import schecduleOrderReducer from "./slices/scdueleDateTime"
+import murabahaSlice from './slices/murabahaSlice'
 
 
 const store = configureStore({
@@ -29,11 +30,12 @@ const store = configureStore({
     selectedService: selectedServiceReducer,
     cartDetails: cartDetailsReducer,
     filter: filterReducer,
-    faq:faqReducer,
-    chat:chatReducer,
+    faq: faqReducer,
+    chat: chatReducer,
     promotions: promotionsReducer,
     baseData: baseDataReducer,
-    schecduleOrder:schecduleOrderReducer
+    schecduleOrder: schecduleOrderReducer,
+    murabaha: murabahaSlice
   },
 });
 

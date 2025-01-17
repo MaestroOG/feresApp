@@ -40,9 +40,9 @@ const PaymentMethods = ({ img, text, isCard, isDiscount, onClick, className }) =
                             <p className='font-medium text-sm text-[#2F2F3F]'>E-birr</p>
                         </>}
 
-                        {paymentMethod === 'kaafi' && <>
-                            <img className='w-[32px] h-[24px] rounded-lg' src={assets.kaafi} alt="" />
-                            <p className='font-medium text-sm text-[#2F2F3F]'>Kaafi</p>
+                        {paymentMethod === 'emurabaha' && <>
+                            <img className='w-[32px] h-[24px] rounded-lg' src={assets.murabaha_sticker} alt="" />
+                            <p className='font-medium text-sm text-[#2F2F3F]'>E-Murabaha</p>
                         </>}
                     </>}
                     {isDiscount && <>

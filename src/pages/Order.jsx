@@ -61,7 +61,8 @@ const Order = () => {
     const [isLoading, setLoading] = useState(true)
     const [error, setError] = useState(false)
     const cartUniqueToken = localStorage.getItem("groupToken")
-
+    const paymentMethod = useSelector((state) => state.modelToggle.paymentMethod)
+    const murabahaPop = useSelector(state => state.murabaha.murabahaPop)
 
 
     const [review, setReview] = useState(false)
@@ -114,6 +115,10 @@ const Order = () => {
     if (error) {
         return <h1>Session Expired Please Log In Again</h1>
     }
+
+    useEffect(() => {
+        console.log(paymentMethod);
+    }, [paymentMethod])
 
 
     return (
@@ -199,7 +204,9 @@ const Order = () => {
 
                 {review && <ReviewPayPopup selectedResturant={selectedResturant?.store} order_payment={cartDetail?.order_payment} isDelivery={false} onCancelClick={() => setReview(false)} onPayClick={() => navigate('/bookride')} onNotNowClick={() => setReview(false)} />}
             </div>
-            {/* <MurabahaPopUp /> */}
+
+            {murabahaPop && <MurabahaPopUp />}
+            {/*  */}
             {/* <MurabahaPin /> */}
         </>
     );

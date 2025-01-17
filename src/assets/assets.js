@@ -311,8 +311,10 @@ import ethiopia from './ethiopia.png'
 import home_11 from './home_11.png'
 import pin_location_03 from './pin_location_03.png'
 import sent from './sent.png'
+import murabaha_sticker from './murabaha_sticker.jpg'
 
 export const assets = {
+    murabaha_sticker,
     sent,
     pin_location_03,
     home_11,

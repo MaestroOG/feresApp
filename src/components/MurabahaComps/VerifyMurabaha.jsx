@@ -2,7 +2,7 @@ import React from 'react'
 import { assets } from '../../assets/assets'
 import PinInput from '../OrderComps/PinInput'
 
-const VerifyMurabaha = () => {
+const VerifyMurabaha = ({ onVerify }) => {
     return (
         <div className='fixed h-screen w-full bg-[#06060640] top-0 left-0'>
             <div className='bg-white fixed w-full min-h-[464px] rounded-t-[20px] bottom-0 left-0'>
@@ -19,7 +19,7 @@ const VerifyMurabaha = () => {
                     <h3 className='text-[#2B2A2F] text-center'>You can resend code in <span className='font-semibold text-[#0AB247]'>55</span> s</h3>
                 </div>
                 <div className='fixed bottom-0 left-0 w-full py-5 px-4'>
-                    <button className='w-full rounded-full bg-[#0AB247] text-white font-semibold text-lg px-4 py-[15px]'>Verify</button>
+                    <button className='w-full rounded-full bg-[#0AB247] text-white font-semibold text-lg px-4 py-[15px]' onClick={onVerify}>Verify</button>
                 </div>
             </div>
         </div>

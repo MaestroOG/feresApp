@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { assets } from '../../assets/assets'
 
-const InstallmentMonthPopup = () => {
+const InstallmentMonthPopup = ({ onClick }) => {
     const [selected, setSelected] = useState(false);
     return (
         <div className='fixed h-screen w-full bg-[#06060640] top-0 left-0'>
@@ -10,7 +10,7 @@ const InstallmentMonthPopup = () => {
                     <img src={assets.popup_bar} alt="" className='mx-auto mt-[10px] mb-5' />
                     <div className='flex items-center justify-between w-[77%] ml-auto pb-5'>
                         <h3 className='text-[#2F2F3F] text-xl font-extrabold'>Select Installment Months</h3>
-                        <img src={assets.close} alt="" className='pr-4' />
+                        <img src={assets.close} alt="" onClick={onClick} className='pr-4' />
                     </div>
                 </div>
                 <div className='mt-[23px] flex items-center justify-between px-4 py-[13px] mb-[6px]'>

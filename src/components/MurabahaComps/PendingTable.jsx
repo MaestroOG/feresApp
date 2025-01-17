@@ -1,6 +1,8 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const PendingTable = () => {
+    const navigate = useNavigate()
     const data = [
         { id: 23216, storeName: "KFC Eastlands", amount: "ETB 600" },
         { id: 23216, storeName: "KFC Eastlands", amount: "ETB 600" },
@@ -29,7 +31,7 @@ const PendingTable = () => {
                                 <td className="px-[17px] py-3 truncate">{item.storeName}</td>
                                 <td className="px-[17px] py-3 truncate">{item.amount}</td>
                                 <td className="px-[17px] py-3 truncate">
-                                    <button className="px-4 py-2 text-green-700 bg-green-100 rounded hover:bg-green-200">
+                                    <button onClick={() => navigate('/murabahadetails')} className="px-4 py-2 text-green-700 bg-green-100 rounded hover:bg-green-200">
                                         Select
                                     </button>
                                 </td>

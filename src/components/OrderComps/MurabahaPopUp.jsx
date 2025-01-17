@@ -1,8 +1,13 @@
 import React from 'react'
 import { assets } from '../../assets/assets'
 import Container from '../Container'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { setMurabahaPop } from '../../redux/slices/murabahaSlice'
 
 const MurabahaPopUp = () => {
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
     return (
         <div className='fixed bottom-0 left-0 h-screen w-full bg-[#06060640]'>
             <div className='bg-white fixed bottom-0 left-0 w-full rounded-t-[20px]'>
@@ -14,7 +19,10 @@ const MurabahaPopUp = () => {
                         <input type="number" placeholder='Enter account number' className='bg-[#F8F8F8] w-full py-[18px] px-5 rounded-[13px] mb-5 outline-none transition-all placeholder:text-[#8E8E93] focus:bg-white focus:border focus:border-[#0AB247]' />
                         <input type="text" placeholder='Account name' className='bg-[#F8F8F8] w-full py-[18px] px-5 rounded-[13px] mb-5 outline-none transition-all placeholder:text-[#8E8E93] focus:bg-white focus:border focus:border-[#0AB247]' />
                         <div className='fixed bottom-0 left-0 w-full py-5 px-4'>
-                            <button className='w-full rounded-full bg-[#0AB247] text-white font-semibold text-lg px-4 py-[15px]'>Verify</button>
+                            <button className='w-full rounded-full bg-[#0AB247] text-white font-semibold text-lg px-4 py-[15px]' onClick={() => {
+                                navigate('/pendingmurabaha')
+                                dispatch(setMurabahaPop())
+                            }}>Verify</button>
                         </div>
                     </form>
                 </Container>
