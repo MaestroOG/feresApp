@@ -33,6 +33,7 @@ import { setCartItemData } from '../redux/slices/cartDetail';
 import Loader from '../components/Loader';
 import Spinner from '../components/Spinner';
 import { setItem_info, setProduct_info, setPromo_id, setPromoPer, setStore_info } from '../redux/slices/promotion';
+import NotAvailablePop from '../components/RestaurantComps/NotAvailablePop';
 
 
 
@@ -80,6 +81,8 @@ const Restaurant = () => {
     const selectedRestaurant = useSelector((state) => state.selectedResturant.selectedResturant)
     const [promoInfo, setPromoInfo] = useState(null)
     const [deadline, setDeadline] = useState('any')
+    const [storeOpenStatus, setStoreOpenStatus] = useState(null)
+    const [notAvailablePop, setNoAvailablePop] = useState(false)
 
     const fetchPromoInfo = async () => {
         const endpoint = '/get_all_promotions'
@@ -226,19 +229,20 @@ const Restaurant = () => {
             }
 
             const data = await res.json();
-            
-           const thristyItem = data?.store?.products.filter(element => {
-                    if(element.related_product_id){
-                        const ids_of_thristy_item = "element.related_product_id"
-                            return ids_of_thristy_item
-                    }   
+
+            const thristyItem = data?.store?.products.filter(element => {
+                if (element.related_product_id) {
+                    const ids_of_thristy_item = "element.related_product_id"
+                    return ids_of_thristy_item
+                }
             });
-            
-            
+
+
 
             setMenuItems(data)
             dispatch(setSelectedResturant(data))
             dispatch(setThristyItem(thristyItem))
+            isStoreOpen(data?.store.store_time)
             setLoading(false);
 
 
@@ -260,6 +264,30 @@ const Restaurant = () => {
         console.log("Added");
         setFoodDetailShow(true)
     };
+
+    function isStoreOpen(storeData) {
+        const now = new Date();
+        const currentDay = now.getDay();
+        const currentTime = `${now.getHours()}:${String(now.getMinutes()).padStart(2, "0")}`;
+
+        const todayData = storeData.find((item) => item.day === currentDay);
+
+        if (todayData && todayData.is_store_open) {
+            const { store_open_time, store_close_time } = todayData.day_time[0];
+
+            if (currentTime >= store_open_time && currentTime <= store_close_time) {
+                console.log("The store is currently Open.");
+                setStoreOpenStatus(true)
+            } else {
+                console.log("The store is currently Closed.");
+                setStoreOpenStatus(false)
+            }
+        } else {
+            console.log("The store is currently Closed.");
+            setStoreOpenStatus(false)
+        }
+    }
+
 
     useEffect(() => {
         const handleScroll = () => {
@@ -299,7 +327,7 @@ const Restaurant = () => {
 
         if (token) {
             setCartUniqueToken(token);
-            localStorage.setItem("groupToken",token)
+            localStorage.setItem("groupToken", token)
             fetchCart(token)
         } else {
             fetchCart(loginUser?.cart_unique_token)
@@ -322,7 +350,7 @@ const Restaurant = () => {
 
     return (
         <>
-            <div className={`pb-16 ${foodPopup && 'blur-sm'}`}>
+            <div className={`pb-16 ${foodPopup || notAvailablePop && 'blur-sm'}`}>
                 <div>
                     {/* Feature */}
                     <div className={`relative`}>
@@ -347,6 +375,15 @@ const Restaurant = () => {
                         </div>
                     </div>
 
+                    {!storeOpenStatus && <Container className={'absolute top-[23%] w-full'} onClick={() => setNoAvailablePop(true)}>
+                        <div className='bg-[#E8E8E8] rounded-2xl p-3 flex items-center justify-between'>
+                            <div className='flex items-center gap-1'>
+                                <img src={assets.notification_bell} alt="" />
+                                <p className='text-[#0AB247] text-sm font-medium'>The restaurant is unavailable for ordering.</p>
+                            </div>
+                            <img src={assets.arrow_right} alt="" />
+                        </div>
+                    </Container>}
                     {/* <Container className={'absolute top-[23%] w-full'}>
                         <div className='bg-[#E8E8E8] rounded-2xl p-3 flex items-center justify-between'>
                             <div className='flex items-center gap-1'>
@@ -478,6 +515,10 @@ const Restaurant = () => {
                     </div>
                 </div>
             </div>
+            {notAvailablePop && <NotAvailablePop onGotIt={() => setNoAvailablePop(false)} onSched={() => {
+                setNoAvailablePop(false)
+                setIsDatePickerOpen(true)
+            }} />}
 
             {foodPopup && <FoodPopUp itemFoodPopup={selectedFood} cartUniqueToken={cartUniqueToken} />}
             {firstGroup && <GroupOrder1 setIsOpen={setFirstGroup} onEdit={() => {
