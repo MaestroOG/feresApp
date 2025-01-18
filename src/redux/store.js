@@ -15,11 +15,8 @@ import chatReducer from "./slices/chatSlice"
 import promotionsReducer from "./slices/promotion"
 import baseDataReducer from "./slices/basePriceSlice"
 import schecduleOrderReducer from "./slices/scdueleDateTime"
-<<<<<<< Updated upstream
-import murabahaSlice from './slices/murabahaSlice'
-=======
 import locationSlice from "./slices/locations"
->>>>>>> Stashed changes
+import murabahaReducer from './slices/murabahaSlice'
 
 
 const store = configureStore({
@@ -38,13 +35,10 @@ const store = configureStore({
     chat: chatReducer,
     promotions: promotionsReducer,
     baseData: baseDataReducer,
-<<<<<<< Updated upstream
     schecduleOrder: schecduleOrderReducer,
-    murabaha: murabahaSlice
-=======
-    schecduleOrder:schecduleOrderReducer,
+    murabaha: murabahaReducer,
+    schecduleOrder: schecduleOrderReducer,
     locations: locationSlice
->>>>>>> Stashed changes
   },
 });
 
