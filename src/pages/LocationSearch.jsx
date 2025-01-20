@@ -13,7 +13,7 @@ const LocationSearch = () => {
     }, [])
 
 
-    console.log(searchedLocation, "searchedLocationsearchedLocation");
+
 
     return (
         <div>
