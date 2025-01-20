@@ -178,7 +178,7 @@ const Outlet = () => {
                 {/* Delivery Service Routes */}
                 <Route path='/deliveryservice' element={<DeliveryService />} />
                 <Route path='/selectlocation' element={<SelectLocation />} />
-                <Route path='/selectlocation/locationsearch' element={<LocationSearch />} />
+                <Route path='/selectlocation/locationsearch/:id' element={<LocationSearch />} />
                 <Route path='/deliveryservice/deliveryoptions' element={<DeliveryOptions />} />
                 <Route path='/deliveryservice/deliverydetails' element={<DeliveryDetails />} />
                 <Route path='/deliveryservice/deliverydetails/senderdetails' element={<SenderDetails />} />

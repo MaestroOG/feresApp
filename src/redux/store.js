@@ -17,6 +17,7 @@ import baseDataReducer from "./slices/basePriceSlice"
 import schecduleOrderReducer from "./slices/scdueleDateTime"
 import locationSlice from "./slices/locations"
 import murabahaReducer from './slices/murabahaSlice'
+import deliveryLocation from "./slices/deliveryLocationSlice"
 
 
 const store = configureStore({
@@ -37,8 +38,9 @@ const store = configureStore({
     baseData: baseDataReducer,
     schecduleOrder: schecduleOrderReducer,
     murabaha: murabahaReducer,
-    schecduleOrder: schecduleOrderReducer,
-    locations: locationSlice
+    deliveryLocation: deliveryLocation,
+    // schecduleOrder: schecduleOrderReducer,
+    locations: locationSlice,
   },
 });
 

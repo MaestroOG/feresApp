@@ -1,14 +1,18 @@
 import React from 'react'
 import { assets } from '../../assets/assets'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { setDestination } from '../../redux/slices/deliveryLocationSlice'
 
-export const RecentLocations = ({ item, onClick }) => {
+export const RecentLocations = ({ item, onClick ,id}) => {
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     return (
         <>
             <div className='px-4 mt-6 flex items-center gap-4' onClick={() => {
                 localStorage.setItem("currentAddress", item?.description)
-                navigate('/')
+                dispatch(setDestination(item))
+                id == 0 ? navigate('/deliveryservice') : navigate('/')
             }}>
                 <div>
                     <img src={assets.location_black} alt="" />
