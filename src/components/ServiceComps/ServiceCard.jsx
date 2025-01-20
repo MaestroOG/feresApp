@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { assets } from '../../assets/assets';
 import { usePost } from '../../servies/usePost';
 import { useLocation } from 'react-router-dom';
@@ -9,6 +9,7 @@ const ServiceCard = ({ to }) => {
     const [ads, setAds] = useState([]);
     const { loading, error, post } = usePost()
     const location = useLocation();
+    const cardImgRef = useRef(null)
 
     const getAds = async () => {
         try {
@@ -17,7 +18,8 @@ const ServiceCard = ({ to }) => {
                 ads_for: location.pathname === '/ecommerce' ? 2 : 1
             })
             if (data && data.success) {
-                setAds(data.images.map(image => image.image_for_banner))
+                setAds(data.images.filter(image => image.is_ads_visible === true))
+                console.log(ads)
             }
         } catch (error) {
             console.log(error.message)
@@ -40,6 +42,16 @@ const ServiceCard = ({ to }) => {
         getAds()
     }, [])
 
+    useEffect(() => {
+        const clickButton = () => {
+            if (cardImgRef.current) {
+                cardImgRef.current.click();
+            }
+        };
+        const interval = setInterval(clickButton, 2000);
+        return () => clearInterval(interval);
+    }, []);
+
     if (loading) {
         return <Spinner />
     }
@@ -47,12 +59,18 @@ const ServiceCard = ({ to }) => {
     if (error) {
         return <h1>Something went wrong</h1>
     }
+
+    if (ads.length === 0) {
+        return;
+    }
     return (
         <div className='my-8 px-4'>
 
             {/* Left */}
-            <div className='bg-[#0AB247] w-[47%] clipped flex flex-col justify-center absolute left-[2%] px-3 pr-5 py-[18px] rounded-tl-3xl rounded-bl-3xl z-10'>
-                <p className='text-[#FFE5A4] font-medium text-base'>Get the best food restaurant and fast delivery with Feres</p>
+            <div className='bg-[#0AB247] w-[47%] min-h-[158px] clipped flex flex-col justify-center absolute left-[2%] px-3 pr-5 py-[18px] rounded-tl-3xl rounded-bl-3xl z-10'>
+                {ads?.map(ad => (
+                    <p className='text-[#FFE5A4] font-medium text-base'>{ad?.ads_detail ? ad?.ads_detail : 'No Description Available'}</p>
+                ))}
                 <button className='bg-white text-[#0AB247] rounded-[30px] p-[10px] py-[7px] w-[77px] mt-3' onClick={to}>View all</button>
             </div>
 
@@ -63,7 +81,7 @@ const ServiceCard = ({ to }) => {
                         transform: `translateX(-${current * 100}%)`,
                     }}>
                         {ads?.map((s, index) => (
-                            <img loading='lazy' src={s} key={index} className="h-[158px] w-[250px] rounded-tr-3xl rounded-br-3xl object-cover" onClick={nextSlide} />
+                            <img ref={cardImgRef} loading='lazy' src={s?.image_for_banner} key={index} className="h-[158px] w-[250px] rounded-tr-3xl rounded-br-3xl object-cover" onClick={nextSlide} />
                         ))}
                     </div>
                 </div>

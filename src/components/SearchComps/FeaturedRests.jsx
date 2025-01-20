@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { usePost } from '../../servies/usePost';
 import Loader from '../Loader';
 import Spinner from '../Spinner';
+import axios from 'axios';
 
 
 const FeaturedRests = ({ type, stores }) => {
@@ -21,17 +22,34 @@ const FeaturedRests = ({ type, stores }) => {
 
     const { post, loading, error } = usePost();
 
+    let controller;
+
     const fetchMarts = async () => {
-        const endpoint = '/api/e-commerce/search_items_by_name'
-        try {
-            const data = await post(endpoint, {
-                name: searchData
-            })
-            setSearchMarts(data)
-        } catch (error) {
-            console.log(error.message)
+        const endpoint = import.meta.env.VITE_API_URI + '/api/e-commerce/search_items_by_name';
+
+        // Abort the previous request if it exists
+        if (controller) {
+            controller.abort();
         }
-    }
+
+        // Create a new AbortController instance
+        controller = new AbortController();
+
+        try {
+            const response = await axios.post(
+                endpoint,
+                { name: searchData },
+                { signal: controller.signal } // Pass the signal to the Axios request
+            );
+            setSearchMarts(response.data);
+        } catch (error) {
+            if (axios.isCancel(error) || error.name === "CanceledError") {
+                console.log("Request canceled:", error.message);
+            } else {
+                console.log("Error:", error.message);
+            }
+        }
+    };
 
 
     const fetchSearchResult = async () => {
