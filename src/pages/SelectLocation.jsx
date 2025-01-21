@@ -200,7 +200,7 @@ const SelectLocation = () => {
             <img
               src={assets.search}
               alt=""
-              onClick={() => navigate("/selectlocation/locationsearch")}
+              onClick={() => navigate("/selectlocation/locationsearch/1")}
             />
           </div>
           <button

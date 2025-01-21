@@ -3,14 +3,29 @@ import Container from '../Container'
 import { assets } from '../../assets/assets'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+
 
 const DeliveryLocationForm = () => {
-    const [location, setLocation] = useState("")
+    const destination = useSelector((state)=> state.deliveryLocation.destination)
+    const [location, setLocation] = useState(destination?.description || "")
     const navigate = useNavigate()
     const [currentLocation, setCurrentLocation] = useState({
         address: "Fetching location...",
         coordinates: { lat: null, lng: null },
     })
+
+    useEffect(() => {
+        if (currentLocation?.coordinates?.lat && location !== "") {
+          const timer = setTimeout(() => {
+            navigate("/deliveryservice/deliveryoptions");
+          }, 1000); // 5000ms = 5 seconds
+    
+          // Cleanup function to clear timeout if the component unmounts
+          return () => clearTimeout(timer);
+        }
+      }, [currentLocation, location]);
+
 
     const GOOGLE_API_KEY = import.meta.env.VITE_MAP_API_KEY // Replace with your Google API key
 
@@ -96,7 +111,7 @@ const DeliveryLocationForm = () => {
                         className='w-full bg-transparent outline-none transition-all'
                         value={location}
                         onChange={(e) => setLocation(e.target.value)}
-                        onClick={()=> navigate('/selectlocation/locationsearch') }
+                        onClick={()=> navigate('/selectlocation/locationsearch/0') }
                     />
                     {location.length > 0 && (
                         <img src={assets.close} alt="Clear Icon" onClick={clearLocation} />
