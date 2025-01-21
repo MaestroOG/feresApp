@@ -23,6 +23,8 @@ const ReviewPayPopup = ({ onCancelClick, onNotNowClick, selectedResturant, onPay
     const [number, setNumber] = useState(loginUserData?.phone || "")
     const [paymentName, setPaymentName] = useState('')
     const [otp, setOtp] = useState('')
+    const [showPayment, setShowPayment] = useState(false)
+    const [accountName, setAccountName] = useState("Select ebirr account")
 
     console.log(selectedResturant, 'here is a resturant ........................');
 
@@ -96,12 +98,17 @@ const ReviewPayPopup = ({ onCancelClick, onNotNowClick, selectedResturant, onPay
                 </Container>
 
                 <Container>
-                    <Container className='mt-6 flex items-center justify-between p-5 bg-[#F8F8F8]'>
-                        <select className='text-[#767578] w-full bg-transparent' onChange={(e) => { setPaymentName(e.target.value) }}>
-                            <option value="Select ebirr account">Select ebirr account</option>
-                            {cartDetail?.payment_options?.map((item) => <option value={item?.name} id={item?.payment_id} key={item?.merchantUid}>{item?.name}</option>)}
+                    <Container className='mt-6 flex items-center justify-between p-5 bg-[#F8F8F8] relative'>
+                        <div className='text-[#767578] w-full bg-transparent' onClick={() => setShowPayment(prev => !prev)} onChange={(e) => { setPaymentName(e.target.value) }}>
+                            <div>{accountName}</div>
+                        </div>
 
-                        </select>
+                        {showPayment && <div className='bg-white min-h-[140px] w-[398px] rounded-[13px] border border-[#F2F4F7] absolute top-16 left-0'>
+                            {cartDetail?.payment_options?.map((item) => <div className='py-[10px] px-[14px] text-[#101828]' onClick={() => {
+                                setAccountName(item?.name)
+                                setShowPayment(false)
+                            }} key={item?.merchantUid}>{item?.name}</div>)}
+                        </div>}
                         {/* <img src={assets.arrow_down} alt="" /> */}
                     </Container>
                 </Container>
