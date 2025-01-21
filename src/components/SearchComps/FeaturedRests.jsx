@@ -155,7 +155,7 @@ const FeaturedRests = ({ type, stores }) => {
                 {searchMarts && searchMarts?.success && <div className='flex overflow-x-auto space-x-6 no-scrollbar'>
                     {searchMarts?.foundItems?.map(items => (
                         <div key={items?._id} className='grid grid-rows-2 gap-y-4 min-w-[300px] max-w-[300px] shrink-0 pr-3'>
-                            <FeaturedRestsCard onClick={() => navigate(`/ecommerce/mart/${items?.store_id}`)} key={items?._id} title={items?.name} desc={items?.store_name} img={items?.image_url[0]} />
+                            <FeaturedRestsCard onClick={() => navigate(`/ecommerce/mart/martproduct/item/${items?._id}`)} key={items?._id} title={items?.name} desc={items?.store_name} img={items?.image_url[0]} />
                         </div>
                     ))}
                 </div>}

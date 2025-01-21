@@ -29,6 +29,7 @@ const EcommerceMart = () => {
     const loginUser = useSelector((state) => state.userAuth.user)
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData);
     const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
+    const [storeOpenStatus, setStoreOpenStatus] = useState(null)
 
 
     const { setEcat } = useContext(FeresContext)
@@ -52,6 +53,7 @@ const EcommerceMart = () => {
             if (productsData?.products?.length > 0) {
                 const storeEndpoint = '/api/food/get_items_by_store_id';
                 const storeData = await post(storeEndpoint, { store_id: productsData.products[0].store_id });
+                isStoreOpen(storeData?.store?.store_time)
                 setStoreInfo(storeData);
                 dispatch(setSelectedResturant(storeData))
                 console.log(storeData);
@@ -193,6 +195,29 @@ const EcommerceMart = () => {
 
     }
 
+    function isStoreOpen(storeData) {
+        const now = new Date();
+        const currentDay = now.getDay();
+        const currentTime = `${now.getHours()}:${String(now.getMinutes()).padStart(2, "0")}`;
+
+        const todayData = storeData.find((item) => item.day === currentDay);
+
+        if (todayData && todayData.is_store_open) {
+            const { store_open_time, store_close_time } = todayData.day_time[0];
+
+            if (currentTime >= store_open_time && currentTime <= store_close_time) {
+                console.log("The store is currently Open.");
+                setStoreOpenStatus(true)
+            } else {
+                console.log("The store is currently Closed.");
+                setStoreOpenStatus(false)
+            }
+        } else {
+            console.log("The store is currently Closed.");
+            setStoreOpenStatus(false)
+        }
+    }
+
 
 
     return (
@@ -219,6 +244,16 @@ const EcommerceMart = () => {
 
                 </div>
             </>}
+
+            {!storeOpenStatus && <Container className={'absolute top-[23%] w-full'}>
+                <div className='bg-[#E8E8E8] rounded-2xl p-3 flex items-center justify-between'>
+                    <div className='flex items-center gap-1'>
+                        <img src={assets.notification_bell} alt="" />
+                        <p className='text-[#0AB247] text-sm font-medium'>The restaurant is unavailable for ordering.</p>
+                    </div>
+                    <img src={assets.arrow_right} alt="" />
+                </div>
+            </Container>}
 
 
 

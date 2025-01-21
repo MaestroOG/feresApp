@@ -458,7 +458,7 @@ const Restaurant = () => {
                             </div>
                         </div>
 
-                        <MealsCategoriesAndItems categoryItems={selectedResturant?.store?.products} store_id={selectedResturant?.store?._id} cartUniqueToken={cartUniqueToken} />
+                        {storeOpenStatus && <MealsCategoriesAndItems categoryItems={selectedResturant?.store?.products} store_id={selectedResturant?.store?._id} cartUniqueToken={cartUniqueToken} />}
 
                         {/* Delivered By Feres Popup*/}
 
