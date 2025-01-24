@@ -5,10 +5,15 @@ import Explore from '../components/ServiceComps/Explore'
 import Offers from '../components/ServiceComps/Offers'
 import Menu from '../components/ServiceComps/Menu'
 import { assets } from '../assets/assets'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import Loader from '../components/Loader'
 import DeliveryTimeLabel from '../components/Labels/deliveryTime'
 import ChooseAddressPopup from '../components/ServiceComps/ChooseAddressPopup'
+import Slider from 'react-slick'
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { usePost } from '../servies/usePost'
+
 
 const Services = () => {
 
@@ -17,6 +22,36 @@ const Services = () => {
     const [topRest, setTopRest] = useState(null)
     const [groceryStore, setGroceryStore] = useState(null)
     const [addressPop, setAddressPop] = useState(false)
+    const [ads, setAds] = useState([]);
+    const location = useLocation();
+    const { loading, error, post } = usePost()
+    const settings = {
+        dots: false,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 3000,
+    };
+
+
+    const getAds = async () => {
+        try {
+            const endpoint = '/api/e-commerce/get_category_slides'
+            const data = await post(endpoint, {
+                ads_for: location.pathname === '/ecommerce' ? 2 : 1
+            })
+            if (data && data?.success) {
+                setAds(data.images)
+                console.log(ads);
+            }
+
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+
 
     const fetchGroceryStores = async () => {
         try {
@@ -84,6 +119,7 @@ const Services = () => {
     useEffect(() => {
         fetchTopRest();
         fetchGroceryStores();
+        getAds();
         // console.log(topRest);
     }, [])
 
@@ -92,7 +128,11 @@ const Services = () => {
             <div className={`pt-20 pb-24 overflow-hidden ${addressPop && 'blur-sm'}`}>
                 {/* <Navbar /> */}
                 <SearchBar onClick={() => navigate('/search')} className="sticky top-0 left-0 bg-white" />
-                <ServiceCard to={() => navigate('/allrestaurants')} />
+                <Slider {...settings}>
+                    {ads && ads?.map(ad => (
+                        <ServiceCard desc={ad?.ads_detail} img={ad?.image_for_banner} loading={loading} error={error} to={() => navigate('/allrestaurants')} />
+                    ))}
+                </Slider>
                 <Explore />
                 <Offers />
                 <>
