@@ -4,28 +4,42 @@ import { assets } from '../../assets/assets'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { setCurrent } from '../../redux/slices/deliveryLocationSlice'
+import { useJsApiLoader } from '@react-google-maps/api';
 
 
-const DeliveryLocationForm = () => {
+const DeliveryLocationForm = ({getSearchedLoc}) => {
     const destination = useSelector((state)=> state.deliveryLocation.destination)
     const [location, setLocation] = useState(destination?.description || "")
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const [suggestions, setSuggestions] = useState([]);
     const [currentLocation, setCurrentLocation] = useState({
         address: "Fetching location...",
         coordinates: { lat: null, lng: null },
     })
 
-    useEffect(() => {
-        if (currentLocation?.coordinates?.lat && location !== "") {
-          const timer = setTimeout(() => {
-            navigate("/deliveryservice/deliveryoptions");
-          }, 1000); // 5000ms = 5 seconds
-    
-          // Cleanup function to clear timeout if the component unmounts
-          return () => clearTimeout(timer);
-        }
-      }, [currentLocation, location]);
+    const { isLoaded } = useJsApiLoader({
+                googleMapsApiKey: import.meta.env.VITE_MAP_API_KEY,
+                libraries: ['places'], // Required for Places API
+             });
 
+    // useEffect(() => {
+    //     if (currentLocation?.coordinates?.lat && location !== "") {
+    //       const timer = setTimeout(() => {
+    //         navigate("/deliveryservice/deliveryoptions");
+    //       }, 1000); // 5000ms = 5 seconds
+    
+    //       // Cleanup function to clear timeout if the component unmounts
+    //       return () => clearTimeout(timer);
+    //     }
+    //   }, [currentLocation, location]);
+
+      useEffect(()=>{
+        dispatch(setCurrent(currentLocation))
+
+      },[currentLocation])
 
     const GOOGLE_API_KEY = import.meta.env.VITE_MAP_API_KEY // Replace with your Google API key
 
@@ -39,6 +53,7 @@ const DeliveryLocationForm = () => {
                         ...prev,
                         coordinates: { lat: latitude, lng: longitude },
                     }))
+                    dispatch(setCurrent())
                     fetchAddressFromCoordinates(latitude, longitude) // Fetch address
                 },
                 (error) => {
@@ -57,6 +72,59 @@ const DeliveryLocationForm = () => {
         }
     }, [])
 
+    const handleSuggtions = (string) => {
+        setLocation(string);
+        if (!isLoaded || string.trim() === '') {
+            setSuggestions([]);
+            return;
+        }
+    
+        const service = new window.google.maps.places.AutocompleteService();
+    
+        service.getPlacePredictions(
+            { input: string, types: ['geocode'] },
+            (predictions, status) => {
+                if (status === window.google.maps.places.PlacesServiceStatus.OK && predictions) {
+                    const suggestionList = predictions.map((place) => ({
+                        description: place.description,
+                        placeId: place.place_id,
+                    }));
+    
+                    // Fetch coordinates for each placeId
+                    const placesService = new window.google.maps.places.PlacesService(document.createElement('div'));
+                    const detailedSuggestions = [];
+    
+                    suggestionList.forEach((suggestion, index) => {
+                        placesService.getDetails(
+                            { placeId: suggestion.placeId },
+                            (placeDetails, status) => {
+                                if (status === window.google.maps.places.PlacesServiceStatus.OK && placeDetails) {
+                                    detailedSuggestions.push({
+                                        ...suggestion,
+                                        coordinates: {
+                                            lat: placeDetails.geometry.location.lat(),
+                                            lng: placeDetails.geometry.location.lng(),
+                                        },
+                                    });
+    
+                                    // Once all details are fetched, update suggestions
+                                    if (detailedSuggestions.length === suggestionList.length) {
+                                        setSuggestions(detailedSuggestions);
+                                        console.log(detailedSuggestions, "here are the suggestions with coordinates");
+                                        getSearchedLoc(detailedSuggestions);
+                                    }
+                                }
+                            }
+                        );
+                    });
+                } else {
+                    setSuggestions([]);
+                }
+            }
+        );
+    };
+    
+
     // Function to fetch address using Google Maps Geocoding API
     const fetchAddressFromCoordinates = async (lat, lng) => {
         try {
@@ -70,6 +138,8 @@ const DeliveryLocationForm = () => {
                     ...prev,
                     address,
                 }))
+            
+                
             } else {
                 console.error("Error fetching address:", data.status)
                 setCurrentLocation((prev) => ({
@@ -110,8 +180,8 @@ const DeliveryLocationForm = () => {
                         placeholder='Enter a new location'
                         className='w-full bg-transparent outline-none transition-all'
                         value={location}
-                        onChange={(e) => setLocation(e.target.value)}
-                        onClick={()=> navigate('/selectlocation/locationsearch/0') }
+                        onChange={(e) =>  handleSuggtions(e.target.value)}
+
                     />
                     {location.length > 0 && (
                         <img src={assets.close} alt="Clear Icon" onClick={clearLocation} />
@@ -126,3 +196,5 @@ const DeliveryLocationForm = () => {
 }
 
 export default DeliveryLocationForm
+
+
