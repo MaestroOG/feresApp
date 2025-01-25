@@ -42,7 +42,7 @@ const Explore = () => {
         return <Loader />
     }
     return (
-        <div className='mt-8 w-full'>
+        <div className='w-full'>
             <h3 className='text-[18px] font-medium px-4'>Explore Feres</h3>
 
             <div className='flex flex-row gap-3 overflow-y-scroll explore-card'>
