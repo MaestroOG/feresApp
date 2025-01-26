@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { assets } from "../../assets/assets";
+import { useNavigate } from "react-router-dom";
 
 const ChooseAddressPopup = ({ onClick, savedLocationPopup, selectedSavedAddress,closePopup }) => {
     const [selectedAddress, setSelectedAddress] = useState(null);
@@ -7,6 +8,8 @@ const ChooseAddressPopup = ({ onClick, savedLocationPopup, selectedSavedAddress,
     const handleCheckboxClick = (item) => {
         setSelectedAddress(item);
         selectedSavedAddress(item); 
+        
+        
     };
 
     return (
