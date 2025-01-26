@@ -97,6 +97,7 @@ import ChangeAddress from './ChangeAddress'
 import PlaceName from './PlaceName'
 import PendingMurabaha from './PendingMurabaha'
 import MurabahaDetails from '../components/MurabahaComps/MurabahaDetails'
+import NotFound from './NotFound'
 
 const Outlet = () => {
     return (
@@ -205,6 +206,7 @@ const Outlet = () => {
                 <Route path='/deliveryservice/deliverydetails/recipientdetails/updatephone/verifyphone' element={<RecipientVerifyPhone />} />
 
                 <Route path='/riderinfo' element={<RiderInfo />} />
+                <Route path='*' element={<NotFound />} />
 
 
                 {/* Group Order Routes */}
