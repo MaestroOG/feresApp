@@ -1,4 +1,5 @@
-import React, { useContext, useState, useEffect } from 'react';
+import { useEffect, useState, useContext } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from 'react-router-dom';
 import { assets } from '../../assets/assets';
 import Container from '../../components/Container';
@@ -6,97 +7,146 @@ import DeliveryDetailsCard from '../../components/DeliveryServiceComps/DeliveryD
 import VehicleTypePopup from '../../components/DeliveryServiceComps/DeliveryDetailsComps/VehicleTypePopup';
 import { FeresContext } from '../../context/FeresContext';
 import DeliveryItemDetail from '../../components/DeliveryServiceComps/DeliveryDetailsComps/DeliveryItemDetail';
-import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { setVehicleSpeed, setVehicleType } from '../../redux/slices/deliveryLocationSlice';
+import { setDestinationPersonName, setDestinationPersonPhone, setVehicleSpeed, setVehicleType } from '../../redux/slices/deliveryLocationSlice';
 
 const DeliveryDetails = () => {
   const navigate = useNavigate();
-  const currentLocation = useSelector((state) => state.deliveryLocation.current); // { coordinates: { lat, lng }, address }
-  const destination = useSelector((state) => state.deliveryLocation.destination); // { coordinates: { lat, lng }, description }
-  const [location, setLocation] = useState(destination?.description);
+  const currentLocation = useSelector((state) => state.deliveryLocation.current);
+  const destination = useSelector((state) => state.deliveryLocation.destination);
   const baseData = useSelector((state) => state.baseData.baseData);
   const { vehicleTypePopup, setVehicleTypePopup, deliveryPayment, discountOpt } = useContext(FeresContext);
   const { deliveryItemDetail, setDeliveryItemDetail } = useContext(FeresContext);
   const userDetail = useSelector((state) => state.userAuth.user);
-   const dispatch = useDispatch();
+  const vehicleType = useSelector((state) => state.deliveryLocation.vehicleType);
+  const vehicleSpeed = useSelector((state) => state.deliveryLocation.vehicleSpeed);
+  const destinationPersonName = useSelector((state) => state.deliveryLocation.destinationPersonName);
+const destinationPersonPhone = useSelector((state) => state.deliveryLocation.destinationPersonPhone);
+  const driverNote = useSelector((state) => state.deliveryLocation.driverNote);
   const [totalDistance, setTotalDistance] = useState(null);
   const [services, setServices] = useState([]);
+  const [location, setLocation] = useState(destination?.description);
+  const dispatch = useDispatch();
+  let cost;
+  useEffect(() => {
+    const sourceLocation = [currentLocation?.coordinates?.lat, currentLocation?.coordinates?.lng];
+    const destinationLocation = [destination?.coordinates?.lat, destination?.coordinates?.lng];
+
+    if (sourceLocation && destinationLocation && baseData?.service_details && userDetail) {
+      const calculateDistance = (coords1, coords2) => {
+        const toRadians = (degrees) => degrees * (Math.PI / 180);
+
+        const { lat: lat1, lng: lng1 } = coords1;
+        const { lat: lat2, lng: lng2 } = coords2;
+
+        const R = 6371; // Radius of Earth in kilometers
+        const dLat = toRadians(lat2 - lat1);
+        const dLng = toRadians(lng2 - lng1);
+
+        const a =
+          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) *
+          Math.sin(dLng / 2) * Math.sin(dLng / 2);
+
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        return R * c; // Distance in kilometers
+      };
+
+      const fetchServiceList = async () => {
+        const apiUrl = "https://suuq.feres.co/service_list";
+        const requestBody = {
+          sourceLocation,
+          destinationLocation,
+          user_id: userDetail.user_id,
+          server_token: userDetail.token,
+          vehicles_id: "",
+        };
+
+        try {
+          const response = await axios.post(apiUrl, requestBody);
+          setServices(response.data.services);
+          response.data.services.forEach((element) => {
+            if (element.vehicle_name.toLowerCase().includes("bike")) {
+              dispatch(setVehicleType(element));
+              const deliveryType = element?.instant_delivery;
+              deliveryType.forEach((type) => {
+                if (type.name.toLowerCase().includes("instant")) {
+                  dispatch(setVehicleSpeed(type));
+                }
+              });
+              return element;
+            }
+          });
+        } catch (error) {
+          console.error("Error fetching service list:", error.message);
+        }
+      };
+
+      fetchServiceList();
+
+      const distance = calculateDistance(
+        { lat: sourceLocation[0], lng: sourceLocation[1] },
+        { lat: destinationLocation[0], lng: destinationLocation[1] }
+      );
+
+      setTotalDistance(distance);
+    }
+  }, [currentLocation, destination, baseData, userDetail]);
+
+console.log(currentLocation);
+
+
+  const calculateTotalCost = () => {
+    if (!vehicleType || totalDistance === null) return "Calculating...";
+
+    const { base_price, base_price_distance, min_fare, price_per_unit_distance } = vehicleType;
     
 
-    useEffect(() => {
-        const sourceLocation = [currentLocation?.coordinates?.lat, currentLocation?.coordinates?.lng];
-        const destinationLocation = [destination?.coordinates?.lat, destination?.coordinates?.lng];
-      
-        if (sourceLocation && destinationLocation && baseData?.service_details && userDetail) {
-          const calculateDistance = (coords1, coords2) => {
-            const toRadians = (degrees) => degrees * (Math.PI / 180);
-      
-            const { lat: lat1, lng: lng1 } = coords1;
-            const { lat: lat2, lng: lng2 } = coords2;
-      
-            const R = 6371; // Radius of Earth in kilometers
-            const dLat = toRadians(lat2 - lat1);
-            const dLng = toRadians(lng2 - lng1);
-      
-            const a =
-              Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-              Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) *
-              Math.sin(dLng / 2) * Math.sin(dLng / 2);
-      
-            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-      
-            return R * c; // Distance in kilometers
-          };
-      
-          // Calculate distance
-          const distance = calculateDistance(
-            { lat: sourceLocation[0], lng: sourceLocation[1] },
-            { lat: destinationLocation[0], lng: destinationLocation[1] }
-          );
-          setTotalDistance(distance * baseData?.service_details?.base_price); // Multiply by 2
-      
-          // API call to service_list
-          const fetchServiceList = async () => {
-            const apiUrl = "https://suuq.feres.co/service_list";
-            const requestBody = {
-              sourceLocation,
-              destinationLocation,
-              user_id: userDetail.user_id,
-              server_token: userDetail.token,
-              vehicles_id: "",
-            };
-      
-            try {
-              const response = await axios.post(apiUrl, requestBody);
-              const services = response.data.services
-              setServices(response.data.services)
-              services.forEach(element => {
-                if (element.vehicle_name.toLowerCase().includes("bike") ){
-                  dispatch(setVehicleType(element))
-                    const deliveryType = element?.instant_delivery 
-                    deliveryType.forEach((element2)=>{
-                      if(element2.name.toLowerCase().includes("instant")){
-                        dispatch(setVehicleSpeed(element2))
-                      }
-                    })
+    if (totalDistance <= base_price_distance) {
+      cost = min_fare;
+    } else {
+      cost = (totalDistance - base_price_distance) * price_per_unit_distance + base_price;
+    }
 
-                  
-                }
-              }); 
+    if (vehicleSpeed?.price) {
+      cost += vehicleSpeed.price;
+    }
 
-            } catch (error) {
-              console.error("Error fetching service list:", error.message);
-            }
-          };
-      
-          fetchServiceList();
-        }
-      }, [currentLocation, destination,baseData,userDetail]);
+    return `ETB${cost.toFixed(2)}`;
+  };
 
-
-      console.log(services);
-      
+  const handelReview = () =>{
+    const createDeg = axios.post('https://suuq.feres.co/api/admin/create_deg_deg_order',{
+   sender_phone: userDetail?.phone ,
+   delivery_id: '63d614b4d7215c6c87f66885',
+   description: '',
+   sender_name: `${userDetail?.first_name} ${userDetail?.last_name}`,
+   Destination_longitude: destination?.coordinates?.lng,
+   type: '3',
+   service_type_name: vehicleType?.vehicle_name ,
+   pin: 'null',
+   destination_addresses: destination?.description,
+   source_address: currentLocation?.address,
+   sender_floor: '0',
+   receiver_name: destinationPersonName,
+   amount: cost,
+   Source_longitude: currentLocation?.coordinates?.lng,
+   server_token: userDetail?.token,
+   receiver_floor: '0',
+   sender_note_driver: driverNote,
+   user_id: userDetail?.user_id,
+   phone: userDetail?.phone,
+   vehicles_id: vehicleType?.vehicle_id,
+   Source_latitude: currentLocation?.coordinates?.lat,
+   payment_name: 'null',
+   receiver_phone: destinationPersonPhone,
+   receiver_note_driver: '',
+   Destination_latitude: destination?.coordinates?.lat,
+   city_id: vehicleType?.city_id
+          })
+    // navigate('/deliveryservice/reviewdeliveryorder')
+  }
 
   return (
     <>
@@ -145,13 +195,13 @@ const DeliveryDetails = () => {
           <DeliveryDetailsCard
             isPriority={true}
             img={assets.bike_character}
-            name={'Instant'}
+            name={vehicleSpeed?.name}
             desc={'Pickup within 30mins, drop-off within 90...'}
             onClick={() => setDeliveryItemDetail(true)}
           />
           <DeliveryDetailsCard
             img={assets.motor_bike}
-            name={'Motor bike'}
+            name={vehicleType?.vehicle_name}
             desc={'Recommended based on your item'}
             onClick={() => setVehicleTypePopup(true)}
           />
@@ -222,19 +272,17 @@ const DeliveryDetails = () => {
         <Container className={'bg-white mt-5 py-5 rounded-lg w-full fixed bottom-0 left-0 rounded-t-lg'}>
           <div className="flex items-center justify-between my-4">
             <h3 className="text-[#2F2F3F] text-lg">Total</h3>
-            <p className="text-[#2F2F3F] text-xl font-bold">
-              {totalDistance ? `ETB${totalDistance.toFixed(2)}` : 'Calculating...'}
-            </p>
+            <p className="text-[#2F2F3F] text-xl font-bold">{calculateTotalCost()}</p>
           </div>
           <button
             className="w-full rounded-full bg-[#0AB247] p-4 text-white text-lg font-medium"
-            onClick={() => navigate('/deliveryservice/reviewdeliveryorder')}
+            onClick={handelReview}
           >
             Review order
           </button>
         </Container>
       </div>
-      {vehicleTypePopup && <VehicleTypePopup isActive={true} services={services}/>}
+      {vehicleTypePopup && <VehicleTypePopup isActive={true} services={services} totalDistance={totalDistance}/>}
       {deliveryItemDetail && <DeliveryItemDetail isActive={true} services={services}/>}
     </>
   );

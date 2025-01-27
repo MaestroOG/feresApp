@@ -3,15 +3,24 @@ import { assets } from '../../../assets/assets'
 import Container from '../../Container'
 import { FeresContext } from '../../../context/FeresContext'
 import { useSelector, useDispatch } from 'react-redux'
-import { setVehicleType } from '../../../redux/slices/deliveryLocationSlice' // Import your action
+import { setVehicleSpeed, setVehicleType } from '../../../redux/slices/deliveryLocationSlice' // Import your action
 
-const VehicleTypePopup = ({ services }) => {
+const VehicleTypePopup = ({ services, totalDistance = 0, totalWeight = 0 }) => {
     const { setVehicleTypePopup } = useContext(FeresContext)
     const dispatch = useDispatch()
     const vehicleType = useSelector((state) => state.deliveryLocation.vehicleType)
 
     const handleSelection = (item) => {
-        dispatch(setVehicleType(item)) // Dispatch selected item to Redux
+        dispatch(setVehicleSpeed(null)) 
+        dispatch(setVehicleType(item)) 
+    }
+
+    const calculatePrice = (item) => {
+        const { base_price = 0, base_price_distance = 0, price_per_unit_distance = 0 } = item
+        const distanceCost = totalDistance > base_price_distance 
+            ? (totalDistance - base_price_distance) * price_per_unit_distance 
+            : 0
+        return base_price + distanceCost
     }
 
     return (
@@ -22,12 +31,12 @@ const VehicleTypePopup = ({ services }) => {
                     <h1 className='text-[#2F2F3F] text-xl font-bold'>Vehicle Type</h1>
                 </div>
                 <hr />
-                {services.map((item) => (
+                {services?.map((item) => (
                     <div
-                        key={item.id} // Use a unique key (assuming item.id exists)
+                        key={item._id} // Use a unique key (assuming item.id exists)
                         onClick={() => handleSelection(item)} // Handle selection
                         className={`w-[398px] h-[87px] rounded-xl cursor-pointer
-                            ${vehicleType?.id === item.id 
+                            ${vehicleType?._id === item._id 
                                 ? 'border border-[#0AB247] bg-[#EBF9EE]' 
                                 : 'border border-[#EEEEEE]'} 
                             my-7 p-4`}
@@ -37,7 +46,8 @@ const VehicleTypePopup = ({ services }) => {
                             <div className='w-full'>
                                 <div className='flex items-center justify-between w-full'>
                                     <h4 className='text-[#2F2F3F] text-lg font-medium'>{item?.vehicle_name}</h4>
-                                    <h3 className='font-bold text-[#2F2F3F]'>ETB{90.00}</h3>
+                                    {/* Dynamically calculated price */}
+                                    <h3 className='font-bold text-[#2F2F3F]'>ETB {calculatePrice(item).toFixed(2)}</h3>
                                 </div>
                                 <p className='text-[#B1B1B1]'>For small items, max 20kg</p>
                             </div>
