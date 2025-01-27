@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { act, useEffect, useState } from 'react'
 import Navbar from '../components/Navbar'
 import SearchBar from '../components/SearchBar'
 import ServiceCard from '../components/ServiceComps/ServiceCard'
@@ -19,10 +19,25 @@ const Ecommerce = () => {
     const [offerLoading, setOfferLoading] = useState(false)
     const [offerErr, setOfferErr] = useState(false)
     const navigate = useNavigate()
-    const buttons = ["Popular stores", "Grocery stores", "Specialty stores"];
+    const [activeButton, setActiveButton] = useState(null)
+    const [storeCategories, setStoreCategories] = useState(null);
 
 
     const [categories, setCategories] = useState(null)
+
+    const fetchStoreCategories = async () => {
+        const endpoint = '/get_all_store_category_type'
+        try {
+            const data = await post(endpoint, {})
+            if (data && data.success) {
+                setStoreCategories(data.data)
+                setActiveButton(data.data[0]?._id)
+                fetchStores()
+            }
+        } catch (error) {
+            console.log("Something went wrong", error.message)
+        }
+    }
 
     const fetchOffers = async () => {
         const endpoint = 'https://farasanya.feres.co/get_all_offers'
@@ -49,7 +64,11 @@ const Ecommerce = () => {
         const endpoint = "/api/e-commerce/get_ecommerce_stores_list"
         try {
             const data = await post(endpoint, {});
-            setStores(data);
+            if (data) {
+                const filteredData = data.stores.filter(store => store.category_id === activeButton)
+                setStores(filteredData);
+                console.log(filteredData)
+            }
         } catch (err) {
             console.error("Error fetching stores:", err);
         }
@@ -77,7 +96,7 @@ const Ecommerce = () => {
     useEffect(() => {
         fetchCategories()
         fetchOffers()
-        fetchStores()
+        fetchStoreCategories()
     }, [])
 
 
@@ -150,13 +169,16 @@ const Ecommerce = () => {
             <Container className={'my-7'}>
                 <h3 className='text-[#2F2F3F] text-lg font-medium my-3'>Shop by store type</h3>
                 <div className='flex items-center gap-4 overflow-auto no-scrollbar sticky top-24 bg-white z-50 pb-3'>
-                    <button className={`active rounded-full p-3 whitespace-nowrap text-lg`}>{buttons[0]}</button>
-                    <button className={`inactive rounded-full p-3 whitespace-nowrap text-lg`}>{buttons[1]}</button>
-                    <button className={`inactive rounded-full p-3 whitespace-nowrap text-lg`}>{buttons[2]}</button>
+                    {storeCategories?.map(category => (
+                        <button key={category?._id} onClick={() => {
+                            setActiveButton(category?._id)
+                            fetchStores()
+                        }} className={`${activeButton === category?._id ? 'active' : 'inactive'} rounded-full p-3 whitespace-nowrap text-lg`}>{category?.name}</button>
+                    ))}
                 </div>
                 {loading && <Spinner />}
                 {error && <div>Error Fetching Stores...</div>}
-                {stores && stores?.stores?.slice(0, 5).map((store, index) => (
+                {stores && stores?.map((store, index) => (
                     <PopularStoreCard store={store} key={index} />
                 ))}
             </Container>
