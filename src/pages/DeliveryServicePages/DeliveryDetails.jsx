@@ -8,7 +8,7 @@ import VehicleTypePopup from '../../components/DeliveryServiceComps/DeliveryDeta
 import { FeresContext } from '../../context/FeresContext';
 import DeliveryItemDetail from '../../components/DeliveryServiceComps/DeliveryDetailsComps/DeliveryItemDetail';
 import axios from 'axios';
-import { setDestinationPersonName, setDestinationPersonPhone, setVehicleSpeed, setVehicleType } from '../../redux/slices/deliveryLocationSlice';
+import { setCost, setDestinationPersonName, setDestinationPersonPhone, setVehicleSpeed, setVehicleType } from '../../redux/slices/deliveryLocationSlice';
 
 const DeliveryDetails = () => {
   const navigate = useNavigate();
@@ -94,7 +94,6 @@ const destinationPersonPhone = useSelector((state) => state.deliveryLocation.des
     }
   }, [currentLocation, destination, baseData, userDetail]);
 
-console.log(currentLocation);
 
 
   const calculateTotalCost = () => {
@@ -112,40 +111,13 @@ console.log(currentLocation);
     if (vehicleSpeed?.price) {
       cost += vehicleSpeed.price;
     }
-
+    dispatch(setCost(cost.toFixed(2)))
     return `ETB${cost.toFixed(2)}`;
   };
 
   const handelReview = () =>{
-    const createDeg = axios.post('https://suuq.feres.co/api/admin/create_deg_deg_order',{
-   sender_phone: userDetail?.phone ,
-   delivery_id: '63d614b4d7215c6c87f66885',
-   description: '',
-   sender_name: `${userDetail?.first_name} ${userDetail?.last_name}`,
-   Destination_longitude: destination?.coordinates?.lng,
-   type: '3',
-   service_type_name: vehicleType?.vehicle_name ,
-   pin: 'null',
-   destination_addresses: destination?.description,
-   source_address: currentLocation?.address,
-   sender_floor: '0',
-   receiver_name: destinationPersonName,
-   amount: cost,
-   Source_longitude: currentLocation?.coordinates?.lng,
-   server_token: userDetail?.token,
-   receiver_floor: '0',
-   sender_note_driver: driverNote,
-   user_id: userDetail?.user_id,
-   phone: userDetail?.phone,
-   vehicles_id: vehicleType?.vehicle_id,
-   Source_latitude: currentLocation?.coordinates?.lat,
-   payment_name: 'null',
-   receiver_phone: destinationPersonPhone,
-   receiver_note_driver: '',
-   Destination_latitude: destination?.coordinates?.lat,
-   city_id: vehicleType?.city_id
-          })
-    // navigate('/deliveryservice/reviewdeliveryorder')
+   
+    navigate('/deliveryservice/reviewdeliveryorder')
   }
 
   return (
