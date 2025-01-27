@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { assets } from '../../assets/assets'
 import Container from '../../components/Container'
 import { Link } from 'react-router-dom'
@@ -8,10 +8,11 @@ import { usePost } from '../../servies/usePost'
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../../redux/slices/userAuthSlice'
 import { FeresContext } from '../../context/FeresContext'
+import axios from 'axios'
 
 
 
-const ReviewPayPopup = ({ onCancelClick, onNotNowClick, selectedResturant, onPayClick, isDelivery = true }) => {
+const ReviewPayPopup = ({ onCancelClick, onNotNowClick, selectedResturant, onPayClick, isDelivery = true ,destination,vehicleType,currentLocation,destinationPersonName,cost,driverNote,destinationPersonPhone }) => {
     const { post, loading, error } = usePost()
     const dispatch = useDispatch()
     const cartDetail = useSelector((state) => state.cartDetails.cartDetails)
@@ -25,57 +26,99 @@ const ReviewPayPopup = ({ onCancelClick, onNotNowClick, selectedResturant, onPay
     const [otp, setOtp] = useState('')
     const [showPayment, setShowPayment] = useState(false)
     const [accountName, setAccountName] = useState("Select ebirr account")
+    const [paymentOptions, setPaymentOptions] = useState([])
 
-    console.log(selectedResturant, 'here is a resturant ........................');
+    useEffect(()=>{
+       const handlePaymentoption = async ()=>{
+        const paymentoptions = await post('/api/admin/getPaymentOptions',{})
+        setPaymentOptions(paymentoptions.payment_options)    
+
+       }
+
+        handlePaymentoption()
+    },[])
+
+console.log(number,"EBirr");
+
 
     const handlePayPayment = async () => {
-        const payOrder = await post('/api/user/pay_order_payment_waafi', {
-            cart_unique_token: cartItemData?.cart_unique_token,
-            cart_id: cartItemData?._id,
-            phone: number,
-            country_code: '+251',
-            server_token: userDetail?.token,
-            user_id: userDetail?.user_id,
-            is_payment_mode_cash: false,
-            is_brafo_payment_mode: true,
-            payment_id: 1,
-            payment_name: paymentName,
-            order_payment_id: "547743944dc478124d753b54",
-            pin: otp,
-            country_id: cartDetail?.order_payment[0]?.country_id,
-            order_type: 7,
-            order_Kitchen_detail: '',
-            last_address: '',
-            normal_address: '',
-            schedule_order_start_at: '',
-            type: 0
-        })
-
-
-        const createOrder = await post('/api/user/create_order', {
-            server_token: userDetail.token,
-            user_id: cartItemData.user._id,
-            cart_id: cartItemData._id,
-            cart_unique_token: cartItemData.cart_unique_token,
-            delivery_user_name: "",
-            delivery_user_phone: "",
-            is_user_pick_up_order: "",
-            order_start_at: 0,
-            schedule_order_start_at: ""
-        })
-
-        const updatedUserDetail = {
-            ...userDetail,
-            order_id: createOrder?.order_id,
-        };
-        localStorage.setItem("userData", JSON.stringify(updatedUserDetail))
-        dispatch(loginUser(updatedUserDetail))
-        navigate('/bookride');
-        onPayClick
+        if(cost > 0){
+            const createDeg =await axios.post('https://suuq.feres.co/api/admin/create_deg_deg_order',{
+                sender_phone: number ,
+                delivery_id: '63d614b4d7215c6c87f66885',
+                description: '',
+                sender_name: `${userDetail?.first_name} ${userDetail?.last_name}`,
+                Destination_longitude: destination?.coordinates?.lng,
+                type: '3',
+                service_type_name: vehicleType?.vehicle_name ,
+                pin: otp,
+                destination_addresses: destination?.description,
+                source_address: currentLocation?.address,
+                sender_floor: '0',
+                receiver_name: destinationPersonName,
+                amount: cost,
+                Source_longitude: currentLocation?.coordinates?.lng,
+                server_token: userDetail?.token,
+                receiver_floor: '0',
+                sender_note_driver: driverNote,
+                user_id: userDetail?.user_id,
+                phone: userDetail?.phone,
+                vehicles_id: vehicleType?.vehicle_id,
+                Source_latitude: currentLocation?.coordinates?.lat,
+                payment_name: paymentName,
+                receiver_phone: destinationPersonPhone,
+                receiver_note_driver: '',
+                Destination_latitude: destination?.coordinates?.lat,
+                city_id: vehicleType?.city_id
+                })
+        }else{
+            const payOrder = await post('/api/user/pay_order_payment_waafi', {
+                cart_unique_token: cartItemData?.cart_unique_token,
+                cart_id: cartItemData?._id,
+                phone: number,
+                country_code: '+251',
+                server_token: userDetail?.token,
+                user_id: userDetail?.user_id,
+                is_payment_mode_cash: false,
+                is_brafo_payment_mode: true,
+                payment_id: 1,
+                payment_name: paymentName,
+                order_payment_id: "547743944dc478124d753b54",
+                pin: otp,
+                country_id: cartDetail?.order_payment[0]?.country_id,
+                order_type: 7,
+                order_Kitchen_detail: '',
+                last_address: '',
+                normal_address: '',
+                schedule_order_start_at: '',
+                type: 0
+            })
+    
+    
+            const createOrder = await post('/api/user/create_order', {
+                server_token: userDetail.token,
+                user_id: cartItemData.user._id,
+                cart_id: cartItemData._id,
+                cart_unique_token: cartItemData.cart_unique_token,
+                delivery_user_name: "",
+                delivery_user_phone: "",
+                is_user_pick_up_order: "",
+                order_start_at: 0,
+                schedule_order_start_at: ""
+            })
+    
+            const updatedUserDetail = {
+                ...userDetail,
+                order_id: createOrder?.order_id,
+            };
+            localStorage.setItem("userData", JSON.stringify(updatedUserDetail))
+            dispatch(loginUser(updatedUserDetail))
+            navigate('/bookride');
+            onPayClick
+        }
+        
     }
 
-    console.log(userDetail, "userDetailuserDetailuserDetailuserDetail");
-    console.log(cartDetail, "cartDetailcartDetailcartDetailcartDetail", cartItemData);
     return (
         <div className='bg-[#06060626] h-screen fixed top-0 left-0 w-full z-50'>
             <div className='fixed bottom-0 left-0 w-full bg-white rounded-t-xl overflow-y-auto pb-28 min-h-[584px]'>
@@ -98,7 +141,23 @@ const ReviewPayPopup = ({ onCancelClick, onNotNowClick, selectedResturant, onPay
                 </Container>
 
                 <Container>
+                    {cost > 0 ?
+                    
                     <Container className='mt-6 flex items-center justify-between p-5 bg-[#F8F8F8] relative'>
+                        <div className='text-[#767578] w-full bg-transparent' onClick={() => setShowPayment(prev => !prev)} onChange={(e) => { setPaymentName(e.target.value) }}>
+                            <div>{accountName}</div>
+                        </div>
+
+                        {showPayment && <div className='bg-white min-h-[140px] w-[398px] rounded-[13px] border border-[#F2F4F7] absolute top-16 left-0'>
+                            {paymentOptions?.map((item) => <div className='py-[10px] px-[14px] text-[#101828]' onClick={() => {
+                                setAccountName(item?.name)
+                                setShowPayment(false)
+                            }} key={item?._id}>{item?.name}</div>)}
+                        </div>}
+                        {/* <img src={assets.arrow_down} alt="" /> */}
+                    </Container>
+                    
+                    :<Container className='mt-6 flex items-center justify-between p-5 bg-[#F8F8F8] relative'>
                         <div className='text-[#767578] w-full bg-transparent' onClick={() => setShowPayment(prev => !prev)} onChange={(e) => { setPaymentName(e.target.value) }}>
                             <div>{accountName}</div>
                         </div>
@@ -110,7 +169,7 @@ const ReviewPayPopup = ({ onCancelClick, onNotNowClick, selectedResturant, onPay
                             }} key={item?.merchantUid}>{item?.name}</div>)}
                         </div>}
                         {/* <img src={assets.arrow_down} alt="" /> */}
-                    </Container>
+                    </Container>}
                 </Container>
 
                 <Container>
@@ -120,7 +179,7 @@ const ReviewPayPopup = ({ onCancelClick, onNotNowClick, selectedResturant, onPay
                 </Container>
 
 
-                <Container>
+                {!cost > 0 && <Container>
                     <Container className={`mt-6 border border-[#EEEEEE] rounded-xl p-5 flex items-center ${isDelivery && 'justify-between'}`}>
                         {isDelivery ? <>
                             <div className='flex items-center gap-3'>
@@ -176,7 +235,7 @@ const ReviewPayPopup = ({ onCancelClick, onNotNowClick, selectedResturant, onPay
                             </div>
                         </>}
                     </Container>
-                </Container>
+                </Container>}
 
                 <Container className={'py-5 w-full fixed left-0 bottom-0 bg-white flex items-center justify-between gap-5'}>
                     <button className='w-1/2 rounded-full bg-[#EBF9EE] p-4 flex items-center gap-4 justify-center' onClick={onNotNowClick}>

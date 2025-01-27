@@ -7,7 +7,8 @@ const initialState = {
   vehicleSpeed: null,
   driverNote: "",
   destinationPersonName: "",
-  destinationPersonPhone: ""
+  destinationPersonPhone: "",
+  cost : 0
 };
 
 const deliveryLocation = createSlice({
@@ -34,9 +35,12 @@ const deliveryLocation = createSlice({
         },
         setDestinationPersonPhone: (state, action) => {
             state.destinationPersonPhone = action.payload;
+        },
+        setCost: (state, action) => {
+            state.cost = action.payload;
         }
     },
 });
 
-export const { setCurrent, setDestination,setVehicleSpeed,setVehicleType ,setDriverNote ,setDestinationPersonPhone,setDestinationPersonName} = deliveryLocation.actions;
+export const { setCurrent, setDestination,setVehicleSpeed,setVehicleType ,setDriverNote ,setDestinationPersonPhone,setDestinationPersonName,setCost} = deliveryLocation.actions;
 export default deliveryLocation.reducer;
