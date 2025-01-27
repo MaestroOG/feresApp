@@ -5,11 +5,24 @@ import { useNavigate } from 'react-router-dom'
 import DeliveryDetailsCard from '../../components/DeliveryServiceComps/DeliveryDetailsCard'
 import { FeresContext } from '../../context/FeresContext'
 import ReviewPayPopup from './ReviewPayPopup'
+import { useSelector } from 'react-redux'
+
 
 const ReviewDeliveryOrder = () => {
     const { deliveryPayment, discountOpt } = useContext(FeresContext)
+    const userDetail = useSelector((state) => state.userAuth.user)
+  const currentLocation = useSelector((state) => state.deliveryLocation.current);
+  const destination = useSelector((state) => state.deliveryLocation.destination);
+  const destinationPersonName = useSelector((state) => state.deliveryLocation.destinationPersonName);
+  const destinationPersonPhone = useSelector((state) => state.deliveryLocation.destinationPersonPhone);
+  const vehicleType = useSelector((state) => state.deliveryLocation.vehicleType);
+  const vehicleSpeed = useSelector((state) => state.deliveryLocation.vehicleSpeed);
+
     const navigate = useNavigate()
     const [reviewPay, setReviewPay] = useState(false)
+
+    
+    
     return (
         <>
             <div className={`bg-[#F8F8F8] pb-[158px]`}>
@@ -30,8 +43,8 @@ const ReviewDeliveryOrder = () => {
                             <img src={assets.location_blue} alt="" />
                             <div>
                                 <h3 className='text-[#2F2F3F] font-medium mb-2'>Sender</h3>
-                                <p className='text-[#979797] text-sm'>Abraham John • +44 9024677034</p>
-                                <p className='text-[#979797] text-sm'>Elgin St. Celina, Delaware 10299</p>
+                                <p className='text-[#979797] text-sm'>{`${userDetail?.first_name} ${userDetail?.last_name} • ${userDetail?.country_detail?.countryphonecode} ${userDetail?.phone}`}</p>
+                                <p className='text-[#979797] text-sm'>{currentLocation?.address}</p>
                             </div>
                         </div>
                         <img src={assets.arrow_right} alt="" />
@@ -42,8 +55,8 @@ const ReviewDeliveryOrder = () => {
                             <img src={assets.location_green} alt="" />
                             <div>
                                 <h3 className='text-[#2F2F3F] font-medium mb-2'>Recipient 1</h3>
-                                <p className='text-[#979797] text-sm'>Dianne Russell • +44 9024674567</p>
-                                <p className='text-[#979797] text-sm'>Royal Ln. Mesa, New Jersey 45463</p>
+                                {destinationPersonName && <p className='text-[#979797] text-sm'>{`${destinationPersonName} • ${destinationPersonPhone}`}</p>}
+                                <p className='text-[#979797] text-sm'>{destination?.description}</p>
                             </div>
                         </div>
                         <img src={assets.arrow_right} alt="" />
@@ -53,7 +66,7 @@ const ReviewDeliveryOrder = () => {
                 {/* Options */}
                 <Container className={'bg-white mt-5 py-1 pb-6 rounded-lg'}>
                     <h3 className='text-[#2F2F3F] text-lg font-medium my-5'>Options</h3>
-                    <DeliveryDetailsCard isPriority={true} img={assets.bike_character} name={"Instant"} desc={"Pickup within 30mins, drop-off within 90..."} />
+                    <DeliveryDetailsCard isPriority={false} img={assets.bike_character} name={"Instant"} desc={"Pickup within 30mins, drop-off within 90..."} />
                     <DeliveryDetailsCard img={assets.motor_bike} name={"Motor bike"} desc={"Recommended based on your iteam"} />
                     <DeliveryDetailsCard img={assets.package_01} name={"Item details"} desc={"Add your item details"} isLast={true} />
                 </Container>

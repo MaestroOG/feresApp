@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import DeliveryItemNav from '../../components/DeliveryItemDetailsComps/DeliveryItemNav'
 import Container from '../../components/Container'
 import { assets } from '../../assets/assets'
@@ -6,16 +6,41 @@ import SelectWeightPopup from '../../components/DeliveryItemDetailsComps/SelectW
 import { FeresContext } from '../../context/FeresContext'
 import UploadPhotoPopup from '../../components/DeliveryItemDetailsComps/UploadPhotoPopup'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import { useSelector } from 'react-redux'
 
 const DeliveryItemDetailsPage = () => {
     const { selectWeight, setSelectWeight, weightValue, picturePop, delItemPhoto, setDelItemPhoto, setPicturePop } = useContext(FeresContext)
     const [kilos, setKilos] = useState("")
+    const currentLocation = useSelector((state) => state.deliveryLocation.current);
+    const destination = useSelector((state) => state.deliveryLocation.destination);
+  const userDetail = useSelector((state) => state.userAuth.user);
+  const vehicleType = useSelector((state) => state.deliveryLocation.vehicleType);
+
     const [activeBtn, setActiveBtn] = useState(null)
     const navigate = useNavigate();
-
+    const [categories, setCategories] = useState(null)
     const handleActiveClick = (id) => {
         setActiveBtn(id)
     }
+    const getTypes = async () => {
+    const types =await axios.post("https://suuq.feres.co/api/admin/get_category_and_deliveries_list",
+        {
+            sourceLocation:[currentLocation?.coordinates?.lat , currentLocation?.coordinates?.lng],
+            destinationLocation:[destination?.coordinates?.lat , currentLocation?.coordinates?.lng],
+            user_id:userDetail.user_id,
+            server_token:userDetail.token,
+            vehicles_id: vehicleType.vehicle_id
+    })
+    setCategories(types?.data?.degdeg_category_and_deliveries[0]?.d_type);
+    
+
+}
+
+    useEffect(()=>{
+        getTypes()
+    },[])
+
     return (
         <>
             <div className={`pb-28 ${selectWeight || picturePop && 'blur-sm'}`}>
@@ -72,10 +97,10 @@ const DeliveryItemDetailsPage = () => {
                 <Container className={'my-7'}>
                     <h3 className='text-lg font-medium text-[#2F2F3F] mb-5'>Item type <span className='text-lg font-normal text-[#979797]'>(optional)</span></h3>
                     <div className='grid grid-cols-3 gap-x-8 gap-y-5'>
-                        {Array(7).fill().map((_, index) => (
+                        {categories?.map((category, index) => (
                             <div key={index} onClick={() => handleActiveClick(index)} className={`${activeBtn === index ? 'bg-[#0AB247]' : 'bg-[#F4FFF8]'} max-w-[110px] h-[73px] rounded-xl p-[10px] flex items-center justify-center flex-col gap-1`}>
-                                <img src={assets.google_doc_green} alt="" />
-                                <p className={`${activeBtn === index ? 'text-white' : 'text-[#0AB247]'} font-medium`}>Document</p>
+                                <img src={category?.featured_image} alt="" width={'30px'}/>
+                                <p className={`${activeBtn === index ? 'text-white' : 'text-[#0AB247]'} font-medium`}>{category?.deliveries_name}</p>
                             </div>
                         ))}
                     </div>
