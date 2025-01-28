@@ -23,7 +23,6 @@ const SelectLocation = () => {
   const [selctedAddress, setSelctedAddress] = useState(null);
   const [popup, setPopup] = useState(false);
 
-
   useEffect(() => {
     const loader = new Loader({
       apiKey: import.meta.env.VITE_MAP_API_KEY, // Replace with your API key
@@ -152,7 +151,10 @@ const SelectLocation = () => {
 
   const selectedSavedAddress = useCallback((data) => {
     setSelctedAddress(data);
-    setPopup(false)
+    setTimeout(() => {
+      setPopup(false);
+      navigate('/')
+    }, 1000);
 
   }, []);
 
