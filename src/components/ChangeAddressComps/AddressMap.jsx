@@ -9,7 +9,7 @@ const AddressMap = ({ setAddress, address, setFullAdd, fullAdd }) => {
     useEffect(() => {
         // Load the Google Maps API
         const loader = new Loader({
-            apiKey: import.meta.env.VITE_MAP_API_KEY, // Replace with your API keu
+            apiKey: import.meta.env.VITE_MAP_API_KEY, // Replace with your API key
             version: "weekly",
             libraries: ["places"] // Load the places library for Geocoding
         });
@@ -47,7 +47,7 @@ const AddressMap = ({ setAddress, address, setFullAdd, fullAdd }) => {
                             if (status === "OK" && results[0]) {
                                 setAddress(results[0].formatted_address); // Set the address in the input
                                 setFullAdd(results[0])
-                                console.log(fullAdd)
+                                console.log(fullAdd);
                             } else {
                                 console.error("Geocode was not successful for the following reason: " + status);
                             }
