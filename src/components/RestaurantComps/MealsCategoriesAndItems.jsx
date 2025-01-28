@@ -10,8 +10,6 @@ import NewOrderPopUpModel from '../../pages/NewOrderPopUp';
 import { setSelectedFood } from '../../redux/slices/selectedFoodSlice';
 import { useNavigate } from 'react-router-dom';
 import { setSupportItem } from '../../redux/slices/selectedResturantSlice';
-
-import Loader from '../Loader';
 import Spinner from '../Spinner';
 
 
