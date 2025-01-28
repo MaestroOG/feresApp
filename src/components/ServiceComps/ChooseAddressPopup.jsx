@@ -2,14 +2,12 @@ import React, { useState } from "react";
 import { assets } from "../../assets/assets";
 import { useNavigate } from "react-router-dom";
 
-const ChooseAddressPopup = ({ onClick, savedLocationPopup, selectedSavedAddress,closePopup }) => {
+const ChooseAddressPopup = ({ onClick, savedLocationPopup, selectedSavedAddress, closePopup }) => {
     const [selectedAddress, setSelectedAddress] = useState(null);
 
     const handleCheckboxClick = (item) => {
         setSelectedAddress(item);
-        selectedSavedAddress(item); 
-        
-        
+        selectedSavedAddress(item);
     };
 
     return (
@@ -18,7 +16,7 @@ const ChooseAddressPopup = ({ onClick, savedLocationPopup, selectedSavedAddress,
                 <img src={assets.popup_bar} className="mt-[10px] mx-auto" alt="" />
                 <div className="flex items-center justify-center gap-[61px] w-[80%] ml-auto mt-[18px] mb-[17px]">
                     <h1 className="text-[#2F2F3F] text-[19px] font-[700]">Choose delivery location</h1>
-                    <img src={assets.close} alt="" onClick={()=> closePopup(false)} />
+                    <img src={assets.close} alt="" onClick={() => closePopup(false)} />
                 </div>
                 <hr />
                 <h3 className="px-4 text-[#2F2F3F] font-[500] text-lg mt-5 mb-[14px]">Saved Addresses</h3>
@@ -36,9 +34,8 @@ const ChooseAddressPopup = ({ onClick, savedLocationPopup, selectedSavedAddress,
                         </div>
                         <div>
                             <button
-                                className={`w-8 h-8 flex items-center justify-center rounded-full ${
-                                    selectedAddress === item ? "bg-green-500" : "bg-gray-200"
-                                }`}
+                                className={`w-8 h-8 flex items-center justify-center rounded-full ${selectedAddress === item ? "bg-green-500" : "bg-gray-200"
+                                    }`}
                                 onClick={() => handleCheckboxClick(item)}
                             >
                                 {selectedAddress === item && (
@@ -65,7 +62,7 @@ const ChooseAddressPopup = ({ onClick, savedLocationPopup, selectedSavedAddress,
                         <img src={assets.pin_location_03} className="object-contain" alt="" />
                         <div>
                             <h3 className="text-lg font-medium text-[#2F2F3F]">Deliver to a different location</h3>
-                            <p className="text-[#8E8E93]" onClick={()=> closePopup(false)}>Choose location on map</p>
+                            <p className="text-[#8E8E93]" onClick={() => closePopup(false)}>Choose location on map</p>
                         </div>
                     </div>
                     <img src={assets.arrow_right} alt="" />
@@ -74,7 +71,7 @@ const ChooseAddressPopup = ({ onClick, savedLocationPopup, selectedSavedAddress,
                     <div className="flex gap-4">
                         <img src={assets.sent} className="object-contain" alt="" />
                         <div>
-                            <h3 className="text-lg font-medium text-[#2F2F3F]" onClick={()=> closePopup(false)}>Deliver to current location</h3>
+                            <h3 className="text-lg font-medium text-[#2F2F3F]" onClick={() => closePopup(false)}>Deliver to current location</h3>
                             <p className="text-[#8E8E93]">Outside Delivery Zone</p>
                         </div>
                     </div>

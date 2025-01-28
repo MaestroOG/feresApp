@@ -245,7 +245,7 @@ const EcommerceMart = () => {
                 </div>
             </>}
 
-            {!storeOpenStatus && <Container className={'absolute top-[23%] w-full'}>
+            {!storeOpenStatus && <Container className={'absolute top-4 w-full'}>
                 <div className='bg-[#E8E8E8] rounded-2xl p-3 flex items-center justify-between'>
                     <div className='flex items-center gap-1'>
                         <img src={assets.notification_bell} alt="" />

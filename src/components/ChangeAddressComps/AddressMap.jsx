@@ -2,14 +2,14 @@ import React, { useState, useRef, useEffect } from 'react'
 import { assets } from '../../assets/assets'
 import { Loader } from '@googlemaps/js-api-loader';
 
-const AddressMap = () => {
-    const [address, setAddress] = useState(''); // Store the address in state
+const AddressMap = ({ setAddress, address, setFullAdd, fullAdd }) => {
+    // Store the address in state
     const mapRef = useRef(null); // Reference to the map container
 
     useEffect(() => {
         // Load the Google Maps API
         const loader = new Loader({
-            apiKey: import.meta.env.VITE_MAP_API_KEY, // Replace with your API key
+            apiKey: import.meta.env.VITE_MAP_API_KEY, // Replace with your API keu
             version: "weekly",
             libraries: ["places"] // Load the places library for Geocoding
         });
@@ -46,6 +46,8 @@ const AddressMap = () => {
                         geocoder.geocode({ location: { lat: latitude, lng: longitude } }, (results, status) => {
                             if (status === "OK" && results[0]) {
                                 setAddress(results[0].formatted_address); // Set the address in the input
+                                setFullAdd(results[0])
+                                console.log(fullAdd)
                             } else {
                                 console.error("Geocode was not successful for the following reason: " + status);
                             }
@@ -75,7 +77,7 @@ const AddressMap = () => {
             </div>
             <div className='py-[17px] px-4 flex items-center gap-3'>
                 <img src={assets.location_black} alt="" />
-                <p className='text-[#2F2F3F] text-lg'>Elgin St. Celina, Delaware 10299</p>
+                <p className='text-[#2F2F3F] text-lg'>{address}</p>
             </div>
         </div>
     )

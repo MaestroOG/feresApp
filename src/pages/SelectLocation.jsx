@@ -104,33 +104,46 @@ const SelectLocation = () => {
 
   const savedLocation = async () => {
     // Replace with API call
-    setPopup(true)
-    setSavedLocationPopup([
-      {
-        title: "Home",
-        address: "456 Elm St, Springfield, IL",
-        location: [-89.6501, 39.7832],
-      },
-      {
-        title: "Office",
-        address: "123 Main St, Springfield, IL",
-        location: [-89.6510, 39.7840],
-      },
-    ]);
-    dispatch(
-      setSavedLocation([
-        {
-          title: "Home",
-          address: "456 Elm St, Springfield, IL",
-          location: [-89.6501, 39.7832],
-        },
-        {
-          title: "Office",
-          address: "123 Main St, Springfield, IL",
-          location: [-89.6510, 39.7840],
-        },
-      ])
-    );
+    const endpoint = '/api/user/get_address'
+
+    try {
+      const data = await post(endpoint, {
+        user_id: loginUser?.user_id
+      })
+      if (data?.success) {
+        setSavedLocationPopup(data.data)
+        dispatch(setSavedLocation(data.data))
+      }
+      setPopup(true)
+    } catch (error) {
+      console.log(error.message)
+    }
+    // setSavedLocationPopup([
+    //   {
+    //     title: "Home",
+    //     address: "456 Elm St, Springfield, IL",
+    //     location: [-89.6501, 39.7832],
+    //   },
+    //   {
+    //     title: "Office",
+    //     address: "123 Main St, Springfield, IL",
+    //     location: [-89.6510, 39.7840],
+    //   },
+    // ]);
+    // dispatch(
+    //   setSavedLocation([
+    //     {
+    //       title: "Home",
+    //       address: "456 Elm St, Springfield, IL",
+    //       location: [-89.6501, 39.7832],
+    //     },
+    //     {
+    //       title: "Office",
+    //       address: "123 Main St, Springfield, IL",
+    //       location: [-89.6510, 39.7840],
+    //     },
+    //   ])
+    // );
   };
 
   useEffect(() => {
@@ -155,7 +168,7 @@ const SelectLocation = () => {
           savedLocationPopup={savedLocationPopup}
           selectedSavedAddress={selectedSavedAddress}
           closePopup={closePopup}
-          
+
         />
       )}
 
