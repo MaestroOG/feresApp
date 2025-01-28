@@ -65,7 +65,7 @@ const Ecommerce = () => {
         try {
             const data = await post(endpoint, {});
             if (data) {
-                const filteredData = data.stores.filter(store => store.category_id === activeButton)
+                const filteredData = data.stores.filter(store => store.store_category_type === activeButton)
                 setStores(filteredData);
                 console.log(filteredData)
             }
