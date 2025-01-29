@@ -18,6 +18,7 @@ const ReviewDeliveryOrder = () => {
   const destinationPersonPhone = useSelector((state) => state.deliveryLocation.destinationPersonPhone);
   const vehicleType = useSelector((state) => state.deliveryLocation.vehicleType);
   const vehicleSpeed = useSelector((state) => state.deliveryLocation.vehicleSpeed);
+  const totalDistance = useSelector((state) => state.deliveryLocation.totalDistance);
     const driverNote = useSelector((state) => state.deliveryLocation.driverNote)
     const cost = useSelector((state) => state.deliveryLocation.cost)
 
@@ -29,7 +30,7 @@ const ReviewDeliveryOrder = () => {
             setReviewPay(true)
         }else{
             
-            const createDeg = axios.post('https://suuq.feres.co/api/admin/create_deg_deg_order',{
+            const createDeg = axios.post('https://suuq.feres.co/api/admin/Create_Express_order',{
                 sender_phone: userDetail?.phone ,
                 delivery_id: '63d614b4d7215c6c87f66885',
                 description: '',
@@ -55,7 +56,10 @@ const ReviewDeliveryOrder = () => {
                 receiver_phone: destinationPersonPhone,
                 receiver_note_driver: '',
                 Destination_latitude: destination?.coordinates?.lat,
-                city_id: vehicleType?.city_id
+                city_id: vehicleType?.city_id,
+                payment_mode_Cash: true,
+                TotalDistance:totalDistance,
+                payment_id:null
                        })
             navigate('/deliveryservice/ridemap')}
     }

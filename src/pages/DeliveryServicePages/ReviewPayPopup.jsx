@@ -17,12 +17,14 @@ const ReviewPayPopup = ({ onCancelClick, onNotNowClick, selectedResturant, onPay
     const dispatch = useDispatch()
     const cartDetail = useSelector((state) => state.cartDetails.cartDetails)
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
+  const totalDistance = useSelector((state) => state.deliveryLocation.totalDistance);
     const loginUserData = useSelector((state) => state.userAuth.user)
     const { tipBtn, setTipBtn, discount, customTip, deliveryPickup } = useContext(FeresContext)
     const userDetail = useSelector((state) => state.userAuth.user)
     const navigate = useNavigate()
     const [number, setNumber] = useState(loginUserData?.phone || "")
     const [paymentName, setPaymentName] = useState('')
+    const [paymentId, setPaymentId] = useState(null)
     const [otp, setOtp] = useState('')
     const [showPayment, setShowPayment] = useState(false)
     const [accountName, setAccountName] = useState("Select ebirr account")
@@ -43,13 +45,13 @@ console.log(number,"EBirr");
 
     const handlePayPayment = async () => {
         if(cost > 0){
-            const createDeg =await axios.post('https://suuq.feres.co/api/admin/create_deg_deg_order',{
+            const createDeg =await axios.post('https://suuq.feres.co/api/admin/Create_Express_order',{
                 sender_phone: number ,
                 delivery_id: '63d614b4d7215c6c87f66885',
                 description: '',
                 sender_name: `${userDetail?.first_name} ${userDetail?.last_name}`,
                 Destination_longitude: destination?.coordinates?.lng,
-                type: '3',
+                type: '2',
                 service_type_name: vehicleType?.vehicle_name ,
                 pin: otp,
                 destination_addresses: destination?.description,
@@ -62,15 +64,19 @@ console.log(number,"EBirr");
                 receiver_floor: '0',
                 sender_note_driver: driverNote,
                 user_id: userDetail?.user_id,
-                phone: userDetail?.phone,
+                phone: number,
                 vehicles_id: vehicleType?.vehicle_id,
                 Source_latitude: currentLocation?.coordinates?.lat,
-                payment_name: paymentName,
+                payment_name: accountName,
                 receiver_phone: destinationPersonPhone,
                 receiver_note_driver: '',
                 Destination_latitude: destination?.coordinates?.lat,
-                city_id: vehicleType?.city_id
+                city_id: vehicleType?.city_id,
+                payment_mode_Cash:false,
+                TotalDistance:totalDistance,
+                payment_id:paymentId
                 })
+                navigate('/deliveryservice/ridemap')
         }else{
             const payOrder = await post('/api/user/pay_order_payment_waafi', {
                 cart_unique_token: cartItemData?.cart_unique_token,
@@ -151,6 +157,7 @@ console.log(number,"EBirr");
                         {showPayment && <div className='bg-white min-h-[140px] w-[398px] rounded-[13px] border border-[#F2F4F7] absolute top-16 left-0'>
                             {paymentOptions?.map((item) => <div className='py-[10px] px-[14px] text-[#101828]' onClick={() => {
                                 setAccountName(item?.name)
+                                setPaymentId(item?._id)
                                 setShowPayment(false)
                             }} key={item?._id}>{item?.name}</div>)}
                         </div>}
