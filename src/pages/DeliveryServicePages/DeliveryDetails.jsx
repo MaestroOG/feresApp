@@ -8,7 +8,7 @@ import VehicleTypePopup from '../../components/DeliveryServiceComps/DeliveryDeta
 import { FeresContext } from '../../context/FeresContext';
 import DeliveryItemDetail from '../../components/DeliveryServiceComps/DeliveryDetailsComps/DeliveryItemDetail';
 import axios from 'axios';
-import { setCost, setDestinationPersonName, setDestinationPersonPhone, setVehicleSpeed, setVehicleType } from '../../redux/slices/deliveryLocationSlice';
+import { setCost, setDestinationPersonName, setDestinationPersonPhone, setTotalDistanceKm, setVehicleSpeed, setVehicleType } from '../../redux/slices/deliveryLocationSlice';
 
 const DeliveryDetails = () => {
   const navigate = useNavigate();
@@ -28,6 +28,8 @@ const destinationPersonPhone = useSelector((state) => state.deliveryLocation.des
   const [location, setLocation] = useState(destination?.description);
   const dispatch = useDispatch();
   let cost;
+
+
   useEffect(() => {
     const sourceLocation = [currentLocation?.coordinates?.lat, currentLocation?.coordinates?.lng];
     const destinationLocation = [destination?.coordinates?.lat, destination?.coordinates?.lng];
@@ -89,8 +91,8 @@ const destinationPersonPhone = useSelector((state) => state.deliveryLocation.des
         { lat: sourceLocation[0], lng: sourceLocation[1] },
         { lat: destinationLocation[0], lng: destinationLocation[1] }
       );
-
       setTotalDistance(distance);
+      dispatch(setTotalDistanceKm(distance))
     }
   }, [currentLocation, destination, baseData, userDetail]);
 

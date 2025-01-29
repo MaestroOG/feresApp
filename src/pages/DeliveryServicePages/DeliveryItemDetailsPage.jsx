@@ -27,10 +27,12 @@ const DeliveryItemDetailsPage = () => {
     const types =await axios.post("https://suuq.feres.co/api/admin/get_category_and_deliveries_list",
         {
             sourceLocation:[currentLocation?.coordinates?.lat , currentLocation?.coordinates?.lng],
-            destinationLocation:[destination?.coordinates?.lat , currentLocation?.coordinates?.lng],
+            destinationLocation:[destination?.coordinates?.lat , destination?.coordinates?.lng],
             user_id:userDetail.user_id,
             server_token:userDetail.token,
-            vehicles_id: vehicleType.vehicle_id
+            vehicles_id: vehicleType.vehicle_id,
+            source_address: currentLocation.address,
+            destination_addresses: destination.description
     })
     setCategories(types?.data?.degdeg_category_and_deliveries[0]?.d_type);
     
