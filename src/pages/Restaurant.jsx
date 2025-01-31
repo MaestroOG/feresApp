@@ -147,6 +147,8 @@ const Restaurant = () => {
         setSelectedTime(time);
         setIsTimePickerOpen(false);
 
+        if (!storeOpenStatus) return;
+
         if (!ordDeadline) {
             setOrdDeadline(true)
         }
@@ -458,7 +460,7 @@ const Restaurant = () => {
                             </div>
                         </div>
 
-                        <MealsCategoriesAndItems categoryItems={selectedResturant?.store?.products} store_id={selectedResturant?.store?._id} cartUniqueToken={cartUniqueToken} />
+                        <MealsCategoriesAndItems storeOpenStatus={storeOpenStatus} categoryItems={selectedResturant?.store?.products} store_id={selectedResturant?.store?._id} cartUniqueToken={cartUniqueToken} />
 
                         {/* Delivered By Feres Popup*/}
 
@@ -520,7 +522,7 @@ const Restaurant = () => {
                 setIsDatePickerOpen(true)
             }} />}
 
-            {foodPopup && <FoodPopUp itemFoodPopup={selectedFood} cartUniqueToken={cartUniqueToken} />}
+            {foodPopup && <FoodPopUp storeOpenStatus={storeOpenStatus} itemFoodPopup={selectedFood} cartUniqueToken={cartUniqueToken} />}
             {firstGroup && <GroupOrder1 setIsOpen={setFirstGroup} onEdit={() => {
                 setFirstGroup(false)
                 setOrdDeadline(true)

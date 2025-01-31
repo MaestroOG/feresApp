@@ -14,7 +14,7 @@ import Spinner from '../Spinner';
 
 
 
-const MealsCategoriesAndItems = ({ categoryItems, store_id, cartUniqueToken, support, notSticky = false }) => {
+const MealsCategoriesAndItems = ({ storeOpenStatus, categoryItems, store_id, cartUniqueToken, support, notSticky = false }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const item_info = useSelector((state) => state.promotions.item_info)
@@ -132,14 +132,18 @@ const MealsCategoriesAndItems = ({ categoryItems, store_id, cartUniqueToken, sup
 
         console.log(requestBody, "here is a data of unexpected cart ");
 
-        const data = await post('/api/user/new_add_item_in_cart', requestBody)
-        const userDetailsResponseprev = await post('/api/user/get_cart', {
-            cart_unique_token: loginUser.cart_unique_token,
-        })
-        const userDetailsResponse = await post('/api/user/get_cart', {
-            cart_unique_token: loginUser.cart_unique_token,
-        })
-        dispatch(setCartItemData(userDetailsResponse.cart))
+        if (!storeOpenStatus) {
+            return;
+        } else {
+            const data = await post('/api/user/new_add_item_in_cart', requestBody)
+            const userDetailsResponseprev = await post('/api/user/get_cart', {
+                cart_unique_token: loginUser.cart_unique_token,
+            })
+            const userDetailsResponse = await post('/api/user/get_cart', {
+                cart_unique_token: loginUser.cart_unique_token,
+            })
+            dispatch(setCartItemData(userDetailsResponse.cart))
+        }
     }
     const checkDiscount = (itemId) => {
         const promoItem = item_info?.find(element => {

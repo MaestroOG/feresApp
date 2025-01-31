@@ -15,14 +15,14 @@ import { setSelectedResturant } from '../../redux/slices/selectedResturantSlice'
 import Loader from '../Loader'
 import Spinner from '../Spinner'
 
-const FoodPopUp = ({ img, text, itemFoodPopup, cartUniqueToken }) => {
+const FoodPopUp = ({ storeOpenStatus, img, text, itemFoodPopup, cartUniqueToken }) => {
 
     const [fvrt, setFvrt] = useState(null)
     const loginUser = useSelector((state) => state.userAuth.user);
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
-    const store_info = useSelector((state)=> state.promotions.store_info)
-    const product_info = useSelector((state)=> state.promotions.product_info)
-    const item_info = useSelector((state)=> state.promotions.item_info)
+    const store_info = useSelector((state) => state.promotions.store_info)
+    const product_info = useSelector((state) => state.promotions.product_info)
+    const item_info = useSelector((state) => state.promotions.item_info)
     const promoPer = useSelector((state) => state.promotions.promoPer)
     const navigate = useNavigate()
     const [note, setNote] = useState('')
@@ -87,7 +87,7 @@ const FoodPopUp = ({ img, text, itemFoodPopup, cartUniqueToken }) => {
 
 
     const handleAddItem = async () => {
-        console.log( "here is a group order api 1");
+        console.log("here is a group order api 1");
 
         closeRef.current.click()
         if (itemFoodPopup) {
@@ -158,26 +158,34 @@ const FoodPopUp = ({ img, text, itemFoodPopup, cartUniqueToken }) => {
                     cart_unique_token: cartUniqueToken
                 }
 
-                const responseData = await post('/api/user/new_add_group_item_in_cart', requestDataGroup)
+                if (!storeOpenStatus) {
+                    return;
+                } else {
+                    const responseData = await post('/api/user/new_add_group_item_in_cart', requestDataGroup)
                     const userDetailsResponse = await post('/api/user/get_cart', {
-                      cart_unique_token: cartUniqueToken,
-                  })
-                dispatch(setCartItemData(userDetailsResponse.cart));
+                        cart_unique_token: cartUniqueToken,
+                    })
+                    dispatch(setCartItemData(userDetailsResponse.cart));
+                }
 
                 console.log('responseData::::::::', responseData);
 
 
             } else {
-                postRequest('/api/user/new_add_item_in_cart', requestBody)
-                // Dispatch both item and its quantity
-                dispatch(addItem({ ...itemFoodPopup, quantity: orderCount }))
-                const userDetailsResponseprev = await post('/api/user/get_cart', {
-                    cart_unique_token: loginUser.cart_unique_token,
-                })
-                const userDetailsResponse = await post('/api/user/get_cart', {
-                    cart_unique_token: loginUser.cart_unique_token,
-                })
-                dispatch(setCartItemData(userDetailsResponse.cart));
+                if (!storeOpenStatus) {
+                    return;
+                } else {
+                    postRequest('/api/user/new_add_item_in_cart', requestBody)
+                    // Dispatch both item and its quantity
+                    dispatch(addItem({ ...itemFoodPopup, quantity: orderCount }))
+                    const userDetailsResponseprev = await post('/api/user/get_cart', {
+                        cart_unique_token: loginUser.cart_unique_token,
+                    })
+                    const userDetailsResponse = await post('/api/user/get_cart', {
+                        cart_unique_token: loginUser.cart_unique_token,
+                    })
+                    dispatch(setCartItemData(userDetailsResponse.cart));
+                }
             }
             setIsLoad(false)
         }
@@ -243,12 +251,12 @@ const FoodPopUp = ({ img, text, itemFoodPopup, cartUniqueToken }) => {
 
     function calculateDiscount(amount, discountPer) {
 
-        
-        const discount = (parseFloat(amount) * parseInt(discountPer)) /100;
-        const finalPrice =  amount-discount ; 
+
+        const discount = (parseFloat(amount) * parseInt(discountPer)) / 100;
+        const finalPrice = amount - discount;
         return finalPrice;
     }
-    
+
     const checkProductInfo = (item) => {
         const promoItem = product_info?.find(element => {
             if (element._id == item.product_id) {
@@ -272,7 +280,7 @@ const FoodPopUp = ({ img, text, itemFoodPopup, cartUniqueToken }) => {
         return promoItem
 
     }
-    
+
 
     return (
         <>
@@ -339,19 +347,19 @@ const FoodPopUp = ({ img, text, itemFoodPopup, cartUniqueToken }) => {
                             </h2>
                             <p className="text-[#767578] text-base">{itemFoodPopup?.details}</p>
                             <div className="flex items-center gap-2 mt-3">
-                            {store_info ? <> <p className='text-[#9E9E9E] line-through text-base'>{`ETB ${itemFoodPopup?.price}`}</p>
-                                           <p className='text-[#0AB247] font-bold text-base'>{`ETB ${calculateDiscount(itemFoodPopup?.price,promoPer)}`}</p></>
-                                             : product_info ?  
-                                             checkProductInfo(itemFoodPopup) ? <> <p className='text-[#9E9E9E] line-through text-base'>{`ETB ${itemFoodPopup?.price}`}</p>
-                                            <p className='text-[#0AB247] font-bold text-base'>{`ETB ${calculateDiscount(itemFoodPopup?.price,promoPer)}`}</p></> :                                   
-                                             <>
-                                            <p className='text-[#0AB247] font-bold text-sm'>EBT {item?.price}</p> </> :
-                                             item_info ?  
-                                             checkItemInfo(itemFoodPopup) ? <> <p className='text-[#9E9E9E] line-through text-base'>{`ETB ${itemFoodPopup?.price}`}</p>
-                                            <p className='text-[#0AB247] font-bold text-base'>{`ETB ${calculateDiscount(itemFoodPopup?.price,promoPer)}`}</p></> :                                   
-                                             <> 
-                                            <p className='text-[#0AB247] font-bold text-sm'>EBT {itemFoodPopup?.price}</p> </> :  <> 
-                                            <p className='text-[#0AB247] font-bold text-sm'>EBT {itemFoodPopup?.price}</p> </>}
+                                {store_info ? <> <p className='text-[#9E9E9E] line-through text-base'>{`ETB ${itemFoodPopup?.price}`}</p>
+                                    <p className='text-[#0AB247] font-bold text-base'>{`ETB ${calculateDiscount(itemFoodPopup?.price, promoPer)}`}</p></>
+                                    : product_info ?
+                                        checkProductInfo(itemFoodPopup) ? <> <p className='text-[#9E9E9E] line-through text-base'>{`ETB ${itemFoodPopup?.price}`}</p>
+                                            <p className='text-[#0AB247] font-bold text-base'>{`ETB ${calculateDiscount(itemFoodPopup?.price, promoPer)}`}</p></> :
+                                            <>
+                                                <p className='text-[#0AB247] font-bold text-sm'>EBT {item?.price}</p> </> :
+                                        item_info ?
+                                            checkItemInfo(itemFoodPopup) ? <> <p className='text-[#9E9E9E] line-through text-base'>{`ETB ${itemFoodPopup?.price}`}</p>
+                                                <p className='text-[#0AB247] font-bold text-base'>{`ETB ${calculateDiscount(itemFoodPopup?.price, promoPer)}`}</p></> :
+                                                <>
+                                                    <p className='text-[#0AB247] font-bold text-sm'>EBT {itemFoodPopup?.price}</p> </> : <>
+                                                <p className='text-[#0AB247] font-bold text-sm'>EBT {itemFoodPopup?.price}</p> </>}
                             </div></div>
 
                         <div className='rounded-tl-[16px] rounded-tr-[16px] p-4 bg-white mt-[15px]'>
