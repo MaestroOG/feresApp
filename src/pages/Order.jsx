@@ -123,7 +123,7 @@ const Order = () => {
 
     return (
         <>
-            <div className='pb-24 bg-[#EAEAEA]'>
+            <div className='pb-20 bg-[#EAEAEA]'>
                 <OrderNav />
                 <DelOrPickBtn />
                 {!deliveryPickup && <SelectRide />}

@@ -20,7 +20,7 @@ const TotalBill = ({ onDelClick, onServiceClick, selectedResturant, order_paymen
         <div className='px-4 pt-7 mt-[10px] pb-4 bg-white'>
             {order_payment !== undefined && <>
                 <div className='flex items-center justify-between'>
-                    <h3 className='text-[#767578]'>Subtotal</h3>
+                    <h3 className='text-[#767578] font-bold'>Subtotal</h3>
                     <p className='text-[#2F2F3F] font-medium text-base'>{`ETB${order_payment && order_payment[0]?.total}`}</p>
                 </div>
                 {/* {!deliveryPickup && <div className='flex items-center justify-between mt-2'>
@@ -71,7 +71,7 @@ const TotalBill = ({ onDelClick, onServiceClick, selectedResturant, order_paymen
                     </div>
                     : null}
                 <div className='flex items-center justify-between mt-2'>
-                    <h3 className='text-[#767578]'>Total</h3>
+                    <h3 className='text-[#767578] font-bold'>Total</h3>
                     <p className='text-[#0AB247] font-medium text-base'>{`ETB${order_payment && order_payment[0]?.total}`}</p>
                 </div>
             </>}

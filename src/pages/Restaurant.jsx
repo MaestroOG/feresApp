@@ -523,7 +523,7 @@ const Restaurant = () => {
             }} />}
 
             {foodPopup && <FoodPopUp storeOpenStatus={storeOpenStatus} itemFoodPopup={selectedFood} cartUniqueToken={cartUniqueToken} />}
-            {firstGroup && <GroupOrder1 setIsOpen={setFirstGroup} onEdit={() => {
+            {firstGroup && <GroupOrder1 restInfo={restInfo} setIsOpen={setFirstGroup} onEdit={() => {
                 setFirstGroup(false)
                 setOrdDeadline(true)
             }} onQr={() => {

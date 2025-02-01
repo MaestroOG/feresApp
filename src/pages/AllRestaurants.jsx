@@ -11,6 +11,8 @@ import FilterResCard from '../components/AllRestaurantComps/FilterResCard'
 import axios from 'axios'
 import Spinner from '../components/Spinner'
 import Loader from '../components/Loader'
+import { setSearchData } from '../redux/slices/searchSlice'
+import { useDispatch } from 'react-redux'
 
 const AllRestaurants = () => {
 
@@ -20,6 +22,7 @@ const AllRestaurants = () => {
     const [notLoad, setNotLoad] = useState(false)
     const [error, setError] = useState(false)
     const [details, setDetails] = useState(null)
+    const dispatch = useDispatch()
 
     const getNotifications = async () => {
         const endpoint = 'https://farasanya.feres.co/getNotifications'
@@ -64,6 +67,7 @@ const AllRestaurants = () => {
     }
 
     useEffect(() => {
+        dispatch(setSearchData(""))
         setRestFilter(null)
         getNotifications()
     }, [])

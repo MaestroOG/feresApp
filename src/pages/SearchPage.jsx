@@ -7,8 +7,9 @@ import { useNavigate } from 'react-router-dom'
 import { FeresContext } from '../context/FeresContext'
 import FilterPopUp from '../components/SearchComps/FilterPopUp'
 import { usePost } from '../servies/usePost'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
+import { setSearchData } from '../redux/slices/searchSlice'
 
 const SearchPage = () => {
     const { setFilterPop, filterPop, searchTerm, setSearchTerm, searchValue } = useContext(FeresContext)
@@ -17,7 +18,7 @@ const SearchPage = () => {
     const options = useSelector(state => state.filter.options)
     console.log(options);
     const searchData = useSelector((state) => state.search.searchData);
-
+    const dispatch = useDispatch()
     const { post, loading, error } = usePost()
 
     const navigate = useNavigate();
@@ -55,6 +56,7 @@ const SearchPage = () => {
     }
 
     useEffect(() => {
+        dispatch(setSearchData(""))
         filterStores();
     }, [options])
 

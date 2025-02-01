@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react'
 import { assets } from '../../assets/assets'
 import Container from '../Container'
 
-const GroupOrder1 = ({ setIsOpen, onEdit, onQr, onInvite }) => {
+const GroupOrder1 = ({ setIsOpen, onEdit, onQr, onInvite, restInfo }) => {
     const divRef = useRef(null);
 
     useEffect(() => {
@@ -26,7 +26,7 @@ const GroupOrder1 = ({ setIsOpen, onEdit, onQr, onInvite }) => {
                     <img src={assets.group_order_img} alt="" className='rounded-xl pt-4' />
                     <div className='mt-5 mb-6'>
                         <h3 className='text-[#2F2F3F] text-xl font-bold'>Your group order</h3>
-                        <p className='text-[#979797] mt-2'>KFC Eastlight</p>
+                        <p className='text-[#979797] mt-2'>{restInfo?.store_detail.name}</p>
                     </div>
                     <div className='border border-[#EEEEEE] rounded-2xl px-5 py-6 flex items-center justify-between' onClick={onEdit}>
                         <div className='flex items-center gap-5'>

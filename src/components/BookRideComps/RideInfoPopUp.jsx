@@ -217,7 +217,7 @@ const RideInfoPopUp = () => {
     }
 
     return (
-        <div className='fixed bottom-0 left-0 max-h-[90vh] w-full rounded-tr-[13px] rounded-tl-[13px] overflow-y-auto pb-48 transition-all z-[104] bg-gray-200'>
+        <div className='fixed bottom-0 left-0 max-h-[90vh] w-full rounded-tr-[13px] rounded-tl-[13px] overflow-y-auto pb-40 transition-all z-[104] bg-gray-200'>
             <div className='sticky top-0 w-full z-20 py-2 bg-white px-3'>
                 <div className='pb-4 pt-2'>
                     <img src={assets.popup_down_arrow} alt="" className='mx-auto' onClick={() => setRideInfoPop(false)} />
@@ -232,16 +232,17 @@ const RideInfoPopUp = () => {
                     <p className='text-lg text-[#979797]'>Estimated time of delivery</p>
                 </div>
             </div>
-            <p className='pt-5 text-[#2F2F3F] text-xl font-medium bg-white px-3'>Order progress</p>
+            <p className='pt-5 text-[#2F2F3F] text-xl bg-white px-3 font-bold'>Order progress</p>
             {/* Order Progress */}
             <div className='relative bg-white pb-[22px] rounded-b-[20px] px-3'>
                 <div className='flex items-center gap-2 pt-6' >
-
+                    <p className='text-[#979797]'>14:53</p>
                     {progress > 1 ? <> <img className='ml-[10px]' src='/tick-icon.svg' alt="" /> </> : <img className='ml-[10px]' src={progress === 1 ? assets.order_progress : assets.order_progress_2} alt="" />}
                     {progress > 1 ? <p className='text-base text-[#2F2F3F]'>{selectedResturant?.store?.name} has been confirmed your order</p> : <div > <p className='text-base text-[#2F2F3F]'>Waiting for {selectedResturant?.store?.name} to confirm your order</p></div>}
                 </div>
-                <hr className='rotate-90 w-10 absolute top-[4.7rem] left-[14px] mb-5' />
+                <hr className='rotate-90 w-10 absolute top-[4.8rem] left-[59px] mb-5 border-[#0AB247]' />
                 <div className='flex items-center gap-2 mt-16 bg-white' >
+                    <p className='text-[#979797]'>14:53</p>
                     {progress > 5 ? <img className='ml-[10px]' src='/tick-icon.svg' alt="" /> : <img className='ml-[10px]' src={progress > 1 && progress <= 5 ? assets.order_progress : assets.order_progress_2} alt="" />}
                     {progress > 5 ? <div> <p className='text-base text-[#2F2F3F]'>Your order is ready for pickup</p> </div> : <p className='text-base text-[#979797]'>Preparing your order</p>}
                 </div>
@@ -251,27 +252,30 @@ const RideInfoPopUp = () => {
                     <p className='text-base text-[#979797]'>Your order is ready</p>
                 </div> */}
 
-                <hr className='rotate-90 w-10 absolute top-[10.2rem] left-[14px] mb-5' />
+                <hr className='rotate-90 w-10 absolute top-[10.3rem] left-[59px] mb-5 border-[#0AB247]' />
                 <div className='flex items-center gap-2 mt-16 bg-white' >
+                    <p className='text-[#979797]'>14:53</p>
                     {progress > 7 ? <img className='ml-[10px]' src='/tick-icon.svg' alt="" /> : <img className='ml-[10px]' src={progress >= 7 && progress <= 9 ? assets.order_progress : assets.order_progress_2} alt="" />}
                     {progress > 7 ? <div> <p className='text-base text-[#2F2F3F]'>Rider has been assgined to your order</p> </div> : <p className='text-base text-[#979797]'>Looking for a rider</p>}
                 </div>
-                <hr className='rotate-90 w-10 absolute top-[15.5rem] left-[14px] mb-5' />
+                <hr className='rotate-90 w-10 absolute top-[15.7rem] left-[59px] mb-5 border-[#0AB247]' />
                 <div className='flex items-center gap-2 mt-16 bg-white' >
+                    <p className='text-[#979797]'>14:53</p>
                     {progress > 13 ? <img className='ml-[10px]' src='/tick-icon.svg' alt="" /> : <img className='ml-[10px]' src={progress >= 9 && progress <= 15 ? assets.order_progress : assets.order_progress_2} alt="" />}
                     {progress > 13 ? <div> <p className='text-base text-[#2F2F3F]'>Rider has picked up your order</p> </div> : <p className='text-base text-[#979797]'>The rider is on their way to {selectedResturant?.store?.name}</p>}
                 </div>
-                <hr className='rotate-90 w-10 absolute top-[21.5rem] left-[14px] mb-5' />
+                <hr className='rotate-90 w-10 absolute top-[21.7rem] left-[59px] mb-5 border-[#0AB247]' />
                 <div className='flex items-center gap-2 mt-16' onClick={() => {
                     navigate('/raterider')
                 }}>
+                    <p className='text-[#979797]'>14:53</p>
                     {progress == 25 ? <img className='ml-[10px]' src='/tick-icon.svg' alt="" /> : <img className='ml-[10px]' src={progress >= 19 && progress <= 25 ? assets.order_progress : assets.order_progress_2} alt="" />}
                     {progress == 25 ? <div><p className='text-base text-[#2F2F3F]'>Your order is delivered</p> </div> : <p className='text-base text-[#979797]'>The rider is on their way to you</p>}
                 </div>
             </div>
             {/* Order Info */}
             <div className='pt-7 mt-3 mb-4 bg-white rounded-[13px] px-3'>
-                <p className='text-[#2F2F3F] text-xl font-medium'>Order #{uniquOrderId && uniquOrderId}</p>
+                <p className='text-[#2F2F3F] text-xl font-bold'>Order #{uniquOrderId && uniquOrderId}</p>
                 <div className='mt-4'>
                     {cartDetails?.stores?.map(items => (
                         items?.items?.map((item, index) => (
@@ -290,7 +294,7 @@ const RideInfoPopUp = () => {
                 </div>
                 <hr className='mt-4' />
                 <div className='flex items-center justify-between pt-4 bg-white pb-[24px]'>
-                    <h2 className='text-[#2F2F3F] text-xl font-medium'>Total</h2>
+                    <h2 className='text-[#2F2F3F] text-xl font-bold'>Total</h2>
                     <h2 className='text-[#2F2F3F] text-xl font-medium'>ETB{cartDetails?.total_cart_price}</h2>
                 </div>
             </div>

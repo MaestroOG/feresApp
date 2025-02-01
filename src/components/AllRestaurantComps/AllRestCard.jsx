@@ -107,7 +107,7 @@ const AllRestCard = () => {
     return (
         <div className='px-4 mt-6 relative'>
             <h2 className='text-[#2F2F3F] text-lg font-medium'>
-                {searchRes ? 'Search results' : allRests && !searchRes && 'All restaurants'}
+                {searchRes && searchData.length > 0 ? 'Search results' : 'All restaurants'}
             </h2>
             {allRests &&
                 !searchRes &&
@@ -154,11 +154,11 @@ const AllRestCard = () => {
                                 alt='Restaurant'
                                 className='rounded-tr-2xl rounded-tl-2xl object-cover h-[154px] w-full'
                             />
-                            <div className='whitespace-nowrap bg-white text-black flex items-center gap-2 p-3 rounded-3xl absolute bottom-2 right-[7.4rem]'>
+                            <div className='whitespace-nowrap bg-white text-black flex items-center gap-2 p-3 rounded-3xl absolute bottom-11 right-[7.4rem]'>
                                 <img src={assets.clock_img} alt='Clock' />
                                 <p className='text-sm'>{st?.delivery_time} mins</p>
                             </div>
-                            <div className='whitespace-nowrap bg-white text-black flex items-center gap-2 p-3 rounded-3xl absolute bottom-2 right-2'>
+                            <div className='whitespace-nowrap bg-white text-black flex items-center gap-2 p-3 rounded-3xl absolute bottom-11 right-2'>
                                 <img src={assets.scooter_img} alt='Scooter' />
                                 <p className='text-sm'>EBT 150</p>
                             </div>

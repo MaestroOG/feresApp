@@ -36,7 +36,7 @@ const Offers = () => {
             setPromotionData(data);
             dispatch(setAllPromo(data.promotions_list))
 
-                
+
         } catch (error) {
             setError(true)
             setIsLoading(false)
@@ -63,11 +63,11 @@ const Offers = () => {
     }
 
     return (
-        <div className='px-1 mt-10'>
+        <div className='px-1 mt-[30px]'>
             {/* Top line */}
 
-            <div className='flex items-center justify-between mb-6 px-3'>
-                <h3 className='text-[#2F2F3F] text-lg font-medium'>Special offers</h3>
+            <div className='flex items-center justify-between mb-5 px-1'>
+                <h3 className='text-[#2F2F3F] text-lg font-bold'>Special offers</h3>
                 {/* <p className='text-base font-medium text-[#979797]'>See all</p> */}
             </div>
             <div className='flex items-center gap-2 overflow-x-auto offers mb-8 w-screen'>
@@ -82,7 +82,7 @@ const Offers = () => {
                                     <img src={store?.image_url} alt="" className='w-[365px] h-[140.98px] rounded-tr-3xl rounded-tl-3xl object-cover' onClick={() => navigate(item?.store_type === 'food' ? `/restaurant/${store?._id}` : `/ecommerce/mart/${item?.category_id}`)} />
                                     {/* Card Top Stickers */}
                                     <div className='bg-[#F2FDF8] w-[154px] h-[34px] rounded-[30px] p-[10px] text-[#0AB247] font-medium text-xs text-center absolute top-2 left-2 whitespace-nowrap'>{item?.discount_percent}% off selected items</div>
-                                        {/* {JSON.stringify(store)} */}
+                                    {/* {JSON.stringify(store)} */}
                                     <DeliveryTimeLabel restaurantCordinates={store.location} delivery_time={store?.delivery_time + store.kitchen_time} wallet_currency_code={store?.wallet_currency_code} />
                                     {/* Card Info */}
                                     <div className='px-2'>

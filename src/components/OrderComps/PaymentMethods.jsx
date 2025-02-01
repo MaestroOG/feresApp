@@ -16,7 +16,7 @@ const PaymentMethods = ({ img, text, isCard, isDiscount, onClick, className }) =
             <div className={`px-3 pt-7 flex items-center justify-between pb-6 bg-white ${className}`} onClick={onClick}>
                 <div className='flex items-center gap-2'>
                     <img src={img} alt="" />
-                    <p className='font-medium text-[#2F2F3F#2F2F3F]'>{text}</p>
+                    <p className='font-bold text-[#2F2F3F#2F2F3F]'>{text}</p>
                 </div>
                 <div className='flex items-center gap-2'>
                     {isCard && <>

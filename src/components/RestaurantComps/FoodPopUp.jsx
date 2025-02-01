@@ -364,7 +364,7 @@ const FoodPopUp = ({ storeOpenStatus, img, text, itemFoodPopup, cartUniqueToken 
 
                         <div className='rounded-tl-[16px] rounded-tr-[16px] p-4 bg-white mt-[15px]'>
                             <textarea
-                                className="mt-6 mb-5 text-base w-[100%] focus:outline-none"
+                                className="mt-6 mb-[-4px] text-base w-[100%] focus:outline-none"
                                 maxLength={100}
                                 style={{ maxHeight: '100px' }}
                                 placeholder="Add a note"

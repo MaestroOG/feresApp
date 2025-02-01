@@ -13,7 +13,7 @@ const ServiceCard = ({ to, loading, error, img, desc }) => {
         return <h1>Something went wrong</h1>
     }
     return (
-        <div className='my-8 px-4 flex items-center gap-[-15px]'>
+        <div className='my-8 mb-5 px-4 flex items-center gap-[-15px]'>
 
             {/* Left */}
             <div className='bg-[#0AB247] w-[50%] min-h-[158px] clipped flex flex-col justify-center left-[2%] px-3 pr-5 py-[18px] rounded-tl-3xl rounded-bl-3xl z-10 clipped'>

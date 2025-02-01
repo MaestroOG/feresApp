@@ -13,6 +13,8 @@ import Slider from 'react-slick'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { usePost } from '../servies/usePost'
+import { useDispatch } from 'react-redux'
+import { setSearchData } from '../redux/slices/searchSlice'
 
 
 const Services = () => {
@@ -25,6 +27,7 @@ const Services = () => {
     const [ads, setAds] = useState([]);
     const location = useLocation();
     const { loading, error, post } = usePost()
+    const dispatch = useDispatch()
     const settings = {
         dots: false,
         infinite: true,
@@ -117,6 +120,7 @@ const Services = () => {
     }
 
     useEffect(() => {
+        dispatch(setSearchData(""))
         fetchTopRest();
         fetchGroceryStores();
         getAds();
@@ -137,7 +141,7 @@ const Services = () => {
                 <Offers />
                 <>
                     <div className='w-full px-2'>
-                        <h2 className='text-[#2F2F3F] text-lg font-medium' onClick={() => setAddressPop(true)}>Top-rated restaurants</h2>
+                        <h2 className='text-[#2F2F3F] text-lg font-bold' onClick={() => setAddressPop(true)}>Top-rated restaurants</h2>
                         <div className='flex items-center gap-3 overflow-auto no-scrollbar'>
                             {isLoading && <Loader />}
                             {topRest && topRest.stores.map((store, index) => (
@@ -168,8 +172,8 @@ const Services = () => {
                     </div>
                 </>
                 <>
-                    <div className='w-full px-2 mt-8'>
-                        <h2 className='text-[#2F2F3F] text-lg font-medium'>Groceries stores</h2>
+                    <div className='w-full px-2 mt-5'>
+                        <h2 className='text-[#2F2F3F] text-lg font-bold'>Groceries stores</h2>
                         <div className='flex items-center gap-3 overflow-auto no-scrollbar'>
                             {isLoading ? <div>Loading...</div> : groceryStore && groceryStore.stores.slice(0, 2).map((store, index) => (
                                 <div key={index} className="flex items-center gap-4 relative">

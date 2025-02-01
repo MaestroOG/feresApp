@@ -43,13 +43,13 @@ const Explore = () => {
     }
     return (
         <div className='w-full'>
-            <h3 className='text-[18px] font-medium px-4'>Explore Feres</h3>
+            <h3 className='text-[18px] font-bold px-4'>Explore Feres</h3>
 
             <div className='flex flex-row gap-3 overflow-y-scroll explore-card'>
                 {/* Card */}
                 {services?.map((item) => {
                     return (
-                        <ExploreCard name={item?.typename.toUpperCase()} img={`https://uploads.feres.co/ride/${item?.type_image_url}`} onClick={() => { item?.typename == 'FOOD' ? navigate('/allrestaurants') : item?.typename == "Parcel" ? navigate('/deliveryservice') : item?.typename === 'MART' ? navigate('/ecommerce') : null }} key={item?._id} />
+                        <ExploreCard className={'first-of-type:pl-4'} name={item?.typename.toUpperCase()} img={`https://uploads.feres.co/ride/${item?.type_image_url}`} onClick={() => { item?.typename == 'FOOD' ? navigate('/allrestaurants') : item?.typename == "Parcel" ? navigate('/deliveryservice') : item?.typename === 'MART' ? navigate('/ecommerce') : null }} key={item?._id} />
                     )
                 })}
             </div>

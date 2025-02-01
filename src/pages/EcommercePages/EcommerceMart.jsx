@@ -30,6 +30,7 @@ const EcommerceMart = () => {
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData);
     const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
     const [storeOpenStatus, setStoreOpenStatus] = useState(null)
+    const [martLoader, setMartLoader] = useState(false)
 
 
     const { setEcat } = useContext(FeresContext)
@@ -46,6 +47,7 @@ const EcommerceMart = () => {
     const { post, loading, error } = usePost();
     const fetchProductsAndStoreInfo = async () => {
         try {
+            setMartLoader(true)
             const productsEndpoint = '/api/e-commerce/get_products_in_category';
             const productsData = await post(productsEndpoint, { category_id: id });
             setProducts(productsData);
@@ -62,6 +64,8 @@ const EcommerceMart = () => {
             }
         } catch (error) {
             console.error(error.message);
+        } finally {
+            setMartLoader(false)
         }
     };
 
@@ -218,6 +222,9 @@ const EcommerceMart = () => {
         }
     }
 
+    if (martLoader) {
+        return <Loader />
+    }
 
 
     return (
