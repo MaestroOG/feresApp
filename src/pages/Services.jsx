@@ -15,10 +15,15 @@ import "slick-carousel/slick/slick-theme.css";
 import { usePost } from '../servies/usePost'
 import { useDispatch } from 'react-redux'
 import { setSearchData } from '../redux/slices/searchSlice'
+import axios from 'axios'
+
+import { loginUser } from '../redux/slices/userAuthSlice'
+import { v4 as uuidv4 } from "uuid";
+
 
 
 const Services = () => {
-
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState(true)
     const [topRest, setTopRest] = useState(null)
@@ -119,11 +124,68 @@ const Services = () => {
         }
     }
 
+    const getUserData = async () => {
+        const params = new URLSearchParams(location.search);
+        const userData = {
+            user_id: params.get('user_id'),
+        };
+
+
+
+
+        if (userData.user_id) {
+            try {
+                const userDetailsResponse = await axios.post('https://demo.feres.co/getuserdetail', userData);
+                const user = userDetailsResponse.data.user
+                dispatch(loginUser({
+                    address: user.address,
+                    app_version: user.app_version,
+                    cart_unique_token: uuidv4(),
+                    city: user.city,
+                    country: user.country,
+                    country_detail: {
+                        countryname: user.country,
+                        countryphonecode: user.country_phone_code,
+                        _id: user.countryid,
+                    },
+                    country_phone_code: user.country_phone_code,
+                    device_timezone: user.device_timezone,
+                    device_token: user.device_token,
+                    device_type: user.device_type,
+                    email: user.email,
+                    first_name: user.first_name,
+                    is_approved: user.is_approved,
+                    is_document_verified: user.is_document_verified,
+                    is_ebirr_user: user.is_ebirr_user,
+                    is_referral: user.is_referral,
+                    last_name: user.last_name,
+                    login_by: user.login_by,
+                    middle_name: user.middle_name,
+                    phone: user.phone,
+                    picture:user.picture,
+                    referral_code: user.referral_code,
+                    social_unique_id: user.social_unique_id,
+                    success: true,
+                    token: user.token,
+                    user_id: user._id,
+                    zipcode: user.zipcode
+                }))
+            } catch (error) {
+                console.error("Error fetching user details:", error);
+            }
+        }
+    };
+
+
+
+
     useEffect(() => {
+        getUserData()
         dispatch(setSearchData(""))
         fetchTopRest();
         fetchGroceryStores();
         getAds();
+
         // console.log(topRest);
     }, [])
 
