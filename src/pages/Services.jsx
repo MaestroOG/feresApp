@@ -16,7 +16,6 @@ import { usePost } from '../servies/usePost'
 import { useDispatch } from 'react-redux'
 import { setSearchData } from '../redux/slices/searchSlice'
 import axios from 'axios'
-
 import { loginUser } from '../redux/slices/userAuthSlice'
 import { v4 as uuidv4 } from "uuid";
 
@@ -31,7 +30,6 @@ const Services = () => {
     const [ads, setAds] = useState([]);
     const location = useLocation();
     const { loading, error, post } = usePost()
-    const dispatch = useDispatch()
     const settings = {
         dots: false,
         infinite: true,
@@ -161,7 +159,7 @@ const Services = () => {
                     login_by: user.login_by,
                     middle_name: user.middle_name,
                     phone: user.phone,
-                    picture:user.picture,
+                    picture: user.picture,
                     referral_code: user.referral_code,
                     social_unique_id: user.social_unique_id,
                     success: true,
