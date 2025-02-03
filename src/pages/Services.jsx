@@ -29,6 +29,7 @@ const Services = () => {
     const [addressPop, setAddressPop] = useState(false)
     const [ads, setAds] = useState([]);
     const location = useLocation();
+    const dispatch = useDispatch();
     const { loading, error, post } = usePost()
     const settings = {
         dots: false,
