@@ -1,10 +1,44 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { assets } from '../../assets/assets'
 import { Link, useNavigate } from 'react-router-dom'
 import Container from '../../components/Container'
+import { usePost } from '../../servies/usePost'
+import { useSelector } from 'react-redux'
 
 const RideMap = () => {
     const navigate = useNavigate()
+    const userDetail = useSelector((state) => state.userAuth.user)
+    const [statusData, setStatusData] = useState({})
+    const { post } = usePost()
+
+    const getExpresOrderHistory = async () => {
+        try {
+            const response = await post('/api/admin/deg_deg_history', {
+                server_token: userDetail.token,
+                user_id: userDetail.user_id
+            })
+            setStatusData(response.orderHistory[0])
+        } catch (error) {
+            console.error("Error fetching order history:", error)
+        }
+    }
+
+    useEffect(() => {
+        // Initial API call
+        getExpresOrderHistory()
+
+        // Set interval to call API every 5 seconds
+        const interval = setInterval(() => {
+            getExpresOrderHistory()
+        }, 5000)
+
+        // Cleanup function to clear interval when component unmounts
+        return () => clearInterval(interval)
+    }, [])
+
+console.log(statusData,"statusDatastatusData");
+
+
     return (
         <div className='relative overflow-hidden'>
             <div className='flex items-center justify-center p-[14.5px] w-max rounded-full absolute bg-white top-6 left-4' onClick={() => navigate(-1)}>
@@ -16,14 +50,19 @@ const RideMap = () => {
                 <div className='rounded-2xl bg-white min-h-[170px] w-full'>
                     <img src={assets.popup_bar} alt="" className='pt-[10px] mx-auto' />
                     <Container className={'mt-5'}>
-                        <h3 className='text-[#2F2F3F] text-xl font-medium'>Rider is on the way to you...</h3>
+                        {statusData.status == 1 && <h3 className='text-[#2F2F3F] text-xl font-medium'>Searching for Rider...</h3>}
+                        {statusData.status == 2 && <h3 className='text-[#2F2F3F] text-xl font-medium'>Order is accepted by Rider...</h3>}
+                        {statusData.status == 3 && <h3 className='text-[#2F2F3F] text-xl font-medium'>Order is picked up...</h3>}
+                        {statusData.status == 4 && <h3 className='text-[#2F2F3F] text-xl font-medium'>Order is delivered...</h3>}
+
+
                         <hr className='my-5' />
                     </Container>
                     <Container className='mt-6 p-5 flex items-center justify-between' onClick={() => navigate('/riderinfo')}>
                         <div className='flex items-center gap-3'>
                             <img src={assets.jacob_jones} alt="" />
                             <div>
-                                <h3 className='text-[#2F2F3F] font-medium mb-2'>Jacob Jones</h3>
+                                <h3 className='text-[#2F2F3F] font-medium mb-2'>{statusData.provider}</h3>
                                 <p className='text-[#767578] text-sm'>Yamaha MX King</p>
                             </div>
                         </div>

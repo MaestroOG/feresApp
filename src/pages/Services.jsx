@@ -23,7 +23,6 @@ import { v4 as uuidv4 } from "uuid";
 
 
 const Services = () => {
-    const dispatch = useDispatch()
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState(true)
     const [topRest, setTopRest] = useState(null)
