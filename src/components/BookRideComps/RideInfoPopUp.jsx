@@ -240,7 +240,7 @@ const RideInfoPopUp = () => {
                     {progress > 1 ? <> <img className='ml-[10px]' src='/tick-icon.svg' alt="" /> </> : <img className='ml-[10px]' src={progress === 1 ? assets.order_progress : assets.order_progress_2} alt="" />}
                     {progress > 1 ? <p className='text-base text-[#2F2F3F]'>{selectedResturant?.store?.name} has been confirmed your order</p> : <div > <p className='text-base text-[#2F2F3F]'>Waiting for {selectedResturant?.store?.name} to confirm your order</p></div>}
                 </div>
-                <hr className='rotate-90 w-10 absolute top-[4.8rem] left-[59px] mb-5 border-[#0AB247]' />
+                <hr className='rotate-90 w-10 absolute top-[6rem] left-[59px] mb-5 border-[#0AB247]' />
                 <div className='flex items-center gap-2 mt-16 bg-white' >
                     <p className='text-[#979797]'>14:53</p>
                     {progress > 5 ? <img className='ml-[10px]' src='/tick-icon.svg' alt="" /> : <img className='ml-[10px]' src={progress > 1 && progress <= 5 ? assets.order_progress : assets.order_progress_2} alt="" />}
@@ -252,19 +252,19 @@ const RideInfoPopUp = () => {
                     <p className='text-base text-[#979797]'>Your order is ready</p>
                 </div> */}
 
-                <hr className='rotate-90 w-10 absolute top-[10.3rem] left-[59px] mb-5 border-[#0AB247]' />
+                <hr className='rotate-90 w-10 absolute top-[11.5rem] left-[59px] mb-5 border-[#0AB247]' />
                 <div className='flex items-center gap-2 mt-16 bg-white' >
                     <p className='text-[#979797]'>14:53</p>
                     {progress > 7 ? <img className='ml-[10px]' src='/tick-icon.svg' alt="" /> : <img className='ml-[10px]' src={progress >= 7 && progress <= 9 ? assets.order_progress : assets.order_progress_2} alt="" />}
                     {progress > 7 ? <div> <p className='text-base text-[#2F2F3F]'>Rider has been assgined to your order</p> </div> : <p className='text-base text-[#979797]'>Looking for a rider</p>}
                 </div>
-                <hr className='rotate-90 w-10 absolute top-[15.7rem] left-[59px] mb-5 border-[#0AB247]' />
+                <hr className='rotate-90 w-10 absolute top-[16.7rem] left-[59px] mb-5 border-[#0AB247]' />
                 <div className='flex items-center gap-2 mt-16 bg-white' >
                     <p className='text-[#979797]'>14:53</p>
                     {progress > 13 ? <img className='ml-[10px]' src='/tick-icon.svg' alt="" /> : <img className='ml-[10px]' src={progress >= 9 && progress <= 15 ? assets.order_progress : assets.order_progress_2} alt="" />}
                     {progress > 13 ? <div> <p className='text-base text-[#2F2F3F]'>Rider has picked up your order</p> </div> : <p className='text-base text-[#979797]'>The rider is on their way to {selectedResturant?.store?.name}</p>}
                 </div>
-                <hr className='rotate-90 w-10 absolute top-[21.7rem] left-[59px] mb-5 border-[#0AB247]' />
+                <hr className='rotate-90 w-10 absolute top-[23.7rem] left-[59px] mb-5 border-[#0AB247]' />
                 <div className='flex items-center gap-2 mt-16' onClick={() => {
                     navigate('/raterider')
                 }}>

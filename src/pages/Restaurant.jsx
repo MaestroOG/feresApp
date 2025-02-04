@@ -464,7 +464,6 @@ const Restaurant = () => {
 
                         {/* Delivered By Feres Popup*/}
 
-                        {pickupPop ? <PickupPopup /> : null}
 
                         {deliverPop ? <DeliveredPopup /> : null}
 
@@ -517,6 +516,7 @@ const Restaurant = () => {
                     </div>
                 </div>
             </div>
+            {pickupPop && <PickupPopup />}
             {notAvailablePop && <NotAvailablePop onGotIt={() => setNoAvailablePop(false)} onSched={() => {
                 setNoAvailablePop(false)
                 setIsDatePickerOpen(true)
