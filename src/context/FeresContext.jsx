@@ -48,7 +48,7 @@ const FeresContextProvider = (props) => {
     const [weightValue, setWeightValue] = useState("Small")
     const [picturePop, setPicturePop] = useState(false)
     const [delItemPhoto, setDelItemPhoto] = useState(null)
-    const [deliveryPayment, setDeliveryPayment] = useState("")
+    const [deliveryPayment, setDeliveryPayment] = useState("ebirr")
     const [ecat, setEcat] = useState("")
     const [review, setReview] = useState(false)
     const [checkedItems, setCheckedItems] = useState({});

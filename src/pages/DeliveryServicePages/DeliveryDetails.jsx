@@ -15,13 +15,16 @@ const DeliveryDetails = () => {
   const currentLocation = useSelector((state) => state.deliveryLocation.current);
   const destination = useSelector((state) => state.deliveryLocation.destination);
   const baseData = useSelector((state) => state.baseData.baseData);
-  const { vehicleTypePopup, setVehicleTypePopup, deliveryPayment, discountOpt } = useContext(FeresContext);
+  const { vehicleTypePopup, setVehicleTypePopup,weightValue, deliveryPayment, discountOpt } = useContext(FeresContext);
   const { deliveryItemDetail, setDeliveryItemDetail } = useContext(FeresContext);
   const userDetail = useSelector((state) => state.userAuth.user);
   const vehicleType = useSelector((state) => state.deliveryLocation.vehicleType);
   const vehicleSpeed = useSelector((state) => state.deliveryLocation.vehicleSpeed);
   const destinationPersonName = useSelector((state) => state.deliveryLocation.destinationPersonName);
 const destinationPersonPhone = useSelector((state) => state.deliveryLocation.destinationPersonPhone);
+const weigth = useSelector((state) => state.deliveryLocation.weigth);
+const category = useSelector((state) => state.deliveryLocation.category);
+
   const driverNote = useSelector((state) => state.deliveryLocation.driverNote);
   const [totalDistance, setTotalDistance] = useState(null);
   const [services, setServices] = useState([]);
@@ -159,7 +162,7 @@ const destinationPersonPhone = useSelector((state) => state.deliveryLocation.des
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
                 />
-                <p className="text-sm text-[#0AB247]">Add recipient details</p>
+                {destinationPersonName.length <= 0 && destinationPersonPhone.length <= 0 ? <p className="text-sm text-[#0AB247]">Add recipient details</p> : <p className="text-sm text-[#0AB247]">{`${destinationPersonName} ${destinationPersonPhone}`}</p>}
               </div>
             </Link>
           </div>
@@ -180,7 +183,7 @@ const destinationPersonPhone = useSelector((state) => state.deliveryLocation.des
             onClick={() => setVehicleTypePopup(true)}
           />
           <Link to={'/deliveryservice/deliveryitemdetails'}>
-            <DeliveryDetailsCard img={assets.package_01} name={'Item details'} desc={'Add your item details'} isLast={true} />
+            <DeliveryDetailsCard img={assets.package_01} name={weigth > 0 ? `${weigth} - ${category} - ${weightValue}` : 'Item details'} desc={'Add your item details'} isLast={true} />
           </Link>
         </Container>
 

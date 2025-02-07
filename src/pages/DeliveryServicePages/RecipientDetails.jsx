@@ -37,7 +37,7 @@ const RecipientDetails = () => {
 
                 {/* Name And Phone Number Section */}
                 <Container className={'bg-white py-6 pb-2 rounded-lg mt-5 mb-20'}>
-                    <input type="text" value={destinationPersonName} className='w-[398px] h-[58px] rounded-xl py-2 px-5 bg-[#F8F8F8] my-2 outline-none placeholder:text-[#767578] focus:bg-white focus:border focus:border-[#0AB247] transition-all' placeholder='Name'  onChange={()=> dispatch(setDestinationPersonName())}/>
+                    <input type="text" value={destinationPersonName} className='w-[398px] h-[58px] rounded-xl py-2 px-5 bg-[#F8F8F8] my-2 outline-none placeholder:text-[#767578] focus:bg-white focus:border focus:border-[#0AB247] transition-all' placeholder='Name'  onChange={(e)=> dispatch(setDestinationPersonName(e.target.value))}/>
                     <input type="text" value={destinationPersonPhone} inputMode='numeric' className='w-[398px] h-[58px] rounded-xl py-2 px-5 bg-[#F8F8F8] my-2 outline-none placeholder:text-[#767578] focus:bg-white focus:border focus:border-[#0AB247] transition-all' placeholder='phone no. ' 
                     //  onClick={() => navigate('/deliveryservice/deliverydetails/recipientdetails/updatephone')}
                     onChange={(e)=> dispatch(setDestinationPersonPhone(e.target.value))}

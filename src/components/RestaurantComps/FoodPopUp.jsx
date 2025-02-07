@@ -24,6 +24,7 @@ const FoodPopUp = ({ storeOpenStatus, img, text, itemFoodPopup, cartUniqueToken 
     const product_info = useSelector((state) => state.promotions.product_info)
     const item_info = useSelector((state) => state.promotions.item_info)
     const promoPer = useSelector((state) => state.promotions.promoPer)
+    const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
     const navigate = useNavigate()
     const [note, setNote] = useState('')
     const [details, setDetails] = useState(null)
@@ -72,9 +73,9 @@ const FoodPopUp = ({ storeOpenStatus, img, text, itemFoodPopup, cartUniqueToken 
     const toggleFavorite = async () => {
         try {
             const data = await post('/api/user/toggle_favourite_items', {
-                "user_id": loginUser?.user_id,
-                "item_id": itemFoodPopup?._id,
-                "store_id": itemFoodPopup?.store_id
+                user_id: loginUser?.user_id,
+                item_id: itemFoodPopup?._id,
+                store_id: itemFoodPopup?.store_id
             })
             setFvrt(data)
         } catch (error) {
@@ -234,7 +235,7 @@ const FoodPopUp = ({ storeOpenStatus, img, text, itemFoodPopup, cartUniqueToken 
         const shareData = {
             title: 'Check this out!',
             text: 'Here is an interesting link for you:',
-            url: 'https://example.com',
+            url: `https://pwa.feres.co/restaurant/${selectedResturant.store._id}`,
         };
 
         if (navigator.share) {

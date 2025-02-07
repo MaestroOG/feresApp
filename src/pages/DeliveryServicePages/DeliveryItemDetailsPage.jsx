@@ -7,7 +7,8 @@ import { FeresContext } from '../../context/FeresContext'
 import UploadPhotoPopup from '../../components/DeliveryItemDetailsComps/UploadPhotoPopup'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { setCategory, setSize, setWeigth } from '../../redux/slices/deliveryLocationSlice'
 
 const DeliveryItemDetailsPage = () => {
     const { selectWeight, setSelectWeight, weightValue, picturePop, delItemPhoto, setDelItemPhoto, setPicturePop } = useContext(FeresContext)
@@ -16,12 +17,14 @@ const DeliveryItemDetailsPage = () => {
     const destination = useSelector((state) => state.deliveryLocation.destination);
   const userDetail = useSelector((state) => state.userAuth.user);
   const vehicleType = useSelector((state) => state.deliveryLocation.vehicleType);
+  const dispatch = useDispatch()
 
     const [activeBtn, setActiveBtn] = useState(null)
     const navigate = useNavigate();
     const [categories, setCategories] = useState(null)
-    const handleActiveClick = (id) => {
+    const handleActiveClick = (id,category) => {
         setActiveBtn(id)
+        dispatch(setCategory(category))
     }
     const getTypes = async () => {
     const types =await axios.post("https://suuq.feres.co/api/admin/get_category_and_deliveries_list",
@@ -58,7 +61,8 @@ const DeliveryItemDetailsPage = () => {
                 {/* Detail Form Starts */}
                 <Container>
                     <h3 className='text-lg font-medium text-[#2F2F3F]'>Size <span className='text-lg font-normal text-[#979797]'>(optional)</span></h3>
-                    <div className='bg-[#F8F8F8] h-[58px] rounded-xl py-2 px-5 flex items-center justify-between my-3' onClick={() => setSelectWeight(true)}>
+                    <div className='bg-[#F8F8F8] h-[58px] rounded-xl py-2 px-5 flex items-center justify-between my-3' onClick={() => {setSelectWeight(true)
+                    }}>
                         <p className='text-[#2F2F3F] text-lg'>{weightValue}</p>
                         <img src={assets.arrow_down} alt="" />
                     </div>
@@ -67,7 +71,9 @@ const DeliveryItemDetailsPage = () => {
                 <Container className={'my-7'}>
                     <h3 className='text-lg font-medium text-[#2F2F3F]'>Weight <span className='text-lg font-normal text-[#979797]'>(kg)</span></h3>
                     <div className={`bg-[#F8F8F8] h-[58px] rounded-xl py-2 px-5 flex items-center justify-between my-3 focus-within:bg-white focus-within:border ${kilos.length === 0 ? 'focus-within:border-[#E92D53]' : 'focus-within:border-[#0AB247]'} ${Number(kilos) > 50 ? 'focus-within:border-[#E92D53]' : 'focus-within:border-[#0AB247]'} transition-all peer`}>
-                        <input type="number" inputMode='numeric' value={kilos} onChange={(e) => setKilos(e.target.value)} placeholder='Enter your item weight' className='placeholder:text-[#767578] text-lg bg-transparent outline-none' />
+                        <input type="number" inputMode='numeric' value={kilos} onChange={(e) => {setKilos(e.target.value)
+                            dispatch(setWeigth(e.target.value))
+                        }} placeholder='Enter your item weight' className='placeholder:text-[#767578] text-lg bg-transparent outline-none' />
                         <p className='text-[#2F2F3F] font-medium'>KG</p>
                     </div>
                     <p className='text-sm text-[#E92D53] text-right mt-3 hidden peer-focus-within:block'>{Number(kilos) > 50 ? 'Max. 50kg' : 'Required'}</p>
@@ -91,7 +97,7 @@ const DeliveryItemDetailsPage = () => {
                             </div>
                         </div>
                         <div className='p-3 bg-[#E92D530D] rounded-full flex items-center justify-center'>
-                            <img src={assets.delete_red} alt="" onClick={() => setDelItemPhoto(null)} />
+                            <img src={assets.delete_red} alt="" onClick={() => {setDelItemPhoto(null)}} />
                         </div>
                     </Container>}
                 </Container>
@@ -100,7 +106,7 @@ const DeliveryItemDetailsPage = () => {
                     <h3 className='text-lg font-medium text-[#2F2F3F] mb-5'>Item type <span className='text-lg font-normal text-[#979797]'>(optional)</span></h3>
                     <div className='grid grid-cols-3 gap-x-8 gap-y-5'>
                         {categories?.map((category, index) => (
-                            <div key={index} onClick={() => handleActiveClick(index)} className={`${activeBtn === index ? 'bg-[#0AB247]' : 'bg-[#F4FFF8]'} max-w-[110px] h-[73px] rounded-xl p-[10px] flex items-center justify-center flex-col gap-1`}>
+                            <div key={index} onClick={() => handleActiveClick(index,category?.deliveries_name)} className={`${activeBtn === index ? 'bg-[#0AB247]' : 'bg-[#F4FFF8]'} max-w-[110px] h-[73px] rounded-xl p-[10px] flex items-center justify-center flex-col gap-1`}>
                                 <img src={category?.featured_image} alt="" width={'30px'}/>
                                 <p className={`${activeBtn === index ? 'text-white' : 'text-[#0AB247]'} font-medium`}>{category?.deliveries_name}</p>
                             </div>

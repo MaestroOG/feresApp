@@ -14,7 +14,7 @@ import Spinner from '../Spinner';
 
 
 
-const MealsCategoriesAndItems = ({ storeOpenStatus, categoryItems, store_id, cartUniqueToken, support, notSticky = false }) => {
+const MealsCategoriesAndItems = ({ storeOpenStatus,storeClosingPopupHandeling, categoryItems, store_id, cartUniqueToken, support, notSticky = false }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const item_info = useSelector((state) => state.promotions.item_info)
@@ -314,6 +314,8 @@ const MealsCategoriesAndItems = ({ storeOpenStatus, categoryItems, store_id, car
                                     support={support}
                                     products={cateItems?.items}
                                     cartUniqueToken={cartUniqueToken}
+                                    storeOpenStatus={storeOpenStatus}
+                                    storeClosingPopupHandeling={storeClosingPopupHandeling}
                                 />
                             </div>
                         ))
@@ -329,6 +331,8 @@ const MealsCategoriesAndItems = ({ storeOpenStatus, categoryItems, store_id, car
                                     <TableList
                                         products={cateItems?.items}
                                         support={support}
+                                        storeOpenStatus={storeOpenStatus}
+                                        storeClosingPopupHandeling={storeClosingPopupHandeling}
                                     />
                                 </div>
                             </div>

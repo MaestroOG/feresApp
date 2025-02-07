@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom'
 import { setSupportItem } from '../../redux/slices/selectedResturantSlice'
 import Spinner from '../Spinner'
 
-const MenuList = ({ products, addItemInCart, cartUniqueToken, support }) => {
+const MenuList = ({ products, addItemInCart, cartUniqueToken, support,storeOpenStatus,storeClosingPopupHandeling }) => {
     const navigate = useNavigate()
     const cartItemData = useSelector((state) => state.cartDetails.cartItemData)
     const selectedResturant = useSelector((state) => state.selectedResturant.selectedResturant);
@@ -191,14 +191,19 @@ const MenuList = ({ products, addItemInCart, cartUniqueToken, support }) => {
                 <div className='bg-[#FFD335] p-2 rounded-lg text-[#2F2F3F] text-xs font-medium w-max mt-6 mb-1'>Trending</div>
                 {products?.map((item) => (
                     <div key={item._id} onClick={() => {
+                        if(!storeOpenStatus){
+                            storeClosingPopupHandeling(true)
+                        }else{
                         dispatch(setSupportItem(item))
-                        navigate('/restaurantsupport/ingredientinfo')
+                        navigate('/restaurantsupport/ingredientinfo')}
                     }}>
                         <div className={`${item?.details.length > 0 && 'my-4'}`}>
                             <div className='flex items-center justify-between' onClick={() => {
-                                dispatch(setSupportItem(item))
-                                navigate('/restaurantsupport/ingredientinfo')
-
+                if(!storeOpenStatus){
+                    storeClosingPopupHandeling(true)
+                }else{
+                dispatch(setSupportItem(item))
+                navigate('/restaurantsupport/ingredientinfo')}
                             }}>
                                 <div className='flex flex-col gap-1 flex-[3]'>
                                     <div className='flex items-center gap-2'>
@@ -230,20 +235,28 @@ const MenuList = ({ products, addItemInCart, cartUniqueToken, support }) => {
                     const isLoading = loadingItems[item._id];
                     return (
                         <div key={item._id} onClick={() => {
-                            if (selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData) {
-                                setFoodPopup(true)
-                                handleAddItem(item)
-                            } else {
-                                dispatch(setNewOrderPopup(true))
+                            if(!storeOpenStatus){
+                                storeClosingPopupHandeling(true)
+                            }else{
+                                if (selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData) {
+                                    setFoodPopup(true)
+                                    handleAddItem(item)
+                                } else {
+                                    dispatch(setNewOrderPopup(true))
+                                }
                             }
                         }}>
                             <div className={`${item?.details.length > 0 && 'my-4'}`}>
                                 <div className='flex items-center justify-between' onClick={() => {
-                                    if (selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData) {
-                                        dispatch(setShowModel(true))
-                                        dispatch(setSelectedFood(item))
-                                    } else {
-                                        dispatch(setNewOrderPopup(true))
+                                      if(!storeOpenStatus){
+                                        storeClosingPopupHandeling(true)
+                                    }else{
+                                        if (selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData) {
+                                            setFoodPopup(true)
+                                            handleAddItem(item)
+                                        } else {
+                                            dispatch(setNewOrderPopup(true))
+                                        }
                                     }
                                 }}>
                                     <div className='flex flex-col gap-1 flex-[3]'>

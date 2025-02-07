@@ -72,7 +72,7 @@ const TotalBill = ({ onDelClick, onServiceClick, selectedResturant, order_paymen
                     : null}
                 <div className='flex items-center justify-between mt-2'>
                     <h3 className='text-[#767578] font-bold'>Total</h3>
-                    <p className='text-[#0AB247] font-medium text-base'>{`ETB${order_payment && order_payment[0]?.total}`}</p>
+                    <p className='text-[#0AB247] font-medium text-base'>{`ETB${order_payment && order_payment[0]?.total+order_payment[0]?.total_service_price+30+customTip+ (tipBtn > 0 && parseInt(tipBtn)  )}`}</p>
                 </div>
             </>}
         </div>

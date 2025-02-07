@@ -154,6 +154,11 @@ const Restaurant = () => {
         }
     };
 
+
+    const storeClosingPopupHandeling = useCallback((data)=>{
+        setNoAvailablePop(data)
+    },[])
+
     const handleTimeClose = () => {
         setIsTimePickerOpen(false);
     };
@@ -270,25 +275,36 @@ const Restaurant = () => {
     function isStoreOpen(storeData) {
         const now = new Date();
         const currentDay = now.getDay();
-        const currentTime = `${now.getHours()}:${String(now.getMinutes()).padStart(2, "0")}`;
-
+        
+        // Get the current time in 24-hour format (HH:mm)
+        const currentHours = String(now.getHours()).padStart(2, "0");
+        const currentMinutes = String(now.getMinutes()).padStart(2, "0");
+        const currentTime = `${currentHours}:${currentMinutes}`;
+    
+        // Find today's store data
         const todayData = storeData.find((item) => item.day === currentDay);
-
+    
         if (todayData && todayData.is_store_open) {
             const { store_open_time, store_close_time } = todayData.day_time[0];
-
-            if (currentTime >= store_open_time && currentTime <= store_close_time) {
+    
+            // Convert times to Date objects for accurate comparison
+            const openTime = new Date(`1970-01-01T${store_open_time}:00`);
+            const closeTime = new Date(`1970-01-01T${store_close_time}:00`);
+            const nowTime = new Date(`1970-01-01T${currentTime}:00`);
+    
+            if (nowTime >= openTime && nowTime <= closeTime) {
                 console.log("The store is currently Open.");
-                setStoreOpenStatus(true)
+                setStoreOpenStatus(true);
             } else {
                 console.log("The store is currently Closed.");
-                setStoreOpenStatus(false)
+                setStoreOpenStatus(false);
             }
         } else {
             console.log("The store is currently Closed.");
-            setStoreOpenStatus(false)
+            setStoreOpenStatus(false);
         }
     }
+    
 
 
     useEffect(() => {
@@ -350,6 +366,23 @@ const Restaurant = () => {
         <Spinner />
     }
 
+    const handleShare = async (url) => {
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: 'Check this out!',
+                    text: 'Here is a link I want to share with you.',
+                    url: url,
+                });
+                console.log('Successfully shared!');
+            } catch (error) {
+                console.error('Error sharing:', error);
+            }
+        } else {
+            alert('Sharing not supported on this browser.');
+        }
+    };
+
     return (
         <>
             <div className={`pb-16 ${foodPopup || notAvailablePop && 'blur-sm'}`}>
@@ -369,7 +402,7 @@ const Restaurant = () => {
                                 <img src={assets.add_team} alt="" className={`${scrolled ? 'invert' : ''}`} />
                             </button>
                             <button className={`p-3 rounded-xl ${scrolled ? 'bg-transparent border border-[#EEEEEE]' : 'bg-[#06060666]'}`}>
-                                <img src={assets.share} alt="" className={`${scrolled ? 'invert' : ''}`} onClick={() => setSharePop(true)} />
+                                <img src={assets.share} alt="" className={`${scrolled ? 'invert' : ''}`} onClick={()=> handleShare(`https://pwa.feres.co/restaurant/${selectedRestaurant.store._id}`)} />
                             </button>
                             <button className={`p-3 rounded-xl ${scrolled ? 'bg-transparent border border-[#EEEEEE]' : 'bg-[#06060666]'}`}>
                                 <img src={assets.search} alt="" className={`${!scrolled ? 'invert' : ''}`} onClick={() => setFoodSearch(true)} />
@@ -460,7 +493,7 @@ const Restaurant = () => {
                             </div>
                         </div>
 
-                        <MealsCategoriesAndItems storeOpenStatus={storeOpenStatus} categoryItems={selectedResturant?.store?.products} store_id={selectedResturant?.store?._id} cartUniqueToken={cartUniqueToken} />
+                        <MealsCategoriesAndItems storeOpenStatus={storeOpenStatus} categoryItems={selectedResturant?.store?.products} store_id={selectedResturant?.store?._id} cartUniqueToken={cartUniqueToken} storeClosingPopupHandeling={storeClosingPopupHandeling}/>
 
                         {/* Delivered By Feres Popup*/}
 

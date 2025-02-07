@@ -11,7 +11,7 @@ import { setSupportItem } from '../../redux/slices/selectedResturantSlice';
 import Spinner from '../Spinner';
 
 
-const TableList = ({ products, support }) => {
+const TableList = ({ storeOpenStatus,storeClosingPopupHandeling,products, support }) => {
     const dispatch = useDispatch();
     const { post } = usePost();
     const navigate = useNavigate()
@@ -131,28 +131,37 @@ const TableList = ({ products, support }) => {
         return (
             <div className="flex" key={item?._id}>
                 <div className="min-w-[170px]" onClick={() => {
-
-                    if (selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData) {
-                        setFoodPopup(true)
-                    } else {
-                        dispatch(setNewOrderPopup(true))
+                    if(!storeOpenStatus){
+                        storeClosingPopupHandeling(true)
+                    }else{
+                        if (selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData) {
+                            setFoodPopup(true)
+                        } else {
+                            dispatch(setNewOrderPopup(true))
+                        }
                     }
+    
                 }}>
                     <div
                         className="relative w-max"
                         onClick={() => {
-                            if (support) {
-                                dispatch(setSupportItem(item))
-                                navigate('/restaurantsupport/ingredientinfo')
-                            } else {
-                                if (selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData) {
-                                    dispatch(setShowModel(true));
-                                    dispatch(setSelectedFood(item));
+                            if(!storeOpenStatus){
+                                storeClosingPopupHandeling(true)
+                            }else{
+                                if (support) {
+                                    dispatch(setSupportItem(item))
+                                    navigate('/restaurantsupport/ingredientinfo')
                                 } else {
-                                    dispatch(setNewOrderPopup(true))
+                                    if (selectedResturant?.store?._id == cartItemData?.stores[0]?._id || !cartItemData) {
+                                        dispatch(setShowModel(true));
+                                        dispatch(setSelectedFood(item));
+                                    } else {
+                                        dispatch(setNewOrderPopup(true))
+                                    }
+    
                                 }
-
                             }
+                            
 
                         }}
                     >
@@ -177,6 +186,10 @@ const TableList = ({ products, support }) => {
                                     src={assets.add_green}
                                     alt=""
                                     onClick={(e) => {
+                                            if(!storeOpenStatus){
+                                                storeClosingPopupHandeling(true)
+                                            }else{
+
                                         if (support) {
                                             dispatch(setSupportItem(item))
                                             navigate('/restaurantsupport/ingredientinfo')
@@ -190,7 +203,7 @@ const TableList = ({ products, support }) => {
                                             }
 
                                         }
-
+                                    }
                                     }}
                                 />
                             )}

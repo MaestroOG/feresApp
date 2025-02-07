@@ -117,7 +117,7 @@ const LocationPick = ({ destination }) => {
         />
         <input
           type="text"
-          placeholder="Add a note for the rider"
+          placeholder="Add a floor and unit no."
           className="bg-[#F8F8F8] w-full py-[10px] px-[20px] rounded-[13px] placeholder:text-[#767578] border-none outline-none"
           onClick={() => setRiderNote(true)}
         />

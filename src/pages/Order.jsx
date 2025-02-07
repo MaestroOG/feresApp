@@ -153,7 +153,7 @@ const Order = () => {
                                         quaUpdate={quaUpdate} />
                                 </>
                                 :
-                                <OrderedFoodCard
+                                item.quantity > 0 && <OrderedFoodCard
                                     key={item.unique_id}
                                     title={item.name}
                                     price={item.total_item_price}

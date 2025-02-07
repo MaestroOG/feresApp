@@ -20,8 +20,8 @@ const ChooseAddressPopup = ({ onClick, savedLocationPopup, selectedSavedAddress,
                 </div>
                 <hr />
                 <h3 className="px-4 text-[#2F2F3F] font-[500] text-lg mt-5 mb-[14px]">Saved Addresses</h3>
-                {savedLocationPopup?.map((item) => (
-                    <div
+                {savedLocationPopup?.map((item,index) => (
+                   index < 2 && <div
                         key={item.id} // Ensure unique key for each item
                         className="px-4 py-[10.5px] flex items-center gap-4 justify-between"
                     >

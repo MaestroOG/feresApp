@@ -202,25 +202,36 @@ const EcommerceMart = () => {
     function isStoreOpen(storeData) {
         const now = new Date();
         const currentDay = now.getDay();
-        const currentTime = `${now.getHours()}:${String(now.getMinutes()).padStart(2, "0")}`;
-
+        
+        // Get the current time in 24-hour format (HH:mm)
+        const currentHours = String(now.getHours()).padStart(2, "0");
+        const currentMinutes = String(now.getMinutes()).padStart(2, "0");
+        const currentTime = `${currentHours}:${currentMinutes}`;
+    
+        // Find today's store data
         const todayData = storeData.find((item) => item.day === currentDay);
-
+    
         if (todayData && todayData.is_store_open) {
             const { store_open_time, store_close_time } = todayData.day_time[0];
-
-            if (currentTime >= store_open_time && currentTime <= store_close_time) {
+    
+            // Convert times to Date objects for accurate comparison
+            const openTime = new Date(`1970-01-01T${store_open_time}:00`);
+            const closeTime = new Date(`1970-01-01T${store_close_time}:00`);
+            const nowTime = new Date(`1970-01-01T${currentTime}:00`);
+    
+            if (nowTime >= openTime && nowTime <= closeTime) {
                 console.log("The store is currently Open.");
-                setStoreOpenStatus(true)
+                setStoreOpenStatus(true);
             } else {
                 console.log("The store is currently Closed.");
-                setStoreOpenStatus(false)
+                setStoreOpenStatus(false);
             }
         } else {
             console.log("The store is currently Closed.");
-            setStoreOpenStatus(false)
+            setStoreOpenStatus(false);
         }
     }
+    
 
     if (martLoader) {
         return <Loader />

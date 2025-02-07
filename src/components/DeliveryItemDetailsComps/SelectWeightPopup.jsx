@@ -18,20 +18,20 @@ const SelectWeightPopup = () => {
                 </div>
                 <hr className='my-5' />
                 <div className='flex items-center justify-between px-4 py-2 my-5'>
-                    <p className='text-[#2F2F3F] text-xl'>Small</p>
-                    <input type="radio" name='weight' onChange={handleChange} value={'Small'} checked={weightValue === 'Small'} />
+                <label htmlFor='small'><p className='text-[#2F2F3F] text-xl'>Small</p></label>
+                    <input id='small' type="radio" name='weight' onChange={handleChange} value={'Small'} checked={weightValue === 'Small'} />
                 </div>
                 <div className='flex items-center justify-between px-4 py-2 my-5'>
-                    <p className='text-[#2F2F3F] text-xl'>Medium</p>
-                    <input type="radio" name='weight' onChange={handleChange} value={'Medium'} checked={weightValue === 'Medium'} />
+                    <label htmlFor='medium'><p className='text-[#2F2F3F] text-xl'>Medium</p></label>
+                    <input id='medium' type="radio" name='weight' onChange={handleChange} value={'Medium'} checked={weightValue === 'Medium'} />
                 </div>
                 <div className='flex items-center justify-between px-4 py-2 my-5'>
-                    <p className='text-[#2F2F3F] text-xl'>Large</p>
-                    <input type="radio" name='weight' onChange={handleChange} value={'Large'} checked={weightValue === 'Large'} />
+                <label htmlFor='large'><p className='text-[#2F2F3F] text-xl'>Large</p></label>
+                    <input id='large' type="radio" name='weight' onChange={handleChange} value={'Large'} checked={weightValue === 'Large'} />
                 </div>
                 <div className='flex items-center justify-between px-4 py-2 my-5'>
-                    <p className='text-[#2F2F3F] text-xl'>Extra large</p>
-                    <input type="radio" name='weight' onChange={handleChange} value={'Extra large'} checked={weightValue === 'Extra large'} />
+                <label htmlFor='extra_large'><p className='text-[#2F2F3F] text-xl'>Extra large</p></label>
+                    <input id='extra_large' type="radio" name='weight' onChange={handleChange} value={'Extra large'} checked={weightValue === 'Extra large'} />
                 </div>
             </div>
         </div>
