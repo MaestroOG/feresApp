@@ -22,7 +22,8 @@ import { v4 as uuidv4 } from "uuid";
 
 
 const Services = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const [isBackHandled, setIsBackHandled] = useState(false);
     const [isLoading, setIsLoading] = useState(true)
     const [topRest, setTopRest] = useState(null)
     const [groceryStore, setGroceryStore] = useState(null)
@@ -41,6 +42,30 @@ const Services = () => {
         autoplaySpeed: 3000,
     };
 
+    const handleBackPress = () => {
+        if (window.kmpJsBridge && typeof window.kmpJsBridge.callNative === "function") {
+            window.kmpJsBridge.callNative("GoBack", JSON.stringify({}), function (data) {
+                console.log("Returned to Native App:", data);
+            });
+        } else {
+            console.warn("Native bridge not available, using fallback navigation.");
+            navigate(-1); // Normal back navigation as a fallback
+        }
+    };
+
+    useEffect(() => {
+        const onBackPress = (event) => {
+            event.preventDefault();
+            handleBackPress();
+        };
+
+        // Listen for hardware back button press (for Android)
+        window.addEventListener("popstate", onBackPress);
+
+        return () => {
+            window.removeEventListener("popstate", onBackPress);
+        };
+    }, [navigate]);
 
     const getAds = async () => {
         try {
