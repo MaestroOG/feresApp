@@ -160,11 +160,13 @@ const Services = () => {
             try {
                 const userDetailsResponse = await axios.post('https://demo.feres.co/getuserdetail', userData);
                 const user = userDetailsResponse.data.user
+                const cart_unique_token= uuidv4()
                 dispatch(loginUser({
                     address: user.address,
                     app_version: user.app_version,
-                    cart_unique_token: uuidv4(),
-                    city: user.city,
+                    cart_unique_token: cart_unique_token ,
+                    // city: user.city,
+                    city :"Addis Ababa",
                     country: user.country,
                     country_detail: {
                         countryname: user.country,
@@ -193,6 +195,7 @@ const Services = () => {
                     user_id: user._id,
                     zipcode: user.zipcode
                 }))
+                localStorage.setItem("cart_unique_token", cart_unique_token)
             } catch (error) {
                 console.error("Error fetching user details:", error);
             }

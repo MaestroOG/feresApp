@@ -34,6 +34,8 @@ const Explore = () => {
     useEffect(() => {
         if (userDetail) {
             handlePrice()
+            console.log(userDetail,"dhfasjhdjas");
+            
             handleGetServices(userDetail.city)
         }
     }, [userDetail])
