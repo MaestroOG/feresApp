@@ -116,9 +116,9 @@ const Order = () => {
         return <h1>Session Expired Please Log In Again</h1>
     }
 
-    useEffect(() => {
-        console.log(paymentMethod);
-    }, [paymentMethod])
+    // useEffect(() => {
+    //     console.log(paymentMethod);
+    // }, [paymentMethod])
 
 
     return (
