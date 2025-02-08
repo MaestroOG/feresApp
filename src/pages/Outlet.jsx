@@ -98,6 +98,7 @@ import PlaceName from './PlaceName'
 import PendingMurabaha from './PendingMurabaha'
 import MurabahaDetails from '../components/MurabahaComps/MurabahaDetails'
 import NotFound from './NotFound'
+import FindeRider from './FindeRider'
 
 const Outlet = () => {
     return (
@@ -194,6 +195,7 @@ const Outlet = () => {
                 <Route path='/deliveryservice/deliverytiprider/payment' element={<DeliveryTipRiderPayment />} />
                 <Route path='/deliveryservice/deliverydetails/deliverydiscounts' element={<DeliveryDiscounts />} />
                 <Route path='/deliveryservice/deliverydetails/selectpayment' element={<DeliverySelectPayment />} />
+                <Route path='/deliveryservice/findrider' element={<FindeRider />} />
                 <Route path='/deliveryservice/ridemap' element={<RideMap />} />
                 <Route path='/deliveryservice/raterider' element={<DeliveryRateRider />} />
 

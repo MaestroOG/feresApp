@@ -76,7 +76,7 @@ console.log(number,"EBirr");
                 TotalDistance:totalDistance,
                 payment_id:paymentId
                 })
-                navigate('/deliveryservice/ridemap')
+                navigate('/deliveryservice/findrider')
         }else{
             const payOrder = await post('/api/user/pay_order_payment_waafi', {
                 cart_unique_token: cartItemData?.cart_unique_token,

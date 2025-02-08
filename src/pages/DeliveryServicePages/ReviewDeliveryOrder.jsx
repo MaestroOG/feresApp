@@ -61,7 +61,7 @@ const ReviewDeliveryOrder = () => {
                 TotalDistance:totalDistance,
                 payment_id:null
                        })
-            navigate('/deliveryservice/ridemap')}
+            navigate('/deliveryservice/findrider')}
     }
     
     return (
@@ -172,7 +172,7 @@ const ReviewDeliveryOrder = () => {
 
             {reviewPay && <ReviewPayPopup onPayClick={() => {
                 setReviewPay(false)
-                navigate('/deliveryservice/ridemap')
+                navigate('/deliveryservice/findrider')
             }} onCancelClick={() => setReviewPay(false)} onNotNowClick={() => setReviewPay(false)} userDetail={userDetail} destination={destination} vehicleType={vehicleType} currentLocation={currentLocation} destinationPersonName={destinationPersonName} cost={cost} driverNote={driverNote} destinationPersonPhone={destinationPersonPhone} />}
         </>
     )
